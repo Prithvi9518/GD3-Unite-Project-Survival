@@ -117,7 +117,7 @@ namespace GD.App
             InitializeDrawnContent(worldScale);
 
             //add the player
-            InitializePlayer();
+            //InitializePlayer();
         }
 
         private void SetTitle(string title)
@@ -297,7 +297,9 @@ namespace GD.App
             InitializeDemoQuad();
 
             //load an FBX and draw
-            InitializeDemoModel();
+            //InitializeDemoModel();
+
+            TestingInteractableItem();
         }
 
         private void InitializeDemoModel()
@@ -317,6 +319,23 @@ namespace GD.App
 
             //lets try out our CycleTranslationBehaviour
             // gameObject.AddComponent(new CycledTranslationBehaviour(0.1f, 10));
+
+            sceneManager.ActiveScene.Add(gameObject);
+        }
+
+        private void TestingInteractableItem()
+        {
+            var gameObject = new GameObject("interactable", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.7f * Vector3.One, null, new Vector3(0, 2, 1));
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/sphere");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
+                new Material(texture, 1),
+                mesh));
+            gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
         }
