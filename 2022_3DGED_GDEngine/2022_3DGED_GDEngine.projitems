@@ -15,6 +15,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Base\Transform.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Behaviours\CurveBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Behaviours\CycledTranslationBehaviour.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Behaviours\InteractableBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Behaviours\SimpleRotationBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Behaviours\CycledRotationBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Camera\Camera.cs" />
@@ -48,6 +49,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\GamepadComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\KeyboardComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\MouseComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\RenderManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Types\Integer2.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\CameraManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\SceneManager.cs" />

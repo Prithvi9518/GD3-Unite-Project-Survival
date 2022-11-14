@@ -2,6 +2,7 @@
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace GD.Engine
 {
@@ -20,7 +21,14 @@ namespace GD.Engine
         private bool crouchEnabled = false;
         private bool needsToCrouch = true;
 
+        private bool isInteracting = false;
+
         #endregion Fields
+
+        public bool IsInteracting
+        {
+            get => isInteracting;
+        }
 
         #region Temps
 
@@ -52,10 +60,14 @@ namespace GD.Engine
         {
             HandleMouseInput(gameTime);
             HandleKeyboardInput(gameTime);
+            System.Diagnostics.Debug.WriteLine($"crouchEnabled: {crouchEnabled}");
+            System.Diagnostics.Debug.WriteLine($"needsToCrouch: {needsToCrouch}");
         }
 
         protected virtual void HandleKeyboardInput(GameTime gameTime)
         {
+            CheckInteracting();
+
             float runMultiplier = 2.5f;
 
             translation = Vector3.Zero;
@@ -129,6 +141,16 @@ namespace GD.Engine
                 needsToCrouch = false;
                 multiplier = 1f;
             }
+        }
+
+        protected virtual void CheckInteracting()
+        {
+            if (Input.Keys.IsPressed(Keys.E))
+            {
+                isInteracting = true;
+            }
+            else
+                isInteracting = false;
         }
 
         protected virtual void HandleMouseInput(GameTime gameTime)
