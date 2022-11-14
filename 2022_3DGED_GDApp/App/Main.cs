@@ -231,6 +231,7 @@ namespace GD.App
             //NEW
             cameraGameObject.AddComponent(new FirstPersonController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
                 AppData.PLAYER_ROTATE_SPEED_VECTOR2, true));
+            cameraGameObject.AddComponent(new InteractionController());
 
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 

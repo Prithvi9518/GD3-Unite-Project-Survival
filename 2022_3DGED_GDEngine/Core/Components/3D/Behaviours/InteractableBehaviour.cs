@@ -10,7 +10,7 @@ namespace GD.Engine
     public class InteractableBehaviour : Component
     {
         private GameObject target;
-        private FirstPersonController controller;
+        private InteractionController controller;
 
         public InteractableBehaviour()
         {
@@ -22,12 +22,12 @@ namespace GD.Engine
             {
                 target = Application.CameraManager.ActiveCamera.gameObject;
             }
-            controller = target.GetComponent<FirstPersonController>();
+            controller = target.GetComponent<InteractionController>();
 
             //System.Diagnostics.Debug.WriteLine($"Target: {target.Name}");
 
             float targetDist = GetDistance();
-            System.Diagnostics.Debug.WriteLine($"Distance: {targetDist}");
+            //System.Diagnostics.Debug.WriteLine($"Distance: {targetDist}");
 
             CheckTrigger();
 
@@ -51,9 +51,16 @@ namespace GD.Engine
 
             float targetDist = GetDistance();
 
-            if (isInteracting && targetDist < 3f)
+            if (isInteracting)
             {
-                System.Diagnostics.Debug.WriteLine("Picked Up");
+                if (targetDist <= 3f)
+                {
+                    System.Diagnostics.Debug.WriteLine("Picked Up");
+                }
+                else
+                {
+                    System.Diagnostics.Debug.WriteLine("Too far");
+                }
             }
         }
     }
