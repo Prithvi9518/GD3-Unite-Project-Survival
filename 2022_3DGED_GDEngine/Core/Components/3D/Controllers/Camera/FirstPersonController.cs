@@ -53,6 +53,7 @@ namespace GD.Engine
         {
             HandleMouseInput(gameTime);
             HandleKeyboardInput(gameTime);
+            HandleGamepadInput(gameTime);
 
             //System.Diagnostics.Debug.WriteLine($"crouchEnabled: {crouchEnabled}");
             //System.Diagnostics.Debug.WriteLine($"needsToCrouch: {needsToCrouch}");
@@ -80,24 +81,14 @@ namespace GD.Engine
                 HandleCrouch();
             }
 
-            //if (crouchEnabled && needsToCrouch)
-            //{
-            //    translation += transform.World.Down;
-            //    needsToCrouch = false;
-            //}
-            //else if (!crouchEnabled && !needsToCrouch)
-            //{
-            //    translation += transform.World.Up;
-            //}
-
-            if (Input.Keys.IsPressed(Keys.W))
+            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.Up))
                 translation += transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
-            else if (Input.Keys.IsPressed(Keys.S))
-                translation -= transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+            else if (Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.Down))
+                translation += transform.World.Backward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
 
-            if (Input.Keys.IsPressed(Keys.A))
+            if (Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.Left))
                 translation += transform.World.Left * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
-            else if (Input.Keys.IsPressed(Keys.D))
+            else if (Input.Keys.IsPressed(Keys.D) || Input.Keys.IsPressed(Keys.Right))
                 translation += transform.World.Right * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
 
             if (isGrounded)
@@ -151,12 +142,55 @@ namespace GD.Engine
 
         #endregion Actions - Update, Input
 
-        #region Actions - Gamepad (Unused)
+        #region Actions - Gamepad
 
         protected virtual void HandleGamepadInput(GameTime gameTime)
         {
+            translation = Vector3.Zero;
+
+            if (Input.Gamepad.IsConnected())
+            {
+                float runMultiplier = 2.5f;
+
+                if (!crouchEnabled)
+                {
+                    if (Input.Gamepad.IsPressed(Buttons.LeftStick))
+                        multiplier = runMultiplier;
+                    else
+                    {
+                        multiplier = 1f;
+                    }
+                }
+
+                if (Input.Gamepad.WasJustPressed(Buttons.X))
+                {
+                    crouchEnabled = !crouchEnabled;
+                    HandleCrouch();
+                }
+
+                if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y > 0.5f)
+                    translation += transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+                else if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y < -0.5f)
+                    translation += transform.World.Backward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+
+                if (Input.Gamepad.GetAxis(Buttons.LeftStick).X < -0.5f)
+                    translation += transform.World.Left * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+                else if (Input.Gamepad.GetAxis(Buttons.LeftStick).X > 0.5f)
+                    translation += transform.World.Right * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+
+                if (isGrounded)
+                    translation.Y = 0;
+            }
+
+            transform.Translate(translation);
+
+            var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
+            rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
+            rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
+
+            transform.Rotate(rotation);
         }
 
-        #endregion Actions - Gamepad (Unused)
+        #endregion Actions - Gamepad
     }
 }
