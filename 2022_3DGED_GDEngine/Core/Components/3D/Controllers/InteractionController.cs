@@ -25,12 +25,22 @@ namespace GD.Engine
 
         protected virtual void CheckInteracting()
         {
-            if (Input.Keys.IsPressed(Keys.E))
+            if (Input.Gamepad.IsConnected())
             {
-                isInteracting = true;
+                if (Input.Gamepad.IsPressed(Buttons.Y))
+                    isInteracting = true;
+                else
+                    isInteracting = false;
             }
             else
-                isInteracting = false;
+            {
+                if (Input.Keys.IsPressed(Keys.E))
+                {
+                    isInteracting = true;
+                }
+                else
+                    isInteracting = false;
+            }
         }
     }
 }
