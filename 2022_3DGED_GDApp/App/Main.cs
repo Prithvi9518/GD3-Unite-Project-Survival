@@ -1,12 +1,11 @@
 ﻿#region Pre-compiler directives
 
-//#define DEMO
+#define DEMO
 #define SHOW_DEBUG_INFO
 
 #endregion
 
 using GD.Core;
-using GD.Core.Types;
 using GD.Engine;
 using GD.Engine.Events;
 using GD.Engine.Globals;
@@ -18,6 +17,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -31,14 +31,21 @@ namespace GD.App
 
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-        private BasicEffect skyBoxEffect;
-        private BasicEffect effect;
+        private BasicEffect unlitEffect;
+        private BasicEffect litEffect;
 
         private CameraManager cameraManager;
         private SceneManager sceneManager;
         private SoundManager soundManager;
+        private RenderManager renderManager;
         private EventDispatcher eventDispatcher;
         private GameObject playerGameObject;
+
+#if DEMO
+
+        private event EventHandler OnChanged;
+
+#endif
 
         #endregion Fields
 
@@ -55,19 +62,30 @@ namespace GD.App
 
         #region Actions - Initialize
 
+#if DEMO
+
+        private void DemoCode()
+        {
+            //shows how we can create an event, register for it, and raise it in Main::Update() on Keys.E press
+            DemoEvent();
+        }
+
+        private void DemoEvent()
+        {
+            OnChanged += HandleOnChanged;
+        }
+
+        private void HandleOnChanged(object sender, EventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine($"{e} was sent by {sender}");
+        }
+
+#endif
+
         protected override void Initialize()
         {
 #if DEMO
-            Integer2 myInt = new Integer2(1, 2);
-            Integer2 cloneMyInt = myInt.GetShallowCopy() as Integer2;
-            //hmm...is this a deep or shallow copy?
-            System.Diagnostics.Debug.WriteLine(myInt.ToString());
-            System.Diagnostics.Debug.WriteLine(cloneMyInt.ToString());
-            myInt.X = -999999;
-            System.Diagnostics.Debug.WriteLine("After...");
-            System.Diagnostics.Debug.WriteLine(myInt.ToString());
-            System.Diagnostics.Debug.WriteLine(cloneMyInt.ToString());
-            Integer2 myOtherInt = Integer2.One;
+            DemoCode();
 #endif
 
             //moved spritebatch initialization here because we need it in InitializeDebug() below
@@ -117,7 +135,7 @@ namespace GD.App
             InitializeDrawnContent(worldScale);
 
             //add the player
-            //InitializePlayer();
+            InitializePlayer();
         }
 
         private void SetTitle(string title)
@@ -182,14 +200,14 @@ namespace GD.App
         private void InitializeEffects()
         {
             //only for skybox with lighting disabled
-            skyBoxEffect = new BasicEffect(_graphics.GraphicsDevice);
-            skyBoxEffect.TextureEnabled = true;
+            unlitEffect = new BasicEffect(_graphics.GraphicsDevice);
+            unlitEffect.TextureEnabled = true;
 
             //all other drawn objects
-            effect = new BasicEffect(_graphics.GraphicsDevice);
-            effect.TextureEnabled = true;
-            effect.LightingEnabled = true;
-            effect.EnableDefaultLighting();
+            litEffect = new BasicEffect(_graphics.GraphicsDevice);
+            litEffect.TextureEnabled = true;
+            litEffect.LightingEnabled = true;
+            litEffect.EnableDefaultLighting();
         }
 
         private void InitializeCameras()
@@ -205,7 +223,9 @@ namespace GD.App
                 AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
                 (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
                 AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
-                AppData.FIRST_PERSON_CAMERA_FCP)); // 3000
+                AppData.FIRST_PERSON_CAMERA_FCP,
+                new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight))); // 3000
 
             cameraGameObject.AddComponent(new ThirdPersonController());
 
@@ -223,7 +243,9 @@ namespace GD.App
                 AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
                 (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
                 AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
-                AppData.FIRST_PERSON_CAMERA_FCP)); // 3000
+                AppData.FIRST_PERSON_CAMERA_FCP,
+                new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
+                _graphics.PreferredBackBufferHeight))); // 3000
 
             //OLD
             //cameraGameObject.AddComponent(new FirstPersonCameraController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED));
@@ -240,7 +262,7 @@ namespace GD.App
             #region Security
 
             //camera 2
-            cameraGameObject = new GameObject("security camera 1");
+            cameraGameObject = new GameObject(AppData.SECURITY_CAMERA_NAME);
 
             cameraGameObject.Transform
                 = new Transform(null,
@@ -248,8 +270,11 @@ namespace GD.App
                 new Vector3(0, 2, 25));
 
             //add camera (view, projection)
-            cameraGameObject.AddComponent(new Camera(MathHelper.PiOver2 / 2,
-                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 1000));
+            cameraGameObject.AddComponent(new Camera(
+                MathHelper.PiOver2 / 2,
+                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+                0.1f, 3500,
+                new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
 
             //add rotation
             cameraGameObject.AddComponent(new CycledRotationBehaviour(
@@ -273,12 +298,15 @@ namespace GD.App
             curve3D.Add(new Vector3(0, 8, 25), 2500);
             curve3D.Add(new Vector3(0, 5, 35), 4000);
 
-            cameraGameObject = new GameObject("curve camera 1");
+            cameraGameObject = new GameObject(AppData.CURVE_CAMERA_NAME);
             cameraGameObject.Transform =
                 new Transform(null, null, null);
             cameraGameObject.AddComponent(new Camera(
                 MathHelper.PiOver2 / 2,
-                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight, 0.1f, 1000));
+                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+                0.1f, 3500,
+                  new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
+
             cameraGameObject.AddComponent(
                 new CurveBehaviour(curve3D));
 
@@ -298,28 +326,37 @@ namespace GD.App
             InitializeDemoQuad();
 
             //load an FBX and draw
-            //InitializeDemoModel();
+            InitializeDemoModel();
 
+#if DEMO
+            //test for one team
+            InitializeRadarModel();
+#endif
+
+            //quad with a tree texture
+            InitializeTreeQuad();
+
+            // testing interactable code
             TestingInteractableItem();
         }
 
         private void InitializeDemoModel()
         {
             //game object
-            var gameObject = new GameObject("my first sphere - wahoo!", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(2 * Vector3.One,
-                null, new Vector3(-2, 0, 0));
+            var gameObject = new GameObject("my first bottle!",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.0005f * Vector3.One,
+                new Vector3(-90, 0, 0), new Vector3(2, 0, 0));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
 
-            var model = Content.Load<Model>("Assets/Models/sphere");
+            var model = Content.Load<Model>("Assets/Models/bottle2");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
-                new Material(texture, 1),
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
                 mesh));
-
-            //lets try out our CycleTranslationBehaviour
-            // gameObject.AddComponent(new CycledTranslationBehaviour(0.1f, 10));
 
             sceneManager.ActiveScene.Add(gameObject);
         }
@@ -333,10 +370,32 @@ namespace GD.App
             var model = Content.Load<Model>("Assets/Models/sphere");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
+            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
                 new Material(texture, 1),
                 mesh));
             gameObject.AddComponent(new InteractableBehaviour());
+
+            sceneManager.ActiveScene.Add(gameObject);
+        }
+
+        private void InitializeRadarModel()
+        {
+            //game object
+            var gameObject = new GameObject("radar",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.005f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(2, 0, 0));
+            //  var texture = Content.Load<Texture2D>("Assets/Textures/Radar/radar-display-texture");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/radar-display");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
         }
@@ -346,12 +405,27 @@ namespace GD.App
             //game object
             var gameObject = new GameObject("my first quad",
                 ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(null, null, new Vector3(0, 2, 1));  //World
+            gameObject.Transform = new Transform(null, null, new Vector3(-1, 2, 1));  //World
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
+            gameObject.AddComponent(new Renderer(new GDBasicEffect(litEffect),
                 new Material(texture, 1), new QuadMesh(_graphics.GraphicsDevice)));
 
             gameObject.AddComponent(new SimpleRotationBehaviour(new Vector3(1, 0, 0), MathHelper.ToRadians(1 / 16.0f)));
+
+            sceneManager.ActiveScene.Add(gameObject);
+        }
+
+        private void InitializeTreeQuad()
+        {
+            //game object
+            var gameObject = new GameObject("my first tree", ObjectType.Static,
+                RenderType.Transparent);
+            gameObject.Transform = new Transform(new Vector3(3, 3, 1), null, new Vector3(-3, 1.5f, 1));  //World
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Trees/tree1");
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(unlitEffect),
+                new Material(texture, 1),
+                new QuadMesh(_graphics.GraphicsDevice)));
 
             sceneManager.ActiveScene.Add(gameObject);
         }
@@ -366,7 +440,7 @@ namespace GD.App
             var model = Content.Load<Model>("Assets/Models/sphere");
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
 
-            playerGameObject.AddComponent(new Renderer(new GDBasicEffect(effect),
+            playerGameObject.AddComponent(new Renderer(new GDBasicEffect(litEffect),
                 new Material(texture, 1),
                 mesh));
 
@@ -384,7 +458,7 @@ namespace GD.App
             float halfWorldScale = worldScale / 2.0f;
 
             GameObject quad = null;
-            var gdBasicEffect = new GDBasicEffect(skyBoxEffect);
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
             var quadMesh = new QuadMesh(_graphics.GraphicsDevice);
 
             //skybox - back face
@@ -439,26 +513,23 @@ namespace GD.App
             //add support for mouse etc
             InitializeInput();
 
-            //set screen resolution and show/hide mouse
-            InitializeGraphics();
-
             //add game effects
             InitializeEffects();
-
-            //add camera, scene manager
-            InitializeManagers();
 
             //add dictionaries to store and access content
             InitializeDictionaries();
 
-            //add game cameras
-            InitializeCameras();
+            //add camera, scene manager
+            InitializeManagers();
 
             //share some core references
             InitializeGlobals();
 
             //set screen properties (incl mouse)
             InitializeScreen(resolution, isMouseVisible, isCursorLocked);
+
+            //add game cameras
+            InitializeCameras();
         }
 
         private void InitializeGlobals()
@@ -512,34 +583,31 @@ namespace GD.App
             //_graphics.ApplyChanges();
         }
 
-        /// <summary>
-        /// Sets the sampler states etc
-        /// </summary>
-        private void InitializeGraphics()
-        {
-            //TODO - move later to something like RenderManager
-            //sets the sampler states which defines how textures are drawn when surface has UV values outside the range [0,1] - fixes the line issue at boundary between skybox textures
-            SamplerState samplerState = new SamplerState();
-            samplerState.AddressU = TextureAddressMode.Mirror;
-            samplerState.AddressV = TextureAddressMode.Mirror;
-            _graphics.GraphicsDevice.SamplerStates[0] = samplerState;
-        }
-
         private void InitializeManagers()
         {
             //add event dispatcher for system events - the most important element!!!!!!
-            //eventDispatcher = new EventDispatcher(this);
+            eventDispatcher = new EventDispatcher(this);
+            //add to Components otherwise no Update() called
+            Components.Add(eventDispatcher);
 
             //add support for multiple cameras and camera switching
-            cameraManager = new CameraManager();
+            cameraManager = new CameraManager(this);
+            //add to Components otherwise no Update() called
+            Components.Add(cameraManager);
 
-            //add support for multiple scenes and scene switching
-            sceneManager = new SceneManager();
+            //big kahuna nr 1! this adds support to store, switch and Update() scene contents
+            sceneManager = new SceneManager(this);
+            //add to Components otherwise no Update()
+            Components.Add(sceneManager);
+
+            //big kahuna nr 2! this renders the ActiveScene from the ActiveCamera perspective
+            renderManager = new RenderManager(this, new ForwardSceneRenderer(_graphics.GraphicsDevice));
+            Components.Add(renderManager);
 
             //add support for playing sounds
             soundManager = new SoundManager();
-
-            //TODO - add other managers
+            //why don't we add SoundManager to Components? Because it has no Update()
+            //wait...SoundManager has no update? Yes, playing sounds is handled by an internal MonoGame thread - so we're off the hook!
         }
 
         private void InitializeDictionaries()
@@ -552,7 +620,7 @@ namespace GD.App
             //intialize the utility component
             var perfUtility = new PerfUtility(this, _spriteBatch,
                 new Vector2(10, 10),
-                new Vector2(0, 20));
+                new Vector2(0, 22));
 
             //set the font to be used
             var spriteFont = Content.Load<SpriteFont>("Assets/Fonts/Perf");
@@ -560,8 +628,6 @@ namespace GD.App
             //add components to the info list to add UI information
             float headingScale = 1f;
             float contentScale = 0.9f;
-            perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Hints -----------------------------------", Color.Yellow, headingScale * Vector2.One));
-            perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Use mouse scroll wheel to change security camera FOV", Color.White, contentScale * Vector2.One));
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Performance ------------------------------", Color.Yellow, headingScale * Vector2.One));
             perfUtility.infoList.Add(new FPSInfo(_spriteBatch, spriteFont, "FPS:", Color.White, contentScale * Vector2.One));
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Camera -----------------------------------", Color.Yellow, headingScale * Vector2.One));
@@ -570,6 +636,8 @@ namespace GD.App
             perfUtility.infoList.Add(new CameraRotationInfo(_spriteBatch, spriteFont, "Rot:", Color.White, contentScale * Vector2.One));
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Object -----------------------------------", Color.Yellow, headingScale * Vector2.One));
             perfUtility.infoList.Add(new ObjectInfo(_spriteBatch, spriteFont, "Objects:", Color.White, contentScale * Vector2.One));
+            perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Hints -----------------------------------", Color.Yellow, headingScale * Vector2.One));
+            perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Use mouse scroll wheel to change security camera FOV, F1-F4 for camera switch", Color.White, contentScale * Vector2.One));
 
             //add to the component list otherwise it wont have its Update or Draw called!
             Components.Add(perfUtility);
@@ -581,19 +649,14 @@ namespace GD.App
 
         protected override void Update(GameTime gameTime)
         {
-            //Possible fix - ThirdPersonController
-            //is third person camera active?
-            //does it have a valid target?
-            //set playerGameObject to be the target?
-
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
             //update all drawn game objects in the active scene
-            sceneManager.Update(gameTime);
+            //sceneManager.Update(gameTime);
 
             //update active camera
-            cameraManager.Update(gameTime);
+            //cameraManager.Update(gameTime);
 
 #if DEMO
 
@@ -605,9 +668,11 @@ namespace GD.App
             if (Input.Keys.IsPressed(Keys.F1))
                 cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
             else if (Input.Keys.IsPressed(Keys.F2))
-                cameraManager.SetActiveCamera("security camera 1");
+                cameraManager.SetActiveCamera(AppData.SECURITY_CAMERA_NAME);
             else if (Input.Keys.IsPressed(Keys.F3))
-                cameraManager.SetActiveCamera("curve camera 1");
+                cameraManager.SetActiveCamera(AppData.CURVE_CAMERA_NAME);
+            else if (Input.Keys.IsPressed(Keys.F4))
+                cameraManager.SetActiveCamera(AppData.THIRD_PERSON_CAMERA_NAME);
 
             #endregion Demo - Camera switching
 
@@ -623,6 +688,13 @@ namespace GD.App
 
             #endregion Demo - Gamepad
 
+            #region Demo - Raising events using GDEvent
+
+            if (Input.Keys.WasJustPressed(Keys.E))
+                OnChanged.Invoke(this, null); //passing null for EventArgs but we'll make our own class MyEventArgs::EventArgs later
+
+            #endregion
+
 #endif
             //fixed a bug with components not getting Update called
             base.Update(gameTime);
@@ -633,7 +705,7 @@ namespace GD.App
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             //get active scene, get camera, and call the draw on the active scene
-            sceneManager.ActiveScene.Draw(gameTime, cameraManager.ActiveCamera);
+            //sceneManager.ActiveScene.Draw(gameTime, cameraManager.ActiveCamera);
 
             base.Draw(gameTime);
         }
