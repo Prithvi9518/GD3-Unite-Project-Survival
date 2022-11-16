@@ -180,15 +180,15 @@ namespace GD.Engine
 
                 if (isGrounded)
                     translation.Y = 0;
+
+                transform.Translate(translation);
+
+                var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
+                rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
+                rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
+
+                transform.Rotate(rotation);
             }
-
-            transform.Translate(translation);
-
-            var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
-            rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
-            rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
-
-            transform.Rotate(rotation);
         }
 
         #endregion Actions - Gamepad
