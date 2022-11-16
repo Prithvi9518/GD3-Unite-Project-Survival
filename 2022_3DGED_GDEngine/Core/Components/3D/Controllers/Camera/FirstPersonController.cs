@@ -84,7 +84,7 @@ namespace GD.Engine
             if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.Up))
                 translation += transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
             else if (Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.Down))
-                translation += transform.World.Backward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+                translation -= transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
 
             if (Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.Left))
                 translation += transform.World.Left * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
@@ -171,7 +171,7 @@ namespace GD.Engine
                 if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y > 0.5f)
                     translation += transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
                 else if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y < -0.5f)
-                    translation += transform.World.Backward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+                    translation -= transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
 
                 if (Input.Gamepad.GetAxis(Buttons.LeftStick).X < -0.5f)
                     translation += transform.World.Left * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
