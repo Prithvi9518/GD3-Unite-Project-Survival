@@ -135,7 +135,7 @@ namespace GD.App
             InitializeDrawnContent(worldScale);
 
             //add the player
-            InitializePlayer();
+            //InitializePlayer();
         }
 
         private void SetTitle(string title)
@@ -322,44 +322,10 @@ namespace GD.App
             //create sky
             //InitializeSkyBoxAndGround(worldScale);
 
-            //quad with crate texture
-            //InitializeDemoQuad();
-
-            //load an FBX and draw
-            //InitializeDemoModel();
-
-#if DEMO
-            //test for one team
-#endif
-
-            //quad with a tree texture
-            //InitializeTreeQuad();
-
             InitializeShoppingCentre();
 
             // testing interactable code
             //TestingInteractableItem();
-        }
-
-        private void InitializeDemoModel()
-        {
-            //game object
-            var gameObject = new GameObject("my first bottle!",
-                ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(0.0005f * Vector3.One,
-                new Vector3(-90, 0, 0), new Vector3(2, 0, 0));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
-
-            var model = Content.Load<Model>("Assets/Models/bottle2");
-
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(litEffect),
-                new Material(texture, 1f, Color.White),
-                mesh));
-
-            sceneManager.ActiveScene.Add(gameObject);
         }
 
         private void TestingInteractableItem()
@@ -948,36 +914,6 @@ namespace GD.App
             }
 
             #endregion
-        }
-
-        private void InitializeDemoQuad()
-        {
-            //game object
-            var gameObject = new GameObject("my first quad",
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(null, null, new Vector3(-1, 2, 1));  //World
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(litEffect),
-                new Material(texture, 1), new QuadMesh(_graphics.GraphicsDevice)));
-
-            gameObject.AddComponent(new SimpleRotationBehaviour(new Vector3(1, 0, 0), MathHelper.ToRadians(1 / 16.0f)));
-
-            sceneManager.ActiveScene.Add(gameObject);
-        }
-
-        private void InitializeTreeQuad()
-        {
-            //game object
-            var gameObject = new GameObject("my first tree", ObjectType.Static,
-                RenderType.Transparent);
-            gameObject.Transform = new Transform(new Vector3(3, 3, 1), null, new Vector3(-3, 1.5f, 1));  //World
-            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Trees/tree1");
-            gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(unlitEffect),
-                new Material(texture, 1),
-                new QuadMesh(_graphics.GraphicsDevice)));
-
-            sceneManager.ActiveScene.Add(gameObject);
         }
 
         private void InitializePlayer()
