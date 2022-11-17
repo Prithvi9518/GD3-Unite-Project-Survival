@@ -521,6 +521,27 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
+
+            #region Electrical Box
+
+            gameObject = new GameObject("electrical box",
+                                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Generator Room/electrical_box");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
         }
 
         private void InitializeWalls()
