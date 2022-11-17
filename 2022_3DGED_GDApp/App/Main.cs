@@ -330,7 +330,6 @@ namespace GD.App
 
 #if DEMO
             //test for one team
-            // InitializeRadarModel();
 #endif
 
             //quad with a tree texture
@@ -380,17 +379,19 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
         }
 
-        private void InitializeRadarModel()
+        private void InitializeScene()
         {
-            //game object
-            var gameObject = new GameObject("radar",
-                ObjectType.Static, RenderType.Opaque);
+            InitializeOfficeModels();
 
-            gameObject.Transform = new Transform(0.005f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(2, 0, 0));
+            #region Floor
+
+            var gameObject = new GameObject("floor",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
 
-            var model = Content.Load<Model>("Assets/Models/radar-display");
+            var model = Content.Load<Model>("Assets/Models/Floor/floor");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -399,11 +400,57 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            InitializeClothesAisle();
         }
 
-        private void InitializeScene()
+        private void InitializeClothesAisle()
         {
-            InitializeOfficeModels();
+            #region Clothes Aisle Shelf
+
+            var gameObject = new GameObject("clothes aisle shelf",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Clothes/clothes_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Clothes Aisle Shelf Ends
+
+            var model_base_path = "Assets/Models/Aisles/Clothes/clothes_aisle_shelf_end_";
+
+            for (int i = 1; i <= 2; i++)
+            {
+                gameObject = new GameObject("clothes aisle shelf end " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+                string model_path = model_base_path + i;
+                model = Content.Load<Model>(model_path);
+
+                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+                gameObject.AddComponent(new Renderer(
+                    new GDBasicEffect(litEffect),
+                    new Material(texture, 1f, Color.White),
+                    mesh));
+
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            #endregion
         }
 
         private void InitializeOfficeModels()
