@@ -382,6 +382,7 @@ namespace GD.App
         private void InitializeShoppingCentre()
         {
             InitializeOfficeModels();
+            InitializeGeneratorRoomModels();
 
             #region Floor
 
@@ -403,6 +404,8 @@ namespace GD.App
 
             #endregion
 
+            InitializeWalls();
+
             InitializeClothesAisle();
             InitializeBeautyAisle();
             InitializeBeveragesAisle();
@@ -410,6 +413,159 @@ namespace GD.App
             InitializePreparedFoodsAisle();
             InitializeProducedFoodsAisle();
             InitializeToysAisle();
+        }
+
+        private void InitializeGeneratorRoomModels()
+        {
+            #region Fuse Box
+
+            var gameObject = new GameObject("fuse box",
+                                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Generator Room/fuse_box");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Gate Access Machine
+
+            gameObject = new GameObject("gate access machine",
+                                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Generator Room/gate_access_machine");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Generator
+
+            gameObject = new GameObject("generator",
+                                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Generator Room/generator");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Lever
+
+            gameObject = new GameObject("lever",
+                                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Generator Room/lever");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Panel
+
+            gameObject = new GameObject("panel",
+                                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Generator Room/panel");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeWalls()
+        {
+            #region Shopping Centre Walls (Except Generator Room)
+
+            var gameObject = new GameObject("shopping centre walls",
+                            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Walls/shopping_centre_walls");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Generator Room Walls
+
+            gameObject = new GameObject("generator room walls",
+                            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Walls/generator_room_walls");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
         }
 
         private void InitializeToysAisle()
@@ -576,29 +732,6 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
-
-            #region Clothes Aisle Shelf Ends
-
-            var model_base_path = "Assets/Models/Aisles/Clothes/clothes_aisle_shelf_end_";
-
-            for (int i = 1; i <= 2; i++)
-            {
-                gameObject = new GameObject("clothes aisle shelf end " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = model_base_path + i;
-                model = Content.Load<Model>(model_path);
-
-                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-                gameObject.AddComponent(new Renderer(
-                    new GDBasicEffect(litEffect),
-                    new Material(texture, 1f, Color.White),
-                    mesh));
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
 
             #endregion
         }
