@@ -330,7 +330,7 @@ namespace GD.App
 
 #if DEMO
             //test for one team
-           // InitializeRadarModel();
+            // InitializeRadarModel();
 #endif
 
             //quad with a tree texture
@@ -388,7 +388,6 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.005f * Vector3.One,
                 new Vector3(0, 0, 0), new Vector3(2, 0, 0));
-            //  var texture = Content.Load<Texture2D>("Assets/Textures/Radar/radar-display-texture");
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
 
             var model = Content.Load<Model>("Assets/Models/radar-display");
@@ -404,16 +403,21 @@ namespace GD.App
 
         private void InitializeScene()
         {
-            //game object
-            var gameObject = new GameObject("scene",
+            InitializeOfficeModels();
+        }
+
+        private void InitializeOfficeModels()
+        {
+            #region Office Chair
+
+            var gameObject = new GameObject("office chair",
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(2, 0, 0));
-            //  var texture = Content.Load<Texture2D>("Assets/Textures/Radar/radar-display-texture");
+                new Vector3(0, 0, 0), new Vector3(0, 0, 0));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
 
-            var model = Content.Load<Model>("Assets/Models/ShoppingCenterLayout");
+            var model = Content.Load<Model>("Assets/Models/Office/office_chair");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -422,6 +426,177 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Table
+
+            gameObject = new GameObject("office table",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Office/office_table");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Shelves
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            string model_base_path = "Assets/Models/Office/Shelves/office_shelf_";
+
+            for (int i = 1; i <= 4; i++)
+            {
+                gameObject = new GameObject("office shelf " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+                string model_path = model_base_path + i;
+                model = Content.Load<Model>(model_path);
+
+                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+                gameObject.AddComponent(new Renderer(
+                    new GDBasicEffect(litEffect),
+                    new Material(texture, 1f, Color.White),
+                    mesh));
+
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            #endregion
+
+            #region Office Rug
+
+            gameObject = new GameObject("office rug",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Office/office_rug");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office PC
+
+            gameObject = new GameObject("office pc",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Office/office_pc");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Screen
+
+            gameObject = new GameObject("office screen",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Office/office_screen");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Keyboard
+
+            gameObject = new GameObject("office keyboard",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Office/office_keyboard");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Keycard
+
+            gameObject = new GameObject("office keycard",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            model = Content.Load<Model>("Assets/Models/Office/office_keycard");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Drawers
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            model_base_path = "Assets/Models/Office/Drawers/office_drawer_";
+
+            for (int i = 1; i <= 4; i++)
+            {
+                gameObject = new GameObject("office drawer " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+                string model_path = model_base_path + i;
+                model = Content.Load<Model>(model_path);
+
+                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+                gameObject.AddComponent(new Renderer(
+                    new GDBasicEffect(litEffect),
+                    new Material(texture, 1f, Color.White),
+                    mesh));
+
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+
+            #endregion
         }
 
         private void InitializeDemoQuad()
