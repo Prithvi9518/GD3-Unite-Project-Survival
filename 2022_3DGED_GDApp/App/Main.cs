@@ -320,24 +320,26 @@ namespace GD.App
         private void InitializeDrawnContent(float worldScale)
         {
             //create sky
-            InitializeSkyBoxAndGround(worldScale);
+            //InitializeSkyBoxAndGround(worldScale);
 
             //quad with crate texture
-            InitializeDemoQuad();
+            //InitializeDemoQuad();
 
             //load an FBX and draw
-            InitializeDemoModel();
+            //InitializeDemoModel();
 
 #if DEMO
             //test for one team
-            InitializeRadarModel();
+           // InitializeRadarModel();
 #endif
 
             //quad with a tree texture
-            InitializeTreeQuad();
+            //InitializeTreeQuad();
+
+            InitializeScene();
 
             // testing interactable code
-            TestingInteractableItem();
+            //TestingInteractableItem();
         }
 
         private void InitializeDemoModel()
@@ -390,6 +392,28 @@ namespace GD.App
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
 
             var model = Content.Load<Model>("Assets/Models/radar-display");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+        }
+
+        private void InitializeScene()
+        {
+            //game object
+            var gameObject = new GameObject("scene",
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One,
+                new Vector3(0, 0, 0), new Vector3(2, 0, 0));
+            //  var texture = Content.Load<Texture2D>("Assets/Textures/Radar/radar-display-texture");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/ShoppingCenterLayout");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
