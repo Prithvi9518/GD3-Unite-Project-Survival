@@ -335,7 +335,7 @@ namespace GD.App
             //quad with a tree texture
             //InitializeTreeQuad();
 
-            InitializeScene();
+            InitializeShoppingCentre();
 
             // testing interactable code
             //TestingInteractableItem();
@@ -379,7 +379,7 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
         }
 
-        private void InitializeScene()
+        private void InitializeShoppingCentre()
         {
             InitializeOfficeModels();
 
@@ -404,6 +404,156 @@ namespace GD.App
             #endregion
 
             InitializeClothesAisle();
+            InitializeBeautyAisle();
+            InitializeBeveragesAisle();
+            InitializeElectronicsAisle();
+            InitializePreparedFoodsAisle();
+            InitializeProducedFoodsAisle();
+            InitializeToysAisle();
+        }
+
+        private void InitializeToysAisle()
+        {
+            #region Toys Aisle Shelf
+
+            var gameObject = new GameObject("toys aisle shelf",
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Toys/toys_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeProducedFoodsAisle()
+        {
+            #region Produced Foods Aisle Shelf
+
+            var gameObject = new GameObject("produced foods aisle shelf",
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Produced Foods/produced_foods_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializePreparedFoodsAisle()
+        {
+            #region Prepared Foods Aisle Shelf
+
+            var gameObject = new GameObject("prepared foods aisle shelf",
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeElectronicsAisle()
+        {
+            #region Electronics Aisle Shelf
+
+            var gameObject = new GameObject("electronics aisle shelf",
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Electronics/electronics_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeBeveragesAisle()
+        {
+            #region Beverages Aisle Shelf
+
+            var gameObject = new GameObject("beverages aisle shelf",
+                       ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Beverages/beverages_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeBeautyAisle()
+        {
+            #region Beauty Aisle Shelf
+
+            var gameObject = new GameObject("beauty aisle shelf",
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+
+            var model = Content.Load<Model>("Assets/Models/Aisles/Beauty/beauty_aisle_shelf");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
         }
 
         private void InitializeClothesAisle()
