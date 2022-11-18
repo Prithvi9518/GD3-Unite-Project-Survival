@@ -137,11 +137,30 @@ namespace GD.Engine
             rotation = Vector3.Zero;
             var delta = Input.Mouse.Delta;
 
+            //Vector2 mousePos = Input.Mouse.Position;
+            //if (mousePos.X < 0)
+            //{
+            //    Input.Mouse.Position = new Vector2(0, mousePos.Y);
+            //}
+            //else if (mousePos.X > AppData.APP_RESOLUTION.X)
+            //{
+            //    Input.Mouse.Position = new Vector2(AppData.APP_RESOLUTION.X, mousePos.Y);
+            //}
+
             if (delta.Length() != 0)
             {
                 //Q - where are X and Y reversed?
                 rotation.Y -= delta.X * rotationSpeed.X * gameTime.ElapsedGameTime.Milliseconds;
                 rotation.X -= delta.Y * rotationSpeed.Y * gameTime.ElapsedGameTime.Milliseconds;
+
+                float minRotX = -0.75f;
+                float maxRotX = 0.65f;
+
+                if (rotation.X < minRotX)
+                    rotation.X = minRotX;
+                else if (rotation.X > maxRotX)
+                    rotation.X = maxRotX;
+
                 transform.SetRotation(rotation);
             }
         }
@@ -203,6 +222,15 @@ namespace GD.Engine
 
             var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
             rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
+
+            float minRotX = -0.75f;
+            float maxRotX = 0.65f;
+
+            if (rotation.X < minRotX)
+                rotation.X = minRotX;
+            else if (rotation.X > maxRotX)
+                rotation.X = maxRotX;
+
             rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
 
             transform.Rotate(rotation);
