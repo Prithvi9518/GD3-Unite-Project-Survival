@@ -356,7 +356,7 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
 
             var model = Content.Load<Model>("Assets/Models/Floor/floor");
 
@@ -390,7 +390,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/fuse_box_diffuse");
 
             var model = Content.Load<Model>("Assets/Models/Generator Room/fuse_box");
 
@@ -411,7 +411,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/access_card_machine_emission");
 
             model = Content.Load<Model>("Assets/Models/Generator Room/gate_access_machine");
 
@@ -432,7 +432,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/generator");
 
             model = Content.Load<Model>("Assets/Models/Generator Room/generator");
 
@@ -453,7 +453,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/lever_base_colour");
 
             model = Content.Load<Model>("Assets/Models/Generator Room/lever");
 
@@ -474,7 +474,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/panel_base_colour");
 
             model = Content.Load<Model>("Assets/Models/Generator Room/panel");
 
@@ -495,7 +495,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/metal");
 
             model = Content.Load<Model>("Assets/Models/Generator Room/electrical_box");
 
@@ -519,7 +519,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
 
             var model = Content.Load<Model>("Assets/Models/Walls/shopping_centre_walls");
 
@@ -540,7 +540,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/walls");
 
             model = Content.Load<Model>("Assets/Models/Walls/generator_room_walls");
 
@@ -564,7 +564,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Toys/toys_aisle_shelf");
 
@@ -588,7 +588,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Produced Foods/produced_foods_aisle_shelf");
 
@@ -612,7 +612,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf");
 
@@ -636,7 +636,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Electronics/electronics_aisle_shelf");
 
@@ -660,7 +660,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Beverages/beverages_aisle_shelf");
 
@@ -684,7 +684,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Beauty/beauty_aisle_shelf");
 
@@ -708,7 +708,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Clothes/clothes_aisle_shelf");
 
@@ -732,7 +732,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One,
                 new Vector3(0, 0, 0), new Vector3(0, 0, 0));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Office/ChairSetT2_Diffuse");
 
             var model = Content.Load<Model>("Assets/Models/Office/office_chair");
 
@@ -753,7 +753,7 @@ namespace GD.App
 
             gameObject.Transform = new Transform(0.02f * Vector3.One,
                 new Vector3(0, 0, 0), new Vector3(0, 0, 0));
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Office/TabletextureSet1_Diffuse");
 
             model = Content.Load<Model>("Assets/Models/Office/office_table");
 
@@ -769,7 +769,7 @@ namespace GD.App
 
             #region Office Shelves
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Office/metal");
             string model_base_path = "Assets/Models/Office/Shelves/office_shelf_";
 
             for (int i = 1; i <= 4; i++)
@@ -797,7 +797,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate1");
 
             model = Content.Load<Model>("Assets/Models/Office/office_rug");
 
@@ -817,7 +817,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/metal");
 
             model = Content.Load<Model>("Assets/Models/Office/office_pc");
 
@@ -837,7 +837,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/metal");
 
             model = Content.Load<Model>("Assets/Models/Office/office_screen");
 
@@ -857,7 +857,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/metal");
 
             model = Content.Load<Model>("Assets/Models/Office/office_keyboard");
 
@@ -877,7 +877,7 @@ namespace GD.App
                 ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Office/keycard_albedo");
 
             model = Content.Load<Model>("Assets/Models/Office/office_keycard");
 
@@ -893,7 +893,7 @@ namespace GD.App
 
             #region Office Drawers
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
+            texture = Content.Load<Texture2D>("Assets/Textures/Props/Generator_Room/metal");
             model_base_path = "Assets/Models/Office/Drawers/office_drawer_";
 
             for (int i = 1; i <= 4; i++)
