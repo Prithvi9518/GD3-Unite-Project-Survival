@@ -15,6 +15,13 @@
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Content\Assets\Models\Aisles\Clothes\" />
+    <Folder Include="Content\Assets\Models\Aisles\Beverages\" />
+    <Folder Include="Content\Assets\Models\Aisles\Beauty\" />
+    <Folder Include="Content\Assets\Models\Generator Room\" />
+    <Folder Include="Content\Assets\Models\Walls\" />
+  </ItemGroup>
   <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
     <Message Text="Restoring dotnet tools" Importance="High" />
     <Exec Command="dotnet tool restore" />
