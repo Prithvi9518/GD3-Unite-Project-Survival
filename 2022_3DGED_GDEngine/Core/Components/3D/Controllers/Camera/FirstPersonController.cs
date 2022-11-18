@@ -51,9 +51,15 @@ namespace GD.Engine
 
         public override void Update(GameTime gameTime)
         {
-            HandleMouseInput(gameTime);
-            HandleKeyboardInput(gameTime);
-            HandleGamepadInput(gameTime);
+            if (Input.Gamepad.IsConnected())
+            {
+                HandleGamepadInput(gameTime);
+            }
+            else
+            {
+                HandleMouseInput(gameTime);
+                HandleKeyboardInput(gameTime);
+            }
 
             //System.Diagnostics.Debug.WriteLine($"crouchEnabled: {crouchEnabled}");
             //System.Diagnostics.Debug.WriteLine($"needsToCrouch: {needsToCrouch}");
@@ -147,48 +153,59 @@ namespace GD.Engine
         protected virtual void HandleGamepadInput(GameTime gameTime)
         {
             translation = Vector3.Zero;
+            rotation = Vector3.Zero;
 
-            if (Input.Gamepad.IsConnected())
+            float runMultiplier = 2.5f;
+
+            if (!crouchEnabled)
             {
-                float runMultiplier = 2.5f;
-
-                if (!crouchEnabled)
+                if (Input.Gamepad.IsPressed(Buttons.LeftStick))
+                    multiplier = runMultiplier;
+                else
                 {
-                    if (Input.Gamepad.IsPressed(Buttons.LeftStick))
-                        multiplier = runMultiplier;
-                    else
-                    {
-                        multiplier = 1f;
-                    }
+                    multiplier = 1f;
                 }
-
-                if (Input.Gamepad.WasJustPressed(Buttons.X))
-                {
-                    crouchEnabled = !crouchEnabled;
-                    HandleCrouch();
-                }
-
-                if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y > 0.5f)
-                    translation += transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
-                else if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y < -0.5f)
-                    translation -= transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
-
-                if (Input.Gamepad.GetAxis(Buttons.LeftStick).X < -0.5f)
-                    translation += transform.World.Left * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
-                else if (Input.Gamepad.GetAxis(Buttons.LeftStick).X > 0.5f)
-                    translation += transform.World.Right * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
-
-                if (isGrounded)
-                    translation.Y = 0;
-
-                transform.Translate(translation);
-
-                var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
-                rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
-                rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
-
-                transform.Rotate(rotation);
             }
+
+            if (Input.Gamepad.WasJustPressed(Buttons.X))
+            {
+                crouchEnabled = !crouchEnabled;
+                HandleCrouch();
+            }
+
+            if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y > 0.5f)
+                translation += transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+            else if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y < -0.5f)
+                translation -= transform.World.Forward * (moveSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+
+            if (Input.Gamepad.GetAxis(Buttons.LeftStick).X < -0.5f)
+                translation += transform.World.Left * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+            else if (Input.Gamepad.GetAxis(Buttons.LeftStick).X > 0.5f)
+                translation += transform.World.Right * (strafeSpeed * multiplier) * gameTime.ElapsedGameTime.Milliseconds;
+
+            if (isGrounded)
+                translation.Y = 0;
+
+            float normalHeight = AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y;
+            float crouchedHeight = normalHeight - 1f;
+
+            if (crouchEnabled && needsToCrouch)
+            {
+                transform.translation.Y = crouchedHeight;
+                needsToCrouch = false;
+            }
+            else if (!crouchEnabled)
+            {
+                transform.translation.Y = normalHeight;
+            }
+
+            transform.Translate(translation);
+
+            var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
+            rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
+            rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
+
+            transform.Rotate(rotation);
         }
 
         #endregion Actions - Gamepad
