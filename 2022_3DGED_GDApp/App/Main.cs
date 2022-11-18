@@ -379,13 +379,13 @@ namespace GD.App
             InitializeShoppingCentre();
 
             // testing interactable code
-            //TestingInteractableItem();
+            TestingInteractableItem();
         }
 
         private void TestingInteractableItem()
         {
             var gameObject = new GameObject("interactable", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.7f * Vector3.One, null, new Vector3(0, 2, 1));
+            gameObject.Transform = new Transform(0.7f * Vector3.One, null, new Vector3(0, 3, 1));
             var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
 
             var model = Content.Load<Model>("Assets/Models/sphere");

@@ -1,4 +1,5 @@
-﻿using GD.Engine.Globals;
+﻿using GD.Engine.Events;
+using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -24,11 +25,6 @@ namespace GD.Engine
             }
             controller = target.GetComponent<InteractionController>();
 
-            //System.Diagnostics.Debug.WriteLine($"Target: {target.Name}");
-
-            float targetDist = GetDistance();
-            //System.Diagnostics.Debug.WriteLine($"Distance: {targetDist}");
-
             CheckTrigger();
 
             //base.Update(gameTime);
@@ -49,13 +45,16 @@ namespace GD.Engine
             }
             bool isInteracting = controller.IsInteracting;
 
-            float targetDist = GetDistance();
-
             if (isInteracting)
             {
-                if (targetDist <= 3f)
+                float targetDist = GetDistance();
+
+                if (targetDist <= 6.5f)
                 {
-                    System.Diagnostics.Debug.WriteLine("Picked Up");
+                    object[] parameters = { gameObject };
+                    EventDispatcher.Raise(
+                        new EventData(EventCategoryType.Pickup, EventActionType.OnPickup, parameters)
+                        );
                 }
                 else
                 {
