@@ -5,6 +5,8 @@
 
 #endregion
 
+using BEPUphysics;
+using BEPUphysics.Entities.Prefabs;
 using GD.Core;
 using GD.Engine;
 using GD.Engine.Events;
@@ -37,9 +39,10 @@ namespace GD.App
         private CameraManager cameraManager;
         private SceneManager sceneManager;
         private SoundManager soundManager;
+        private PhysicsManager physicsManager;
         private RenderManager renderManager;
         private EventDispatcher eventDispatcher;
-        private GameObject playerGameObject;
+        private StateManager stateManager;
 
 #if DEMO
 
@@ -68,6 +71,46 @@ namespace GD.App
         {
             //shows how we can create an event, register for it, and raise it in Main::Update() on Keys.E press
             DemoEvent();
+
+            //shows us how to listen to a specific event
+            DemoStateManagerEvent();
+
+            Demo3DSoundTree();
+        }
+
+        private void Demo3DSoundTree()
+        {
+            //var camera = Application.CameraManager.ActiveCamera.AudioListener;
+            //var audioEmitter = //get tree, get emitterbehaviour, get audio emitter
+
+            //object[] parameters = {"sound name", audioListener, audioEmitter};
+
+            //EventDispatcher.Raise(new EventData(EventCategoryType.Sound,
+            //    EventActionType.OnPlay3D, parameters));
+
+            //throw new NotImplementedException();
+        }
+
+        private void DemoStateManagerEvent()
+        {
+            EventDispatcher.Subscribe(EventCategoryType.Player, HandleEvent);
+        }
+
+        private void HandleEvent(EventData eventData)
+        {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnWin:
+                    System.Diagnostics.Debug.WriteLine(eventData.Parameters[0] as string);
+                    break;
+
+                case EventActionType.OnLose:
+                    System.Diagnostics.Debug.WriteLine(eventData.Parameters[2] as string);
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         private void DemoEvent()
@@ -84,10 +127,6 @@ namespace GD.App
 
         protected override void Initialize()
         {
-#if DEMO
-            DemoCode();
-#endif
-
             //moved spritebatch initialization here because we need it in InitializeDebug() below
             _spriteBatch = new SpriteBatch(GraphicsDevice);
 
@@ -99,6 +138,10 @@ namespace GD.App
 
 #if SHOW_DEBUG_INFO
             InitializeDebug();
+#endif
+
+#if DEMO
+            DemoCode();
 #endif
 
             base.Initialize();
@@ -131,11 +174,18 @@ namespace GD.App
             //add scene manager and starting scenes
             InitializeScenes();
 
-            //add drawn stuff
-            InitializeDrawnContent(worldScale);
+            //add collidable drawn stuff
+            //InitializeCollidableContent(worldScale);
 
-            //add the player
-            //InitializePlayer();
+            //add non-collidable drawn stuff
+            InitializeNonCollidableContent(worldScale);
+
+            //Raise all the events that I want to happen at the start
+            //object[] parameters = { "epic_soundcue" };
+            //EventDispatcher.Raise(
+            //    new EventData(EventCategoryType.Player,
+            //    EventActionType.OnSpawnObject,
+            //    parameters));
         }
 
         private void SetTitle(string title)
@@ -317,7 +367,11 @@ namespace GD.App
             cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
         }
 
-        private void InitializeDrawnContent(float worldScale)
+        private void InitializeCollidableContent(float worldScale)
+        {
+        }
+
+        private void InitializeNonCollidableContent(float worldScale)
         {
             //create sky
             //InitializeSkyBoxAndGround(worldScale);
@@ -916,29 +970,6 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializePlayer()
-        {
-            playerGameObject = new GameObject("player 1", ObjectType.Static, RenderType.Opaque);
-
-            playerGameObject.Transform = new Transform(new Vector3(0.4f, 0.4f, 1),
-                null, new Vector3(0, 0.2f, -2));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
-            var model = Content.Load<Model>("Assets/Models/sphere");
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-
-            playerGameObject.AddComponent(new Renderer(new GDBasicEffect(litEffect),
-                new Material(texture, 1),
-                mesh));
-
-            playerGameObject.AddComponent(new PlayerController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, true));
-
-            sceneManager.ActiveScene.Add(playerGameObject);
-
-            //set this as active player
-            Application.Player = playerGameObject;
-        }
-
         private void InitializeSkyBoxAndGround(float worldScale)
         {
             float halfWorldScale = worldScale / 2.0f;
@@ -1094,6 +1125,14 @@ namespace GD.App
             soundManager = new SoundManager();
             //why don't we add SoundManager to Components? Because it has no Update()
             //wait...SoundManager has no update? Yes, playing sounds is handled by an internal MonoGame thread - so we're off the hook!
+
+            //add the physics manager update thread
+            physicsManager = new PhysicsManager(this);
+            Components.Add(physicsManager);
+
+            //add state manager for inventory and countdown
+            stateManager = new StateManager(this, AppData.MAX_GAME_TIME_IN_MSECS);
+            Components.Add(stateManager);
         }
 
         private void InitializeDictionaries()
@@ -1147,7 +1186,15 @@ namespace GD.App
 #if DEMO
 
             if (Input.Keys.WasJustPressed(Keys.B))
-                Application.SoundManager.Play2D("boom1");
+            {
+                object[] parameters = { "boom1" };
+                EventDispatcher.Raise(
+                    new EventData(EventCategoryType.Player,
+                    EventActionType.OnWin,
+                    parameters));
+
+                //    Application.SoundManager.Play2D("boom1");
+            }
 
             #region Demo - Camera switching
 

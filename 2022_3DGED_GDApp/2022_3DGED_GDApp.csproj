@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
@@ -15,6 +15,14 @@
     <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.1.303" />
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
+	<ItemGroup>
+		<Reference Include="BEPUphysics">
+			<HintPath>..\Physics\BEPUphysics.dll</HintPath>
+		</Reference>
+		<Reference Include="BEPUutilities">
+			<HintPath>..\Physics\BEPUutilities.dll</HintPath>
+		</Reference>
+	</ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Assets\Models\Aisles\Clothes\" />
     <Folder Include="Content\Assets\Models\Aisles\Beverages\" />

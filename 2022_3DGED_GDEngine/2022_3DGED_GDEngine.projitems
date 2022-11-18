@@ -25,6 +25,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Controllers\Camera\ThirdPersonController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Controllers\InteractionController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Controllers\PlayerController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Physics\BoxCollider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Renderers\Renderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\3D\Scene\Scene.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Demo\TestUpdateableDrawableComponent.cs" />
@@ -49,7 +50,9 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\GamepadComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\KeyboardComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\MouseComponent.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\PhysicsManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\RenderManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\StateManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\Data\Resolutions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\Level\ILoadLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\Screen\Screen.cs" />

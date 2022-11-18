@@ -104,5 +104,7 @@ namespace GD.App
         public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.0004f, 0.0003f);
 
         #endregion Movement Constants
+
+        internal static double MAX_GAME_TIME_IN_MSECS = 2500;
     }
 }
