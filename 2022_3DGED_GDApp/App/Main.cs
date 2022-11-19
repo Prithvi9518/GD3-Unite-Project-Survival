@@ -387,12 +387,16 @@ namespace GD.App
 
         private void InitializeEnemies()
         {
+            #region Middle Lane Enemy
+
             var gameObject = new GameObject("enemy 1", ObjectType.Static, RenderType.Opaque);
+
             gameObject.Transform = new Transform(
                 0.007f * Vector3.One,
                 new Vector3(0, MathHelper.PiOver2, 0),
-                new Vector3(0, 2, -10))
-                ;
+                new Vector3(-2.5f, 2, -55)
+                );
+
             var texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
 
             var model = Content.Load<Model>("Assets/Models/Enemies/zombie");
@@ -405,14 +409,47 @@ namespace GD.App
             List<Vector3> waypoints = new List<Vector3>()
             {
                 gameObject.Transform.translation,
-                new Vector3(0, 2, 5),
-                new Vector3(11, 2, 5),
-                new Vector3(11, 2, 1)
+                new Vector3(-2.5f, 2, -1.3f),
+                new Vector3(11, 2, -1.3f),
+                new Vector3(11, 2, -55)
             };
 
             gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, 0.005f));
 
             sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Right Lane Enemy
+
+            gameObject = new GameObject("enemy 2", ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(
+                0.007f * Vector3.One,
+                new Vector3(0, MathHelper.PiOver2, 0),
+                new Vector3(24.5f, 2, -55)
+                );
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
+
+            model = Content.Load<Model>("Assets/Models/Enemies/zombie");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
+                new Material(texture, 1),
+                mesh));
+
+            waypoints = new List<Vector3>()
+            {
+                gameObject.Transform.translation,
+                new Vector3(24.5f, 2, 37)
+            };
+
+            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, 0.005f));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
         }
 
         private void TestingInteractableItem()

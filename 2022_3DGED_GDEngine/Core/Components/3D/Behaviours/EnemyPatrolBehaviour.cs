@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace GD.Engine
 {
@@ -36,14 +34,19 @@ namespace GD.Engine
             else
             {
                 Vector3 currentWaypoint = waypoints[currentWaypointIndex];
+
                 Vector3 direction = currentWaypoint - transform.translation;
                 direction.Normalize();
 
                 // Reference for finding target rotation:
                 // https://subscription.packtpub.com/book/game-development/9781849692403/4/ch04lvl1sec107/time-for-action-enemy-update-and-draw
 
-                float targetRotation = Convert.ToSingle(Math.Atan2(transform.translation.Z - currentWaypoint.Z,
-                    transform.translation.X - currentWaypoint.X));
+                float targetRotation = Convert.ToSingle(
+                    Math.Atan2(
+                        -(transform.translation.Z - currentWaypoint.Z),
+                        transform.translation.X - currentWaypoint.X
+                    )
+                );
 
                 transform.SetRotation(transform.rotation.X, targetRotation, transform.rotation.Z);
 
