@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -378,8 +379,40 @@ namespace GD.App
 
             InitializeShoppingCentre();
 
+            InitializeEnemies();
+
             // testing interactable code
-            TestingInteractableItem();
+            //TestingInteractableItem();
+        }
+
+        private void InitializeEnemies()
+        {
+            var gameObject = new GameObject("enemy 1", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(
+                0.007f * Vector3.One,
+                new Vector3(0, MathHelper.PiOver2, 0),
+                new Vector3(0, 2, -10))
+                ;
+            var texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
+
+            var model = Content.Load<Model>("Assets/Models/Enemies/zombie");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
+                new Material(texture, 1),
+                mesh));
+
+            List<Vector3> waypoints = new List<Vector3>()
+            {
+                gameObject.Transform.translation,
+                new Vector3(0, 2, 5),
+                new Vector3(11, 2, 5),
+                new Vector3(11, 2, 1)
+            };
+
+            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, 0.005f));
+
+            sceneManager.ActiveScene.Add(gameObject);
         }
 
         private void TestingInteractableItem()
