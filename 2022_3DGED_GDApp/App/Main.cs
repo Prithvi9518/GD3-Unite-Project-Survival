@@ -379,7 +379,7 @@ namespace GD.App
             InitializeShoppingCentre();
 
             // testing interactable code
-            TestingInteractableItem();
+            //TestingInteractableItem();
         }
 
         private void TestingInteractableItem()
@@ -401,8 +401,8 @@ namespace GD.App
 
         private void InitializeShoppingCentre()
         {
-            InitializeOfficeModels();
-            InitializeGeneratorRoomModels();
+            //InitializeOfficeModels();
+            //InitializeGeneratorRoomModels();
 
             #region Floor
 
@@ -424,8 +424,202 @@ namespace GD.App
 
             #endregion
 
-            InitializeWalls();
 
+            //InitializeWalls();
+
+            //InitializeShutter();
+
+            InitializeAisles();
+            InitializeCoffeeShop();
+        }
+
+        private void InitializeCoffeeShop()
+        {
+            InitializeShopStall();
+            InitializeChairs();
+            InitializeTables();
+            InitializeWaterDispensers();
+        }
+
+        private void InitializeWaterDispensers()
+        {
+            #region Water Dispensers
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+
+            var gameObject = new GameObject("water dispenser 1",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            var model = Content.Load<Model>("Assets/Models/Coffee Shop/water dispensers/water_dispenser_1");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("water dispenser 2",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            model = Content.Load<Model>("Assets/Models/Coffee Shop/water dispensers/water_dispenser_2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeShopStall()
+        {
+
+            #region Chairs
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+
+            var gameObject = new GameObject("coffee shop",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            var model = Content.Load<Model>("Assets/Models/Coffee Shop/coffee_shop/coffee_shop");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeChairs()
+        {
+            #region Chairs
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+
+            var gameObject = new GameObject("coffee chair 1",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            
+
+            var model = Content.Load<Model>("Assets/Models/Coffee Shop/chairs/coffee_chair_1");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("coffee chair 2",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);         
+            model = Content.Load<Model>("Assets/Models/Coffee Shop/chairs/coffee_chair_2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("coffee chair 3",
+                  ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            model = Content.Load<Model>("Assets/Models/Coffee Shop/chairs/coffee_chair_3");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("coffee chair 4",
+                 ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            model = Content.Load<Model>("Assets/Models/Coffee Shop/chairs/coffee_chair_4");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+        }
+
+        private void InitializeTables()
+        {
+            #region Tables
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+
+            var gameObject = new GameObject("Table 1",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            var model = Content.Load<Model>("Assets/Models/Coffee Shop/tables/table_1");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+
+           gameObject = new GameObject("Table 2",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            model = Content.Load<Model>("Assets/Models/Coffee Shop/tables/table_2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion
+
+        }
+        private void InitializeAisles()
+        {
+            #region Aisles
             InitializeClothesAisle();
             InitializeBeautyAisle();
             InitializeBeveragesAisle();
@@ -433,6 +627,30 @@ namespace GD.App
             InitializePreparedFoodsAisle();
             InitializeProducedFoodsAisle();
             InitializeToysAisle();
+            #endregion
+        }
+
+        private void InitializeShutter()
+        {
+            #region Shutter
+
+            var gameObject = new GameObject("shutter",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+
+            var model = Content.Load<Model>("Assets/Shutter/shutter");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
         }
 
         private void InitializeGeneratorRoomModels()
