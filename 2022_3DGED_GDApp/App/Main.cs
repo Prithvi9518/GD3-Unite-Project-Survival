@@ -460,7 +460,92 @@ namespace GD.App
         {
             InitializeDoors();
             InitializeVendingMachine();
+            InitializeFridges();
             InitializeLights();
+            InitializeScaffolding();
+        }
+
+        private void InitializeScaffolding()
+        {
+            #region Scaffolding
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            GameObject gameObject = null;
+            Model model = null;
+            Mesh mesh = null;
+
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            string scaffolding_base_path = "Assets/Models/Shopping Centre/Scaffolding/scaffolding_";
+
+            for (int i = 1; i <= 3; i++)
+            {
+                gameObject = new GameObject("scaffolding " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+                string model_path = scaffolding_base_path + i;
+                model = Content.Load<Model>(model_path);
+
+                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+                gameObject.AddComponent(new Renderer(
+                    gdBasicEffect,
+                    new Material(texture, 1f, Color.White),
+                    mesh));
+
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            #endregion Scaffolding
+        }
+
+        private void InitializeFridges()
+        {
+            #region Fridges
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            GameObject gameObject = null;
+            Model model = null;
+            Mesh mesh = null;
+
+            #region Doors Of Fridge
+            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            string doors_fridges_base_path = "Assets/Models/Shopping Centre/Fridges/Doors of Fridges/door_of_fridge_";
+
+            for (int i = 1; i <= 5; i++)
+            {
+                gameObject = new GameObject("door of fridge " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+                string model_path = doors_fridges_base_path + i;
+                model = Content.Load<Model>(model_path);
+
+                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+                gameObject.AddComponent(new Renderer(
+                    gdBasicEffect,
+                    new Material(texture, 1f, Color.White),
+                    mesh));
+
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            #endregion Doors Of Fridge
+            #region Base Of Fridge
+            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            string base_fridges_base_path = "Assets/Models/Shopping Centre/Fridges/Base of Fridges/base_of_fridge_";
+
+            for (int i = 1; i <= 5; i++)
+            {
+                gameObject = new GameObject("base of fridge " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+                string model_path = base_fridges_base_path + i;
+                model = Content.Load<Model>(model_path);
+
+                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+                gameObject.AddComponent(new Renderer(
+                    gdBasicEffect,
+                    new Material(texture, 1f, Color.White),
+                    mesh));
+
+                sceneManager.ActiveScene.Add(gameObject);
+            }
+            #endregion Base Of Fridge
+            #endregion Fridges
         }
 
         private void InitializeLights()
@@ -716,16 +801,34 @@ namespace GD.App
         private void InitializeAisles()
         {
             #region Aisles
-            InitializeClothesAisle();
-            InitializeBeautyAisle();
-            InitializeBeveragesAisle();
-            InitializeElectronicsAisle();
-            InitializePreparedFoodsAisle();
-            InitializeProducedFoodsAisle();
-            InitializeToysAisle();
+            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
+            InitializeClothesAisle(texture);
+            InitializeBeautyAisle(texture);
+            InitializeBeveragesAisle(texture);
+            InitializeElectronicsAisle(texture);
+            InitializePreparedFoodsAisle(texture);
+            InitializeProducedFoodsAisle(texture);
+            InitializeToysAisle(texture);
+            InitializeWallAisle(texture);
             #endregion
         }
 
+        private void InitializeWallAisle(Texture2D texture)
+        {
+            var gameObject = new GameObject("wall aisle",
+                       ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            var model = Content.Load<Model>("Assets/Models/Aisles/Wall Aisle/wall_aisle");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+        }
         private void InitializeShutter()
         {
             #region Shutter
@@ -953,7 +1056,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeToysAisle()
+        private void InitializeToysAisle(Texture2D texture)
         {
             #region Toys Aisle Shelf
 
@@ -961,8 +1064,6 @@ namespace GD.App
                         ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Toys/toys_aisle_shelf");
 
@@ -977,7 +1078,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeProducedFoodsAisle()
+        private void InitializeProducedFoodsAisle(Texture2D texture)
         {
             #region Produced Foods Aisle Shelf
 
@@ -985,8 +1086,6 @@ namespace GD.App
                         ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Produced Foods/produced_foods_aisle_shelf");
 
@@ -1001,7 +1100,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializePreparedFoodsAisle()
+        private void InitializePreparedFoodsAisle(Texture2D texture)
         {
             #region Prepared Foods Aisle Shelf
 
@@ -1009,8 +1108,6 @@ namespace GD.App
                         ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf");
 
@@ -1025,7 +1122,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeElectronicsAisle()
+        private void InitializeElectronicsAisle(Texture2D texture)
         {
             #region Electronics Aisle Shelf
 
@@ -1033,8 +1130,6 @@ namespace GD.App
                         ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Electronics/electronics_aisle_shelf");
 
@@ -1049,7 +1144,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeBeveragesAisle()
+        private void InitializeBeveragesAisle(Texture2D texture)
         {
             #region Beverages Aisle Shelf
 
@@ -1057,8 +1152,6 @@ namespace GD.App
                        ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Beverages/beverages_aisle_shelf");
 
@@ -1073,7 +1166,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeBeautyAisle()
+        private void InitializeBeautyAisle(Texture2D texture)
         {
             #region Beauty Aisle Shelf
 
@@ -1081,8 +1174,6 @@ namespace GD.App
                         ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Beauty/beauty_aisle_shelf");
 
@@ -1097,7 +1188,7 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeClothesAisle()
+        private void InitializeClothesAisle(Texture2D texture)
         {
             #region Clothes Aisle Shelf
 
@@ -1105,8 +1196,6 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/shop_shelf");
 
             var model = Content.Load<Model>("Assets/Models/Aisles/Clothes/clothes_aisle_shelf");
 
