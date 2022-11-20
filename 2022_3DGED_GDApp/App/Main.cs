@@ -374,7 +374,7 @@ namespace GD.App
         private void InitializeNonCollidableContent(float worldScale)
         {
             //create sky
-            //InitializeSkyBoxAndGround(worldScale);
+            InitializeSkyBoxAndGround(worldScale);
 
             InitializeShoppingCentre();
 
@@ -679,6 +679,564 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
+
+            #region Tomatoe Soup
+
+            gameObject = new GameObject("tomatoe soup",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/TomatoSoup");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/TomatoSoup");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("tomato soup 1",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/TomatoSoup");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/TomatoSoup1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Olive oil
+
+            gameObject = new GameObject("oil bottle",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/OliveOilLabel");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/OilBottle");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("oil bottle 1",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/OliveOilLabel");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/OilBottle1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("oil bottle 2",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/OliveOilLabel");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/OilBottle2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("oil bottle 3",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/VanillaExtractLabel");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/OilBottle3");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("oil bottle 4",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/VanillaExtractLabel");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/OilBottle4");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("oil bottle 5 ",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/VanillaExtractLabel");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/OilBottle5");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Juice
+
+            gameObject = new GameObject("juice",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/JuicePack_Surface_Color");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/Juice");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("juice 1",
+           ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/JuicePack_Surface_Color");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/Juice1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("juice 2",
+           ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/JuicePack_Surface_Color");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/Juice2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("juice 3",
+           ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/JuicePack_Surface_Color");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/Juice3");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Energy Drink
+
+            gameObject = new GameObject("energy drink",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/EnergyDrink");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/EnergyDrink");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("energy drink 1",
+           ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/EnergyDrink");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/EnergyDrink1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("energy drink 2",
+           ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/EnergyDrink");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/EnergyDrink2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+
+            #region Crisps
+
+            gameObject = new GameObject("crisps",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("crisps 1",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("crisps 2",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("crisps 3",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps3");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("crisps 4",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps4");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("crisps 5",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps5");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("crisps 6",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/chips");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/crisps6");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Cereal Box
+
+            gameObject = new GameObject("cereal box",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/CerealBox");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/Cereal");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("cereal box 1",
+ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/CerealBox");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/Cereal1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Canned Peas
+
+            gameObject = new GameObject("canned food",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_PeaStew");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("canned food 1",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_PeaStew");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood1");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("canned food 2",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_TomatoSoup");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood2");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("canned food 3",
+ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_TomatoSoup");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood3");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("canned food 4",
+ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_TomatoSoup");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood4");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("canned food 5",
+ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_Ministrone");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood5");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = new GameObject("canned food 6",
+ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/Can_Texture_Ministrone");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Prepared Foods/CannedFood6");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+
         }
 
         private void InitializeElectronicsAisle()
@@ -719,6 +1277,27 @@ namespace GD.App
             var model = Content.Load<Model>("Assets/Models/Aisles/Beverages/beverages_aisle_shelf");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Beer Botle
+
+            gameObject = new GameObject("beer bottle",
+            ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Aisles/Prepared Foods/BeerBottle");
+
+            model = Content.Load<Model>("Assets/Models/Aisles/Beverages/beerbottle");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
                 new GDBasicEffect(litEffect),
                 new Material(texture, 1f, Color.White),
