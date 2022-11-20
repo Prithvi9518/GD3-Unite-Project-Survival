@@ -63,6 +63,11 @@ namespace GD.Engine.Globals
         /// </summary>
         public static PhysicsManager PhysicsManager { get; internal set; }
 
+        /// <summary>
+        /// Gets or sets the state manager.
+        /// </summary>
+        public static StateManager StateManager { get; internal set; }
+
         #endregion Properties
     }
 }

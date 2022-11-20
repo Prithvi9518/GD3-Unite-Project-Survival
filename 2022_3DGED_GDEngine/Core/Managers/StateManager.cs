@@ -1,5 +1,6 @@
 ﻿using GD.Engine.Events;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 
 namespace GD.Engine
@@ -31,6 +32,12 @@ namespace GD.Engine
         private double maxTimeInMS;
         private double totalElapsedTimeMS;
         private List<InventoryItem> inventory;
+        private bool stopTime = false;
+
+        public double CountdownTimeSecs
+        {
+            get => Math.Abs((maxTimeInMS - totalElapsedTimeMS) / 1000d);
+        }
 
         public StateManager(Game game, double maxTimeInMS) : base(game)
         {
@@ -43,10 +50,12 @@ namespace GD.Engine
 
         public override void Update(GameTime gameTime)
         {
-            totalElapsedTimeMS += gameTime.ElapsedGameTime.Milliseconds;
+            if (!stopTime)
+                totalElapsedTimeMS += gameTime.ElapsedGameTime.Milliseconds;
 
             if (totalElapsedTimeMS >= maxTimeInMS)
             {
+                stopTime = true;
                 //object[] parameters = { "You win!", totalElapsedTimeMS, "win_soundcue" };
                 //EventDispatcher.Raise(
                 //    new EventData(EventCategoryType.Player,

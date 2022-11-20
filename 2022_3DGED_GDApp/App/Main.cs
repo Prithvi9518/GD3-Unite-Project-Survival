@@ -1,7 +1,8 @@
 ﻿#region Pre-compiler directives
 
 #define DEMO
-#define SHOW_DEBUG_INFO
+//#define SHOW_DEBUG_INFO
+#define SHOW_TIMER_TEXT
 
 #endregion
 
@@ -142,6 +143,10 @@ namespace GD.App
 
 #if DEMO
             DemoCode();
+#endif
+
+#if SHOW_TIMER_TEXT
+            InitializeTimerText();
 #endif
 
             base.Initialize();
@@ -397,6 +402,27 @@ namespace GD.App
             gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
+        }
+
+        private void InitializeTimerText()
+        {
+            //intialize the utility component
+            var perfUtility = new PerfUtility(this, _spriteBatch,
+                new Vector2(10, 10),
+                new Vector2(0, 22));
+
+            //set the font to be used
+            var spriteFont = Content.Load<SpriteFont>("Assets/Fonts/Perf");
+
+            //add TimerInfo to the info list
+            float contentScale = 1.1f;
+
+            perfUtility.infoList.Add(
+                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.White, contentScale * Vector2.One)
+                );
+
+            //add to the component list otherwise it wont have its Update or Draw called!
+            Components.Add(perfUtility);
         }
 
         private void InitializeShoppingCentre()
@@ -1061,6 +1087,8 @@ namespace GD.App
             Application.CameraManager = cameraManager;
             Application.SceneManager = sceneManager;
             Application.SoundManager = soundManager;
+
+            Application.StateManager = stateManager;
         }
 
         private void InitializeInput()

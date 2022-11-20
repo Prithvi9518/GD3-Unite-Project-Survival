@@ -105,6 +105,6 @@ namespace GD.App
 
         #endregion Movement Constants
 
-        internal static double MAX_GAME_TIME_IN_MSECS = 2500;
+        internal static double MAX_GAME_TIME_IN_MSECS = 180000;
     }
 }
