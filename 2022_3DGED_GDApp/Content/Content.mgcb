@@ -1495,6 +1495,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Checkout Desks/Cashier/cashier_3.fbx
 
+#begin Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign.fbx
+
 #begin Assets/Models/Shopping Centre/Doors/Exit Door/exit_door.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -2833,6 +2852,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/shop_shelf.png
 
+#begin Assets/Textures/Shopping Centre/Barricade/barricade.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Barricade/barricade.jpg
+
 #begin Assets/Textures/Shopping Centre/Benches/legs.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2856,6 +2887,150 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Benches/wood_top.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
+
+#begin Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
 
 #begin Assets/Textures/Shopping Centre/Checkout Desk/cash_register.png
 /importer:TextureImporter
@@ -2941,7 +3116,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Exit Door/exit_door.png
 
-#begin Assets/Textures/Shopping Centre/Fire Extinguisher/fire_extinguisher.jpg
+#begin Assets/Textures/Shopping Centre/Exit Door/exit_sign.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -2951,7 +3126,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Fire Extinguisher/fire_extinguisher.jpg
+/build:Assets/Textures/Shopping Centre/Exit Door/exit_sign.jpg
 
 #begin Assets/Textures/Shopping Centre/Fridge/fridge.png
 /importer:TextureImporter
