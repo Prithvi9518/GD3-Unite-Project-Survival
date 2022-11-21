@@ -114,7 +114,7 @@ namespace GD.App
 
         #region Timer Variables
 
-        internal static double MAX_GAME_TIME_IN_MSECS = 2500;
+        internal static double MAX_GAME_TIME_IN_MSECS = 180000;
 
         #endregion
     }

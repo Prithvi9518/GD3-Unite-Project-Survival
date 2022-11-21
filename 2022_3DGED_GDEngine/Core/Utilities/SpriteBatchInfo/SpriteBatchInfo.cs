@@ -1,6 +1,7 @@
 ﻿using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using SpriteBatch = Microsoft.Xna.Framework.Graphics.SpriteBatch;
 
 namespace GD.Engine.Utilities
@@ -34,6 +35,31 @@ namespace GD.Engine.Utilities
 
         public virtual void Draw(Vector2 position)
         {
+        }
+    }
+
+    public class TimerInfo : SpriteBatchInfo
+    {
+        public TimerInfo(SpriteBatch spriteBatch, SpriteFont spriteFont, string label, Color color, Vector2 scale)
+            : base(spriteBatch, spriteFont, label, color, scale)
+        {
+        }
+        public override void Draw(Vector2 position)
+        {
+            double secs = Application.StateManager.CountdownTimeSecs;
+            string secondsString = (secs > 9) ? secs.ToString() : "0" + secs;
+
+            spriteBatch.DrawString(
+                spriteFont,
+                $"{label}{Application.StateManager.CountdownTimeMins}m {secondsString}s",
+                position,
+                color,
+                rotation,
+                origin,
+                scale,
+                effects,
+                layerDepth
+                );
         }
     }
 
