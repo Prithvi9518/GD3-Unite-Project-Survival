@@ -404,7 +404,6 @@ namespace GD.App
         {
             InitializeOfficeModels();
             InitializeGeneratorRoomModels();
-
             InitializeFloors();
             InitializeWalls();
             InitializeShoppingCentreAssets();
@@ -502,7 +501,7 @@ namespace GD.App
             #endregion Belt
 
             #region Cashier
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Checkout Desk/cash_register");
             string cashier_path = checkout_desk_path_start + "Cashier/cashier_";
 
             for (int i = 1; i <= 3; i++)
@@ -537,7 +536,7 @@ namespace GD.App
             string benches_base_path_start = "Assets/Models/Shopping Centre/Benches/";
 
             #region Bench Bases
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Benches/legs");
             string benches_bottom_base_path = benches_base_path_start + "Bench Bases/bench_base_";
 
             for (int i = 1; i <= 4; i++)
@@ -559,7 +558,7 @@ namespace GD.App
             #endregion Bench Bases
 
             #region Bench Tops
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Benches/wood_top");
             string benches_top_base_path = benches_base_path_start + "Bench Tops/bench_top_";
 
             for (int i = 1; i <= 2; i++)
@@ -637,7 +636,7 @@ namespace GD.App
             #endregion Bin Baskets
 
             #region Fire Extinguisher
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Fire Extinguisher/fire_extinguisher");
             string fire_extinguishers_base_path = bins_base_path_start + "Fire Extinguishers/fire_extinguisher_";
 
             for (int i = 1; i <= 2; i++)
@@ -811,16 +810,15 @@ namespace GD.App
             Model model = null;
             Mesh mesh = null;
 
-            #region Doors Of Fridge
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
-            string doors_fridges_base_path = "Assets/Models/Shopping Centre/Fridges/Doors of Fridges/door_of_fridge_";
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Fridge/fridge");
+            string fridges_base_path = "Assets/Models/Shopping Centre/Fridges/fridge_";
 
             for (int i = 1; i <= 5; i++)
             {
-                gameObject = new GameObject("door of fridge " + i, ObjectType.Static, RenderType.Opaque);
+                gameObject = new GameObject("fridge " + i, ObjectType.Static, RenderType.Opaque);
                 gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                string model_path = doors_fridges_base_path + i;
+                string model_path = fridges_base_path + i;
                 model = Content.Load<Model>(model_path);
 
                 mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
@@ -831,28 +829,6 @@ namespace GD.App
 
                 sceneManager.ActiveScene.Add(gameObject);
             }
-            #endregion Doors Of Fridge
-            #region Base Of Fridge
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
-            string base_fridges_base_path = "Assets/Models/Shopping Centre/Fridges/Base of Fridges/base_of_fridge_";
-
-            for (int i = 1; i <= 5; i++)
-            {
-                gameObject = new GameObject("base of fridge " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = base_fridges_base_path + i;
-                model = Content.Load<Model>(model_path);
-
-                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-                gameObject.AddComponent(new Renderer(
-                    gdBasicEffect,
-                    new Material(texture, 1f, Color.White),
-                    mesh));
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-            #endregion Base Of Fridge
             #endregion Fridges
         }
 
@@ -935,28 +911,60 @@ namespace GD.App
         {
             #region Vending Machines
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
-            GameObject gameObject = null;
-            string vending_machine_base_path = "Assets/Models/Shopping Centre/Vending Machines/vending_machine_";
-            Model model = null;
-            Mesh mesh = null;
+            string model_path = "Assets/Models/Shopping Centre/Vending Machines/vending_machine_";
+            string texture_path = "Assets/Textures/Shopping Centre/Vending Machines/";
 
-            for (int i = 1; i <= 2; i++)
-            {
-                gameObject = new GameObject("coffee chair " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            #region Coke Vending Machine
+            var gameObject = new GameObject("vending machine 1", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                string model_path = vending_machine_base_path + i;
-                model = Content.Load<Model>(model_path);
+            var model = Content.Load<Model>(model_path + "1");
 
-                mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-                gameObject.AddComponent(new Renderer(
-                    new GDBasicEffect(litEffect),
-                    new Material(texture, 1f, Color.White),
-                    mesh));
+            var texture = Content.Load<Texture2D>(texture_path + "coke");
 
-                sceneManager.ActiveScene.Add(gameObject);
-            }
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Coke Vending Machine
+
+            #region Pepsi Vending Machine
+            gameObject = new GameObject("vending machine 2", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            model = Content.Load<Model>(model_path + "2");
+
+            texture = Content.Load<Texture2D>(texture_path + "pepsi");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Pepsi Vending Machine
+
+            #region Sprite Vending Machine
+            gameObject = new GameObject("vending machine 3", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            model = Content.Load<Model>(model_path + "3");
+
+            texture = Content.Load<Texture2D>(texture_path + "sprite");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Pepsi Vending Machine
+
             #endregion Vending Machines
         }
 
@@ -1013,24 +1021,69 @@ namespace GD.App
         {
 
             #region Coffee Shop
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            string model_path = "Assets/Models/Coffee Shop/coffee_shop/coffee_shop_";
+            string texture_path = "Assets/Textures/Shopping Centre/Coffee Shop/";
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            #region Coffee Shop Base
+            var texture = Content.Load<Texture2D>(texture_path + "steel");
 
-            var gameObject = new GameObject("coffee shop",
+            var gameObject = new GameObject("coffee shop base",
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
 
-            var model = Content.Load<Model>("Assets/Models/Coffee Shop/coffee_shop/coffee_shop");
+            var model = Content.Load<Model>(model_path + "base");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
-                new GDBasicEffect(litEffect),
+                gdBasicEffect,
                 new Material(texture, 1f, Color.White),
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+            #endregion Coffee Shop Base
+
+            #region Coffee Shop Cover
+            texture = Content.Load<Texture2D>(texture_path + "cover");
+
+            gameObject = new GameObject("coffee shop cover",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            model = Content.Load<Model>(model_path + "cover");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Coffee Shop Cover
+
+            #region Coffee Shop Panel
+            texture = Content.Load<Texture2D>(texture_path + "wood");
+
+            gameObject = new GameObject("coffee shop panel",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+
+            model = Content.Load<Model>(model_path + "panel");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Coffee Shop Panel
+
+
 
             #endregion
         }
@@ -1039,7 +1092,7 @@ namespace GD.App
         {
             #region Chairs
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Coffee Shop/Chair/chair_wood");
             GameObject gameObject = null;
             string coffee_chairs_base_path = "Assets/Models/Coffee Shop/chairs/coffee_chair_";
             Model model = null;
@@ -1069,7 +1122,7 @@ namespace GD.App
             #region Tables
             var gdBasicEffect = new GDBasicEffect(litEffect);
             
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Coffee Shop/Table/table_wood");
 
             var gameObject = new GameObject("Table 1",
                     ObjectType.Static, RenderType.Opaque);
