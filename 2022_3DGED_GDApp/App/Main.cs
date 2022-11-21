@@ -597,10 +597,10 @@ namespace GD.App
             Model model = null;
             Mesh mesh = null;
             string checkout_desk_path_start = "Assets/Models/Shopping Centre/Checkout Desks/";
+            string texture_path_start = "Assets/Textures/Shopping Centre/Checkout Desk/";
 
             #region Belt
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>(texture_path_start + "belt");
             string belt_base_path = checkout_desk_path_start + "Belt/belt_";
 
             for (int i = 1; i <= 3; i++)
@@ -623,8 +623,7 @@ namespace GD.App
             #endregion Belt
 
             #region Cashier
-
-            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Checkout Desk/cash_register");
+            texture = Content.Load<Texture2D>(texture_path_start + "cash_register");
             string cashier_path = checkout_desk_path_start + "Cashier/cashier_";
 
             for (int i = 1; i <= 3; i++)
@@ -866,10 +865,11 @@ namespace GD.App
             GameObject gameObject = null;
             Model model = null;
             Mesh mesh = null;
+            string texture_base_start = "Assets/Textures/Shopping Centre/Shopping Cart/";
 
             #region Barricades
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Barricade/barricade");
+            var texture = Content.Load<Texture2D>(texture_base_start + "Barricade/barricade");
             string barricades_base_path = "Assets/Models/Shopping Centre/Shopping Cart/Barricades/barricade_";
 
             for (int i = 1; i <= 5; i++)
@@ -893,7 +893,7 @@ namespace GD.App
 
             #region Trolleys
 
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(texture_base_start + "Trolley/trolley_metal");
             string base_fridges_base_path = "Assets/Models/Shopping Centre/Shopping Cart/Trolleys/trolley_";
 
             for (int i = 1; i <= 8; i++)
@@ -927,7 +927,7 @@ namespace GD.App
             Model model = null;
             Mesh mesh = null;
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Scaffolding/scaffolding");
             string scaffolding_base_path = "Assets/Models/Shopping Centre/Scaffolding/scaffolding_";
 
             for (int i = 1; i <= 3; i++)
@@ -987,7 +987,7 @@ namespace GD.App
             #region Ligths
 
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Light/light_rust");
             GameObject gameObject = null;
             string coffee_chairs_base_path = "Assets/Models/Shopping Centre/Lights/light_";
             Model model = null;
@@ -1144,7 +1144,7 @@ namespace GD.App
             #region Water Dispensers
 
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Water Dispenser/water_dispenser");
 
             var gameObject = new GameObject("water dispenser 1",
                     ObjectType.Static, RenderType.Opaque);
@@ -1336,7 +1336,6 @@ namespace GD.App
             InitializeProducedFoodsAisle(texture);
             InitializeToysAisle(texture);
             InitializeWallAisle(texture);
-
             #endregion
         }
 
@@ -1365,7 +1364,7 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Shutter/shutter_rust");
 
             var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Shutter/shutter_model");
 

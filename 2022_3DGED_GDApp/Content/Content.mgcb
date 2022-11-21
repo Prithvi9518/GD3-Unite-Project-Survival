@@ -2852,18 +2852,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/shop_shelf.png
 
-#begin Assets/Textures/Shopping Centre/Barricade/barricade.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Barricade/barricade.jpg
-
 #begin Assets/Textures/Shopping Centre/Benches/legs.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2900,18 +2888,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
 
-#begin Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Bins/Bin Bag/bin_bag.jpg
-
 #begin Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2923,30 +2899,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
-
-#begin Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Bins/Bin Basket/bin_basket.jpg
-
-#begin Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
 
 #begin Assets/Textures/Shopping Centre/Bins/Fire Extinguisher/fire_extinguisher.jpg
 /importer:TextureImporter
@@ -2972,30 +2924,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
 
-#begin Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Bins/Large Bin/large_bin.jpg
-
-#begin Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
-
 #begin Assets/Textures/Shopping Centre/Bins/Pallet/pallet_wood.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3020,7 +2948,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
 
-#begin Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
+#begin Assets/Textures/Shopping Centre/Checkout Desk/belt.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -3030,7 +2958,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
+/build:Assets/Textures/Shopping Centre/Checkout Desk/belt.png
 
 #begin Assets/Textures/Shopping Centre/Checkout Desk/cash_register.png
 /importer:TextureImporter
@@ -3140,6 +3068,78 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Fridge/fridge.png
 
+#begin Assets/Textures/Shopping Centre/Light/light_rust.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Light/light_rust.jpg
+
+#begin Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
+
+#begin Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
+
+#begin Assets/Textures/Shopping Centre/Shopping Cart/Barricade/barricade.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Shopping Cart/Barricade/barricade.jpg
+
+#begin Assets/Textures/Shopping Centre/Shopping Cart/Trolley/trolley_metal.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Shopping Cart/Trolley/trolley_metal.jpg
+
+#begin Assets/Textures/Shopping Centre/Shutter/shutter_rust.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Shutter/shutter_rust.jpg
+
 #begin Assets/Textures/Shopping Centre/Vending Machines/coke.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3175,6 +3175,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Vending Machines/sprite.png
+
+#begin Assets/Textures/Shopping Centre/Water Dispenser/water_dispenser.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Water Dispenser/water_dispenser.jpg
 
 #begin Assets/Textures/Skybox/back.bmp
 /importer:TextureImporter
