@@ -1457,7 +1457,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Checkout Desks/Cashier/cashier_3.fbx
 
-#begin Assets/Models/Shopping Centre/Doors/Exit Door/door_frame.fbx
+#begin Assets/Models/Shopping Centre/Doors/Exit Door/exit_door.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -1474,9 +1474,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Shopping Centre/Doors/Exit Door/door_frame.fbx
+/build:Assets/Models/Shopping Centre/Doors/Exit Door/exit_door.fbx
 
-#begin Assets/Models/Shopping Centre/Doors/Exit Door/main_door.fbx
+#begin Assets/Models/Shopping Centre/Doors/Exit Door/exit_door.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -1493,7 +1493,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Shopping Centre/Doors/Exit Door/main_door.fbx
+/build:Assets/Models/Shopping Centre/Doors/Exit Door/exit_door.fbx
 
 #begin Assets/Models/Shopping Centre/Doors/Shutter/shutter_model.fbx
 /importer:FbxImporter
@@ -2838,18 +2838,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Coffee Shop/Chair/chair_wood.jpg
 
-#begin Assets/Textures/Shopping Centre/Coffee Shop/Chair/chair_wood.jpg
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Coffee Shop/Chair/chair_wood.jpg
-
 #begin Assets/Textures/Shopping Centre/Coffee Shop/cover.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2897,6 +2885,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Coffee Shop/wood.jpg
+
+#begin Assets/Textures/Shopping Centre/Exit Door/exit_door.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Exit Door/exit_door.png
 
 #begin Assets/Textures/Shopping Centre/Fire Extinguisher/fire_extinguisher.jpg
 /importer:TextureImporter

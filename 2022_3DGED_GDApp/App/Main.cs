@@ -876,9 +876,9 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Exit Door/exit_door");
 
-            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/main_door");
+            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/exit_door");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -887,23 +887,6 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
-
-            gameObject = new GameObject("door frame",
-                    ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
-
-            model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/door_frame");
-
-            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(
-                gdBasicEffect,
-                new Material(texture, 1f, Color.White),
-                mesh));
-
-            sceneManager.ActiveScene.Add(gameObject);
-
             #endregion Exit Door
         }
 
