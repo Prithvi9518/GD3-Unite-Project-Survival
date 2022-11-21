@@ -137,7 +137,7 @@ namespace GD.App
             InitializeEngine(AppData.APP_RESOLUTION, true, true);
 
             //game specific content
-            InitializeLevel("My Amazing Game", AppData.SKYBOX_WORLD_SCALE);
+            InitializeLevel("Project Survival", AppData.SKYBOX_WORLD_SCALE);
 
 #if SHOW_DEBUG_INFO
             InitializeDebug();
@@ -586,6 +586,32 @@ namespace GD.App
             InitializeBins();
             InitializeBenches();
             InitializeCheckoutDesks();
+            InitializeNotes();
+        }
+
+        private void InitializeNotes()
+        {
+            #region Notes
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+            #region Office Note
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Notes/office_room_note");
+
+            var gameObject = new GameObject("office room note", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Notes/office_room_note");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+            gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Office Note
+
+            #endregion Notes
         }
 
         private void InitializeCheckoutDesks()
@@ -597,10 +623,10 @@ namespace GD.App
             Model model = null;
             Mesh mesh = null;
             string checkout_desk_path_start = "Assets/Models/Shopping Centre/Checkout Desks/";
+            string texture_path_start = "Assets/Textures/Shopping Centre/Checkout Desk/";
 
             #region Belt
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>(texture_path_start + "belt");
             string belt_base_path = checkout_desk_path_start + "Belt/belt_";
 
             for (int i = 1; i <= 3; i++)
@@ -623,8 +649,7 @@ namespace GD.App
             #endregion Belt
 
             #region Cashier
-
-            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Checkout Desk/cash_register");
+            texture = Content.Load<Texture2D>(texture_path_start + "cash_register");
             string cashier_path = checkout_desk_path_start + "Cashier/cashier_";
 
             for (int i = 1; i <= 3; i++)
@@ -719,10 +744,11 @@ namespace GD.App
             Model model = null;
             Mesh mesh = null;
             string bins_base_path_start = "Assets/Models/Shopping Centre/Bins/";
+            string bins_base_texture_path_start = "Assets/Textures/Shopping Centre/Bins/";
 
             #region Bin Bags
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>(bins_base_texture_path_start + "Bin Bag/bin_bag");
             string bins_bags_base_path = bins_base_path_start + "Bin Bags/bin_bag_";
 
             for (int i = 1; i <= 6; i++)
@@ -746,7 +772,7 @@ namespace GD.App
 
             #region Bin Baskets
 
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(bins_base_texture_path_start + "Bin Basket/bin_basket");
             string bins_baskets_base_path = bins_base_path_start + "Bin Baskets/bin_basket_";
 
             for (int i = 1; i <= 3; i++)
@@ -770,7 +796,7 @@ namespace GD.App
 
             #region Fire Extinguisher
 
-            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Fire Extinguisher/fire_extinguisher");
+            texture = Content.Load<Texture2D>(bins_base_texture_path_start + "Fire Extinguisher/fire_extinguisher");
             string fire_extinguishers_base_path = bins_base_path_start + "Fire Extinguishers/fire_extinguisher_";
 
             for (int i = 1; i <= 2; i++)
@@ -794,7 +820,7 @@ namespace GD.App
 
             #region Large Bin
 
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(bins_base_texture_path_start + "Large Bin/large_bin");
 
             gameObject = new GameObject("large bin", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -813,7 +839,7 @@ namespace GD.App
 
             #region Pallet
 
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(bins_base_texture_path_start + "Pallet/pallet_wood");
 
             gameObject = new GameObject("pallet", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -832,7 +858,7 @@ namespace GD.App
 
             #region Plastic Bottles
 
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(bins_base_texture_path_start + "Plastic Bottle/plastic_bottle");
             string plastic_bottles_base_path = bins_base_path_start + "Plastic Bottles/plastic_bottle_";
 
             for (int i = 1; i <= 4; i++)
@@ -865,10 +891,11 @@ namespace GD.App
             GameObject gameObject = null;
             Model model = null;
             Mesh mesh = null;
+            string texture_base_start = "Assets/Textures/Shopping Centre/Shopping Cart/";
 
             #region Barricades
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>(texture_base_start + "Barricade/barricade");
             string barricades_base_path = "Assets/Models/Shopping Centre/Shopping Cart/Barricades/barricade_";
 
             for (int i = 1; i <= 5; i++)
@@ -892,7 +919,7 @@ namespace GD.App
 
             #region Trolleys
 
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(texture_base_start + "Trolley/trolley_metal");
             string base_fridges_base_path = "Assets/Models/Shopping Centre/Shopping Cart/Trolleys/trolley_";
 
             for (int i = 1; i <= 8; i++)
@@ -926,7 +953,7 @@ namespace GD.App
             Model model = null;
             Mesh mesh = null;
 
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Scaffolding/scaffolding");
             string scaffolding_base_path = "Assets/Models/Shopping Centre/Scaffolding/scaffolding_";
 
             for (int i = 1; i <= 3; i++)
@@ -986,7 +1013,7 @@ namespace GD.App
             #region Ligths
 
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Light/light_rust");
             GameObject gameObject = null;
             string coffee_chairs_base_path = "Assets/Models/Shopping Centre/Lights/light_";
             Model model = null;
@@ -1014,21 +1041,43 @@ namespace GD.App
 
         private void InitializeDoors()
         {
+            InitializeGeneratorDoor();
+            InitializeExit();
             InitializeShutter();
-            InitializeExitDoor();
         }
 
-        private void InitializeExitDoor()
+        private void InitializeGeneratorDoor()
         {
-            #region Exit Door
-
-            var gdBasicEffect = new GDBasicEffect(litEffect);
-
-            var gameObject = new GameObject("main door",
+            #region Generator Door
+            var gameObject = new GameObject("generator door",
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Exit Door/exit_door");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Doors/Generator Room Door/generator_room_door");
+
+            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Generator Door
+        }
+
+        private void InitializeExit()
+        {
+            #region Exit 
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+
+            #region Exit Door
+            var gameObject = new GameObject("exit door",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door");
 
             var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/exit_door");
 
@@ -1039,8 +1088,27 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
-
             #endregion Exit Door
+
+            #region Exit Sign
+            gameObject = new GameObject("exit sign",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign");
+
+            model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign");
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Exit Sign
+
+            #endregion Exit
         }
 
         private void InitializeVendingMachine()
@@ -1124,7 +1192,7 @@ namespace GD.App
             #region Water Dispensers
 
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Water Dispenser/water_dispenser");
 
             var gameObject = new GameObject("water dispenser 1",
                     ObjectType.Static, RenderType.Opaque);
@@ -1316,7 +1384,6 @@ namespace GD.App
             InitializeProducedFoodsAisle(texture);
             InitializeToysAisle(texture);
             InitializeWallAisle(texture);
-
             #endregion
         }
 
@@ -1345,7 +1412,7 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Shutter/shutter_rust");
 
             var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Shutter/shutter_model");
 
