@@ -393,19 +393,18 @@ namespace GD.App
 
         private void InitializeEnemies()
         {
-            #region Middle Lane Enemy
+            var model = Content.Load<Model>("Assets/Models/Enemies/hollow");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
+
+            #region Middle Lanes Enemy
 
             var gameObject = new GameObject("enemy 1", ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(
                 0.007f * Vector3.One,
                 new Vector3(0, MathHelper.PiOver2, 0),
-                new Vector3(-2.5f, 2, -55)
+                new Vector3(-16, AppData.ENEMY_POSITION_Y, -120)
                 );
-
-            var texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
-
-            var model = Content.Load<Model>("Assets/Models/Enemies/zombie");
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
@@ -415,12 +414,38 @@ namespace GD.App
             List<Vector3> waypoints = new List<Vector3>()
             {
                 gameObject.Transform.translation,
-                new Vector3(-2.5f, 2, -1.3f),
-                new Vector3(11, 2, -1.3f),
-                new Vector3(11, 2, -55)
+                new Vector3(-16, AppData.ENEMY_POSITION_Y, -60),
+                new Vector3(-2, AppData.ENEMY_POSITION_Y, -60),
+                new Vector3(-2, AppData.ENEMY_POSITION_Y, -120)
             };
 
-            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, 0.005f));
+            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, AppData.ENEMY_MOVEMENT_SPEED));
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Office Guarding Enemy
+
+            gameObject = new GameObject("enemy 2", ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(
+                0.007f * Vector3.One,
+                new Vector3(0, MathHelper.Pi, 0),
+                new Vector3(-39, AppData.ENEMY_POSITION_Y, -109)
+                );
+
+            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
+                new Material(texture, 1),
+                mesh));
+
+            waypoints = new List<Vector3>()
+            {
+                gameObject.Transform.translation
+            };
+
+            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, AppData.ENEMY_MOVEMENT_SPEED, false));
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -428,17 +453,13 @@ namespace GD.App
 
             #region Right Lane Enemy
 
-            gameObject = new GameObject("enemy 2", ObjectType.Static, RenderType.Opaque);
+            gameObject = new GameObject("enemy 3", ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(
                 0.007f * Vector3.One,
                 new Vector3(0, MathHelper.PiOver2, 0),
-                new Vector3(24.5f, 2, -55)
+                new Vector3(30, AppData.ENEMY_POSITION_Y, -108)
                 );
-
-            texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
-
-            model = Content.Load<Model>("Assets/Models/Enemies/zombie");
 
             mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
@@ -448,10 +469,10 @@ namespace GD.App
             waypoints = new List<Vector3>()
             {
                 gameObject.Transform.translation,
-                new Vector3(24.5f, 2, 37)
+                new Vector3(30, AppData.ENEMY_POSITION_Y, -12)
             };
 
-            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, 0.005f));
+            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, AppData.ENEMY_MOVEMENT_SPEED));
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -609,10 +630,10 @@ namespace GD.App
             for (int i = 1; i <= 3; i++)
             {
                 gameObject = new GameObject("cashier " + i, ObjectType.Static, RenderType.Opaque);
-        gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-        string model_path = cashier_path + i;
-        model = Content.Load<Model>(model_path);
+                string model_path = cashier_path + i;
+                model = Content.Load<Model>(model_path);
 
                 mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
                 gameObject.AddComponent(new Renderer(
@@ -628,7 +649,7 @@ namespace GD.App
             }
         }
 
-    private void InitializeBenches()
+        private void InitializeBenches()
         {
             #region Benches
 
@@ -1264,8 +1285,8 @@ namespace GD.App
 
             sceneManager.ActiveScene.Add(gameObject);
 
-           gameObject = new GameObject("Table 2",
-                    ObjectType.Static, RenderType.Opaque);
+            gameObject = new GameObject("Table 2",
+                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
@@ -1281,6 +1302,7 @@ namespace GD.App
 
             #endregion
         }
+
         private void InitializeAisles()
         {
             #region Aisles
@@ -1314,6 +1336,7 @@ namespace GD.App
 
             sceneManager.ActiveScene.Add(gameObject);
         }
+
         private void InitializeShutter()
         {
             #region Shutter

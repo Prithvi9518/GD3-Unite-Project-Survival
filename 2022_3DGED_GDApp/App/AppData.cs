@@ -105,6 +105,17 @@ namespace GD.App
 
         #endregion Movement Constants
 
-        internal static double MAX_GAME_TIME_IN_MSECS = 180000;
+        #region Enemy Variables
+
+        public static readonly float ENEMY_POSITION_Y = 2f;
+        public static readonly float ENEMY_MOVEMENT_SPEED = 0.005f;
+
+        #endregion
+
+        #region Timer Variables
+
+        internal static double MAX_GAME_TIME_IN_MSECS = 2500;
+
+        #endregion
     }
 }
