@@ -586,6 +586,32 @@ namespace GD.App
             InitializeBins();
             InitializeBenches();
             InitializeCheckoutDesks();
+            InitializeNotes();
+        }
+
+        private void InitializeNotes()
+        {
+            #region Notes
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+            #region Office Note
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Notes/office_room_note");
+
+            var gameObject = new GameObject("office room note", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Notes/office_room_note");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+            gdBasicEffect,
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Office Note
+
+            #endregion Notes
         }
 
         private void InitializeCheckoutDesks()
@@ -1015,8 +1041,30 @@ namespace GD.App
 
         private void InitializeDoors()
         {
-            InitializeShutter();
+            InitializeGeneratorDoor();
             InitializeExit();
+            InitializeShutter();
+        }
+
+        private void InitializeGeneratorDoor()
+        {
+            #region Generator Door
+            var gameObject = new GameObject("generator door",
+                    ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Doors/Generator Room Door/generator_room_door");
+
+            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door");
+
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+            gameObject.AddComponent(new Renderer(
+                new GDBasicEffect(litEffect),
+                new Material(texture, 1f, Color.White),
+                mesh));
+
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Generator Door
         }
 
         private void InitializeExit()
@@ -1029,7 +1077,7 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Exit Door/exit_door");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door");
 
             var model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/exit_door");
 
@@ -1047,7 +1095,7 @@ namespace GD.App
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Exit Door/exit_sign");
+            texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign");
 
             model = Content.Load<Model>("Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign");
 

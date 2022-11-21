@@ -184,25 +184,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Aisles/Wall Aisle/wall_aisle.fbx
 
-#begin Assets/Models/bottle2.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/bottle2.fbx
-
 #begin Assets/Models/Coffee Shop/chairs/coffee_chair_1.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -430,25 +411,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Coffee Shop/water dispensers/water_dispenser_2.fbx
-
-#begin Assets/Models/cube.FBX
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/cube.FBX
 
 #begin Assets/Models/Enemies/hollow.fbx
 /importer:FbxImporter
@@ -924,25 +886,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Office/Shelves/office_shelf_4.fbx
-
-#begin Assets/Models/radar-display.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/radar-display.fbx
 
 #begin Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base_1.fbx
 /importer:FbxImporter
@@ -1533,6 +1476,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Doors/Exit Door/exit_door.fbx
 
+#begin Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door.fbx
+
 #begin Assets/Models/Shopping Centre/Doors/Shutter/shutter_model.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -1932,6 +1894,44 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Lights/light_9.fbx
 
+#begin Assets/Models/Shopping Centre/Notes/office_room_note.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Notes/office_room_note.fbx
+
+#begin Assets/Models/Shopping Centre/Notes/office_room_note.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Notes/office_room_note.fbx
+
 #begin Assets/Models/Shopping Centre/Scaffolding/scaffolding_1.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -2292,25 +2292,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Vending Machines/vending_machine_3.fbx
-
-#begin Assets/Models/sphere.FBX
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/sphere.FBX
 
 #begin Assets/Models/Walls/Door Walls/door_wall_1.fbx
 /importer:FbxImporter
@@ -3032,7 +3013,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Coffee Shop/wood.jpg
 
-#begin Assets/Textures/Shopping Centre/Exit Door/exit_door.png
+#begin Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -3042,9 +3023,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Exit Door/exit_door.png
+/build:Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door.png
 
-#begin Assets/Textures/Shopping Centre/Exit Door/exit_sign.jpg
+#begin Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -3054,7 +3035,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Exit Door/exit_sign.jpg
+/build:Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign.jpg
+
+#begin Assets/Textures/Shopping Centre/Doors/Generator Room Door/generator_room_door.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Doors/Generator Room Door/generator_room_door.png
 
 #begin Assets/Textures/Shopping Centre/Fridge/fridge.png
 /importer:TextureImporter
@@ -3080,7 +3073,7 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Light/light_rust.jpg
 
-#begin Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
+#begin Assets/Textures/Shopping Centre/Notes/office_room_note.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -3090,7 +3083,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
+/build:Assets/Textures/Shopping Centre/Notes/office_room_note.png
 
 #begin Assets/Textures/Shopping Centre/Scaffolding/scaffolding.jpeg
 /importer:TextureImporter
