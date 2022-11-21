@@ -5,9 +5,11 @@
 
 #endregion
 
+using GD.Engine;
 using GD.Engine.Data;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
 
 namespace GD.App
 {
@@ -91,6 +93,13 @@ namespace GD.App
 
         #endregion Input Key Mappings
 
+        #region Game Variables
+
+        public static readonly string GAME_TITLE = "Project Survival";
+        public static readonly string SCENE_NAME = "shopping centre";
+
+        #endregion Game Variables
+
         #region Movement Constants
 
         public static readonly float PLAYER_MOVE_SPEED = 0.1f;
@@ -108,14 +117,101 @@ namespace GD.App
         #region Enemy Variables
 
         public static readonly float ENEMY_POSITION_Y = 2f;
+        public static readonly float ENEMY_SCALE = 0.007f;
+
         public static readonly float ENEMY_MOVEMENT_SPEED = 0.005f;
 
-        #endregion
+        // ENEMY 1 - Middle Lanes Enemy
+        // ENEMY 2 - Office Guarding Enemy
+        // ENEMY 3 - Right Lane Enemy
+
+        public static readonly Vector3 ENEMY_1_INITIAL_POS = new Vector3(-16, AppData.ENEMY_POSITION_Y, -120);
+        public static readonly Vector3 ENEMY_2_INITIAL_POS = new Vector3(-39, AppData.ENEMY_POSITION_Y, -109);
+        public static readonly Vector3 ENEMY_3_INITIAL_POS = new Vector3(30, AppData.ENEMY_POSITION_Y, -108);
+
+        public static readonly List<Vector3> ENEMY_INITIAL_POSITIONS = new List<Vector3>()
+        {
+            ENEMY_1_INITIAL_POS,
+            ENEMY_2_INITIAL_POS,
+            ENEMY_3_INITIAL_POS
+        };
+
+        public static readonly List<Vector3> ENEMY_INITIAL_ROTATIONS = new List<Vector3>()
+        {
+            new Vector3(0, MathHelper.PiOver2, 0),
+            new Vector3(0, MathHelper.Pi, 0),
+            new Vector3(0, MathHelper.PiOver2, 0)
+        };
+
+        public static readonly List<List<Vector3>> ENEMY_WAYPOINTS_LIST = new List<List<Vector3>>()
+        {
+            new List<Vector3>()
+            {
+            ENEMY_1_INITIAL_POS,
+            new Vector3(-16, AppData.ENEMY_POSITION_Y, -60),
+            new Vector3(-2, AppData.ENEMY_POSITION_Y, -60),
+            new Vector3(-2, AppData.ENEMY_POSITION_Y, -120)
+            },
+
+            new List<Vector3>()
+            {
+                ENEMY_2_INITIAL_POS
+            },
+
+            new List<Vector3>()
+            {
+                ENEMY_3_INITIAL_POS,
+                new Vector3(30, AppData.ENEMY_POSITION_Y, -12)
+            }
+    };
+
+        #endregion Enemy Variables
 
         #region Timer Variables
 
         internal static double MAX_GAME_TIME_IN_MSECS = 180000;
 
-        #endregion
+        #endregion Timer Variables
+
+        #region Model Paths
+
+        #region Enemy Model Paths
+
+        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow";
+
+        #endregion Enemy Model Paths
+
+        public static readonly string FLOOR_MODEL_PATH = "Assets/Models/Floors/ground_floor";
+        public static readonly string CEILING_MODEL_PATH = "Assets/Models/Floors/ceiling";
+
+        #region Office Room Model Paths
+
+        public static readonly string OFFICE_NOTE_MODEL_PATH = "Assets/Models/Shopping Centre/Notes/office_room_note";
+
+        #endregion Office Room Model Paths
+
+        public static readonly string CHECKOUT_DESK_MODEL_BASE_PATH = "Assets/Models/Shopping Centre/Checkout Desks/";
+
+        #endregion Model Paths
+
+        #region Texture Paths
+
+        #region Enemy Texture Paths
+
+        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/black";
+
+        #endregion Enemy Texture Paths
+
+        public static readonly string WALL_TEXTURE_PATH = "Assets/Textures/walls";
+
+        #region Office Room Texture Paths
+
+        public static readonly string OFFICE_NOTE_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Notes/office_room_note";
+
+        #endregion Office Room Texture Paths
+
+        public static readonly string CHECKOUT_DESK_TEXTURE_BASE_PATH = "Assets/Textures/Shopping Centre/Checkout Desk/";
+
+        #endregion Texture Paths
     }
 }

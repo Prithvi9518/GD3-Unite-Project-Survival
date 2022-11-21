@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Text;
 using System.Reflection;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
@@ -137,7 +138,7 @@ namespace GD.App
             InitializeEngine(AppData.APP_RESOLUTION, true, true);
 
             //game specific content
-            InitializeLevel("Project Survival", AppData.SKYBOX_WORLD_SCALE);
+            InitializeLevel(AppData.GAME_TITLE, AppData.SKYBOX_WORLD_SCALE);
 
 #if SHOW_DEBUG_INFO
             InitializeDebug();
@@ -245,13 +246,13 @@ namespace GD.App
         private void InitializeScenes()
         {
             //initialize a scene
-            var scene = new Scene("labyrinth");
+            var scene = new Scene(AppData.SCENE_NAME);
 
             //add scene to the scene manager
             sceneManager.Add(scene.ID, scene);
 
             //don't forget to set active scene
-            sceneManager.SetActiveScene("labyrinth");
+            sceneManager.SetActiveScene(AppData.SCENE_NAME);
         }
 
         private void InitializeEffects()
@@ -274,27 +275,29 @@ namespace GD.App
 
             #region Third Person
 
-            cameraGameObject = new GameObject(AppData.THIRD_PERSON_CAMERA_NAME);
-            cameraGameObject.Transform = new Transform(null, null, null);
-            cameraGameObject.AddComponent(new Camera(
-                AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
-                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-                AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
-                AppData.FIRST_PERSON_CAMERA_FCP,
-                new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
-                _graphics.PreferredBackBufferHeight))); // 3000
+            //cameraGameObject = new GameObject(AppData.THIRD_PERSON_CAMERA_NAME);
+            //cameraGameObject.Transform = new Transform(null, null, null);
+            //cameraGameObject.AddComponent(new Camera(
+            //    AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
+            //    (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+            //    AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
+            //    AppData.FIRST_PERSON_CAMERA_FCP,
+            //    new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
+            //    _graphics.PreferredBackBufferHeight))); // 3000
 
-            cameraGameObject.AddComponent(new ThirdPersonController());
+            //cameraGameObject.AddComponent(new ThirdPersonController());
 
-            cameraManager.Add(cameraGameObject.Name, cameraGameObject);
+            //cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
-            #endregion
+            #endregion Third Person
 
             #region First Person
 
-            //camera 1
             cameraGameObject = new GameObject(AppData.FIRST_PERSON_CAMERA_NAME);
+
             cameraGameObject.Transform = new Transform(null, null, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION);
+
+            // Camera component
             cameraGameObject.AddComponent(
                 new Camera(
                 AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
@@ -304,12 +307,11 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
-            //OLD
-            //cameraGameObject.AddComponent(new FirstPersonCameraController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED));
-
-            //NEW
+            // First person controller component
             cameraGameObject.AddComponent(new FirstPersonController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
                 AppData.PLAYER_ROTATE_SPEED_VECTOR2, true));
+
+            // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
 
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
@@ -318,56 +320,56 @@ namespace GD.App
 
             #region Security
 
-            //camera 2
-            cameraGameObject = new GameObject(AppData.SECURITY_CAMERA_NAME);
+            ////camera 2
+            //cameraGameObject = new GameObject(AppData.SECURITY_CAMERA_NAME);
 
-            cameraGameObject.Transform
-                = new Transform(null,
-                null,
-                new Vector3(0, 2, 25));
+            //cameraGameObject.Transform
+            //    = new Transform(null,
+            //    null,
+            //    new Vector3(0, 2, 25));
 
-            //add camera (view, projection)
-            cameraGameObject.AddComponent(new Camera(
-                MathHelper.PiOver2 / 2,
-                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-                0.1f, 3500,
-                new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
+            ////add camera (view, projection)
+            //cameraGameObject.AddComponent(new Camera(
+            //    MathHelper.PiOver2 / 2,
+            //    (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+            //    0.1f, 3500,
+            //    new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
 
-            //add rotation
-            cameraGameObject.AddComponent(new CycledRotationBehaviour(
-                AppData.SECURITY_CAMERA_ROTATION_AXIS,
-                AppData.SECURITY_CAMERA_MAX_ANGLE,
-                AppData.SECURITY_CAMERA_ANGULAR_SPEED_MUL,
-                TurnDirectionType.Right));
+            ////add rotation
+            //cameraGameObject.AddComponent(new CycledRotationBehaviour(
+            //    AppData.SECURITY_CAMERA_ROTATION_AXIS,
+            //    AppData.SECURITY_CAMERA_MAX_ANGLE,
+            //    AppData.SECURITY_CAMERA_ANGULAR_SPEED_MUL,
+            //    TurnDirectionType.Right));
 
-            //adds FOV change on mouse scroll
-            cameraGameObject.AddComponent(new CameraFOVController(AppData.CAMERA_FOV_INCREMENT_LOW));
+            ////adds FOV change on mouse scroll
+            //cameraGameObject.AddComponent(new CameraFOVController(AppData.CAMERA_FOV_INCREMENT_LOW));
 
-            cameraManager.Add(cameraGameObject.Name, cameraGameObject);
+            //cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
             #endregion Security
 
             #region Curve
 
-            Curve3D curve3D = new Curve3D(CurveLoopType.Oscillate);
-            curve3D.Add(new Vector3(0, 2, 5), 0);
-            curve3D.Add(new Vector3(0, 5, 10), 1000);
-            curve3D.Add(new Vector3(0, 8, 25), 2500);
-            curve3D.Add(new Vector3(0, 5, 35), 4000);
+            //Curve3D curve3D = new Curve3D(CurveLoopType.Oscillate);
+            //curve3D.Add(new Vector3(0, 2, 5), 0);
+            //curve3D.Add(new Vector3(0, 5, 10), 1000);
+            //curve3D.Add(new Vector3(0, 8, 25), 2500);
+            //curve3D.Add(new Vector3(0, 5, 35), 4000);
 
-            cameraGameObject = new GameObject(AppData.CURVE_CAMERA_NAME);
-            cameraGameObject.Transform =
-                new Transform(null, null, null);
-            cameraGameObject.AddComponent(new Camera(
-                MathHelper.PiOver2 / 2,
-                (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-                0.1f, 3500,
-                  new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
+            //cameraGameObject = new GameObject(AppData.CURVE_CAMERA_NAME);
+            //cameraGameObject.Transform =
+            //    new Transform(null, null, null);
+            //cameraGameObject.AddComponent(new Camera(
+            //    MathHelper.PiOver2 / 2,
+            //    (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
+            //    0.1f, 3500,
+            //      new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
 
-            cameraGameObject.AddComponent(
-                new CurveBehaviour(curve3D));
+            //cameraGameObject.AddComponent(
+            //    new CurveBehaviour(curve3D));
 
-            cameraManager.Add(cameraGameObject.Name, cameraGameObject);
+            //cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
             #endregion Curve
 
@@ -391,92 +393,47 @@ namespace GD.App
             //TestingInteractableItem();
         }
 
+        private Renderer InitializeRenderer(string modelPath, string texturePath, BasicEffect effect, float alpha)
+        {
+            var model = Content.Load<Model>(modelPath);
+            var texture = Content.Load<Texture2D>(texturePath);
+            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
+
+            return new Renderer(new GDBasicEffect(effect),
+                new Material(texture, alpha),
+                mesh);
+        }
+
         private void InitializeEnemies()
         {
-            var model = Content.Load<Model>("Assets/Models/Enemies/hollow");
-            var texture = Content.Load<Texture2D>("Assets/Textures/Enemies/black");
+            Renderer enemyRenderer = null;
+            GameObject gameObject = null;
 
-            #region Middle Lanes Enemy
-
-            var gameObject = new GameObject("enemy 1", ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(
-                0.007f * Vector3.One,
-                new Vector3(0, MathHelper.PiOver2, 0),
-                new Vector3(-16, AppData.ENEMY_POSITION_Y, -120)
+            for (int i = 0; i < AppData.ENEMY_WAYPOINTS_LIST.Count; i++)
+            {
+                enemyRenderer = InitializeRenderer(
+                AppData.ENEMY_MODEL_PATH,
+                AppData.ENEMY_TEXTURE_PATH,
+                unlitEffect,
+                1
                 );
 
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
-                new Material(texture, 1),
-                mesh));
+                gameObject = new GameObject("enemy " + (i + 1), ObjectType.Static, RenderType.Opaque);
 
-            List<Vector3> waypoints = new List<Vector3>()
-            {
-                gameObject.Transform.translation,
-                new Vector3(-16, AppData.ENEMY_POSITION_Y, -60),
-                new Vector3(-2, AppData.ENEMY_POSITION_Y, -60),
-                new Vector3(-2, AppData.ENEMY_POSITION_Y, -120)
-            };
-
-            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, AppData.ENEMY_MOVEMENT_SPEED));
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
-
-            #region Office Guarding Enemy
-
-            gameObject = new GameObject("enemy 2", ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(
-                0.007f * Vector3.One,
-                new Vector3(0, MathHelper.Pi, 0),
-                new Vector3(-39, AppData.ENEMY_POSITION_Y, -109)
+                gameObject.Transform = new Transform(
+                AppData.ENEMY_SCALE * Vector3.One,
+                AppData.ENEMY_INITIAL_ROTATIONS[i],
+                AppData.ENEMY_INITIAL_POSITIONS[i]
                 );
 
-            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
-                new Material(texture, 1),
-                mesh));
+                gameObject.AddComponent(enemyRenderer);
 
-            waypoints = new List<Vector3>()
-            {
-                gameObject.Transform.translation
-            };
+                gameObject.AddComponent(new EnemyPatrolBehaviour(
+                    AppData.ENEMY_WAYPOINTS_LIST[i], AppData.ENEMY_MOVEMENT_SPEED)
+                    );
 
-            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, AppData.ENEMY_MOVEMENT_SPEED, false));
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
-
-            #region Right Lane Enemy
-
-            gameObject = new GameObject("enemy 3", ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(
-                0.007f * Vector3.One,
-                new Vector3(0, MathHelper.PiOver2, 0),
-                new Vector3(30, AppData.ENEMY_POSITION_Y, -108)
-                );
-
-            mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
-                new Material(texture, 1),
-                mesh));
-
-            waypoints = new List<Vector3>()
-            {
-                gameObject.Transform.translation,
-                new Vector3(30, AppData.ENEMY_POSITION_Y, -12)
-            };
-
-            gameObject.AddComponent(new EnemyPatrolBehaviour(waypoints, AppData.ENEMY_MOVEMENT_SPEED));
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
+                sceneManager.ActiveScene.Add(gameObject);
+            }
         }
 
         private void TestingInteractableItem()
@@ -539,9 +496,9 @@ namespace GD.App
                ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            var texture = Content.Load<Texture2D>(AppData.WALL_TEXTURE_PATH);
 
-            var model = Content.Load<Model>("Assets/Models/Floors/ground_floor");
+            var model = Content.Load<Model>(AppData.FLOOR_MODEL_PATH);
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -558,9 +515,9 @@ namespace GD.App
             ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            texture = Content.Load<Texture2D>("Assets/Textures/walls");
+            texture = Content.Load<Texture2D>(AppData.WALL_TEXTURE_PATH);
 
-            model = Content.Load<Model>("Assets/Models/Floors/ceiling");
+            model = Content.Load<Model>(AppData.CEILING_MODEL_PATH);
 
             mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -592,15 +549,17 @@ namespace GD.App
         private void InitializeNotes()
         {
             #region Notes
+
             var gdBasicEffect = new GDBasicEffect(unlitEffect);
 
             #region Office Note
-            var texture = Content.Load<Texture2D>("Assets/Textures/Shopping Centre/Notes/office_room_note");
+
+            var texture = Content.Load<Texture2D>(AppData.OFFICE_NOTE_TEXTURE_PATH);
 
             var gameObject = new GameObject("office room note", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            var model = Content.Load<Model>("Assets/Models/Shopping Centre/Notes/office_room_note");
+            var model = Content.Load<Model>(AppData.OFFICE_NOTE_MODEL_PATH);
 
             var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
             gameObject.AddComponent(new Renderer(
@@ -609,6 +568,7 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Office Note
 
             #endregion Notes
@@ -622,12 +582,11 @@ namespace GD.App
             GameObject gameObject = null;
             Model model = null;
             Mesh mesh = null;
-            string checkout_desk_path_start = "Assets/Models/Shopping Centre/Checkout Desks/";
-            string texture_path_start = "Assets/Textures/Shopping Centre/Checkout Desk/";
 
             #region Belt
-            var texture = Content.Load<Texture2D>(texture_path_start + "belt");
-            string belt_base_path = checkout_desk_path_start + "Belt/belt_";
+
+            var texture = Content.Load<Texture2D>(AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "belt");
+            string belt_base_path = AppData.CHECKOUT_DESK_MODEL_BASE_PATH + "Belt/belt_";
 
             for (int i = 1; i <= 3; i++)
             {
@@ -649,8 +608,9 @@ namespace GD.App
             #endregion Belt
 
             #region Cashier
-            texture = Content.Load<Texture2D>(texture_path_start + "cash_register");
-            string cashier_path = checkout_desk_path_start + "Cashier/cashier_";
+
+            texture = Content.Load<Texture2D>(AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "cash_register");
+            string cashier_path = AppData.CHECKOUT_DESK_MODEL_BASE_PATH + "Cashier/cashier_";
 
             for (int i = 1; i <= 3; i++)
             {
@@ -1049,6 +1009,7 @@ namespace GD.App
         private void InitializeGeneratorDoor()
         {
             #region Generator Door
+
             var gameObject = new GameObject("generator door",
                     ObjectType.Static, RenderType.Opaque);
 
@@ -1064,15 +1025,18 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Generator Door
         }
 
         private void InitializeExit()
         {
-            #region Exit 
+            #region Exit
+
             var gdBasicEffect = new GDBasicEffect(litEffect);
 
             #region Exit Door
+
             var gameObject = new GameObject("exit door",
                     ObjectType.Static, RenderType.Opaque);
 
@@ -1088,9 +1052,11 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Exit Door
 
             #region Exit Sign
+
             gameObject = new GameObject("exit sign",
                     ObjectType.Static, RenderType.Opaque);
 
@@ -1106,6 +1072,7 @@ namespace GD.App
                 mesh));
 
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Exit Sign
 
             #endregion Exit
@@ -1384,6 +1351,7 @@ namespace GD.App
             InitializeProducedFoodsAisle(texture);
             InitializeToysAisle(texture);
             InitializeWallAisle(texture);
+
             #endregion
         }
 
