@@ -44,12 +44,14 @@ namespace GD.Engine.Utilities
             : base(spriteBatch, spriteFont, label, color, scale)
         {
         }
-
         public override void Draw(Vector2 position)
         {
+            double secs = Application.StateManager.CountdownTimeSecs;
+            string secondsString = (secs > 9) ? secs.ToString() : "0" + secs;
+
             spriteBatch.DrawString(
                 spriteFont,
-                $"{label}{Math.Round(Application.StateManager.CountdownTimeSecs)}",
+                $"{label}{Application.StateManager.CountdownTimeMins}m {secondsString}s",
                 position,
                 color,
                 rotation,

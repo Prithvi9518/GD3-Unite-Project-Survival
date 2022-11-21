@@ -507,10 +507,10 @@ namespace GD.App
             var spriteFont = Content.Load<SpriteFont>("Assets/Fonts/Perf");
 
             //add TimerInfo to the info list
-            float contentScale = 1.1f;
+            float timerScale = 1.5f;
 
             perfUtility.infoList.Add(
-                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.White, contentScale * Vector2.One)
+                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.Red, timerScale * Vector2.One)
                 );
 
             //add to the component list otherwise it wont have its Update or Draw called!

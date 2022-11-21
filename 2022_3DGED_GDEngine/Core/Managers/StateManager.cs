@@ -31,12 +31,18 @@ namespace GD.Engine
     {
         private double maxTimeInMS;
         private double totalElapsedTimeMS;
+        private double minutesLeft;
+        private double secondsLeft;
         private List<InventoryItem> inventory;
         private bool stopTime = false;
 
         public double CountdownTimeSecs
         {
-            get => Math.Abs((maxTimeInMS - totalElapsedTimeMS) / 1000d);
+            get => secondsLeft;
+        }
+        public double CountdownTimeMins
+        {
+            get => minutesLeft;
         }
 
         public StateManager(Game game, double maxTimeInMS) : base(game)
@@ -62,6 +68,10 @@ namespace GD.Engine
                 //    EventActionType.OnLose,
                 //    parameters));
             }
+
+            double countdownTime = Math.Abs((maxTimeInMS - totalElapsedTimeMS) / 1000d);
+            minutesLeft = Math.Floor(countdownTime / 60);
+            secondsLeft = Math.Round(countdownTime % 60);
 
             //check game state
             //if win then
