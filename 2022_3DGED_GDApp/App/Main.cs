@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 #define DEMO
-//#define SHOW_DEBUG_INFO
+#define SHOW_DEBUG_INFO
 #define SHOW_TIMER_TEXT
 
 #endregion
@@ -273,24 +273,6 @@ namespace GD.App
             //camera
             GameObject cameraGameObject = null;
 
-            #region Third Person
-
-            //cameraGameObject = new GameObject(AppData.THIRD_PERSON_CAMERA_NAME);
-            //cameraGameObject.Transform = new Transform(null, null, null);
-            //cameraGameObject.AddComponent(new Camera(
-            //    AppData.FIRST_PERSON_HALF_FOV, //MathHelper.PiOver2 / 2,
-            //    (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-            //    AppData.FIRST_PERSON_CAMERA_NCP, //0.1f,
-            //    AppData.FIRST_PERSON_CAMERA_FCP,
-            //    new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
-            //    _graphics.PreferredBackBufferHeight))); // 3000
-
-            //cameraGameObject.AddComponent(new ThirdPersonController());
-
-            //cameraManager.Add(cameraGameObject.Name, cameraGameObject);
-
-            #endregion Third Person
-
             #region First Person
 
             cameraGameObject = new GameObject(AppData.FIRST_PERSON_CAMERA_NAME);
@@ -317,61 +299,6 @@ namespace GD.App
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
             #endregion First Person
-
-            #region Security
-
-            ////camera 2
-            //cameraGameObject = new GameObject(AppData.SECURITY_CAMERA_NAME);
-
-            //cameraGameObject.Transform
-            //    = new Transform(null,
-            //    null,
-            //    new Vector3(0, 2, 25));
-
-            ////add camera (view, projection)
-            //cameraGameObject.AddComponent(new Camera(
-            //    MathHelper.PiOver2 / 2,
-            //    (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-            //    0.1f, 3500,
-            //    new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
-
-            ////add rotation
-            //cameraGameObject.AddComponent(new CycledRotationBehaviour(
-            //    AppData.SECURITY_CAMERA_ROTATION_AXIS,
-            //    AppData.SECURITY_CAMERA_MAX_ANGLE,
-            //    AppData.SECURITY_CAMERA_ANGULAR_SPEED_MUL,
-            //    TurnDirectionType.Right));
-
-            ////adds FOV change on mouse scroll
-            //cameraGameObject.AddComponent(new CameraFOVController(AppData.CAMERA_FOV_INCREMENT_LOW));
-
-            //cameraManager.Add(cameraGameObject.Name, cameraGameObject);
-
-            #endregion Security
-
-            #region Curve
-
-            //Curve3D curve3D = new Curve3D(CurveLoopType.Oscillate);
-            //curve3D.Add(new Vector3(0, 2, 5), 0);
-            //curve3D.Add(new Vector3(0, 5, 10), 1000);
-            //curve3D.Add(new Vector3(0, 8, 25), 2500);
-            //curve3D.Add(new Vector3(0, 5, 35), 4000);
-
-            //cameraGameObject = new GameObject(AppData.CURVE_CAMERA_NAME);
-            //cameraGameObject.Transform =
-            //    new Transform(null, null, null);
-            //cameraGameObject.AddComponent(new Camera(
-            //    MathHelper.PiOver2 / 2,
-            //    (float)_graphics.PreferredBackBufferWidth / _graphics.PreferredBackBufferHeight,
-            //    0.1f, 3500,
-            //      new Viewport(0, 0, _graphics.PreferredBackBufferWidth, _graphics.PreferredBackBufferHeight)));
-
-            //cameraGameObject.AddComponent(
-            //    new CurveBehaviour(curve3D));
-
-            //cameraManager.Add(cameraGameObject.Name, cameraGameObject);
-
-            #endregion Curve
 
             cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
         }
@@ -473,13 +400,13 @@ namespace GD.App
                 new Vector2(0, 22));
 
             //set the font to be used
-            var spriteFont = Content.Load<SpriteFont>("Assets/Fonts/Perf");
+            var spriteFont = Content.Load<SpriteFont>(AppData.PERF_FONT_PATH);
 
             //add TimerInfo to the info list
             float timerScale = 1.5f;
 
             perfUtility.infoList.Add(
-                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.Red, timerScale * Vector2.One)
+                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.White, timerScale * Vector2.One)
                 );
 
             //add to the component list otherwise it wont have its Update or Draw called!
@@ -506,7 +433,7 @@ namespace GD.App
             var gameObject = new GameObject("ground_floor",
                ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer(
                 AppData.FLOOR_MODEL_PATH,
@@ -527,7 +454,7 @@ namespace GD.App
             gameObject = new GameObject("ceiling",
             ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             renderer = InitializeRenderer(
                 AppData.CEILING_MODEL_PATH,
@@ -568,7 +495,7 @@ namespace GD.App
 
             var gameObject = new GameObject("office room note", ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer(
                 AppData.OFFICE_NOTE_MODEL_PATH,
@@ -602,7 +529,7 @@ namespace GD.App
             for (int i = 1; i <= 3; i++)
             {
                 gameObject = new GameObject("belt " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = belt_base_path + i;
 
@@ -628,7 +555,7 @@ namespace GD.App
             for (int i = 1; i <= 3; i++)
             {
                 gameObject = new GameObject("cashier " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = cashier_path + i;
 
@@ -658,16 +585,14 @@ namespace GD.App
             GameObject gameObject = null;
             Renderer renderer = null;
 
-            string benches_base_path_start = "Assets/Models/Shopping Centre/Benches/";
-
             #region Bench Bases
 
-            string benches_bottom_base_path = benches_base_path_start + "Bench Bases/bench_base_";
+            string benches_bottom_base_path = AppData.BENCH_MODELS_PATH + "Bench Bases/bench_base_";
 
             for (int i = 1; i <= 4; i++)
             {
                 gameObject = new GameObject("bench base " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = benches_bottom_base_path + i;
 
@@ -688,12 +613,12 @@ namespace GD.App
 
             #region Bench Tops
 
-            string benches_top_base_path = benches_base_path_start + "Bench Tops/bench_top_";
+            string benches_top_base_path = AppData.BENCH_MODELS_PATH + "Bench Tops/bench_top_";
 
             for (int i = 1; i <= 2; i++)
             {
                 gameObject = new GameObject("bench top " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = benches_top_base_path + i;
 
@@ -723,23 +648,20 @@ namespace GD.App
             GameObject gameObject = null;
             Renderer renderer = null;
 
-            string bins_base_path_start = "Assets/Models/Shopping Centre/Bins/";
-            string bins_base_texture_path_start = "Assets/Textures/Shopping Centre/Bins/";
-
             #region Bin Bags
 
-            string bins_bags_base_path = bins_base_path_start + "Bin Bags/bin_bag_";
+            string bins_bags_base_path = AppData.BIN_MODELS_PATH + "Bin Bags/bin_bag_";
 
             for (int i = 1; i <= 6; i++)
             {
                 gameObject = new GameObject("bin bag " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = bins_bags_base_path + i;
 
                 renderer = InitializeRenderer(
                     model_path,
-                    bins_base_texture_path_start + "Bin Bag/bin_bag",
+                    AppData.BIN_TEXTURES_PATH + "Bin Bag/bin_bag",
                     gdBasicEffect,
                     1,
                     Color.White
@@ -754,18 +676,18 @@ namespace GD.App
 
             #region Bin Baskets
 
-            string bins_baskets_base_path = bins_base_path_start + "Bin Baskets/bin_basket_";
+            string bins_baskets_base_path = AppData.BIN_MODELS_PATH + "Bin Baskets/bin_basket_";
 
             for (int i = 1; i <= 3; i++)
             {
                 gameObject = new GameObject("bin basket " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = bins_baskets_base_path + i;
 
                 renderer = InitializeRenderer(
                     model_path,
-                    bins_base_texture_path_start + "Bin Basket/bin_basket",
+                    AppData.BIN_TEXTURES_PATH + "Bin Basket/bin_basket",
                     gdBasicEffect,
                     1,
                     Color.White
@@ -780,18 +702,18 @@ namespace GD.App
 
             #region Fire Extinguisher
 
-            string fire_extinguishers_base_path = bins_base_path_start + "Fire Extinguishers/fire_extinguisher_";
+            string fire_extinguishers_base_path = AppData.BIN_MODELS_PATH + "Fire Extinguishers/fire_extinguisher_";
 
             for (int i = 1; i <= 2; i++)
             {
                 gameObject = new GameObject("fire extinguisher " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = fire_extinguishers_base_path + i;
 
                 renderer = InitializeRenderer(
                     model_path,
-                    bins_base_texture_path_start + "Fire Extinguisher/fire_extinguisher",
+                    AppData.BIN_TEXTURES_PATH + "Fire Extinguisher/fire_extinguisher",
                     gdBasicEffect,
                     1,
                     Color.White
@@ -807,11 +729,11 @@ namespace GD.App
             #region Large Bin
 
             gameObject = new GameObject("large bin", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             renderer = InitializeRenderer(
-                   bins_base_path_start + "Large Bin/large_bin",
-                   bins_base_texture_path_start + "Large Bin/large_bin",
+                   AppData.BIN_MODELS_PATH + "Large Bin/large_bin",
+                   AppData.BIN_TEXTURES_PATH + "Large Bin/large_bin",
                    gdBasicEffect,
                    1,
                    Color.White
@@ -826,11 +748,11 @@ namespace GD.App
             #region Pallet
 
             gameObject = new GameObject("pallet", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             renderer = InitializeRenderer(
-                   bins_base_path_start + "Pallet/pallet",
-                   bins_base_texture_path_start + "Pallet/pallet_wood",
+                   AppData.BIN_MODELS_PATH + "Pallet/pallet",
+                   AppData.BIN_TEXTURES_PATH + "Pallet/pallet_wood",
                    gdBasicEffect,
                    1,
                    Color.White
@@ -844,18 +766,18 @@ namespace GD.App
 
             #region Plastic Bottles
 
-            string plastic_bottles_base_path = bins_base_path_start + "Plastic Bottles/plastic_bottle_";
+            string plastic_bottles_base_path = AppData.BIN_MODELS_PATH + "Plastic Bottles/plastic_bottle_";
 
             for (int i = 1; i <= 4; i++)
             {
                 gameObject = new GameObject("plastic bottle " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = plastic_bottles_base_path + i;
 
                 renderer = InitializeRenderer(
                     model_path,
-                    bins_base_texture_path_start + "Plastic Bottle/plastic_bottle",
+                    AppData.BIN_TEXTURES_PATH + "Plastic Bottle/plastic_bottle",
                     gdBasicEffect,
                     1,
                     Color.White
@@ -877,15 +799,13 @@ namespace GD.App
 
             var gdBasicEffect = new GDBasicEffect(unlitEffect);
             GameObject gameObject = null;
-            Model model = null;
-            Mesh mesh = null;
             Renderer renderer = null;
 
-            string texture_base_start = "Assets/Textures/Shopping Centre/Shopping Cart/";
+            string texture_base_start = AppData.SHOPPING_CART_TEXTURES_PATH;
 
             #region Barricades
 
-            string barricades_base_path = "Assets/Models/Shopping Centre/Shopping Cart/Barricades/barricade_";
+            string barricades_base_path = AppData.BARRICADE_MODELS_PATH;
 
             for (int i = 1; i <= 5; i++)
             {

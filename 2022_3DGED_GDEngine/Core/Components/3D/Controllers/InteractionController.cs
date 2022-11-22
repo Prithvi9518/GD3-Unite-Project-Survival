@@ -6,6 +6,14 @@ using System;
 
 namespace GD.Engine
 {
+    /// <summary>
+    /// Handles the player's interaction with items using a key/button press.
+    ///
+    /// Uses a boolean to keep track of whether the player is currently attempting to interact with an object.
+    ///
+    /// For the moment, the class listens to events in the Pickup category,
+    /// and removes the object that was picked up from the scene.
+    /// </summary>
     public class InteractionController : Component
     {
         private bool isInteracting = false;
@@ -26,6 +34,10 @@ namespace GD.Engine
             //base.Update(gameTime);
         }
 
+        /// <summary>
+        /// In case of a successful pickup, the method removes the picked-up object from the scene
+        /// </summary>
+        /// <param name="eventData"></param>
         private void HandlePickup(EventData eventData)
         {
             switch (eventData.EventActionType)
