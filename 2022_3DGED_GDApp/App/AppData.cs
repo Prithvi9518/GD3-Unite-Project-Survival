@@ -61,7 +61,7 @@ namespace GD.App
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
 
         public static readonly float FIRST_PERSON_HALF_FOV
-             = MathHelper.PiOver2 / 2.0f;
+             = MathHelper.ToRadians(75);
 
         #endregion Camera - First Person
 
