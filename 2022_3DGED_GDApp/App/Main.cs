@@ -333,7 +333,7 @@ namespace GD.App
 
         private void InitializeFloors()
         {
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             #region Floor
 
@@ -1367,7 +1367,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1382,7 +1382,7 @@ namespace GD.App
         {
             #region Shopping Centre Walls
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             var texture_path = "Assets/Textures/walls";
             GameObject gameObject = null;
             Renderer renderer = null;
