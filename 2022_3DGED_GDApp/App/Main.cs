@@ -160,7 +160,7 @@ namespace GD.App
                 new Vector3(1, 1, 0),
                 false));
 
-            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Horror");
+            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
 
             //Add the new sound for background
             soundManager.Add(new Cue(
