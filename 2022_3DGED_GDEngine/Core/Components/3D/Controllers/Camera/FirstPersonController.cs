@@ -15,9 +15,15 @@ namespace GD.Engine
 
         protected float moveSpeed = 0.05f;
         protected float strafeSpeed = 0.025f;
-        protected float multiplier = 1f;
+
+        protected float multiplier = AppData.PLAYER_DEFAULT_MULTIPLIER;
+        protected float runMultiplier = AppData.PLAYER_RUN_MULTIPLIER;
+        protected float crouchMultiplier = AppData.PLAYER_CROUCH_MULTIPLIER;
+
         protected Vector2 rotationSpeed;
+
         private bool isGrounded;
+
         private bool crouchEnabled = false;
         private bool needsToCrouch = true;
 
@@ -60,25 +66,15 @@ namespace GD.Engine
                 HandleMouseInput(gameTime);
                 HandleKeyboardInput(gameTime);
             }
-
-            //System.Diagnostics.Debug.WriteLine($"crouchEnabled: {crouchEnabled}");
-            //System.Diagnostics.Debug.WriteLine($"needsToCrouch: {needsToCrouch}");
         }
 
         protected virtual void HandleKeyboardInput(GameTime gameTime)
         {
-            float runMultiplier = 2.5f;
-
             translation = Vector3.Zero;
 
             if (!crouchEnabled)
             {
-                if (Input.Keys.IsPressed(Keys.LeftShift))
-                    multiplier = runMultiplier;
-                else
-                {
-                    multiplier = 1f;
-                }
+                HandleRun(false);
             }
 
             if (Input.Keys.WasJustPressed(Keys.LeftControl))
@@ -100,8 +96,55 @@ namespace GD.Engine
             if (isGrounded)
                 translation.Y = 0;
 
+            transform.Translate(translation);
+        }
+
+        /// <summary>
+        /// Increases the player's speed when the run key is pressed
+        /// For the moment, the run key/button is E on keyboard, and Left Stick on gamepad
+        /// </summary>
+        /// <param name="usingGamepad"></param>
+        protected virtual void HandleRun(bool usingGamepad)
+        {
+            if (usingGamepad)
+            {
+                if (Input.Gamepad.IsPressed(Buttons.LeftStick))
+                    multiplier = runMultiplier;
+                else
+                {
+                    multiplier = AppData.PLAYER_DEFAULT_MULTIPLIER;
+                }
+            }
+            else
+            {
+                if (Input.Keys.IsPressed(Keys.LeftShift))
+                    multiplier = runMultiplier;
+                else
+                {
+                    multiplier = AppData.PLAYER_DEFAULT_MULTIPLIER;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Responsible for toggling the crouched/uncrouched state of player
+        /// Decreases player speed when crouched, and brings down translation on Y-axis
+        /// </summary>
+        protected virtual void HandleCrouch()
+        {
+            if (crouchEnabled)
+            {
+                needsToCrouch = true;
+                multiplier = crouchMultiplier;
+            }
+            else
+            {
+                needsToCrouch = false;
+                multiplier = AppData.PLAYER_DEFAULT_MULTIPLIER;
+            }
+
             float normalHeight = AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y;
-            float crouchedHeight = normalHeight - 1f;
+            float crouchedHeight = normalHeight - AppData.PLAYER_CROUCH_HEIGHT_OFFSET;
 
             if (crouchEnabled && needsToCrouch)
             {
@@ -112,24 +155,17 @@ namespace GD.Engine
             {
                 transform.translation.Y = normalHeight;
             }
-
-            transform.Translate(translation);
         }
 
-        protected virtual void HandleCrouch()
+        /// <summary>
+        /// Clamps the vertical rotation of the first-person camera
+        /// </summary>
+        protected virtual void ClampRotationX()
         {
-            float crouchMultiplier = 0.7f;
-
-            if (crouchEnabled)
-            {
-                needsToCrouch = true;
-                multiplier = crouchMultiplier;
-            }
-            else
-            {
-                needsToCrouch = false;
-                multiplier = 1f;
-            }
+            if (rotation.X < AppData.PLAYER_ROTATE_MIN_X)
+                rotation.X = AppData.PLAYER_ROTATE_MIN_X;
+            else if (rotation.X > AppData.PLAYER_ROTATE_MAX_X)
+                rotation.X = AppData.PLAYER_ROTATE_MAX_X;
         }
 
         protected virtual void HandleMouseInput(GameTime gameTime)
@@ -137,29 +173,13 @@ namespace GD.Engine
             rotation = Vector3.Zero;
             var delta = Input.Mouse.Delta;
 
-            //Vector2 mousePos = Input.Mouse.Position;
-            //if (mousePos.X < 0)
-            //{
-            //    Input.Mouse.Position = new Vector2(0, mousePos.Y);
-            //}
-            //else if (mousePos.X > AppData.APP_RESOLUTION.X)
-            //{
-            //    Input.Mouse.Position = new Vector2(AppData.APP_RESOLUTION.X, mousePos.Y);
-            //}
-
             if (delta.Length() != 0)
             {
                 //Q - where are X and Y reversed?
                 rotation.Y -= delta.X * rotationSpeed.X * gameTime.ElapsedGameTime.Milliseconds;
                 rotation.X -= delta.Y * rotationSpeed.Y * gameTime.ElapsedGameTime.Milliseconds;
 
-                float minRotX = -0.75f;
-                float maxRotX = 0.65f;
-
-                if (rotation.X < minRotX)
-                    rotation.X = minRotX;
-                else if (rotation.X > maxRotX)
-                    rotation.X = maxRotX;
+                ClampRotationX();
 
                 transform.SetRotation(rotation);
             }
@@ -174,16 +194,9 @@ namespace GD.Engine
             translation = Vector3.Zero;
             rotation = Vector3.Zero;
 
-            float runMultiplier = 2.5f;
-
             if (!crouchEnabled)
             {
-                if (Input.Gamepad.IsPressed(Buttons.LeftStick))
-                    multiplier = runMultiplier;
-                else
-                {
-                    multiplier = 1f;
-                }
+                HandleRun(true);
             }
 
             if (Input.Gamepad.WasJustPressed(Buttons.X))
@@ -205,33 +218,17 @@ namespace GD.Engine
             if (isGrounded)
                 translation.Y = 0;
 
-            float normalHeight = AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y;
-            float crouchedHeight = normalHeight - 1f;
-
-            if (crouchEnabled && needsToCrouch)
-            {
-                transform.translation.Y = crouchedHeight;
-                needsToCrouch = false;
-            }
-            else if (!crouchEnabled)
-            {
-                transform.translation.Y = normalHeight;
-            }
-
             transform.Translate(translation);
 
             var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
-            rotation.X += changeInRotation.Y * rotationSpeed.Y * 15 * gameTime.ElapsedGameTime.Milliseconds;
 
-            float minRotX = -0.75f;
-            float maxRotX = 0.65f;
+            rotation.X += changeInRotation.Y * rotationSpeed.Y *
+                AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
-            if (rotation.X < minRotX)
-                rotation.X = minRotX;
-            else if (rotation.X > maxRotX)
-                rotation.X = maxRotX;
+            ClampRotationX();
 
-            rotation.Y -= changeInRotation.X * rotationSpeed.X * 15 * gameTime.ElapsedGameTime.Milliseconds;
+            rotation.Y -= changeInRotation.X * rotationSpeed.X *
+                AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
             transform.Rotate(rotation);
         }
