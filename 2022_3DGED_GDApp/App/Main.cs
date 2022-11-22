@@ -879,7 +879,7 @@ namespace GD.App
 
             Renderer renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door",
-                    "Assets/Textures/Shopping Centre/Light/light_rust",
+                    "Assets/Textures/Shopping Centre/Doors/Generator Room Door/generator_room_door",
                     new GDBasicEffect(unlitEffect),
                     1,
                     Color.White
