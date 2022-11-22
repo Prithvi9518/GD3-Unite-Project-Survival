@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GD.Engine.Events;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -26,6 +27,8 @@ namespace GD.Engine
             this.waypoints = waypoints;
             this.enemyMovementSpeed = enemyMovementSpeed;
             this.isMoving = isMoving;
+
+            EventDispatcher.Subscribe(EventCategoryType.NonPlayer, TriggerEnemyMovement);
         }
 
         /// <summary>
@@ -75,6 +78,18 @@ namespace GD.Engine
             );
 
             return targetRotation;
+        }
+
+        private void TriggerEnemyMovement(EventData eventData)
+        {
+            if (eventData.EventActionType == EventActionType.OnEnemyAlert)
+            {
+                string param = eventData.Parameters[0] as string;
+                if (param == "true")
+                    isMoving = true;
+                else if (param == "false")
+                    isMoving = false;
+            }
         }
 
         public override void Update(GameTime gameTime)

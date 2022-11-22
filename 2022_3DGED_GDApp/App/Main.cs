@@ -1,8 +1,8 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define SHOW_DEBUG_INFO
-#define SHOW_TIMER_TEXT
+#define SHOW_DEBUG_INFO
+//#define SHOW_TIMER_TEXT
 
 #endregion
 
@@ -292,7 +292,7 @@ namespace GD.App
                 gameObject.AddComponent(enemyRenderer);
 
                 gameObject.AddComponent(new EnemyPatrolBehaviour(
-                    AppData.ENEMY_WAYPOINTS_LIST[i], AppData.ENEMY_MOVEMENT_SPEED)
+                    AppData.ENEMY_WAYPOINTS_LIST[i], AppData.ENEMY_MOVEMENT_SPEED, AppData.ENEMY_MOVING_BOOLS[i])
                     );
 
                 sceneManager.ActiveScene.Add(gameObject);

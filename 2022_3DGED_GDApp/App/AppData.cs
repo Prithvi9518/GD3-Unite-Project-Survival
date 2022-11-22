@@ -168,7 +168,8 @@ namespace GD.App
 
             new List<Vector3>()
             {
-                ENEMY_2_INITIAL_POS
+                ENEMY_2_INITIAL_POS,
+                new Vector3(-39, AppData.ENEMY_POSITION_Y, -40)
             },
 
             new List<Vector3>()
@@ -176,7 +177,14 @@ namespace GD.App
                 ENEMY_3_INITIAL_POS,
                 new Vector3(30, AppData.ENEMY_POSITION_Y, -12)
             }
-    };
+        };
+
+        public static readonly List<bool> ENEMY_MOVING_BOOLS = new List<bool>()
+        {
+            true,
+            false,
+            true
+        };
 
         #endregion Enemy Variables
 
