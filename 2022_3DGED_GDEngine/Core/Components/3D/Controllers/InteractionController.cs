@@ -86,20 +86,33 @@ namespace GD.Engine
 
         private void MakeOfficeEnemyMove()
         {
-            if (Input.Gamepad.IsConnected() && Input.Gamepad.IsPressed(Buttons.RightTrigger))
+            if (Input.Gamepad.IsConnected() && Input.Gamepad.WasJustPressed(Buttons.RightTrigger))
             {
-                object[] parameters = { "true" };
-                EventDispatcher.Raise(
-                    new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
-                    );
+                RaiseEnemyMoveEvents();
             }
-            else if (Input.Keys.IsPressed(Keys.R))
+            else if (Input.Keys.WasJustPressed(Keys.R))
             {
-                object[] parameters = { "true" };
-                EventDispatcher.Raise(
-                    new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
-                    );
+                RaiseEnemyMoveEvents();
             }
+        }
+
+        private void RaiseEnemyMoveEvents()
+        {
+            // Event to play glass breaking sound
+
+            object[] parameters = { "glass-shatter" };
+
+            EventDispatcher.Raise(
+                new EventData(EventCategoryType.Sound,
+                EventActionType.OnPlay2D,
+                parameters)
+                );
+
+            // Event to make enemy move
+            parameters = new object[] { "true" };
+            EventDispatcher.Raise(
+                new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
+                );
         }
     }
 }

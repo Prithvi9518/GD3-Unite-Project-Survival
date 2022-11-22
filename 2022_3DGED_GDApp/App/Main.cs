@@ -20,6 +20,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -178,6 +179,18 @@ namespace GD.App
                  SoundCategoryType.BackgroundMusic,
                  new Vector3(1f, 1, 0),
                  false));
+
+            // Glass breaking sound
+
+            var glassBreakingSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
+
+            soundManager.Add(new Cue(
+                "glass-shatter",
+                glassBreakingSound,
+                SoundCategoryType.Explosion,
+                new Vector3(1, 1, 0),
+                false
+                ));
         }
 
         private void LoadTextures()
