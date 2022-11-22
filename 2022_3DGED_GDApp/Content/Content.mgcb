@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Assets/Audio/Diegetic/Ambient/horror-ambience-7.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Ambient/horror-ambience-7.wav
+
 #begin Assets/Audio/Diegetic/explode1.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -24,6 +30,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/smokealarm1.ogg
+
+#begin Assets/Audio/Non-Diegetic/SoundTracks/Horror.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Non-Diegetic/SoundTracks/Horror.wav
 
 #begin Assets/Fonts/Perf.spritefont
 /importer:FontDescriptionImporter

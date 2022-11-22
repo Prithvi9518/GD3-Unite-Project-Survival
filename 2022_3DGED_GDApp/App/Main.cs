@@ -118,6 +118,19 @@ namespace GD.App
 
             //add non-collidable drawn stuff
             InitializeNonCollidableContent(worldScale);
+
+            //Raise all the events that I want to happen at the start
+            object[] parameters = { "Ambient" };
+            EventDispatcher.Raise(
+                new EventData(EventCategoryType.Sound,
+                EventActionType.OnPlay2D,
+                parameters));
+
+            object[] parameters2 = { "HorrorMusic" };
+            EventDispatcher.Raise(
+                new EventData(EventCategoryType.Sound,
+                EventActionType.OnPlay2D,
+                parameters2));
         }
 
         private void SetTitle(string title)
@@ -145,6 +158,26 @@ namespace GD.App
                 SoundCategoryType.Alarm,
                 new Vector3(1, 1, 0),
                 false));
+
+            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Horror");
+
+            //Add the new sound for background
+            soundManager.Add(new Cue(
+                "HorrorMusic",
+                 MusicSound,
+                 SoundCategoryType.BackgroundMusic,
+                 new Vector3(1, 1, 0),
+                 true));
+
+            var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
+
+            //Add the new sound for background
+            soundManager.Add(new Cue(
+                "Ambient",
+                 AmbientSound,
+                 SoundCategoryType.BackgroundMusic,
+                 new Vector3(1f, 1, 0),
+                 false));
         }
 
         private void LoadTextures()
