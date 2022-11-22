@@ -207,14 +207,14 @@ namespace GD.App
             // Alarm sound
 
             var alarmSound = Content.Load<SoundEffect>(
-                "Assets/Audio/Diegetic/Alarm/612094__michigankid2020__timestretched-fs-thunderbolts-sounding-off");
+                "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
 
             soundManager.Add(new Cue(
                 "alarm-sound",
                 alarmSound,
                 SoundCategoryType.Alarm,
-                new Vector3(0.3f, 1f, 0),
-                false));
+                new Vector3(0.3f, 0.5f, 0),
+                true));
         }
 
         private void LoadTextures()

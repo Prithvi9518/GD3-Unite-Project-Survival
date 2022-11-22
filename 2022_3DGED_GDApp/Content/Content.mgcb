@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm.wav
+
 #begin Assets/Audio/Diegetic/Alarm/612094__michigankid2020__timestretched-fs-thunderbolts-sounding-off.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
