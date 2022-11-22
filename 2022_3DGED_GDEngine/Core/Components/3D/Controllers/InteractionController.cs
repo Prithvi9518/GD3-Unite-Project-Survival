@@ -1,4 +1,6 @@
-﻿using GD.Engine.Events;
+﻿#define ALPHA_DEMO
+
+using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
@@ -31,6 +33,10 @@ namespace GD.Engine
         public override void Update(GameTime gameTime)
         {
             CheckInteracting();
+
+#if ALPHA_DEMO
+            MakeOfficeEnemyMove();
+#endif
             //base.Update(gameTime);
         }
 
@@ -75,6 +81,24 @@ namespace GD.Engine
                     isInteracting = true;
                 else
                     isInteracting = false;
+            }
+        }
+
+        private void MakeOfficeEnemyMove()
+        {
+            if (Input.Gamepad.IsConnected() && Input.Gamepad.IsPressed(Buttons.RightTrigger))
+            {
+                object[] parameters = { "true" };
+                EventDispatcher.Raise(
+                    new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
+                    );
+            }
+            else if (Input.Keys.IsPressed(Keys.R))
+            {
+                object[] parameters = { "true" };
+                EventDispatcher.Raise(
+                    new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
+                    );
             }
         }
     }

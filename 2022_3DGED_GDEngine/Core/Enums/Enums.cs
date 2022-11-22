@@ -153,6 +153,7 @@
         OnMouseClick,
 
         //add more here...
+        OnEnemyAlert
     }
 
     /// <summary>

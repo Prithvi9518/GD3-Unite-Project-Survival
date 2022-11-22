@@ -325,7 +325,7 @@ namespace GD.App
                 gameObject.AddComponent(enemyRenderer);
 
                 gameObject.AddComponent(new EnemyPatrolBehaviour(
-                    AppData.ENEMY_WAYPOINTS_LIST[i], AppData.ENEMY_MOVEMENT_SPEED)
+                    AppData.ENEMY_WAYPOINTS_LIST[i], AppData.ENEMY_MOVEMENT_SPEED, AppData.ENEMY_MOVING_BOOLS[i])
                     );
 
                 sceneManager.ActiveScene.Add(gameObject);
