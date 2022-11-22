@@ -59,7 +59,12 @@ namespace GD.Engine
 
                 if (targetDist <= AppData.INTERACTION_DISTANCE)
                 {
-                    object[] parameters = { gameObject };
+                    // Play pickup sound effect
+                    object[] parameters = { "pickup-sound" };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                    // Raise event to remove object from scene
+                    parameters = new object[] { gameObject };
                     EventDispatcher.Raise(
                         new EventData(EventCategoryType.Pickup, EventActionType.OnPickup, parameters)
                         );

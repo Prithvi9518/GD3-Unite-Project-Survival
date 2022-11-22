@@ -4,6 +4,7 @@ using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 using System;
 
 namespace GD.Engine
@@ -36,6 +37,7 @@ namespace GD.Engine
 
 #if ALPHA_DEMO
             MakeOfficeEnemyMove();
+            ActivateGeneratorAlarm();
 #endif
             //base.Update(gameTime);
         }
@@ -113,6 +115,39 @@ namespace GD.Engine
             EventDispatcher.Raise(
                 new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
                 );
+        }
+
+        private void ActivateGeneratorAlarm()
+        {
+            if (Input.Gamepad.IsConnected() && Input.Gamepad.WasJustPressed(Buttons.LeftTrigger))
+            {
+                RaiseAlarmEvent();
+            }
+            else if (Input.Keys.WasJustPressed(Keys.G))
+            {
+                RaiseAlarmEvent();
+            }
+
+            if (Input.Gamepad.IsConnected() && Input.Gamepad.WasJustPressed(Buttons.LeftShoulder))
+            {
+                StopAlarm();
+            }
+            else if (Input.Keys.WasJustPressed(Keys.P))
+            {
+                StopAlarm();
+            }
+        }
+
+        private void RaiseAlarmEvent()
+        {
+            object[] parameters = { "alarm-sound" };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+        }
+
+        private void StopAlarm()
+        {
+            object[] parameters = { "alarm-sound" };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnStop, parameters));
         }
     }
 }

@@ -169,10 +169,13 @@ namespace GD.Engine.Managers
                 Play3D(eventData.Parameters[0] as string,
                     eventData.Parameters[1] as AudioListener,
                     eventData.Parameters[2] as AudioEmitter);
-
             else if (eventData.EventActionType == EventActionType.OnPlay2D)
             {
                 Play2D(eventData.Parameters[0] as string);
+            }
+            else if (eventData.EventActionType == EventActionType.OnStop)
+            {
+                Stop(eventData.Parameters[0] as string);
             }
         }
 

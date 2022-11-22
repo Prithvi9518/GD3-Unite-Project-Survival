@@ -36,7 +36,8 @@
         WinLose,
         Explosion,
         BackgroundMusic,
-        Alarm
+        Alarm,
+        Pickup
     }
 
     #region Unused

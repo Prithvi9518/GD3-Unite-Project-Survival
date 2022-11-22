@@ -167,7 +167,7 @@ namespace GD.App
                 "HorrorMusic",
                  MusicSound,
                  SoundCategoryType.BackgroundMusic,
-                 new Vector3(1, 1, 0),
+                 new Vector3(0.1f, 1, 0),
                  true));
 
             var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
@@ -177,7 +177,7 @@ namespace GD.App
                 "Ambient",
                  AmbientSound,
                  SoundCategoryType.BackgroundMusic,
-                 new Vector3(1f, 1, 0),
+                 new Vector3(0.1f, 1, 0),
                  false));
 
             // Glass breaking sound
@@ -191,6 +191,30 @@ namespace GD.App
                 new Vector3(1, 1, 0),
                 false
                 ));
+
+            // Pickup sound
+
+            var pickupSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
+
+            soundManager.Add(new Cue(
+                "pickup-sound",
+                pickupSound,
+                SoundCategoryType.Pickup,
+                new Vector3(1, 1, 0),
+                false
+                ));
+
+            // Alarm sound
+
+            var alarmSound = Content.Load<SoundEffect>(
+                "Assets/Audio/Diegetic/Alarm/612094__michigankid2020__timestretched-fs-thunderbolts-sounding-off");
+
+            soundManager.Add(new Cue(
+                "alarm-sound",
+                alarmSound,
+                SoundCategoryType.Alarm,
+                new Vector3(0.3f, 1f, 0),
+                false));
         }
 
         private void LoadTextures()

@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin Assets/Audio/Diegetic/Alarm/612094__michigankid2020__timestretched-fs-thunderbolts-sounding-off.mp3
+/importer:Mp3Importer
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Alarm/612094__michigankid2020__timestretched-fs-thunderbolts-sounding-off.mp3
+
 #begin Assets/Audio/Diegetic/Ambient/horror-ambience-7.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -36,6 +42,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/smokealarm1.ogg
+
+#begin Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item.wav
 
 #begin Assets/Audio/Non-Diegetic/SoundTracks/Horror.wav
 /importer:WavImporter
