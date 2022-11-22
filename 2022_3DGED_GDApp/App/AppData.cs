@@ -121,7 +121,7 @@ namespace GD.App
         public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;
         public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.7f;
 
-        public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1f;
+        public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1.75f;
 
         public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
 

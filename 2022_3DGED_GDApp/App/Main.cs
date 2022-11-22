@@ -22,6 +22,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing.Text;
 using System.Reflection;
 using Application = GD.Engine.Globals.Application;
@@ -406,7 +407,7 @@ namespace GD.App
             float timerScale = 1.5f;
 
             perfUtility.infoList.Add(
-                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.White, timerScale * Vector2.One)
+                new TimerInfo(_spriteBatch, spriteFont, "Time Remaining: ", Color.OrangeRed, timerScale * Vector2.One)
                 );
 
             //add to the component list otherwise it wont have its Update or Draw called!
@@ -1662,7 +1663,7 @@ namespace GD.App
             var gameObject = new GameObject("electronics aisle shelf",
                         ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             var model_path = "Assets/Models/Aisles/Electronics/electronics_aisle_shelf";
 
@@ -1677,7 +1678,32 @@ namespace GD.App
 
             sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion
+            #endregion Electronics Aisle Shelf
+
+            #region Fuse
+
+            gameObject = new GameObject("fuse", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform
+                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
+                new Vector3(MathHelper.PiOver2, 0, 0),
+                new Vector3(-10, 2.75f, -67));
+
+            model_path = "Assets/Models/Fuse/fuse";
+            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            gameObject.AddComponent(new InteractableBehaviour());
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Fuse
         }
 
         private void InitializeBeveragesAisle(string texture_path)
@@ -1930,10 +1956,10 @@ namespace GD.App
             gameObject = new GameObject("office keycard",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
             texture_path = "Assets/Textures/Props/Office/keycard_albedo";
 
-            model_path = "Assets/Models/Office/office_keycard";
+            model_path = "Assets/Models/Keycard/keycard_unapplied";
 
             renderer = InitializeRenderer(
                     model_path,
@@ -1943,6 +1969,8 @@ namespace GD.App
                     );
 
             gameObject.AddComponent(renderer);
+
+            gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 
