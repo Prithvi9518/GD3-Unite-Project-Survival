@@ -239,6 +239,8 @@ namespace GD.App
 
         #endregion Office Room Texture Paths
 
+        public static readonly string SHELF_TEXTURE_PATH = "Assets/Textures/shop_shelf";
+
         public static readonly string CHECKOUT_DESK_TEXTURE_BASE_PATH = "Assets/Textures/Shopping Centre/Checkout Desk/";
 
         public static readonly string BIN_TEXTURES_PATH = "Assets/Textures/Shopping Centre/Bins/";

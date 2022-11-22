@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
-#define DEMO
-#define SHOW_DEBUG_INFO
+//#define DEMO
+//#define SHOW_DEBUG_INFO
 #define SHOW_TIMER_TEXT
 
 #endregion
@@ -49,12 +49,6 @@ namespace GD.App
         private EventDispatcher eventDispatcher;
         private StateManager stateManager;
 
-#if DEMO
-
-        private event EventHandler OnChanged;
-
-#endif
-
         #endregion Fields
 
         #region Constructors
@@ -70,66 +64,6 @@ namespace GD.App
 
         #region Actions - Initialize
 
-#if DEMO
-
-        private void DemoCode()
-        {
-            //shows how we can create an event, register for it, and raise it in Main::Update() on Keys.E press
-            DemoEvent();
-
-            //shows us how to listen to a specific event
-            DemoStateManagerEvent();
-
-            Demo3DSoundTree();
-        }
-
-        private void Demo3DSoundTree()
-        {
-            //var camera = Application.CameraManager.ActiveCamera.AudioListener;
-            //var audioEmitter = //get tree, get emitterbehaviour, get audio emitter
-
-            //object[] parameters = {"sound name", audioListener, audioEmitter};
-
-            //EventDispatcher.Raise(new EventData(EventCategoryType.Sound,
-            //    EventActionType.OnPlay3D, parameters));
-
-            //throw new NotImplementedException();
-        }
-
-        private void DemoStateManagerEvent()
-        {
-            EventDispatcher.Subscribe(EventCategoryType.Player, HandleEvent);
-        }
-
-        private void HandleEvent(EventData eventData)
-        {
-            switch (eventData.EventActionType)
-            {
-                case EventActionType.OnWin:
-                    System.Diagnostics.Debug.WriteLine(eventData.Parameters[0] as string);
-                    break;
-
-                case EventActionType.OnLose:
-                    System.Diagnostics.Debug.WriteLine(eventData.Parameters[2] as string);
-                    break;
-
-                default:
-                    break;
-            }
-        }
-
-        private void DemoEvent()
-        {
-            OnChanged += HandleOnChanged;
-        }
-
-        private void HandleOnChanged(object sender, EventArgs e)
-        {
-            System.Diagnostics.Debug.WriteLine($"{e} was sent by {sender}");
-        }
-
-#endif
-
         protected override void Initialize()
         {
             //moved spritebatch initialization here because we need it in InitializeDebug() below
@@ -143,10 +77,6 @@ namespace GD.App
 
 #if SHOW_DEBUG_INFO
             InitializeDebug();
-#endif
-
-#if DEMO
-            DemoCode();
 #endif
 
 #if SHOW_TIMER_TEXT
@@ -188,13 +118,6 @@ namespace GD.App
 
             //add non-collidable drawn stuff
             InitializeNonCollidableContent(worldScale);
-
-            //Raise all the events that I want to happen at the start
-            //object[] parameters = { "epic_soundcue" };
-            //EventDispatcher.Raise(
-            //    new EventData(EventCategoryType.Player,
-            //    EventActionType.OnSpawnObject,
-            //    parameters));
         }
 
         private void SetTitle(string title)
@@ -374,23 +297,6 @@ namespace GD.App
 
                 sceneManager.ActiveScene.Add(gameObject);
             }
-        }
-
-        private void TestingInteractableItem()
-        {
-            var gameObject = new GameObject("interactable", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.7f * Vector3.One, null, new Vector3(0, 3, 1));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Props/Crates/crate2");
-
-            var model = Content.Load<Model>("Assets/Models/sphere");
-
-            var mesh = new Engine.ModelMesh(_graphics.GraphicsDevice, model);
-            gameObject.AddComponent(new Renderer(new GDBasicEffect(unlitEffect),
-                new Material(texture, 1),
-                mesh));
-            gameObject.AddComponent(new InteractableBehaviour());
-
-            sceneManager.ActiveScene.Add(gameObject);
         }
 
         private void InitializeTimerText()
@@ -811,7 +717,7 @@ namespace GD.App
             for (int i = 1; i <= 5; i++)
             {
                 gameObject = new GameObject("barricade " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = barricades_base_path + i;
 
@@ -819,8 +725,7 @@ namespace GD.App
                     model_path,
                     texture_base_start + "Barricade/barricade",
                     gdBasicEffect,
-                    1,
-                    Color.White
+                    1
                     );
 
                 gameObject.AddComponent(renderer);
@@ -872,7 +777,7 @@ namespace GD.App
             for (int i = 1; i <= 3; i++)
             {
                 gameObject = new GameObject("scaffolding " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = scaffolding_base_path + i;
 
@@ -880,8 +785,7 @@ namespace GD.App
                     model_path,
                     "Assets/Textures/Shopping Centre/Scaffolding/scaffolding",
                     gdBasicEffect,
-                    1,
-                    Color.White
+                    1
                     );
 
                 gameObject.AddComponent(renderer);
@@ -937,7 +841,7 @@ namespace GD.App
             for (int i = 1; i <= 15; i++)
             {
                 gameObject = new GameObject("ligth " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = coffee_chairs_base_path + i;
 
@@ -971,7 +875,7 @@ namespace GD.App
             var gameObject = new GameObject("generator door",
                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door",
@@ -999,7 +903,7 @@ namespace GD.App
             var gameObject = new GameObject("exit door",
                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Exit Door/exit_door",
@@ -1049,7 +953,7 @@ namespace GD.App
             #region Coke Vending Machine
 
             var gameObject = new GameObject("vending machine 1", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer(
                     model_path + "1",
@@ -1127,7 +1031,7 @@ namespace GD.App
                 gameObject = new GameObject("water dispenser " + (i + 1),
                     ObjectType.Static, RenderType.Opaque);
 
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 renderer = InitializeRenderer(
                     model_base_path + (i + 1),
@@ -1159,7 +1063,7 @@ namespace GD.App
             var gameObject = new GameObject("coffee shop base",
                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             renderer = InitializeRenderer(
                     model_path + "base",
@@ -1232,7 +1136,7 @@ namespace GD.App
             for (int i = 1; i <= 4; i++)
             {
                 gameObject = new GameObject("coffee chair " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = coffee_chairs_base_path + i;
 
@@ -1268,7 +1172,7 @@ namespace GD.App
                 gameObject = new GameObject("Table " + (i + 1),
                     ObjectType.Static, RenderType.Opaque);
 
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 renderer = InitializeRenderer(
                 model_base_path + (i + 1),
@@ -1288,7 +1192,7 @@ namespace GD.App
         {
             #region Aisles
 
-            var texture_path = "Assets/Textures/shop_shelf";
+            var texture_path = AppData.SHELF_TEXTURE_PATH;
             InitializeClothesAisle(texture_path);
             InitializeBeautyAisle(texture_path);
             InitializeBeveragesAisle(texture_path);
@@ -1301,26 +1205,6 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeWallAisle(string texture_path)
-        {
-            var gameObject = new GameObject("wall aisle",
-                       ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-            var model_path = "Assets/Models/Aisles/Wall Aisle/wall_aisle";
-
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(unlitEffect),
-                    1
-                    );
-
-            gameObject.AddComponent(renderer);
-
-            sceneManager.ActiveScene.Add(gameObject);
-        }
-
         private void InitializeShutter()
         {
             #region Shutter
@@ -1328,7 +1212,7 @@ namespace GD.App
             var gameObject = new GameObject("shutter",
                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
             var texture_path = "Assets/Textures/Shopping Centre/Shutter/shutter_rust";
 
             var model_path = "Assets/Models/Shopping Centre/Doors/Shutter/shutter_model";
@@ -1354,7 +1238,7 @@ namespace GD.App
             var gameObject = new GameObject("fuse box",
                                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             var texture_path = "Assets/Textures/Props/Generator_Room/fuse_box_diffuse";
 
@@ -1378,7 +1262,7 @@ namespace GD.App
             gameObject = new GameObject("gate access machine",
                                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
@@ -1402,7 +1286,7 @@ namespace GD.App
             gameObject = new GameObject("generator",
                                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             texture_path = "Assets/Textures/Props/Generator_Room/generator";
 
@@ -1426,7 +1310,7 @@ namespace GD.App
             gameObject = new GameObject("lever",
                                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             texture_path = "Assets/Textures/Props/Generator_Room/lever_base_colour";
 
@@ -1450,7 +1334,7 @@ namespace GD.App
             gameObject = new GameObject("panel",
                                     ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             texture_path = "Assets/Textures/Props/Generator_Room/panel_base_colour";
 
@@ -1474,7 +1358,7 @@ namespace GD.App
             gameObject = new GameObject("electrical box",
                                         ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             texture_path = "Assets/Textures/Props/Generator_Room/metal";
 
@@ -1510,7 +1394,7 @@ namespace GD.App
             for (int i = 1; i <= 8; i++)
             {
                 gameObject = new GameObject("wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 string model_path = main_wall_base_path + i;
 
@@ -1579,6 +1463,28 @@ namespace GD.App
             #endregion Door Walls
 
             #endregion
+        }
+
+        #region Aisles
+
+        private void InitializeWallAisle(string texture_path)
+        {
+            var gameObject = new GameObject("wall aisle",
+                       ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            var model_path = "Assets/Models/Aisles/Wall Aisle/wall_aisle";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            sceneManager.ActiveScene.Add(gameObject);
         }
 
         private void InitializeToysAisle(string texture_path)
@@ -1781,6 +1687,8 @@ namespace GD.App
             #endregion
         }
 
+        #endregion
+
         private void InitializeOfficeModels()
         {
             GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
@@ -1790,8 +1698,7 @@ namespace GD.App
             var gameObject = new GameObject("office chair",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One,
-                new Vector3(0, 0, 0), new Vector3(0, 0, 0));
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
             var texture_path = "Assets/Textures/Props/Office/ChairSetT2_Diffuse";
 
             var model_path = "Assets/Models/Office/office_chair";
@@ -1814,7 +1721,7 @@ namespace GD.App
             gameObject = new GameObject("office table",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One,
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
                 new Vector3(0, 0, 0), new Vector3(0, 0, 0));
             texture_path = "Assets/Textures/Props/Office/TabletextureSet1_Diffuse";
 
@@ -1841,7 +1748,7 @@ namespace GD.App
             for (int i = 1; i <= 4; i++)
             {
                 gameObject = new GameObject("office shelf " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 model_path = model_base_path + i;
 
@@ -1864,7 +1771,7 @@ namespace GD.App
             gameObject = new GameObject("office rug",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
             texture_path = "Assets/Textures/Props/Crates/crate1";
 
             model_path = "Assets/Models/Office/office_rug";
@@ -1887,7 +1794,7 @@ namespace GD.App
             gameObject = new GameObject("office pc",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
             texture_path = "Assets/Textures/Props/Generator_Room/metal";
 
             model_path = "Assets/Models/Office/office_pc";
@@ -1910,7 +1817,7 @@ namespace GD.App
             gameObject = new GameObject("office screen",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
             texture_path = "Assets/Textures/Props/Generator_Room/metal";
 
             model_path = "Assets/Models/Office/office_screen";
@@ -1933,7 +1840,7 @@ namespace GD.App
             gameObject = new GameObject("office keyboard",
                 ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
             texture_path = "Assets/Textures/Props/Generator_Room/metal";
 
             model_path = "Assets/Models/Office/office_keyboard";
@@ -1984,7 +1891,7 @@ namespace GD.App
             for (int i = 1; i <= 4; i++)
             {
                 gameObject = new GameObject("office drawer " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
                 model_path = model_base_path + i;
 
@@ -2243,25 +2150,6 @@ namespace GD.App
                 cameraManager.SetActiveCamera(AppData.THIRD_PERSON_CAMERA_NAME);
 
             #endregion Demo - Camera switching
-
-            #region Demo - Gamepad
-
-            var thumbsL = Input.Gamepad.ThumbSticks(false);
-            //   System.Diagnostics.Debug.WriteLine(thumbsL);
-
-            var thumbsR = Input.Gamepad.ThumbSticks(false);
-            //     System.Diagnostics.Debug.WriteLine(thumbsR);
-
-            //    System.Diagnostics.Debug.WriteLine($"A: {Input.Gamepad.IsPressed(Buttons.A)}");
-
-            #endregion Demo - Gamepad
-
-            #region Demo - Raising events using GDEvent
-
-            if (Input.Keys.WasJustPressed(Keys.E))
-                OnChanged.Invoke(this, null); //passing null for EventArgs but we'll make our own class MyEventArgs::EventArgs later
-
-            #endregion
 
 #endif
             //fixed a bug with components not getting Update called
