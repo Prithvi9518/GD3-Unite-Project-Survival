@@ -21,7 +21,7 @@ namespace GD.Engine
             if (target != null)
             {
                 //use target position + offset to generate new camera position
-                var newPosition = target.Transform.translation
+                var newPosition = target.Transform.Translation
                     + new Vector3(0, 2, 10);
 
                 //set new camera position

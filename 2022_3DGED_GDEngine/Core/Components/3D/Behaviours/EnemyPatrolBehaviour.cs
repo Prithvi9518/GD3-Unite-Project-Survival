@@ -38,7 +38,7 @@ namespace GD.Engine
         /// <param name="gameTime"></param>
         private void MoveToNextWaypoint(GameTime gameTime)
         {
-            float distance = Vector3.Distance(transform.translation, waypoints[currentWaypointIndex]);
+            float distance = Vector3.Distance(transform.Translation, waypoints[currentWaypointIndex]);
 
             if (distance < margin)
             {
@@ -48,12 +48,12 @@ namespace GD.Engine
             {
                 Vector3 currentWaypoint = waypoints[currentWaypointIndex];
 
-                Vector3 direction = currentWaypoint - transform.translation;
+                Vector3 direction = currentWaypoint - transform.Translation;
                 direction.Normalize();
 
                 float targetRotation = GetTargetRotation(currentWaypoint);
 
-                transform.SetRotation(transform.rotation.X, targetRotation, transform.rotation.Z);
+                transform.SetRotation(transform.Rotation.X, targetRotation, transform.Rotation.Z);
 
                 Vector3 translation = direction * enemyMovementSpeed * gameTime.ElapsedGameTime.Milliseconds;
                 transform.Translate(translation);
@@ -72,8 +72,8 @@ namespace GD.Engine
 
             float targetRotation = Convert.ToSingle(
                 Math.Atan2(
-                    -(transform.translation.Z - currentWaypoint.Z),
-                    transform.translation.X - currentWaypoint.X
+                    -(transform.Translation.Z - currentWaypoint.Z),
+                    transform.Translation.X - currentWaypoint.X
                 )
             );
 

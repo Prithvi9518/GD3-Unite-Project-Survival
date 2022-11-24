@@ -39,6 +39,7 @@ namespace GD.Engine
         /// </summary>
         /// <see cref="Scene"/>
         private RenderType renderType;
+        private GameObjectType gameObjectType = GameObjectType.Prop;
 
         #endregion Fields
 
@@ -64,6 +65,7 @@ namespace GD.Engine
         /// Gets a list of all components (e.g. controllers, behaviours, camera) of the current object
         /// </summary>
         public List<Component> Components { get => components; }
+        public GameObjectType GameObjectType { get => gameObjectType; set => gameObjectType = value; }
 
         #endregion Properties
 
@@ -159,5 +161,40 @@ namespace GD.Engine
         }
 
         #endregion Actions - Update
+
+        #region Utility
+
+        /// <summary>
+        /// Object to target vector, also provides access to distance from object to target
+        /// </summary>
+        /// <param name="target"></param>
+        /// <param name="distance"></param>
+        /// <returns></returns>
+        public Vector3 GetNormalizedVectorTo(GameObject target, out float distance)
+        {
+            //camera to target object vector
+            Vector3 vectorToTarget = target.Transform.Translation - transform.Translation;
+
+            //distance from camera to target
+            distance = vectorToTarget.Length();
+
+            //camera to target object vector
+            vectorToTarget.Normalize();
+
+            return vectorToTarget;
+        }
+
+        /// <summary>
+        /// Object to target vector, no distance
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public Vector3 GetNormalizedVectorTo(GameObject target)
+        {
+            //camera to target object vector
+            return Vector3.Normalize(target.Transform.Translation - transform.Translation);
+        }
+
+        #endregion Utility
     }
 }

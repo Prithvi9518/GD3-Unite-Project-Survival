@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GD.Core.Types;
+using GD.Engine;
+using Microsoft.Xna.Framework;
+using SharpDX.Direct2D1.Effects;
 using System;
 
 /// <summary>

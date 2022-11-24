@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GD.Engine
 {
-    public class ModelMesh : Mesh
+    public class ModelMesh : TexturedMesh<VertexPositionNormalTexture>
     {
         private Model model;
 

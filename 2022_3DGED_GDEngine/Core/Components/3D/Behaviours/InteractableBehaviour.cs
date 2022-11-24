@@ -40,7 +40,7 @@ namespace GD.Engine
 
         public float GetDistance()
         {
-            float distance = Vector3.Distance(target.Transform.translation, transform.translation);
+            float distance = Vector3.Distance(target.Transform.Translation, transform.Translation);
             return distance;
         }
 

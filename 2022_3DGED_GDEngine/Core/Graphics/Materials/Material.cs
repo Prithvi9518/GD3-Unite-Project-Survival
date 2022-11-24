@@ -15,9 +15,9 @@ namespace GD.Engine
 
         #region Properties
 
-        public Texture2D Diffuse { get => diffuse; protected set => diffuse = value; }
-        public float Alpha { get => alpha; protected set => alpha = value; }
-        public Color DiffuseColor { get => diffuseColor; protected set => diffuseColor = value; }
+        public Texture2D Diffuse { get => diffuse; set => diffuse = value; }
+        public float Alpha { get => alpha; set => alpha = value; }
+        public Color DiffuseColor { get => diffuseColor; set => diffuseColor = value; }
 
         #endregion Properties
 

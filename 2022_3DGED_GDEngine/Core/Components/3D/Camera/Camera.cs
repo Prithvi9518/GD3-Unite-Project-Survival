@@ -54,7 +54,7 @@ namespace GD.Engine
             get
             {
                 //TODO - improve so not always calculated
-                return Matrix.CreateLookAt(transform.translation, transform.translation + transform.World.Forward, transform.World.Up);
+                return Matrix.CreateLookAt(transform.Translation, transform.Translation + transform.World.Forward, transform.World.Up);
             }
         }
 

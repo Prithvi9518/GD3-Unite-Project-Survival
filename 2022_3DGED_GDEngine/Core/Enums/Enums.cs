@@ -1,5 +1,17 @@
 ﻿namespace GD.Engine
 {
+    public enum GameObjectType : sbyte
+    {
+        Interactable,
+        Collectible,
+        Consumable,
+        Prop,
+        Player,
+        NPC,
+        Enemy,
+        Architecture,
+    }
+
     public enum TurnDirectionType : sbyte
     {
         Left = 1,

@@ -87,8 +87,7 @@ namespace GD.Engine.Utilities
 
         public override void Draw(Vector2 position)
         {
-            spriteBatch.DrawString(spriteFont, $"{label}", position, color,
-                rotation, origin, scale, effects, layerDepth);
+            spriteBatch.DrawString(spriteFont, $"{label}", position, color, rotation, origin, scale, effects, layerDepth);
         }
     }
 
@@ -108,17 +107,23 @@ namespace GD.Engine.Utilities
     }
 
     /// <summary>
-    /// Adds active camera position info to the performance UI
+    /// Adds transform info to the performance UI
     /// </summary>
-    public class CameraPositionInfo : SpriteBatchInfo
+    public class TransformInfo : SpriteBatchInfo
     {
-        public CameraPositionInfo(SpriteBatch spriteBatch, SpriteFont spriteFont, string label, Color color, Vector2 scale) : base(spriteBatch, spriteFont, label, color, scale)
+        private Transform transform;
+        private Func<Transform, string> infoFunction;
+
+        public TransformInfo(SpriteBatch spriteBatch, SpriteFont spriteFont, string label, Color color, Vector2 scale,
+            ref Transform transform, Func<Transform, string> infoFunction) : base(spriteBatch, spriteFont, label, color, scale)
         {
+            this.transform = transform;
+            this.infoFunction = infoFunction;
         }
 
         public override void Draw(Vector2 position)
         {
-            spriteBatch.DrawString(spriteFont, $"{label}{Application.CameraManager.ActiveCamera.transform.translation.GetNewRounded(1)}", position, color, rotation, origin, scale, effects, layerDepth);
+            spriteBatch.DrawString(spriteFont, $"{label}{infoFunction(transform)}", position, color, rotation, origin, scale, effects, layerDepth);
         }
     }
 
@@ -133,7 +138,7 @@ namespace GD.Engine.Utilities
 
         public override void Draw(Vector2 position)
         {
-            spriteBatch.DrawString(spriteFont, $"{label}{Application.CameraManager.ActiveCamera.transform.rotation.GetNewRounded(2)}", position, color, rotation, origin, scale, effects, layerDepth);
+            spriteBatch.DrawString(spriteFont, $"{label}{Application.CameraManager.ActiveCamera.transform.Rotation.GetNewRounded(2)}", position, color, rotation, origin, scale, effects, layerDepth);
         }
     }
 

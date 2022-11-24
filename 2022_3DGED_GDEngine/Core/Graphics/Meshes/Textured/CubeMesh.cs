@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace GD.Engine
 {
-    public class CubeMesh : Mesh
+    public class CubeMesh : TexturedMesh<VertexPositionNormalTexture>
     {
         public CubeMesh(GraphicsDevice graphicsDevice)
             : base(graphicsDevice)

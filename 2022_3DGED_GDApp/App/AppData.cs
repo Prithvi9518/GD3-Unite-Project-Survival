@@ -63,6 +63,8 @@ namespace GD.App
         public static readonly float FIRST_PERSON_HALF_FOV
              = MathHelper.ToRadians(75);
 
+        public static readonly float FIRST_PERSON_CAMERA_SMOOTH_FACTOR = 1f;
+
         #endregion Camera - First Person
 
         #region Camera - Third Person
@@ -199,6 +201,12 @@ namespace GD.App
         internal static double MAX_GAME_TIME_IN_MSECS = 180000;
 
         #endregion Timer Variables
+
+        #region Physics Variables
+
+        public static readonly Vector3 GRAVITY = new Vector3(0, -9.81f, 0);
+
+        #endregion
 
         #region Model Paths
 

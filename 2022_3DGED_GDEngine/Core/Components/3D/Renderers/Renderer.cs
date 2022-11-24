@@ -11,17 +11,25 @@ namespace GD.Engine
 
         private IEffect effect; //effect
         private Material material;  //textures, alpha
-        private Mesh mesh;  //vertices and indices
+        private Mesh<VertexPositionNormalTexture> mesh;  //vertices and indices
 
         #endregion Fields
 
+        #region Properties
+
+        public IEffect Effect { get => effect; set => effect = value; }
+        public Material Material { get => material; set => material = value; }
+        public Mesh<VertexPositionNormalTexture> Mesh { get => mesh; set => mesh = value; }
+
+        #endregion Properties
+
         #region Constructors
 
-        public Renderer(IEffect effect, Material material, Mesh mesh)
+        public Renderer(IEffect effect, Material material, Mesh<VertexPositionNormalTexture> mesh)
         {
-            this.effect = effect;
-            this.material = material;
-            this.mesh = mesh;
+            Effect = effect;
+            Material = material;
+            Mesh = mesh;
         }
 
         #endregion Constructors
@@ -30,14 +38,6 @@ namespace GD.Engine
 
         public virtual void Draw(GraphicsDevice graphicsDevice, Camera camera)
         {
-            //set WVP as always
-            //effect.SetWorld(transform.World);
-            //effect.SetCamera(camera);
-            //effect.SetMaterial(material);
-
-            ////apply all settings
-            //effect.Apply();
-
             //draw the object
             mesh.Draw(graphicsDevice, effect, transform, camera, material);
         }

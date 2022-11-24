@@ -6,8 +6,6 @@
 
 #endregion
 
-using BEPUphysics;
-using BEPUphysics.Entities.Prefabs;
 using GD.Core;
 using GD.Engine;
 using GD.Engine.Events;
@@ -77,7 +75,7 @@ namespace GD.App
             InitializeLevel(AppData.GAME_TITLE, AppData.SKYBOX_WORLD_SCALE);
 
 #if SHOW_DEBUG_INFO
-            InitializeDebug();
+            InitializeDebug(true);
 #endif
 
 #if SHOW_TIMER_TEXT
@@ -284,8 +282,9 @@ namespace GD.App
                 _graphics.PreferredBackBufferHeight))); // 3000
 
             // First person controller component
-            cameraGameObject.AddComponent(new FirstPersonController(AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, true));
+            cameraGameObject.AddComponent(new FirstPersonController(
+                AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
+                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
@@ -309,9 +308,6 @@ namespace GD.App
             InitializeShoppingCentre();
 
             InitializeEnemies();
-
-            // testing interactable code
-            //TestingInteractableItem();
         }
 
         private Renderer InitializeRenderer(string modelPath, string texturePath, GDBasicEffect effect, float alpha)
@@ -2139,7 +2135,7 @@ namespace GD.App
             //wait...SoundManager has no update? Yes, playing sounds is handled by an internal MonoGame thread - so we're off the hook!
 
             //add the physics manager update thread
-            physicsManager = new PhysicsManager(this);
+            physicsManager = new PhysicsManager(this, AppData.GRAVITY);
             Components.Add(physicsManager);
 
             //add state manager for inventory and countdown
@@ -2152,7 +2148,7 @@ namespace GD.App
             //TODO - add texture dictionary, soundeffect dictionary, model dictionary
         }
 
-        private void InitializeDebug()
+        private void InitializeDebug(bool showCollisionSkins = true)
         {
             //intialize the utility component
             var perfUtility = new PerfUtility(this, _spriteBatch,
@@ -2169,15 +2165,34 @@ namespace GD.App
             perfUtility.infoList.Add(new FPSInfo(_spriteBatch, spriteFont, "FPS:", Color.White, contentScale * Vector2.One));
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Camera -----------------------------------", Color.Yellow, headingScale * Vector2.One));
             perfUtility.infoList.Add(new CameraNameInfo(_spriteBatch, spriteFont, "Name:", Color.White, contentScale * Vector2.One));
-            perfUtility.infoList.Add(new CameraPositionInfo(_spriteBatch, spriteFont, "Pos:", Color.White, contentScale * Vector2.One));
-            perfUtility.infoList.Add(new CameraRotationInfo(_spriteBatch, spriteFont, "Rot:", Color.White, contentScale * Vector2.One));
+
+            var infoFunction = (Transform transform) =>
+            {
+                return transform.Translation.GetNewRounded(1).ToString();
+            };
+
+            perfUtility.infoList.Add(new TransformInfo(_spriteBatch, spriteFont, "Pos:", Color.White, contentScale * Vector2.One,
+                ref Application.CameraManager.ActiveCamera.transform, infoFunction));
+
+            infoFunction = (Transform transform) =>
+            {
+                return transform.Rotation.GetNewRounded(1).ToString();
+            };
+
+            perfUtility.infoList.Add(new TransformInfo(_spriteBatch, spriteFont, "Rot:", Color.White, contentScale * Vector2.One,
+                ref Application.CameraManager.ActiveCamera.transform, infoFunction));
+
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Object -----------------------------------", Color.Yellow, headingScale * Vector2.One));
             perfUtility.infoList.Add(new ObjectInfo(_spriteBatch, spriteFont, "Objects:", Color.White, contentScale * Vector2.One));
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Hints -----------------------------------", Color.Yellow, headingScale * Vector2.One));
             perfUtility.infoList.Add(new TextInfo(_spriteBatch, spriteFont, "Use mouse scroll wheel to change security camera FOV, F1-F4 for camera switch", Color.White, contentScale * Vector2.One));
 
             //add to the component list otherwise it wont have its Update or Draw called!
+            // perfUtility.StatusType = StatusType.Drawn | StatusType.Updated;
             Components.Add(perfUtility);
+
+            if (showCollisionSkins)
+                Components.Add(new PhysicsDebugDrawer(this));
         }
 
         #endregion Actions - Engine Specific

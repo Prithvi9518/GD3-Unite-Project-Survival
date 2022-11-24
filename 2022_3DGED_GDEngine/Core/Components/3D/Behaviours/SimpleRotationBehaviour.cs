@@ -28,7 +28,7 @@ namespace GD.Engine
             //stuff
             //transform.rotation = transform.rotation + new Vector3(0, MathHelper.ToRadians(1), 0);
 
-            transform.rotation = transform.rotation + gameTime.ElapsedGameTime.Milliseconds * rotationSpeedInRadians * rotationAxis;
+            transform.SetRotation(transform.Rotation + gameTime.ElapsedGameTime.Milliseconds * rotationSpeedInRadians * rotationAxis);
 
             //dont call parent since its Update does nothing
             //base.Update(gameTime);

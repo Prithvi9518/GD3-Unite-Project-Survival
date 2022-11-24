@@ -27,27 +27,31 @@ namespace GD.Engine
         private bool crouchEnabled = false;
         private bool needsToCrouch = true;
 
+        private float smoothFactor;
+
         #endregion Fields
 
         #region Temps
 
         protected Vector3 translation = Vector3.Zero;
         protected Vector3 rotation = Vector3.Zero;
+        private Vector2 oldDelta;
 
         #endregion Temps
 
         #region Constructors
 
-        public FirstPersonController(float moveSpeed, float strafeSpeed, float rotationSpeed, bool isGrounded = true)
-    : this(moveSpeed, strafeSpeed, rotationSpeed * Vector2.One, isGrounded)
+        public FirstPersonController(float moveSpeed, float strafeSpeed, float rotationSpeed, float smoothFactor = 0.25f, bool isGrounded = true)
+    : this(moveSpeed, strafeSpeed, rotationSpeed * Vector2.One, smoothFactor, isGrounded)
         {
         }
 
-        public FirstPersonController(float moveSpeed, float strafeSpeed, Vector2 rotationSpeed, bool isGrounded = true)
+        public FirstPersonController(float moveSpeed, float strafeSpeed, Vector2 rotationSpeed, float smoothFactor, bool isGrounded)
         {
             this.moveSpeed = moveSpeed;
             this.strafeSpeed = strafeSpeed;
             this.rotationSpeed = rotationSpeed;
+            this.smoothFactor = smoothFactor;
             this.isGrounded = isGrounded;
         }
 
@@ -148,12 +152,12 @@ namespace GD.Engine
 
             if (crouchEnabled && needsToCrouch)
             {
-                transform.translation.Y = crouchedHeight;
+                transform.SetTranslation(new Vector3(transform.Translation.X, crouchedHeight, transform.Translation.Z));
                 needsToCrouch = false;
             }
             else if (!crouchEnabled)
             {
-                transform.translation.Y = normalHeight;
+                transform.SetTranslation(new Vector3(transform.Translation.X, normalHeight, transform.Translation.Z));
             }
         }
 
@@ -171,18 +175,24 @@ namespace GD.Engine
         protected virtual void HandleMouseInput(GameTime gameTime)
         {
             rotation = Vector3.Zero;
-            var delta = Input.Mouse.Delta;
+            var currentDelta = Input.Mouse.Delta;
 
-            if (delta.Length() != 0)
+            //smooth camera movement
+            var newDelta = oldDelta.Lerp(currentDelta, smoothFactor);
+
+            //did we move mouse?
+            if (newDelta.Length() != 0)
             {
                 //Q - where are X and Y reversed?
-                rotation.Y -= delta.X * rotationSpeed.X * gameTime.ElapsedGameTime.Milliseconds;
-                rotation.X -= delta.Y * rotationSpeed.Y * gameTime.ElapsedGameTime.Milliseconds;
+                rotation.Y -= newDelta.X * rotationSpeed.X * gameTime.ElapsedGameTime.Milliseconds;
+                rotation.X -= newDelta.Y * rotationSpeed.Y * gameTime.ElapsedGameTime.Milliseconds;
 
                 ClampRotationX();
 
                 transform.SetRotation(rotation);
             }
+            //store current to be used for next update of smoothing
+            oldDelta = newDelta;
         }
 
         #endregion Actions - Update, Input

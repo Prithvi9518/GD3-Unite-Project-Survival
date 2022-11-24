@@ -8,7 +8,7 @@ namespace GD.Engine.Managers
     /// <summary>
     /// Stores all cameras and updates the active camera
     /// </summary>
-    public class CameraManager : GameComponent
+    public class CameraManager : PausableGameComponent
     {
         #region Fields
 
@@ -91,13 +91,16 @@ namespace GD.Engine.Managers
 
         public override void Update(GameTime gameTime)
         {
-            if (activeGameObject == null)
-                throw new ArgumentNullException("Active object not set. " +
-                    "Did you add camera in Main::InitializeLevel()? " +
-                    "Did you call SetActiveCamera() in Main::InitializeLevel()? " +
-                    "Is the camera name correct in SetActiveCamera()?");
+            if (StatusType != StatusType.Off)
+            {
+                if (activeGameObject == null)
+                    throw new ArgumentNullException("Active object not set. " +
+                        "Did you add camera in Main::InitializeLevel()? " +
+                        "Did you call SetActiveCamera() in Main::InitializeLevel()? " +
+                        "Is the camera name correct in SetActiveCamera()?");
 
-            activeGameObject.Update(gameTime);
+                activeGameObject.Update(gameTime);
+            }
         }
 
         #endregion Actions - Update
