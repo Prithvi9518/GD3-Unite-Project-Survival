@@ -61,9 +61,9 @@ namespace GD.App
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
 
         public static readonly float FIRST_PERSON_HALF_FOV
-             = MathHelper.ToRadians(75);
+             = MathHelper.ToRadians(45);
 
-        public static readonly float FIRST_PERSON_CAMERA_SMOOTH_FACTOR = 1f;
+        public static readonly float FIRST_PERSON_CAMERA_SMOOTH_FACTOR = 0.1f;
 
         #endregion Camera - First Person
 
@@ -114,10 +114,10 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_SPEED_SINGLE = 0.001f;
 
         //why bother? can you tilt your head at the same speed as you rotate it?
-        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.0004f, 0.0003f);
+        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.004f, 0.003f);
 
-        public static readonly float PLAYER_ROTATE_MAX_X = 0.65f;
-        public static readonly float PLAYER_ROTATE_MIN_X = -0.75f;
+        public static readonly float PLAYER_ROTATE_MAX_X = 8f;
+        public static readonly float PLAYER_ROTATE_MIN_X = -10f;
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
         public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;

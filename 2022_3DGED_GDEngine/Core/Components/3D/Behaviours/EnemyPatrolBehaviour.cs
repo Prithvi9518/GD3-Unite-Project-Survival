@@ -53,7 +53,7 @@ namespace GD.Engine
 
                 float targetRotation = GetTargetRotation(currentWaypoint);
 
-                transform.SetRotation(transform.Rotation.X, targetRotation, transform.Rotation.Z);
+                transform.SetRotation(transform.Rotation.X, MathHelper.ToDegrees(targetRotation), transform.Rotation.Z);
 
                 Vector3 translation = direction * enemyMovementSpeed * gameTime.ElapsedGameTime.Milliseconds;
                 transform.Translate(translation);
