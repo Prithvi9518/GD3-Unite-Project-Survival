@@ -314,10 +314,10 @@ namespace GD.App
 
             #region Main Walls
 
-            string main_wall_base_path = "Assets/Models/Walls/wall_";
+            string main_wall_base_path = "Assets/Models/Walls/Unapplied/wall_";
 
             gameObject = new GameObject("wall " + 1, ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, AppData.WALL_TRANSLATIONS[0]);
 
             string model_path = main_wall_base_path + 1;
 
@@ -331,7 +331,12 @@ namespace GD.App
             gameObject.AddComponent(renderer);
 
             var collider = new Collider(gameObject, true);
-            collider.AddPrimitive(AppData.WALL_COLLIDER_BOXES[0],
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(0.5f, 10, 142)
+                    ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
 
@@ -432,6 +437,8 @@ namespace GD.App
             InitializeShoppingCentre();
 
             InitializeEnemies();
+
+            InitializePickups();
         }
 
         private Renderer InitializeRenderer(string modelPath, string texturePath, GDBasicEffect effect, float alpha)
@@ -454,6 +461,64 @@ namespace GD.App
             return new Renderer(effect,
                 new Material(texture, alpha, color),
                 mesh);
+        }
+
+        private void InitializePickups()
+        {
+            GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+            #region Office Keycard
+
+            var gameObject = new GameObject("office keycard",
+                ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+
+            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+            string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
+
+            string model_path = "Assets/Models/Keycard/keycard_unapplied";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    gdBasicEffect,
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            gameObject.AddComponent(new InteractableBehaviour());
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
+
+            #region Fuse
+
+            gameObject = new GameObject("fuse", ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+
+            gameObject.Transform = new Transform
+                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
+                new Vector3(MathHelper.PiOver2, 0, 0),
+                new Vector3(-10, 2.75f, -67));
+
+            model_path = "Assets/Models/Fuse/fuse";
+            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            gameObject.AddComponent(new InteractableBehaviour());
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Fuse
         }
 
         private void InitializeEnemies()
@@ -1775,31 +1840,6 @@ namespace GD.App
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Electronics Aisle Shelf
-
-            #region Fuse
-
-            gameObject = new GameObject("fuse", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform
-                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
-                new Vector3(MathHelper.PiOver2, 0, 0),
-                new Vector3(-10, 2.75f, -67));
-
-            model_path = "Assets/Models/Fuse/fuse";
-            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
-
-            renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(unlitEffect),
-                    1
-                    );
-
-            gameObject.AddComponent(renderer);
-            gameObject.AddComponent(new InteractableBehaviour());
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion Fuse
         }
 
         private void InitializeBeveragesAisle(string texture_path)
@@ -2043,31 +2083,6 @@ namespace GD.App
                     );
 
             gameObject.AddComponent(renderer);
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
-
-            #region Office Keycard
-
-            gameObject = new GameObject("office keycard",
-                ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
-            texture_path = "Assets/Textures/Props/Office/keycard_albedo";
-
-            model_path = "Assets/Models/Keycard/keycard_unapplied";
-
-            renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-            gameObject.AddComponent(renderer);
-
-            gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 

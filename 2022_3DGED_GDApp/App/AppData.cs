@@ -209,9 +209,14 @@ namespace GD.App
 
         #endregion
 
+        public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()
+        {
+            new Vector3(-41.75f, 5.5f, -21.5f)
+        };
+
         public static readonly List<Box> WALL_COLLIDER_BOXES = new List<Box>()
         {
-            new Box(new Vector3(0,3,0), Vector3.Zero, new Vector3(30, 20, 1))
+            new Box(new Vector3(-15,0,0), Vector3.Zero, new Vector3(1, 30, 20))
         };
 
         #region Model Paths
