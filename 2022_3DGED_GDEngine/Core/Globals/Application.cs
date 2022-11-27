@@ -42,7 +42,7 @@ namespace GD.Engine.Globals
         /// <summary>
         /// Gets or sets the scene manager.
         /// </summary>
-        public static SceneManager SceneManager { get; set; }
+        public static SceneManager<Scene> SceneManager { get; set; }
 
         /// <summary>
         /// Gets or sets the scene manager.
@@ -68,6 +68,11 @@ namespace GD.Engine.Globals
         /// Gets or sets the state manager.
         /// </summary>
         public static StateManager StateManager { get; internal set; }
+
+        /// <summary>
+        /// For the UI
+        /// </summary>
+        public static SceneManager<Scene2D> UISceneManager { get; internal set; }
 
         #endregion Properties
     }

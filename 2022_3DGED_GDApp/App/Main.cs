@@ -41,12 +41,14 @@ namespace GD.App
         private BasicEffect litEffect;
 
         private CameraManager cameraManager;
-        private SceneManager sceneManager;
+        private SceneManager<Scene> sceneManager;
         private SoundManager soundManager;
         private PhysicsManager physicsManager;
         private RenderManager renderManager;
         private EventDispatcher eventDispatcher;
         private StateManager stateManager;
+        private SceneManager<Scene2D> uiManager;
+        private Render2DManager uiRenderManager;
 
         #endregion Fields
 
@@ -2069,6 +2071,7 @@ namespace GD.App
             Application.SoundManager = soundManager;
 
             Application.StateManager = stateManager;
+            //Application.UISceneManager = uiManager;
         }
 
         private void InitializeInput()
@@ -2121,7 +2124,7 @@ namespace GD.App
             Components.Add(cameraManager);
 
             //big kahuna nr 1! this adds support to store, switch and Update() scene contents
-            sceneManager = new SceneManager(this);
+            sceneManager = new SceneManager<Scene>(this);
             //add to Components otherwise no Update()
             Components.Add(sceneManager);
 
@@ -2141,6 +2144,13 @@ namespace GD.App
             //add state manager for inventory and countdown
             stateManager = new StateManager(this, AppData.MAX_GAME_TIME_IN_MSECS);
             Components.Add(stateManager);
+
+            //add ui managers
+            //uiManager = new SceneManager<Scene2D>(this);
+            //Components.Add(uiManager);
+
+            //uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
+            //Components.Add(uiRenderManager);
         }
 
         private void InitializeDictionaries()

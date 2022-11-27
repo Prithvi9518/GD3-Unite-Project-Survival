@@ -153,9 +153,9 @@ namespace GD.App
 
         public static readonly List<Vector3> ENEMY_INITIAL_ROTATIONS = new List<Vector3>()
         {
-            new Vector3(0, MathHelper.PiOver2, 0),
-            new Vector3(0, MathHelper.Pi, 0),
-            new Vector3(0, MathHelper.PiOver2, 0)
+            new Vector3(0, 90, 0),
+            new Vector3(0, 180, 0),
+            new Vector3(0, 90, 0)
         };
 
         public static readonly List<List<Vector3>> ENEMY_WAYPOINTS_LIST = new List<List<Vector3>>()
