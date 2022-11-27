@@ -7,6 +7,7 @@
 
 using GD.Engine;
 using GD.Engine.Data;
+using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -207,6 +208,11 @@ namespace GD.App
         public static readonly Vector3 GRAVITY = new Vector3(0, -9.81f, 0);
 
         #endregion
+
+        public static readonly List<Box> WALL_COLLIDER_BOXES = new List<Box>()
+        {
+            new Box(new Vector3(0,3,0), Vector3.Zero, new Vector3(30, 20, 1))
+        };
 
         #region Model Paths
 

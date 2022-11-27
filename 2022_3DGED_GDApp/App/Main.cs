@@ -1,8 +1,8 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define SHOW_DEBUG_INFO
-#define SHOW_TIMER_TEXT
+#define SHOW_DEBUG_INFO
+//#define SHOW_TIMER_TEXT
 
 #endregion
 
@@ -14,6 +14,8 @@ using GD.Engine.Inputs;
 using GD.Engine.Managers;
 using GD.Engine.Parameters;
 using GD.Engine.Utilities;
+using JigLibX.Collision;
+using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
@@ -115,7 +117,7 @@ namespace GD.App
             InitializeScenes();
 
             //add collidable drawn stuff
-            //InitializeCollidableContent(worldScale);
+            InitializeCollidableContent(worldScale);
 
             //add non-collidable drawn stuff
             InitializeNonCollidableContent(worldScale);
@@ -300,6 +302,126 @@ namespace GD.App
 
         private void InitializeCollidableContent(float worldScale)
         {
+            InitializeCollidableWalls();
+        }
+
+        private void InitializeCollidableWalls()
+        {
+            var gdBasicEffect = new GDBasicEffect(litEffect);
+            var texture_path = "Assets/Textures/walls";
+            GameObject gameObject = null;
+            Renderer renderer = null;
+
+            #region Main Walls
+
+            string main_wall_base_path = "Assets/Models/Walls/wall_";
+
+            gameObject = new GameObject("wall " + 1, ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            string model_path = main_wall_base_path + 1;
+
+            renderer = InitializeRenderer(
+                model_path,
+                texture_path,
+                gdBasicEffect,
+                1
+                );
+
+            gameObject.AddComponent(renderer);
+
+            var collider = new Collider(gameObject, true);
+            collider.AddPrimitive(AppData.WALL_COLLIDER_BOXES[0],
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            //for (int i = 1; i <= 8; i++)
+            //{
+            //    gameObject = new GameObject("wall " + i, ObjectType.Static, RenderType.Opaque);
+            //    gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            //    string model_path = main_wall_base_path + i;
+
+            //    renderer = InitializeRenderer(
+            //        model_path,
+            //        texture_path,
+            //        gdBasicEffect,
+            //        1
+            //        );
+
+            //    gameObject.AddComponent(renderer);
+
+            //    var collider = new Collider(gameObject, true);
+            //    collider.AddPrimitive(new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        gameObject.Transform.Scale
+            //        ),
+            //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //        );
+
+            //    collider.Enable(gameObject, true, 10);
+            //    gameObject.AddComponent(collider);
+
+            //    sceneManager.ActiveScene.Add(gameObject);
+            //}
+
+            #endregion
+
+            #region Shutter Walls
+
+            //string shutter_wall_base_path = "Assets/Models/Walls/Shutter Walls/shutter_wall_";
+
+            //for (int i = 1; i <= 2; i++)
+            //{
+            //    gameObject = new GameObject("shutter wall " + i, ObjectType.Static, RenderType.Opaque);
+            //    gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            //    string model_path = shutter_wall_base_path + i;
+
+            //    renderer = InitializeRenderer(
+            //        model_path,
+            //        texture_path,
+            //        gdBasicEffect,
+            //        1
+            //        );
+
+            //    gameObject.AddComponent(renderer);
+
+            //    sceneManager.ActiveScene.Add(gameObject);
+            //}
+
+            #endregion
+
+            #region Door Walls
+
+            //string doors_wall_base_path = "Assets/Models/Walls/Door Walls/door_wall_";
+
+            //for (int i = 1; i <= 2; i++)
+            //{
+            //    gameObject = new GameObject("door wall " + i, ObjectType.Static, RenderType.Opaque);
+            //    gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            //    string model_path = doors_wall_base_path + i;
+
+            //    renderer = InitializeRenderer(
+            //        model_path,
+            //        texture_path,
+            //        gdBasicEffect,
+            //        1
+            //        );
+
+            //    gameObject.AddComponent(renderer);
+
+            //    sceneManager.ActiveScene.Add(gameObject);
+            //}
+
+            #endregion Door Walls
         }
 
         private void InitializeNonCollidableContent(float worldScale)
@@ -393,7 +515,7 @@ namespace GD.App
             InitializeOfficeModels();
             InitializeGeneratorRoomModels();
             InitializeFloors();
-            InitializeWalls();
+            //InitializeWalls();
             InitializeShoppingCentreAssets();
             InitializeAisles();
             InitializeCoffeeShop();
