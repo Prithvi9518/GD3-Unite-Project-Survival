@@ -211,12 +211,32 @@ namespace GD.App
 
         public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()
         {
-            new Vector3(-41.75f, 5.5f, -21.5f)
+            // Left wall
+            new Vector3(-42.4f, 5.5f, -21.5f),
+            // Back wall
+            new Vector3(0, 5.5f, 50.15f),
+            // Right wall
+            new Vector3(39f, 5.5f, -52)
         };
 
-        public static readonly List<Box> WALL_COLLIDER_BOXES = new List<Box>()
+        public static readonly List<Vector3> WALL_ROTATIONS = new List<Vector3>()
         {
-            new Box(new Vector3(-15,0,0), Vector3.Zero, new Vector3(1, 30, 20))
+            // Left wall
+            new Vector3(0, -0.55f, 0),
+            // Back wall
+            new Vector3(0, 0f, 0),
+            // Right wall
+            new Vector3(0, 0, 0)
+        };
+
+        public static readonly List<Vector3> WALL_SCALES = new List<Vector3>()
+        {
+            // Left wall
+            DEFAULT_OBJECT_SCALE * new Vector3(0.3f,2.8f,35.5f),
+            // Back wall
+            DEFAULT_OBJECT_SCALE * new Vector3(35.5f, 2.8f, 0.3f),
+            // Right wall
+            DEFAULT_OBJECT_SCALE * new Vector3(0.3f,2.8f,38f),
         };
 
         #region Model Paths

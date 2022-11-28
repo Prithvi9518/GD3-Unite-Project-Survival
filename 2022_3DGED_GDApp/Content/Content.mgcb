@@ -2449,7 +2449,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Walls/Shutter Walls/shutter_wall_2.fbx
 
-#begin Assets/Models/Walls/Unapplied/wall_1.fbx
+#begin Assets/Models/Walls/Unapplied/cube.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -2466,7 +2466,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Walls/Unapplied/wall_1.fbx
+/build:Assets/Models/Walls/Unapplied/cube.fbx
 
 #begin Assets/Models/Walls/wall_1.fbx
 /importer:FbxImporter

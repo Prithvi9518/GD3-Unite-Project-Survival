@@ -307,43 +307,47 @@ namespace GD.App
 
         private void InitializeCollidableWalls()
         {
-            var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture_path = "Assets/Textures/walls";
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
             GameObject gameObject = null;
             Renderer renderer = null;
 
             #region Main Walls
 
-            string main_wall_base_path = "Assets/Models/Walls/Unapplied/wall_";
+            string model_path = "Assets/Models/Walls/Unapplied/cube";
+            var texture_path = "Assets/Textures/walls";
 
-            gameObject = new GameObject("wall " + 1, ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, AppData.WALL_TRANSLATIONS[0]);
+            for (int i = 0; i < AppData.WALL_TRANSLATIONS.Count; i++)
+            {
+                gameObject = new GameObject("wall " + (i + 1), ObjectType.Static, RenderType.Opaque);
+                gameObject.Transform = new Transform(
+                    AppData.WALL_SCALES[i],
+                    AppData.WALL_ROTATIONS[i],
+                    AppData.WALL_TRANSLATIONS[i]);
 
-            string model_path = main_wall_base_path + 1;
+                renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    gdBasicEffect,
+                    1
+                    );
 
-            renderer = InitializeRenderer(
-                model_path,
-                texture_path,
-                gdBasicEffect,
-                1
-                );
+                gameObject.AddComponent(renderer);
 
-            gameObject.AddComponent(renderer);
+                var collider = new Collider(gameObject, true);
+                collider.AddPrimitive(
+                    new Box(
+                        gameObject.Transform.Translation,
+                        gameObject.Transform.Rotation,
+                        200 * gameObject.Transform.Scale
+                        ),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f)
+                    );
 
-            var collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    new Vector3(0.5f, 10, 142)
-                    ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+                collider.Enable(gameObject, true, 10);
+                gameObject.AddComponent(collider);
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
-
-            sceneManager.ActiveScene.Add(gameObject);
+                sceneManager.ActiveScene.Add(gameObject);
+            }
 
             //for (int i = 1; i <= 8; i++)
             //{
