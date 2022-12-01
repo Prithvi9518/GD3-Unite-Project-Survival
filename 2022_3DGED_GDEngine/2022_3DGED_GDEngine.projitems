@@ -26,6 +26,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Camera\Camera.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Base\UserInputController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\CameraFOVController.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\CollidableFirstPersonController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\FirstPersonCameraController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\FirstPersonController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\ThirdPersonController.cs" />
@@ -34,6 +35,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\RailController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Renderers\Renderer.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Scene\Scene.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\CharacterCollider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\Collider.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\Component.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\GameObject.cs" />
@@ -69,9 +71,12 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\KeyboardComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Inputs\MouseComponent.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\IProvideStats.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Interfaces\IStoreable.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\PhysicsManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\PickingManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\Render2DManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\RenderManager.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Core\Managers\UI\UserInterfaceManager.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\Data\Resolutions.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\Level\ILoadLevel.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Other\Screen\Screen.cs" />
