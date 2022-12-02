@@ -53,7 +53,6 @@ namespace GD.Engine
                 case EventActionType.OnPickup:
 
                     GameObject gameObject = eventData.Parameters[0] as GameObject;
-                    System.Diagnostics.Debug.WriteLine("Picked Up " + gameObject.Name);
 
                     Application.SceneManager.ActiveScene.Remove(
                         gameObject.ObjectType,

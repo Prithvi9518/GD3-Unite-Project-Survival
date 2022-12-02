@@ -41,7 +41,7 @@ namespace GD.App
         }
     }
 
-    public struct InventoryItemData
+    public class InventoryItemData
     {
         public string uniqueID;
         public string name;
@@ -49,6 +49,19 @@ namespace GD.App
         public string description;
         public Texture2D icon;
         public string cueName;
+        public GameObject gameObject;
+
+        public InventoryItemData(string uniqueID, string name, ItemType itemType, string description,
+            Texture2D icon, string cueName, GameObject gameObject)
+        {
+            this.uniqueID = uniqueID;
+            this.name = name;
+            this.itemType = itemType;
+            this.description = description;
+            this.icon = icon;
+            this.cueName = cueName;
+            this.gameObject = gameObject;
+        }
     }
 
     public class InventoryManager : PausableDrawableGameComponent
@@ -63,6 +76,17 @@ namespace GD.App
 
         private void HandlePickupEvent(EventData eventData)
         {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnPickup:
+                    InventoryItemData itemData = eventData.Parameters[1] as InventoryItemData;
+                    Add(itemData);
+                    PrintInventory();
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public void Add(InventoryItemData itemData)
@@ -98,7 +122,7 @@ namespace GD.App
         public void PrintInventory()
         {
             foreach (InventoryItem item in inventory)
-                Console.WriteLine("Item name: " + item.itemData.name);
+                System.Diagnostics.Debug.WriteLine("Item name: " + item.itemData.name);
         }
 
         public override void Update(GameTime gameTime)

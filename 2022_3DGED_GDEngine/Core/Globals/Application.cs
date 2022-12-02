@@ -74,6 +74,8 @@ namespace GD.Engine.Globals
         /// </summary>
         public static SceneManager<Scene2D> UISceneManager { get; internal set; }
 
+        public static InventoryManager InventoryManager { get; internal set; }
+
         #endregion Properties
     }
 }

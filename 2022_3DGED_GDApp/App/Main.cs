@@ -52,6 +52,8 @@ namespace GD.App
         private SceneManager<Scene2D> uiManager;
         private Render2DManager uiRenderManager;
 
+        private InventoryManager inventoryManager;
+
         #endregion Fields
 
         #region Constructors
@@ -2228,6 +2230,8 @@ namespace GD.App
 
             Application.StateManager = stateManager;
             //Application.UISceneManager = uiManager;
+
+            Application.InventoryManager = inventoryManager;
         }
 
         private void InitializeInput()
@@ -2307,6 +2311,9 @@ namespace GD.App
 
             //uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
             //Components.Add(uiRenderManager);
+
+            inventoryManager = new InventoryManager(this, StatusType.Drawn | StatusType.Updated);
+            Components.Add(inventoryManager);
         }
 
         private void InitializeDictionaries()
