@@ -19,8 +19,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\ColorLerpBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\CurveBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\CycledRotationBehaviour.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\EnemyPatrolBehaviour.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\InteractableBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\PickupBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Behaviours\SimpleRotationBehaviour.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Camera\Camera.cs" />
@@ -30,7 +28,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\FirstPersonCameraController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\FirstPersonController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\Camera\ThirdPersonController.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\InteractionController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\PlayerController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Controllers\RailController.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Components\Base\3D\Renderers\Renderer.cs" />
