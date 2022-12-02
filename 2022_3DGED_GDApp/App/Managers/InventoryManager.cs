@@ -1,5 +1,6 @@
 ﻿using GD.Engine;
 using GD.Engine.Events;
+using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -72,6 +73,7 @@ namespace GD.App
         {
             this.inventory = new List<InventoryItem>();
             EventDispatcher.Subscribe(EventCategoryType.Pickup, HandlePickupEvent);
+            EventDispatcher.Subscribe(EventCategoryType.Inventory, HandleInventoryEvent);
         }
 
         private void HandlePickupEvent(EventData eventData)
@@ -87,6 +89,13 @@ namespace GD.App
                 default:
                     break;
             }
+        }
+
+        private void HandleInventoryEvent(EventData eventData)
+        {
+            string id = eventData.Parameters[0] as string;
+
+            UseItem(id);
         }
 
         public void Add(InventoryItemData itemData)
@@ -112,6 +121,28 @@ namespace GD.App
                 InventoryItem item = inventory.Find(uniqueIDMatch);
                 if (item.amount <= 0)
                     inventory.Remove(item);
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Item does not exist in inventory");
+            }
+        }
+
+        public void UseItem(string uniqueID)
+        {
+            Predicate<InventoryItem> uniqueIDMatch = x => (x.itemData.uniqueID == uniqueID);
+
+            if (inventory.Exists(uniqueIDMatch))
+            {
+                InventoryItem item = inventory.Find(uniqueIDMatch);
+                GameObject gameObject = item.itemData.gameObject;
+
+                Transform playerTransform = Application.CameraManager.ActiveCamera.transform;
+                gameObject.Transform.SetTranslation(
+                    playerTransform.Translation + playerTransform.World.Forward * 3
+                    );
+
+                Application.SceneManager.ActiveScene.Add(gameObject);
             }
             else
             {
