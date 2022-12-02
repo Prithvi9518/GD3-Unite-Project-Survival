@@ -302,7 +302,7 @@ namespace GD.App
 
         private void InitializeCollidableContent(float worldScale)
         {
-            InitializeCollidableWalls();
+            //InitializeCollidableWalls();
         }
 
         private void InitializeCollidableWalls()
@@ -599,7 +599,7 @@ namespace GD.App
             InitializeOfficeModels();
             InitializeGeneratorRoomModels();
             InitializeFloors();
-            //InitializeWalls();
+            InitializeWalls();
             InitializeShoppingCentreAssets();
             InitializeAisles();
             InitializeCoffeeShop();

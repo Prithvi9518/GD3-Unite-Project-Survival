@@ -4,25 +4,6 @@ using System.Collections.Generic;
 
 namespace GD.App
 {
-    public enum ItemType : sbyte
-    {
-        Story,
-        Health,
-        Ammo,
-        Quest,
-        Prop
-    }
-
-    public class InventoryItem
-    {
-        public string uniqueID;
-        public string name;
-        public ItemType itemType;
-        public string description;
-        public int value;
-        public string cueName;  //"boom"
-    }
-
     /// <summary>
     /// Countdown/up timer and we need an inventory system
     /// </summary>
