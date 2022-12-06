@@ -118,6 +118,7 @@
         Video,
 
         //add more here...
+        GameState
     }
 
     /// <summary>
@@ -166,7 +167,9 @@
         OnMouseClick,
 
         //add more here...
-        OnEnemyAlert
+        OnEnemyAlert,
+
+        OnChangeState
     }
 
     /// <summary>
