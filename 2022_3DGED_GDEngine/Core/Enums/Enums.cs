@@ -169,7 +169,9 @@
         //add more here...
         OnEnemyAlert,
 
-        OnChangeState
+        OnChangeState,
+
+        OnReachExit
     }
 
     /// <summary>

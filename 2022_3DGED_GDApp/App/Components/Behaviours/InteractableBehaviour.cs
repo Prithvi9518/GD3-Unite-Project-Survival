@@ -50,18 +50,17 @@ namespace GD.Engine
             }
             bool isInteracting = controller.IsInteracting;
 
-            if (isInteracting)
-            {
-                float targetDist = GetDistance();
+            float targetDist = GetDistance();
 
-                if (targetDist <= AppData.INTERACTION_DISTANCE)
-                {
+            if (targetDist <= AppData.INTERACTION_DISTANCE)
+            {
+                if (isInteracting)
                     HandleInteraction();
-                }
-                else
-                {
+            }
+            else
+            {
+                if (isInteracting)
                     System.Diagnostics.Debug.WriteLine("Too far");
-                }
             }
         }
 
@@ -137,6 +136,13 @@ namespace GD.Engine
                         // otherwise, send message/hint to user that they need a fuse
                         System.Diagnostics.Debug.WriteLine("You need a fuse");
                     }
+                    break;
+
+                case "exit door":
+                    // send event to game state to check time remaining. If time is still left,
+                    // change state to win state
+                    EventDispatcher.Raise(new EventData(EventCategoryType.GameState,
+                        EventActionType.OnReachExit));
                     break;
 
                 default:

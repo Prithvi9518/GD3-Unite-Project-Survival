@@ -60,6 +60,10 @@ namespace GD.App
                     HandleStateChange(newState);
                     break;
 
+                case EventActionType.OnReachExit:
+                    CheckWin();
+                    break;
+
                 default:
                     break;
             }
@@ -87,8 +91,17 @@ namespace GD.App
 #if DEMO_STATES
                     System.Diagnostics.Debug.WriteLine("Generator is now on");
 
-                    RaiseAlarmEvent();
+                    RaiseAlarmEvent(EventActionType.OnPlay2D);
 #endif
+
+                    break;
+
+                case GameState.Win:
+
+                    System.Diagnostics.Debug.WriteLine("You Win!");
+                    // Alarm sound playing twice for some reason - will fix later
+                    RaiseAlarmEvent(EventActionType.OnStop);
+                    RaiseAlarmEvent(EventActionType.OnStop);
 
                     break;
 
@@ -97,16 +110,26 @@ namespace GD.App
             }
         }
 
-        private bool CheckWinLose()
+        private bool CheckWin()
         {
+            if ((currentState == GameState.GeneratorOn || currentState == GameState.Win)
+                && totalElapsedTimeMS < AppData.MAX_GAME_TIME_IN_MSECS)
+            {
+                HandleStateChange(GameState.Win);
+                return true;
+            }
+            else
+            {
+                System.Diagnostics.Debug.WriteLine("Need to restore power first!");
+            }
+
             return false;
-            //check individual game items
         }
 
-        private void RaiseAlarmEvent()
+        private void RaiseAlarmEvent(EventActionType eventActionType)
         {
             object[] parameters = { "alarm-sound" };
-            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, eventActionType, parameters));
         }
 
         public override void Update(GameTime gameTime)

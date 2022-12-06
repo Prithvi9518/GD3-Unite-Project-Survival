@@ -217,6 +217,9 @@ namespace GD.App
         public static readonly string FUSE_BOX_NAME = "fuse box";
         public static readonly string FUSE_NAME = "fuse";
 
+        public static readonly string EXIT_DOOR_NAME = "exit door";
+        public static readonly string EXIT_DOOR_FRAME_NAME = "exit door frame";
+
         #endregion
 
         public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()
