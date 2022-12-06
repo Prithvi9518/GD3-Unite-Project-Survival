@@ -135,6 +135,18 @@ namespace GD.App
             }
         }
 
+        public InventoryItem FindByName(string name)
+        {
+            Predicate<InventoryItem> uniqueIDMatch = x => (x.itemData.uniqueID == name);
+
+            if (inventory.Exists(uniqueIDMatch))
+            {
+                return inventory.Find(uniqueIDMatch);
+            }
+
+            return null;
+        }
+
         public void UseItem(string uniqueID)
         {
             Predicate<InventoryItem> uniqueIDMatch = x => (x.itemData.uniqueID == uniqueID);

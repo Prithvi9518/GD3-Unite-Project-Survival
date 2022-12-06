@@ -2,7 +2,7 @@
 {
     public enum GameObjectType : sbyte
     {
-        Interactable,
+        Interactible,
         Collectible,
         Consumable,
         Prop,
