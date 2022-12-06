@@ -98,7 +98,7 @@ namespace GD.App
 
                 case GameState.Win:
 
-                    System.Diagnostics.Debug.WriteLine("You Win!");
+                    System.Diagnostics.Debug.WriteLine("You Escaped");
                     // Alarm sound playing twice for some reason - will fix later
                     RaiseAlarmEvent(EventActionType.OnStop);
                     RaiseAlarmEvent(EventActionType.OnStop);
