@@ -1539,11 +1539,12 @@ namespace GD.App
                                 ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Interactible;
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
+                new Vector3(38.9f, 3.5f, 42f));
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
-            model_path = "Assets/Models/Generator Room/gate_access_machine";
+            model_path = "Assets/Models/Generator Room/gate_access_machine_test_2";
 
             renderer = InitializeRenderer(
                     model_path,
