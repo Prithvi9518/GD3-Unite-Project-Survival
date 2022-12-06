@@ -93,9 +93,16 @@ namespace GD.App
 
         private void HandleInventoryEvent(EventData eventData)
         {
-            string id = eventData.Parameters[0] as string;
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnObjectPicked:
+                    string id = eventData.Parameters[0] as string;
+                    UseItem(id);
+                    break;
 
-            UseItem(id);
+                default:
+                    break;
+            }
         }
 
         public void Add(InventoryItemData itemData)
@@ -143,6 +150,7 @@ namespace GD.App
                     );
 
                 Application.SceneManager.ActiveScene.Add(gameObject);
+                Remove(item.itemData);
             }
             else
             {
