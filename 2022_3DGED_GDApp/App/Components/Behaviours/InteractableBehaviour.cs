@@ -2,6 +2,7 @@
 using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
+using SharpDX.XAudio2;
 using System;
 using System.Collections.Generic;
 using System.Drawing.Text;
@@ -61,15 +62,7 @@ namespace GD.Engine
                 {
                     if (this.gameObject.GameObjectType == GameObjectType.Collectible)
                     {
-                        // Play pickup sound effect
-                        object[] parameters = { "pickup-sound" };
-                        EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
-
-                        // Raise event to remove object from scene
-                        parameters = new object[] { gameObject };
-                        EventDispatcher.Raise(
-                            new EventData(EventCategoryType.Pickup, EventActionType.OnPickup, parameters)
-                            );
+                        RaiseCollectibleEvents();
                     }
                 }
                 else
@@ -77,6 +70,28 @@ namespace GD.Engine
                     System.Diagnostics.Debug.WriteLine("Too far");
                 }
             }
+        }
+
+        private void RaiseCollectibleEvents()
+        {
+            // Play pickup sound effect
+            object[] parameters = { "pickup-sound" };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+            // Raise event to remove object from scene
+            InventoryItemData itemData = new InventoryItemData(
+                this.gameObject.Name,
+                this.gameObject.Name,
+                ItemType.Quest,
+                "test",
+                null,
+                null,
+                this.gameObject
+                );
+            parameters = new object[] { gameObject, itemData };
+            EventDispatcher.Raise(
+                new EventData(EventCategoryType.Pickup, EventActionType.OnPickup, parameters)
+                );
         }
     }
 }

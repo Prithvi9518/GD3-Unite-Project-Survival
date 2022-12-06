@@ -1,4 +1,5 @@
-﻿#define ALPHA_DEMO
+﻿//#define ALPHA_DEMO
+#define TEST_INVENTORY
 
 using GD.Engine.Events;
 using GD.Engine.Globals;
@@ -39,6 +40,10 @@ namespace GD.Engine
             MakeOfficeEnemyMove();
             ActivateGeneratorAlarm();
 #endif
+
+#if TEST_INVENTORY
+            UseInventoryItems();
+#endif
             //base.Update(gameTime);
         }
 
@@ -53,7 +58,6 @@ namespace GD.Engine
                 case EventActionType.OnPickup:
 
                     GameObject gameObject = eventData.Parameters[0] as GameObject;
-                    System.Diagnostics.Debug.WriteLine("Picked Up " + gameObject.Name);
 
                     Application.SceneManager.ActiveScene.Remove(
                         gameObject.ObjectType,
@@ -85,6 +89,17 @@ namespace GD.Engine
                     isInteracting = false;
             }
         }
+
+        private void UseInventoryItems()
+        {
+            if (Input.Keys.IsPressed(Keys.F))
+            {
+                object[] parameters = { "fuse" };
+                EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+            }
+        }
+
+        #region Alpha Demo Code
 
         private void MakeOfficeEnemyMove()
         {
@@ -150,4 +165,6 @@ namespace GD.Engine
             EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnStop, parameters));
         }
     }
+
+    #endregion Alpha Demo Code
 }
