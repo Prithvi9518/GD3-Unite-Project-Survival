@@ -2,11 +2,7 @@
 using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
-using SharpDX.XAudio2;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Text;
-using System.Text;
 
 namespace GD.Engine
 {
@@ -60,15 +56,56 @@ namespace GD.Engine
 
                 if (targetDist <= AppData.INTERACTION_DISTANCE)
                 {
-                    if (this.gameObject.GameObjectType == GameObjectType.Collectible)
-                    {
-                        RaiseCollectibleEvents();
-                    }
+                    HandleInteraction();
                 }
                 else
                 {
                     System.Diagnostics.Debug.WriteLine("Too far");
                 }
+            }
+        }
+
+        private void HandleInteraction()
+        {
+            switch (this.gameObject.GameObjectType)
+            {
+                case GameObjectType.Collectible:
+                    RaiseCollectibleEvents();
+                    break;
+
+                case GameObjectType.Interactible:
+                    RaiseInteractibleEvents();
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void RaiseInteractibleEvents()
+        {
+            // Raise event based on what object it is.
+            switch (this.gameObject.Name)
+            {
+                case "gate access machine":
+                    // Check whether keycard is present in inventory
+                    InventoryItem keycard = Application.InventoryManager.FindByName(AppData.KEYCARD_NAME);
+                    if (keycard != null)
+                    {
+                        // If it is, send event to remove it
+                        object[] parameters = { AppData.KEYCARD_NAME };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.Inventory,
+                            EventActionType.OnObjectPicked, parameters));
+                    }
+                    else
+                    {
+                        // otherwise, send message/hint to user that they need some sort of keycard
+                        System.Diagnostics.Debug.WriteLine("You need a keycard");
+                    }
+                    break;
+
+                default:
+                    break;
             }
         }
 

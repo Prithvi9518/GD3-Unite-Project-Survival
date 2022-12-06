@@ -490,7 +490,7 @@ namespace GD.App
 
             #region Office Keycard
 
-            var gameObject = new GameObject("office keycard",
+            var gameObject = new GameObject(AppData.KEYCARD_NAME,
                 ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Collectible;
 
@@ -1535,8 +1535,9 @@ namespace GD.App
 
             #region Gate Access Machine
 
-            gameObject = new GameObject("gate access machine",
+            gameObject = new GameObject(AppData.GATE_ACCESS_MACHINE_NAME,
                                 ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Interactible;
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
@@ -1552,6 +1553,8 @@ namespace GD.App
                     );
 
             gameObject.AddComponent(renderer);
+
+            gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 

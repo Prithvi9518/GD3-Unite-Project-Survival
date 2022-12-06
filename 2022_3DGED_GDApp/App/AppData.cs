@@ -209,6 +209,13 @@ namespace GD.App
 
         #endregion
 
+        #region Object Names
+
+        public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
+        public static readonly string KEYCARD_NAME = "office keycard";
+
+        #endregion
+
         public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()
         {
             // Left wall
