@@ -1,5 +1,6 @@
 ﻿//#define ALPHA_DEMO
-#define TEST_INVENTORY
+//#define TEST_INVENTORY
+#define DEMO_STATES
 
 using GD.Engine.Events;
 using GD.Engine.Globals;
@@ -38,12 +39,17 @@ namespace GD.Engine
 
 #if ALPHA_DEMO
             MakeOfficeEnemyMove();
-            ActivateGeneratorAlarm();
 #endif
 
 #if TEST_INVENTORY
             UseInventoryItems();
 #endif
+
+#if DEMO_STATES
+            StopGeneratorAlarm();
+
+#endif
+
             //base.Update(gameTime);
         }
 
@@ -132,34 +138,19 @@ namespace GD.Engine
                 );
         }
 
-        private void ActivateGeneratorAlarm()
+        private void StopGeneratorAlarm()
         {
-            if (Input.Gamepad.IsConnected() && Input.Gamepad.WasJustPressed(Buttons.LeftTrigger))
-            {
-                RaiseAlarmEvent();
-            }
-            else if (Input.Keys.WasJustPressed(Keys.G))
-            {
-                RaiseAlarmEvent();
-            }
-
             if (Input.Gamepad.IsConnected() && Input.Gamepad.WasJustPressed(Buttons.LeftShoulder))
             {
-                StopAlarm();
+                StopAlarmEvent();
             }
             else if (Input.Keys.WasJustPressed(Keys.P))
             {
-                StopAlarm();
+                StopAlarmEvent();
             }
         }
 
-        private void RaiseAlarmEvent()
-        {
-            object[] parameters = { "alarm-sound" };
-            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
-        }
-
-        private void StopAlarm()
+        private void StopAlarmEvent()
         {
             object[] parameters = { "alarm-sound" };
             EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnStop, parameters));

@@ -1,8 +1,8 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-#define SHOW_DEBUG_INFO
-//#define SHOW_TIMER_TEXT
+//#define SHOW_DEBUG_INFO
+#define SHOW_TIMER_TEXT
 
 #endregion
 
@@ -516,7 +516,7 @@ namespace GD.App
 
             #region Fuse
 
-            gameObject = new GameObject("fuse", ObjectType.Static, RenderType.Opaque);
+            gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform
@@ -1148,7 +1148,7 @@ namespace GD.App
         {
             #region Generator Door
 
-            var gameObject = new GameObject("generator door",
+            var gameObject = new GameObject(AppData.GENERATOR_DOOR_NAME,
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -1174,15 +1174,23 @@ namespace GD.App
 
             var gdBasicEffect = new GDBasicEffect(unlitEffect);
 
-            #region Exit Door
+            //var gameObject = new GameObject("exit door",
+            //        ObjectType.Static, RenderType.Opaque);
 
-            var gameObject = new GameObject("exit door",
-                    ObjectType.Static, RenderType.Opaque);
+            //gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            #region Exit Door Frame
+
+            var gameObject = new GameObject(AppData.EXIT_DOOR_FRAME_NAME,
+                      ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(
+                AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+                Vector3.Zero,
+                new Vector3(1.83f, 0.01f, -128.2f));
 
             Renderer renderer = InitializeRenderer(
-                    "Assets/Models/Shopping Centre/Doors/Exit Door/exit_door",
+                    "Assets/Models/Shopping Centre/Doors/Exit Door/Test/frame",
                     "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door",
                     gdBasicEffect,
                     1
@@ -1192,7 +1200,34 @@ namespace GD.App
 
             sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion Exit Door
+            #endregion
+
+            #region Exit Door
+
+            gameObject = new GameObject(AppData.EXIT_DOOR_NAME,
+                       ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Interactible;
+
+            gameObject.Transform = new Transform(
+                AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+                Vector3.Zero,
+                new Vector3(1.83f, 0f, -127.9f));
+
+            renderer = InitializeRenderer(
+                    "Assets/Models/Shopping Centre/Doors/Exit Door/Test/door",
+                    "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door",
+                    gdBasicEffect,
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            //TODO: need to change this to a collider as the door doesnt require interaction
+            gameObject.AddComponent(new InteractableBehaviour());
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
 
             #region Exit Sign
 
@@ -1511,14 +1546,17 @@ namespace GD.App
         {
             #region Fuse Box
 
-            var gameObject = new GameObject("fuse box",
+            var gameObject = new GameObject(AppData.FUSE_BOX_NAME,
                                 ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Interactible;
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+                Vector3.Zero,
+                new Vector3(57.5f, 2.2f, 42.4f));
 
             var texture_path = "Assets/Textures/Props/Generator_Room/fuse_box_diffuse";
 
-            var model_path = "Assets/Models/Generator Room/fuse_box";
+            var model_path = "Assets/Models/Generator Room/fuse_box_test";
 
             Renderer renderer = InitializeRenderer(
                     model_path,
@@ -1528,6 +1566,7 @@ namespace GD.App
                     );
 
             gameObject.AddComponent(renderer);
+            gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -1539,11 +1578,12 @@ namespace GD.App
                                 ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Interactible;
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
+                new Vector3(38.9f, 3.5f, 42f));
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
-            model_path = "Assets/Models/Generator Room/gate_access_machine";
+            model_path = "Assets/Models/Generator Room/gate_access_machine_test_2";
 
             renderer = InitializeRenderer(
                     model_path,

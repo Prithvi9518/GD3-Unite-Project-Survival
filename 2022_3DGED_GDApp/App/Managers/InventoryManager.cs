@@ -154,14 +154,16 @@ namespace GD.App
             if (inventory.Exists(uniqueIDMatch))
             {
                 InventoryItem item = inventory.Find(uniqueIDMatch);
-                GameObject gameObject = item.itemData.gameObject;
 
-                Transform playerTransform = Application.CameraManager.ActiveCamera.transform;
-                gameObject.Transform.SetTranslation(
-                    playerTransform.Translation + playerTransform.World.Forward * 3
-                    );
+                //GameObject gameObject = item.itemData.gameObject;
 
-                Application.SceneManager.ActiveScene.Add(gameObject);
+                //Transform playerTransform = Application.CameraManager.ActiveCamera.transform;
+                //gameObject.Transform.SetTranslation(
+                //    playerTransform.Translation + playerTransform.World.Forward * 3
+                //    );
+
+                //Application.SceneManager.ActiveScene.Add(gameObject);
+
                 Remove(item.itemData);
             }
             else

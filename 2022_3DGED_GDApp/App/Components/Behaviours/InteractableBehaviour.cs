@@ -50,18 +50,17 @@ namespace GD.Engine
             }
             bool isInteracting = controller.IsInteracting;
 
-            if (isInteracting)
-            {
-                float targetDist = GetDistance();
+            float targetDist = GetDistance();
 
-                if (targetDist <= AppData.INTERACTION_DISTANCE)
-                {
+            if (targetDist <= AppData.INTERACTION_DISTANCE)
+            {
+                if (isInteracting)
                     HandleInteraction();
-                }
-                else
-                {
+            }
+            else
+            {
+                if (isInteracting)
                     System.Diagnostics.Debug.WriteLine("Too far");
-                }
             }
         }
 
@@ -84,10 +83,13 @@ namespace GD.Engine
 
         private void RaiseInteractibleEvents()
         {
+            // NEED TO REFACTOR THIS CODE - once colliders are in place, use separate collider classes for each object
+
             // Raise event based on what object it is.
             switch (this.gameObject.Name)
             {
                 case "gate access machine":
+
                     // Check whether keycard is present in inventory
                     InventoryItem keycard = Application.InventoryManager.FindByName(AppData.KEYCARD_NAME);
                     if (keycard != null)
@@ -96,12 +98,51 @@ namespace GD.Engine
                         object[] parameters = { AppData.KEYCARD_NAME };
                         EventDispatcher.Raise(new EventData(EventCategoryType.Inventory,
                             EventActionType.OnObjectPicked, parameters));
+
+                        // Send event to StateManager - change state to reflect that generator room has opened.
+                        parameters = new object[] { GameState.GeneratorRoomOpen };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.GameState,
+                            EventActionType.OnChangeState, parameters));
                     }
                     else
                     {
                         // otherwise, send message/hint to user that they need some sort of keycard
                         System.Diagnostics.Debug.WriteLine("You need a keycard");
                     }
+
+                    break;
+
+                case "fuse box":
+                    // Check whether fuse is present in inventory
+                    InventoryItem fuse = Application.InventoryManager.FindByName(AppData.FUSE_NAME);
+                    if (fuse != null)
+                    {
+                        // Check whether generator room has been opened with keycard first
+                        if (Application.StateManager.CurrentGameState != GameState.GeneratorRoomOpen)
+                            return;
+
+                        // Send event to remove fuse
+                        object[] parameters = { AppData.FUSE_NAME };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.Inventory,
+                            EventActionType.OnObjectPicked, parameters));
+
+                        // Send event to StateManager - change state to reflect that generator is now on.
+                        parameters = new object[] { GameState.GeneratorOn };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.GameState,
+                            EventActionType.OnChangeState, parameters));
+                    }
+                    else
+                    {
+                        // otherwise, send message/hint to user that they need a fuse
+                        System.Diagnostics.Debug.WriteLine("You need a fuse");
+                    }
+                    break;
+
+                case "exit door":
+                    // send event to game state to check time remaining. If time is still left,
+                    // change state to win state
+                    EventDispatcher.Raise(new EventData(EventCategoryType.GameState,
+                        EventActionType.OnReachExit));
                     break;
 
                 default:
@@ -115,7 +156,7 @@ namespace GD.Engine
             object[] parameters = { "pickup-sound" };
             EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
 
-            // Raise event to remove object from scene
+            // Raise event to take object out of inventory and use it
             InventoryItemData itemData = new InventoryItemData(
                 this.gameObject.Name,
                 this.gameObject.Name,
