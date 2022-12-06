@@ -1,5 +1,10 @@
-﻿using Microsoft.Xna.Framework;
+﻿#define DEMO_STATES
+
+using GD.Engine.Events;
+using Microsoft.Xna.Framework;
 using System;
+using GD.Engine;
+using GD.Engine.Globals;
 
 namespace GD.App
 {
@@ -43,6 +48,65 @@ namespace GD.App
             totalElapsedTimeMS = 0;
 
             //Register
+            EventDispatcher.Subscribe(EventCategoryType.GameState, HandleGameStateEvent);
+        }
+
+        private void HandleGameStateEvent(EventData eventData)
+        {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnChangeState:
+                    GameState newState = (GameState)eventData.Parameters[0];
+                    HandleStateChange(newState);
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private void HandleStateChange(GameState newState)
+        {
+            this.currentState = newState;
+            switch (currentState)
+            {
+                case GameState.GeneratorRoomOpen:
+#if DEMO_STATES
+
+                    System.Diagnostics.Debug.WriteLine("Generator room is now open");
+
+                    Application.SceneManager.ActiveScene.Remove(
+                        ObjectType.Static,
+                        RenderType.Opaque,
+                        (x) => x.Name == AppData.GENERATOR_DOOR_NAME);
+#endif
+                    break;
+
+                case GameState.GeneratorOn:
+
+#if DEMO_STATES
+                    System.Diagnostics.Debug.WriteLine("Generator is now on");
+
+                    RaiseAlarmEvent();
+#endif
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        private bool CheckWinLose()
+        {
+            return false;
+            //check individual game items
+        }
+
+        private void RaiseAlarmEvent()
+        {
+            object[] parameters = { "alarm-sound" };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
         }
 
         public override void Update(GameTime gameTime)
@@ -74,17 +138,6 @@ namespace GD.App
             //show restart screen
 
             base.Update(gameTime);
-        }
-
-        private void SetGameState(GameState gameState)
-        {
-            this.currentState = gameState;
-        }
-
-        private bool CheckWinLose()
-        {
-            return false;
-            //check individual game items
         }
     }
 }

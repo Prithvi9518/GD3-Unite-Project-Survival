@@ -213,6 +213,9 @@ namespace GD.App
 
         public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
         public static readonly string KEYCARD_NAME = "office keycard";
+        public static readonly string GENERATOR_DOOR_NAME = "generator door";
+        public static readonly string FUSE_BOX_NAME = "fuse box";
+        public static readonly string FUSE_NAME = "fuse";
 
         #endregion
 

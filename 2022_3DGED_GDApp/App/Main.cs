@@ -516,7 +516,7 @@ namespace GD.App
 
             #region Fuse
 
-            gameObject = new GameObject("fuse", ObjectType.Static, RenderType.Opaque);
+            gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform
@@ -1148,7 +1148,7 @@ namespace GD.App
         {
             #region Generator Door
 
-            var gameObject = new GameObject("generator door",
+            var gameObject = new GameObject(AppData.GENERATOR_DOOR_NAME,
                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -1511,14 +1511,17 @@ namespace GD.App
         {
             #region Fuse Box
 
-            var gameObject = new GameObject("fuse box",
+            var gameObject = new GameObject(AppData.FUSE_BOX_NAME,
                                 ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Interactible;
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+                Vector3.Zero,
+                new Vector3(57.5f, 2.2f, 42.4f));
 
             var texture_path = "Assets/Textures/Props/Generator_Room/fuse_box_diffuse";
 
-            var model_path = "Assets/Models/Generator Room/fuse_box";
+            var model_path = "Assets/Models/Generator Room/fuse_box_test";
 
             Renderer renderer = InitializeRenderer(
                     model_path,
@@ -1528,6 +1531,7 @@ namespace GD.App
                     );
 
             gameObject.AddComponent(renderer);
+            gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 
