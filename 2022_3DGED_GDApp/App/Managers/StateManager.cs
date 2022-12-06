@@ -4,17 +4,24 @@ using System.Collections.Generic;
 
 namespace GD.App
 {
-    /// <summary>
-    /// Countdown/up timer and we need an inventory system
-    /// </summary>
+    public enum GameState
+    {
+        Default,
+        GeneratorRoomOpen,
+        GeneratorOn,
+        Win,
+        Lose
+    }
+
     public class StateManager : GameComponent
     {
         private double maxTimeInMS;
         private double totalElapsedTimeMS;
         private double minutesLeft;
         private double secondsLeft;
-        private List<InventoryItem> inventory;
         private bool stopTime = false;
+
+        private GameState currentState;
 
         public double CountdownTimeSecs
         {
@@ -26,11 +33,15 @@ namespace GD.App
             get => minutesLeft;
         }
 
+        public GameState CurrentGameState
+        {
+            get => currentState;
+        }
+
         public StateManager(Game game, double maxTimeInMS) : base(game)
         {
             this.maxTimeInMS = maxTimeInMS;
             totalElapsedTimeMS = 0;
-            inventory = new List<InventoryItem>();
 
             //Register
         }
@@ -64,6 +75,11 @@ namespace GD.App
             //show restart screen
 
             base.Update(gameTime);
+        }
+
+        private void SetGameState(GameState gameState)
+        {
+            this.currentState = gameState;
         }
 
         private bool CheckWinLose()
