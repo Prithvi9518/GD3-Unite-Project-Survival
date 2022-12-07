@@ -1,8 +1,8 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define SHOW_DEBUG_INFO
-#define SHOW_TIMER_TEXT
+#define SHOW_DEBUG_INFO
+//#define SHOW_TIMER_TEXT
 
 #endregion
 
@@ -122,7 +122,7 @@ namespace GD.App
             InitializeCollidableContent(worldScale);
 
             //add non-collidable drawn stuff
-            InitializeNonCollidableContent(worldScale);
+            //InitializeNonCollidableContent(worldScale);
 
             //Raise all the events that I want to happen at the start
             object[] parameters = { "Ambient" };
@@ -287,10 +287,32 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
+            #region Collision - Add capsule
+
+            //adding a collidable surface that enables acceleration, jumping
+            var characterCollider = new CharacterCollider(cameraGameObject, true);
+
+            cameraGameObject.AddComponent(characterCollider);
+            characterCollider.AddPrimitive(new Capsule(
+                cameraGameObject.Transform.Translation,
+                Matrix.CreateRotationX(MathHelper.PiOver2),
+                1, 3.6f),
+                new MaterialProperties(0.2f, 0.8f, 0.7f));
+            characterCollider.Enable(cameraGameObject, false, 1);
+
+            #endregion
+
             // First person controller component
-            cameraGameObject.AddComponent(new FirstPersonController(
+
+            //cameraGameObject.AddComponent(new FirstPersonController(
+            //    AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
+            //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+            cameraGameObject.AddComponent(new CollidableFirstPersonController(cameraGameObject,
+                characterCollider,
                 AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
@@ -305,6 +327,32 @@ namespace GD.App
         private void InitializeCollidableContent(float worldScale)
         {
             //InitializeCollidableWalls();
+            InitializeCollidableGround(worldScale);
+        }
+
+        private void InitializeCollidableGround(float worldScale)
+        {
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var quadMesh = new QuadMesh(_graphics.GraphicsDevice);
+
+            //ground
+            var ground = new GameObject("ground");
+            ground.Transform = new Transform(new Vector3(worldScale, worldScale, 1),
+                new Vector3(-90, 0, 0), new Vector3(0, 0, 0));
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Ground/grass1");
+            ground.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+
+            //add Collision Surface(s)
+            var collider = new Collider(ground);
+            collider.AddPrimitive(new Box(
+                    ground.Transform.Translation,
+                    ground.Transform.Rotation,
+                    ground.Transform.Scale),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(ground, true, 1);
+            ground.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(ground);
         }
 
         private void InitializeCollidableWalls()

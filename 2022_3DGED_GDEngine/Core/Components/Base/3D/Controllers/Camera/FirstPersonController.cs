@@ -22,12 +22,12 @@ namespace GD.Engine
 
         protected Vector2 rotationSpeed;
 
-        private bool isGrounded;
+        protected bool isGrounded;
 
-        private bool crouchEnabled = false;
-        private bool needsToCrouch = true;
+        protected bool crouchEnabled = false;
+        protected bool needsToCrouch = true;
 
-        private float smoothFactor;
+        protected float smoothFactor;
 
         #endregion Fields
 

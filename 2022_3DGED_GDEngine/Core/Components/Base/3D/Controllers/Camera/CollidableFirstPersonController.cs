@@ -66,17 +66,28 @@ namespace GD.Engine
 
         protected override void HandleKeyboardInput(GameTime gameTime)
         {
-            if (Input.Keys.IsPressed(Keys.W))//&& Input.Keys.IsPressed(Keys.LeftControl))
+            if (!crouchEnabled)
+            {
+                HandleRun(false);
+            }
+
+            if (Input.Keys.WasJustPressed(Keys.LeftControl))
+            {
+                crouchEnabled = !crouchEnabled;
+                HandleCrouch();
+            }
+
+            if (Input.Keys.IsPressed(Keys.W) || Input.Keys.IsPressed(Keys.Up))
             {
                 restrictedLook = transform.World.Forward; //we use Up instead of Forward
                 restrictedLook.Y = 0;
-                characterBody.Velocity += moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
+                characterBody.Velocity += (moveSpeed * multiplier) * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
             }
-            else if (Input.Keys.IsPressed(Keys.S))
+            else if (Input.Keys.IsPressed(Keys.S) || Input.Keys.IsPressed(Keys.Down))
             {
                 restrictedLook = transform.World.Forward;
                 restrictedLook.Y = 0;
-                characterBody.Velocity -= moveSpeed * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
+                characterBody.Velocity -= (moveSpeed * multiplier) * restrictedLook * gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
@@ -86,17 +97,17 @@ namespace GD.Engine
 
         private void HandleStrafe(GameTime gameTime)
         {
-            if (Input.Keys.IsPressed(Keys.A))
+            if (Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.Left))
             {
                 restrictedRight = transform.World.Right;
                 restrictedRight.Y = 0;
-                characterBody.Velocity -= strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+                characterBody.Velocity -= (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
             }
-            else if (Input.Keys.IsPressed(Keys.D))
+            else if (Input.Keys.IsPressed(Keys.D) || Input.Keys.IsPressed(Keys.Right))
             {
                 restrictedRight = transform.World.Right;
                 restrictedRight.Y = 0;
-                characterBody.Velocity += strafeSpeed * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+                characterBody.Velocity += (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
