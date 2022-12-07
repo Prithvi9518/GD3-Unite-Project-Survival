@@ -120,7 +120,7 @@ namespace GD.App
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
         public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;
-        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.7f;
+        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.9f;
 
         public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1.75f;
 
@@ -129,7 +129,7 @@ namespace GD.App
         public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
 
         public static readonly float PLAYER_DEFAULT_CAPSULE_HEIGHT = 3.6f;
-        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 1.6f;
+        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.3f;
 
         #endregion Movement Constants
 

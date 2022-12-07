@@ -23,7 +23,6 @@ namespace GD.Engine
         #region Fields
 
         private CharacterCollider characterCollider;
-        private CharacterCollider defaultCollider;
         private Character characterBody;
         private float jumpHeight;
 
@@ -47,8 +46,6 @@ namespace GD.Engine
             this.characterCollider = characterCollider;
             //get the body so that we can change its position when keys
             characterBody = characterCollider.Body as Character;
-
-            this.defaultCollider = characterCollider;
         }
 
         #endregion Contructors
@@ -199,7 +196,7 @@ namespace GD.Engine
             if (crouchEnabled)
             {
                 needsToCrouch = true;
-                multiplier = crouchMultiplier;
+                multiplier = AppData.PLAYER_CROUCH_MULTIPLIER;
             }
             else
             {
@@ -215,11 +212,7 @@ namespace GD.Engine
             }
             else if (!crouchEnabled)
             {
-                gameObject.RemoveComponent<CharacterCollider>();
-                gameObject.AddComponent(defaultCollider);
-
-                characterCollider = defaultCollider;
-                characterBody = characterCollider.Body as Character;
+                SetDefaultCollider();
                 //transform.SetTranslation(new Vector3(transform.Translation.X, normalHeight, transform.Translation.Z));
             }
         }
@@ -240,6 +233,26 @@ namespace GD.Engine
 
             characterCollider = crouchedCollider;
             characterBody = crouchedCollider.Body as Character;
+        }
+
+        private void SetDefaultCollider()
+        {
+            var defaultCollider = new CharacterCollider(gameObject, true);
+
+            gameObject.RemoveComponent<CharacterCollider>();
+            gameObject.AddComponent(defaultCollider);
+
+            defaultCollider.AddPrimitive(new Capsule(
+                gameObject.Transform.Translation,
+                Matrix.CreateRotationX(MathHelper.PiOver2),
+                1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
+                new MaterialProperties(0.2f, 0.8f, 0.7f));
+            defaultCollider.Enable(gameObject, false, 1);
+
+            characterCollider = defaultCollider;
+            characterBody = defaultCollider.Body as Character;
+
+            transform.Translate(0, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y - 2, 0);
         }
 
         private void HandleJump(GameTime gameTime)
