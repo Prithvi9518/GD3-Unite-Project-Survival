@@ -98,10 +98,12 @@ namespace GD.App
 
                 case GameState.Win:
 
+#if DEMO_STATES
                     System.Diagnostics.Debug.WriteLine("You Escaped");
                     // Alarm sound playing twice for some reason - will fix later
                     RaiseAlarmEvent(EventActionType.OnStop);
                     RaiseAlarmEvent(EventActionType.OnStop);
+#endif
 
                     break;
 
