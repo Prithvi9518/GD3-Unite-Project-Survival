@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Reflection;
+using System.Text;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -51,6 +52,7 @@ namespace GD.App
         private StateManager stateManager;
         private SceneManager<Scene2D> uiManager;
         private Render2DManager uiRenderManager;
+        private Scene2D mainUIScene;
 
         #endregion Fields
 
@@ -134,7 +136,63 @@ namespace GD.App
                 new EventData(EventCategoryType.Sound,
                 EventActionType.OnPlay2D,
                 parameters2));
+
+            InitializeUI();
         }
+
+        private void InitializeUI()
+        {
+            InitializeCompass();
+            InitializeMiniMap();
+        }
+
+        private void InitializeMiniMap()
+        {
+            var uiTextureGameObject = new GameObject("minimap");
+            uiTextureGameObject.Transform = new Transform(
+                new Vector3(0.6f, 0.6f, 0), //s
+                new Vector3(0, 0, 0), //r
+                new Vector3(AppData.APP_RESOLUTION.X / 2 + 400, 0, 0)); //t
+
+            var material = new SpriteMaterial(
+               Content.Load<Texture2D>("Assets/Textures/UI/Game/minimap"),
+                0, Color.DarkGray);
+
+            var uiElement = new UITextureElement();
+
+            uiTextureGameObject.AddComponent(
+                new SpriteRenderer(material, uiElement));
+
+            //add to scene2D
+            mainUIScene.Add(uiTextureGameObject);
+        }
+
+        private void InitializeCompass()
+        {
+            var uiTextureGameObject = new GameObject("compass");
+            uiTextureGameObject.Transform = new Transform(
+                new Vector3(0.8f, 0.8f, 0), //s
+                new Vector3(0, 0, 0), //r
+                new Vector3(AppData.APP_RESOLUTION.X / 2 - 200, 0, 0)); //t
+
+            //var spriteFont = Content.Load<SpriteFont>(AppData.PERF_FONT_PATH);
+            //StringBuilder word = new StringBuilder();
+
+            //word.Append("Main Menu");
+
+            var material = new SpriteMaterial(
+               Content.Load<Texture2D>("Assets/Textures/UI/Game/compass"),
+                0, Color.Red);
+
+            var uiElement = new UITextureElement();
+
+            uiTextureGameObject.AddComponent(
+                new SpriteRenderer(material, uiElement));
+
+            //add to scene2D
+            mainUIScene.Add(uiTextureGameObject);
+        }
+        
 
         private void SetTitle(string title)
         {
@@ -1520,12 +1578,12 @@ namespace GD.App
 
             gameObject = new GameObject("gate access machine",
                                 ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+           
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(1,3.5f,1));
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
-            model_path = "Assets/Models/Generator Room/gate_access_machine";
+            model_path = "Assets/Models/Generator Room/gate_access_machine_test_2";
 
             renderer = InitializeRenderer(
                     model_path,
@@ -2212,7 +2270,7 @@ namespace GD.App
             Application.SoundManager = soundManager;
 
             Application.StateManager = stateManager;
-            //Application.UISceneManager = uiManager;
+            Application.UISceneManager = uiManager;
         }
 
         private void InitializeInput()
@@ -2287,11 +2345,20 @@ namespace GD.App
             Components.Add(stateManager);
 
             //add ui managers
-            //uiManager = new SceneManager<Scene2D>(this);
-            //Components.Add(uiManager);
+            uiManager = new SceneManager<Scene2D>(this);
+            Components.Add(uiManager);
 
-            //uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
-            //Components.Add(uiRenderManager);
+            uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
+            Components.Add(uiRenderManager);
+
+            mainUIScene = new Scene2D("main UI");
+            //add scene2D to manager
+            uiManager.Add(mainUIScene.ID, mainUIScene);
+
+            //what ui do i see first?
+            uiManager.SetActiveScene(mainUIScene.ID);
+
+
         }
 
         private void InitializeDictionaries()
