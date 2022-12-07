@@ -54,8 +54,6 @@ namespace GD.App
         #region Camera - First Person
 
         public static readonly string FIRST_PERSON_CAMERA_NAME = "fpc 1";
-        public static readonly float FIRST_PERSON_MOVE_SPEED = 0.05f;
-        public static readonly float FIRST_PERSON_STRAFE_SPEED = 0.6f * FIRST_PERSON_MOVE_SPEED;
         public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 7f, 35);
 
         public static readonly float FIRST_PERSON_CAMERA_FCP = 3000;
@@ -107,8 +105,8 @@ namespace GD.App
 
         #region Movement Constants
 
-        public static readonly float PLAYER_MOVE_SPEED = 0.1f;
-        private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
+        public static readonly float PLAYER_MOVE_SPEED = 0.05f;
+        private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.6f;
         public static readonly float PLAYER_STRAFE_SPEED = PLAYER_STRAFE_SPEED_MULTIPLIER * PLAYER_MOVE_SPEED;
 
         //can use either same X-Y rotation for camera controller or different
@@ -129,6 +127,9 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
 
         public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
+
+        public static readonly float PLAYER_DEFAULT_CAPSULE_HEIGHT = 3.6f;
+        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 1.6f;
 
         #endregion Movement Constants
 

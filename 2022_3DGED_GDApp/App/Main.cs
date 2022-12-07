@@ -296,7 +296,7 @@ namespace GD.App
             characterCollider.AddPrimitive(new Capsule(
                 cameraGameObject.Transform.Translation,
                 Matrix.CreateRotationX(MathHelper.PiOver2),
-                1, 3.6f),
+                1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
                 new MaterialProperties(0.2f, 0.8f, 0.7f));
             characterCollider.Enable(cameraGameObject, false, 1);
 
@@ -310,7 +310,7 @@ namespace GD.App
 
             cameraGameObject.AddComponent(new CollidableFirstPersonController(cameraGameObject,
                 characterCollider,
-                AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
+                AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
                 AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
                 AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
 
