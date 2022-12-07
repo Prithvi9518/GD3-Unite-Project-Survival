@@ -1,5 +1,17 @@
 ﻿namespace GD.Engine
 {
+    public enum GameObjectType : sbyte
+    {
+        Interactible,
+        Collectible,
+        Consumable,
+        Prop,
+        Player,
+        NPC,
+        Enemy,
+        Architecture,
+    }
+
     public enum TurnDirectionType : sbyte
     {
         Left = 1,
@@ -106,6 +118,7 @@
         Video,
 
         //add more here...
+        GameState
     }
 
     /// <summary>
@@ -154,7 +167,11 @@
         OnMouseClick,
 
         //add more here...
-        OnEnemyAlert
+        OnEnemyAlert,
+
+        OnChangeState,
+
+        OnReachExit
     }
 
     /// <summary>

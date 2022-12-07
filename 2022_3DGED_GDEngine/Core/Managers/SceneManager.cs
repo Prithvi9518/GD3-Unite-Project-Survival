@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GD.Engine.Events;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 
@@ -7,18 +8,18 @@ namespace GD.Engine.Managers
     /// <summary>
     /// Stores all scenes and updates the active scene
     /// </summary>
-    public class SceneManager : GameComponent
+    public class SceneManager<T> : PausableGameComponent where T : IUpdateable
     {
         #region Fields
 
-        private Scene activeScene = null;
-        private Dictionary<string, Scene> scenes;
+        private T activeScene;
+        private Dictionary<string, T> scenes;
 
         #endregion Fields
 
         #region Properties
 
-        public Scene ActiveScene
+        public T ActiveScene
         {
             get
             {
@@ -36,14 +37,41 @@ namespace GD.Engine.Managers
         public SceneManager(Game game)
             : base(game)
         {
-            scenes = new Dictionary<string, Scene>();
+            scenes = new Dictionary<string, T>();
         }
 
         #endregion Constructors
 
+        protected override void SubscribeToEvents()
+        {
+            //handle add/remove events
+            EventDispatcher.Subscribe(EventCategoryType.GameObject, HandleGameObjectEvents);
+
+            base.SubscribeToEvents();
+        }
+
+        protected void HandleGameObjectEvents(EventData eventData)
+        {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnRemoveObject: //TODO
+                    break;
+
+                case EventActionType.OnAddObject: //TODO
+                    break;
+
+                default:
+                    break;
+                    //add more cases for each method that we want to support with events
+            }
+
+            //call base method because we want to participate in the pause/play events
+            base.HandleEvent(eventData);
+        }
+
         #region Actions - Add, SetActiveScene
 
-        public bool Add(string id, Scene scene)
+        public bool Add(string id, T scene)
         {
             id = id.Trim().ToLower();
 
@@ -54,7 +82,7 @@ namespace GD.Engine.Managers
             return true;
         }
 
-        public Scene SetActiveScene(string id)
+        public T SetActiveScene(string id)
         {
             id = id.Trim().ToLower();
 
@@ -70,7 +98,8 @@ namespace GD.Engine.Managers
 
         public override void Update(GameTime gameTime)
         {
-            activeScene.Update(gameTime);
+            if (IsUpdated)
+                activeScene.Update(gameTime);
         }
 
         #endregion Actions - Update

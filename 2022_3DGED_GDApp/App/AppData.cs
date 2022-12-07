@@ -7,6 +7,7 @@
 
 using GD.Engine;
 using GD.Engine.Data;
+using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -61,7 +62,9 @@ namespace GD.App
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
 
         public static readonly float FIRST_PERSON_HALF_FOV
-             = MathHelper.ToRadians(75);
+             = MathHelper.ToRadians(45);
+
+        public static readonly float FIRST_PERSON_CAMERA_SMOOTH_FACTOR = 0.1f;
 
         #endregion Camera - First Person
 
@@ -112,10 +115,10 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_SPEED_SINGLE = 0.001f;
 
         //why bother? can you tilt your head at the same speed as you rotate it?
-        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.0004f, 0.0003f);
+        public static readonly Vector2 PLAYER_ROTATE_SPEED_VECTOR2 = new Vector2(0.004f, 0.003f);
 
-        public static readonly float PLAYER_ROTATE_MAX_X = 0.65f;
-        public static readonly float PLAYER_ROTATE_MIN_X = -0.75f;
+        public static readonly float PLAYER_ROTATE_MAX_X = 8f;
+        public static readonly float PLAYER_ROTATE_MIN_X = -10f;
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
         public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;
@@ -151,9 +154,9 @@ namespace GD.App
 
         public static readonly List<Vector3> ENEMY_INITIAL_ROTATIONS = new List<Vector3>()
         {
-            new Vector3(0, MathHelper.PiOver2, 0),
-            new Vector3(0, MathHelper.Pi, 0),
-            new Vector3(0, MathHelper.PiOver2, 0)
+            new Vector3(0, 90, 0),
+            new Vector3(0, 180, 0),
+            new Vector3(0, 90, 0)
         };
 
         public static readonly List<List<Vector3>> ENEMY_WAYPOINTS_LIST = new List<List<Vector3>>()
@@ -199,6 +202,55 @@ namespace GD.App
         internal static double MAX_GAME_TIME_IN_MSECS = 180000;
 
         #endregion Timer Variables
+
+        #region Physics Variables
+
+        public static readonly Vector3 GRAVITY = new Vector3(0, -9.81f, 0);
+
+        #endregion
+
+        #region Object Names
+
+        public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
+        public static readonly string KEYCARD_NAME = "office keycard";
+        public static readonly string GENERATOR_DOOR_NAME = "generator door";
+        public static readonly string FUSE_BOX_NAME = "fuse box";
+        public static readonly string FUSE_NAME = "fuse";
+
+        public static readonly string EXIT_DOOR_NAME = "exit door";
+        public static readonly string EXIT_DOOR_FRAME_NAME = "exit door frame";
+
+        #endregion
+
+        public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()
+        {
+            // Left wall
+            new Vector3(-42.4f, 5.5f, -21.5f),
+            // Back wall
+            new Vector3(0, 5.5f, 50.15f),
+            // Right wall
+            new Vector3(39f, 5.5f, -52)
+        };
+
+        public static readonly List<Vector3> WALL_ROTATIONS = new List<Vector3>()
+        {
+            // Left wall
+            new Vector3(0, -0.55f, 0),
+            // Back wall
+            new Vector3(0, 0f, 0),
+            // Right wall
+            new Vector3(0, 0, 0)
+        };
+
+        public static readonly List<Vector3> WALL_SCALES = new List<Vector3>()
+        {
+            // Left wall
+            DEFAULT_OBJECT_SCALE * new Vector3(0.3f,2.8f,35.5f),
+            // Back wall
+            DEFAULT_OBJECT_SCALE * new Vector3(35.5f, 2.8f, 0.3f),
+            // Right wall
+            DEFAULT_OBJECT_SCALE * new Vector3(0.3f,2.8f,38f),
+        };
 
         #region Model Paths
 
