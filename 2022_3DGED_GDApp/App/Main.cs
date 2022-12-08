@@ -328,6 +328,7 @@ namespace GD.App
         {
             //InitializeCollidableWalls();
             InitializeCollidableGround(worldScale);
+            InitializeCollidablePickups();
         }
 
         private void InitializeCollidableGround(float worldScale)
@@ -507,7 +508,7 @@ namespace GD.App
 
             InitializeEnemies();
 
-            InitializePickups();
+            //InitializePickups();
         }
 
         private Renderer InitializeRenderer(string modelPath, string texturePath, GDBasicEffect effect, float alpha)
@@ -530,6 +531,47 @@ namespace GD.App
             return new Renderer(effect,
                 new Material(texture, alpha, color),
                 mesh);
+        }
+
+        private void InitializeCollidablePickups()
+        {
+            GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+            #region Office Keycard
+
+            var gameObject = new GameObject(AppData.KEYCARD_NAME,
+                ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+
+            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+
+            string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
+            string model_path = "Assets/Models/Keycard/keycard_unapplied";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    gdBasicEffect,
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            var collider = new PickupCollider(gameObject, true, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 230
+                ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion
         }
 
         private void InitializePickups()
