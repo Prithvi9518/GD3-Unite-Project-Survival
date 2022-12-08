@@ -57,7 +57,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\2D\Materials\Material2D.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\2D\Materials\TextSpriteMaterial.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\2D\Materials\TextureMaterial2D.cs" />
-    <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\2D\UIElements\UIElement.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\3D\Effects\GDBasicEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\3D\Effects\IEffect.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Core\Graphics\3D\Materials\Material.cs" />
