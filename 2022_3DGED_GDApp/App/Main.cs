@@ -612,6 +612,100 @@ namespace GD.App
         //    sceneManager.ActiveScene.Add(gameObject);
 
         //    #endregion
+
+        //    #region Exit
+
+        //    var gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+        //    //var gameObject = new GameObject("exit door",
+        //    //        ObjectType.Static, RenderType.Opaque);
+
+        //    //gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //    #region Exit Door Frame
+
+        //    gameObject = new GameObject(AppData.EXIT_DOOR_FRAME_NAME,
+        //              ObjectType.Static, RenderType.Opaque);
+
+        //    gameObject.Transform = new Transform(
+        //        AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+        //        Vector3.Zero,
+        //        new Vector3(1.83f, 0.01f, -128.2f));
+
+        //    renderer = InitializeRenderer(
+        //            "Assets/Models/Shopping Centre/Doors/Exit Door/Test/frame",
+        //            "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door",
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Exit Door
+
+        //    gameObject = new GameObject(AppData.EXIT_DOOR_NAME,
+        //               ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Interactible;
+
+        //    gameObject.Transform = new Transform(
+        //        AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+        //        Vector3.Zero,
+        //        new Vector3(1.83f, 0f, -127.9f));
+
+        //    renderer = InitializeRenderer(
+        //            "Assets/Models/Shopping Centre/Doors/Exit Door/Test/door",
+        //            "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door",
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    collider = new ExitDoorCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        230 * new Vector3(
+        //            gameObject.Transform.Scale.X * 2f,
+        //            gameObject.Transform.Scale.Y * 3,
+        //            gameObject.Transform.Scale.Z * 1.9f
+        //            )
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Exit Sign
+
+        //    gameObject = new GameObject("exit sign",
+        //            ObjectType.Static, RenderType.Opaque);
+
+        //    gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //    renderer = InitializeRenderer(
+        //            "Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign",
+        //            "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign",
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion Exit Sign
+
+        //    #endregion Exit
         //}
 
         //private void InitializeCollidablePickups()

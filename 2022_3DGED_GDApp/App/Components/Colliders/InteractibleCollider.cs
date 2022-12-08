@@ -1,4 +1,6 @@
-﻿namespace GD.Engine
+﻿using GD.App;
+
+namespace GD.Engine
 {
     public class InteractibleCollider : Collider
     {
@@ -14,7 +16,8 @@
 
             if (controller == null)
             {
-                System.Diagnostics.Debug.WriteLine("InteractionController not found.");
+                if (parentGameObject.Name == AppData.FIRST_PERSON_CAMERA_NAME)
+                    System.Diagnostics.Debug.WriteLine("InteractionController not found.");
                 return;
             }
 
