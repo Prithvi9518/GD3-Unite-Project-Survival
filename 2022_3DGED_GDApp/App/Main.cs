@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define SHOW_DEBUG_INFO
+#define SHOW_DEBUG_INFO
 #define SHOW_TIMER_TEXT
 
 #endregion
@@ -627,6 +627,19 @@ namespace GD.App
                 );
 
             gameObject.AddComponent(renderer);
+
+            Collider collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    new Vector3(6800f * gameObject.Transform.Scale.X, gameObject.Transform.Scale.Z, 9000f * gameObject.Transform.Scale.Y)
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -1505,11 +1518,8 @@ namespace GD.App
 
             var texture_path = AppData.SHELF_TEXTURE_PATH;
             InitializeClothesAisle(texture_path);
-            InitializeBeautyAisle(texture_path);
-            InitializeBeveragesAisle(texture_path);
-            InitializeElectronicsAisle(texture_path);
-            InitializePreparedFoodsAisle(texture_path);
-            InitializeProducedFoodsAisle(texture_path);
+            InitializeFrontAisles(texture_path);
+            InitializeBackAisles(texture_path);
             InitializeToysAisle(texture_path);
             InitializeWallAisle(texture_path);
 
@@ -1579,7 +1589,7 @@ namespace GD.App
             gameObject.GameObjectType = GameObjectType.Interactible;
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
-                new Vector3(38.9f, 3.5f, 42f));
+                Vector3.Zero);
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
@@ -1595,8 +1605,6 @@ namespace GD.App
             gameObject.AddComponent(renderer);
 
             gameObject.AddComponent(new InteractableBehaviour());
-
-            sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
 
@@ -1831,66 +1839,16 @@ namespace GD.App
             #endregion
         }
 
-        private void InitializeProducedFoodsAisle(string texture_path)
-        {
-            #region Produced Foods Aisle Shelf
-
-            var gameObject = new GameObject("produced foods aisle shelf",
-                        ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var model_path = "Assets/Models/Aisles/Produced Foods/produced_foods_aisle_shelf";
-
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(unlitEffect),
-                    1
-                    );
-
-            gameObject.AddComponent(renderer);
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
-        }
-
-        private void InitializePreparedFoodsAisle(string texture_path)
-        {
-            #region Prepared Foods Aisle Shelf
-
-            var gameObject = new GameObject("prepared foods aisle shelf",
-                        ObjectType.Static, RenderType.Opaque);
-
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-            var model_path = "Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf";
-
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(unlitEffect),
-                    1
-                    );
-
-            gameObject.AddComponent(renderer);
-
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
-        }
-
-        private void InitializeElectronicsAisle(string texture_path)
+        private void InitializeBackAisles(string texture_path)
         {
             #region Electronics Aisle Shelf
 
             var gameObject = new GameObject("electronics aisle shelf",
                         ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(31.6f, 2.6f, -50.2f));
 
-            var model_path = "Assets/Models/Aisles/Electronics/electronics_aisle_shelf";
+            var model_path = "Assets/Models/Aisles/aisle_3";
 
             Renderer renderer = InitializeRenderer(
                     model_path,
@@ -1901,46 +1859,91 @@ namespace GD.App
 
             gameObject.AddComponent(renderer);
 
+            var aisleScale = new Vector3(160f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 2550f * gameObject.Transform.Scale.Z);
+            Collider collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+
             sceneManager.ActiveScene.Add(gameObject);
+
+
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(-16.5f, 0, 0), aisleScale);
+                sceneManager.ActiveScene.Add(gameObject);
+            }
 
             #endregion Electronics Aisle Shelf
         }
 
-        private void InitializeBeveragesAisle(string texture_path)
+        private GameObject CloneModelGameObject(GameObject gameObject, string newName, Vector3 offset, Vector3 colliderScale)
         {
-            #region Beverages Aisle Shelf
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
 
-            var gameObject = new GameObject("beverages aisle shelf",
-                       ObjectType.Static, RenderType.Opaque);
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Translation + offset
+                );
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
 
-            var model_path = "Assets/Models/Aisles/Beverages/beverages_aisle_shelf";
+            Collider cloneCollider = new Collider(gameObjectClone, true);
 
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(unlitEffect),
-                    1
-                    );
+            cloneCollider.AddPrimitive(
+                new Box(
+                    gameObjectClone.Transform.Translation,
+                    gameObjectClone.Transform.Rotation,
+                    colliderScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
 
-            gameObject.AddComponent(renderer);
+            cloneCollider.Enable(gameObjectClone, true, 10);
+            gameObjectClone.AddComponent(cloneCollider);
 
-            sceneManager.ActiveScene.Add(gameObject);
-
-            #endregion
+            return gameObjectClone;
         }
 
-        private void InitializeBeautyAisle(string texture_path)
+        private GameObject CloneModelGameObject(GameObject gameObject, string newName, Vector3 offset)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Translation + offset
+                );
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
+
+            return gameObjectClone;
+        }
+
+        private void InitializeFrontAisles(string texture_path)
         {
             #region Beauty Aisle Shelf
-
             var gameObject = new GameObject("beauty aisle shelf",
                         ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(31.6f,2.6f,7.6f));
 
-            var model_path = "Assets/Models/Aisles/Beauty/beauty_aisle_shelf";
+            var model_path = "Assets/Models/Aisles/aisle_2";
 
             Renderer renderer = InitializeRenderer(
                     model_path,
@@ -1951,8 +1954,29 @@ namespace GD.App
 
             gameObject.AddComponent(renderer);
 
+
+            var aisleScale = new Vector3(160f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 2240f * gameObject.Transform.Scale.Z);
+            Collider collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+
             sceneManager.ActiveScene.Add(gameObject);
 
+
+      for(int i = 0; i < 2; i++)
+        {
+            gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(-16.5f, 0, 0), aisleScale);
+            sceneManager.ActiveScene.Add(gameObject);
+        }
             #endregion
         }
 
