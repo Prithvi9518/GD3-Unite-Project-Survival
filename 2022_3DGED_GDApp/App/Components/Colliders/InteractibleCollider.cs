@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GD.Engine
+﻿namespace GD.Engine
 {
     public class InteractibleCollider : Collider
     {
@@ -33,8 +27,8 @@ namespace GD.Engine
         }
 
         /// <summary>
-        /// Override this method to program interaction behaviour for specific interactibles/pickups
-        /// Ex: a keycard and a fuse will have different colliders that inherit from this class,
+        /// Override this method to program interaction behaviour for specific interactibles
+        /// Ex: the gate access machine and the fusebox will have different colliders that inherit from this class,
         /// and override this method to send different events.
         /// </summary>
         protected virtual void HandleInteraction()

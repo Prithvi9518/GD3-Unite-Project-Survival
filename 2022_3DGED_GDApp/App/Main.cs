@@ -328,7 +328,8 @@ namespace GD.App
         {
             //InitializeCollidableWalls();
             InitializeCollidableGround(worldScale);
-            InitializeCollidablePickups();
+            //InitializeCollidablePickups();
+            //InitializeCollidableInteractibles();
         }
 
         private void InitializeCollidableGround(float worldScale)
@@ -508,7 +509,7 @@ namespace GD.App
 
             InitializeEnemies();
 
-            //InitializePickups();
+            InitializePickups();
         }
 
         private Renderer InitializeRenderer(string modelPath, string texturePath, GDBasicEffect effect, float alpha)
@@ -533,46 +534,164 @@ namespace GD.App
                 mesh);
         }
 
-        private void InitializeCollidablePickups()
-        {
-            GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+        //private void InitializeCollidableInteractibles()
+        //{
+        //    #region Gate Access Machine
 
-            #region Office Keycard
+        //    var gameObject = new GameObject(AppData.GATE_ACCESS_MACHINE_NAME,
+        //                        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Interactible;
 
-            var gameObject = new GameObject(AppData.KEYCARD_NAME,
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.GameObjectType = GameObjectType.Collectible;
+        //    gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
+        //        new Vector3(38.9f, 3.5f, 42f));
 
-            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+        //    string texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
-            string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
-            string model_path = "Assets/Models/Keycard/keycard_unapplied";
+        //    string model_path = "Assets/Models/Generator Room/gate_access_machine_test_2";
 
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
+        //    Renderer renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(unlitEffect),
+        //            1
+        //            );
 
-            gameObject.AddComponent(renderer);
+        //    gameObject.AddComponent(renderer);
 
-            var collider = new PickupCollider(gameObject, true, true);
-            collider.AddPrimitive(new Box(
-                gameObject.Transform.Translation,
-                gameObject.Transform.Rotation,
-                gameObject.Transform.Scale * 230
-                ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+        //    InteractibleCollider collider = new AccessMachineCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 230
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
 
-            collider.Enable(gameObject, true, 5);
-            gameObject.AddComponent(collider);
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
 
-            sceneManager.ActiveScene.Add(gameObject);
+        //    sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion
-        }
+        //    #endregion
+
+        //    #region Fuse Box
+
+        //    gameObject = new GameObject(AppData.FUSE_BOX_NAME,
+        //                        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Interactible;
+
+        //    gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+        //        Vector3.Zero,
+        //        new Vector3(57.5f, 2.2f, 42.4f));
+
+        //    texture_path = "Assets/Textures/Props/Generator_Room/fuse_box_diffuse";
+
+        //    model_path = "Assets/Models/Generator Room/fuse_box_test";
+
+        //    renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(unlitEffect),
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    collider = new FuseboxCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 230
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+        //}
+
+        //private void InitializeCollidablePickups()
+        //{
+        //    GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+        //    #region Office Keycard
+
+        //    var gameObject = new GameObject(AppData.KEYCARD_NAME,
+        //        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
+
+        //    gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+
+        //    string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
+        //    string model_path = "Assets/Models/Keycard/keycard_unapplied";
+
+        //    Renderer renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    var collider = new PickupCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 230
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Fuse
+
+        //    gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
+
+        //    gameObject.Transform = new Transform
+        //        (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
+        //        new Vector3(MathHelper.PiOver2, 0, 0),
+        //        new Vector3(-10, 2.75f, -67));
+
+        //    model_path = "Assets/Models/Fuse/fuse";
+        //    texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+
+        //    renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(unlitEffect),
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    collider = new PickupCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 2000
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion Fuse
+        //}
 
         private void InitializePickups()
         {
