@@ -308,7 +308,7 @@ namespace GD.App
             //    AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
             //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
 
-            cameraGameObject.AddComponent(new CollidableFirstPersonController(cameraGameObject,
+            cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
                 characterCollider,
                 AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
                 AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,

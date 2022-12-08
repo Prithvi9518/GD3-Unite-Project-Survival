@@ -12,7 +12,7 @@ namespace GD.Engine
     /// <summary>
     /// Adds collidable 1st person controller to camera using keyboard and mouse input
     /// </summary>
-    public class CollidableFirstPersonController : FirstPersonController
+    public class OurCollidableFPController : OurFirstPersonController
     {
         #region Statics
 
@@ -33,7 +33,7 @@ namespace GD.Engine
 
         #region Contructors
 
-        public CollidableFirstPersonController(GameObject gameObject,
+        public OurCollidableFPController(GameObject gameObject,
             CharacterCollider characterCollider,
             float moveSpeed,
             float strafeSpeed, Vector2 rotationSpeed,
