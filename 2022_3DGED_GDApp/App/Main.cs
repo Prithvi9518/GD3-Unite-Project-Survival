@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-#define SHOW_DEBUG_INFO
+//#define SHOW_DEBUG_INFO
 //#define SHOW_TIMER_TEXT
 
 #endregion
@@ -46,6 +46,7 @@ namespace GD.App
         private BasicEffect floorEffect;
         private BasicEffect fuse220VEffect;
         private BasicEffect fuse440VEffect;
+        private BasicEffect enemyEffect;
 
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
@@ -496,8 +497,8 @@ namespace GD.App
             //litEffect.FogColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
             litEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
             //litEffect.FogColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
-            litEffect.FogStart = 0f;
-            litEffect.FogEnd = 25f;
+            litEffect.FogStart = 7f;
+            litEffect.FogEnd = 30f;
 
             litEffect.PreferPerPixelLighting = true;
 
@@ -618,6 +619,35 @@ namespace GD.App
             fuse440VEffect.PreferPerPixelLighting = true;
 
             #endregion
+
+            enemyEffect = new BasicEffect(_graphics.GraphicsDevice);
+            enemyEffect.TextureEnabled = true;
+            enemyEffect.LightingEnabled = true;
+
+            enemyEffect.DirectionalLight0.DiffuseColor = new Vector3(156 / 255f, 149 / 255f, 196 / 255f);
+            enemyEffect.DirectionalLight0.Direction = new Vector3(0, -1, 0);
+            enemyEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+
+            enemyEffect.DirectionalLight1.DiffuseColor = new Vector3(82 / 255f, 59 / 255f, 228 / 255f);
+            enemyEffect.DirectionalLight1.Direction = new Vector3(0, 0, -1);
+            enemyEffect.DirectionalLight1.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+            enemyEffect.DirectionalLight1.Enabled = true;
+
+            //enemyEffect.DirectionalLight2.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            //enemyEffect.DirectionalLight2.Direction = new Vector3(0, 1, 0);
+            //enemyEffect.DirectionalLight2.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
+            //enemyEffect.DirectionalLight2.Enabled = true;
+
+            enemyEffect.EmissiveColor = new Vector3(29 / 255f, 26 / 255f, 51 / 255f);
+
+            enemyEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            enemyEffect.FogEnabled = true;
+            enemyEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            enemyEffect.FogStart = 10f;
+            enemyEffect.FogEnd = 70f;
+
+            enemyEffect.PreferPerPixelLighting = true;
         }
 
         private void InitializeCameras()
@@ -1070,7 +1100,7 @@ namespace GD.App
         {
             Renderer enemyRenderer = null;
             GameObject gameObject = null;
-            var gdBasicEffect = new GDBasicEffect(litEffect);
+            var gdBasicEffect = new GDBasicEffect(enemyEffect);
 
             for (int i = 0; i < AppData.ENEMY_WAYPOINTS_LIST.Count; i++)
             {
