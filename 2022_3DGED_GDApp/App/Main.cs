@@ -604,7 +604,7 @@ namespace GD.App
             //InitializeWalls();
             Initializew();
             InitializeShoppingCentreAssets();
-            //InitializeAisles();
+            InitializeAisles();
             InitializeCoffeeShop();
         }
 
@@ -1156,8 +1156,8 @@ ObjectType.Static, RenderType.Opaque);
             InitializeFridges();
             InitializeLights();
             InitializeScaffolding();
-            InitializeShoppingCart();
-            InitializeBins();
+            //InitializeShoppingCart();
+            //InitializeBins();
             InitializeBenches();
             InitializeCheckoutDesks();
             InitializeNotes();
@@ -1204,25 +1204,45 @@ ObjectType.Static, RenderType.Opaque);
 
             string belt_base_path = AppData.CHECKOUT_DESK_MODEL_BASE_PATH + "Belt/belt_";
 
-            for (int i = 1; i <= 3; i++)
+      
+            gameObject = new GameObject("belt ", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(17.2f, 1f, 47.6f));
+
+            String model_path = belt_base_path + "2";
+
+            renderer = InitializeRenderer(
+                model_path,
+                AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "belt",
+                gdBasicEffect,
+                1,
+                Color.White
+                );
+
+            gameObject.AddComponent(renderer);
+
+            var aisleScale = new Vector3(140f * gameObject.Transform.Scale.X, 95f * gameObject.Transform.Scale.Y, 300f * gameObject.Transform.Scale.Z);
+            Collider collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+
+            for (int i = 0; i < 2; i++)
             {
-                gameObject = new GameObject("belt " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = belt_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "belt",
-                    gdBasicEffect,
-                    1,
-                    Color.White
-                    );
-
-                gameObject.AddComponent(renderer);
-
+                gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(-10.5f, 0, 0), aisleScale);
                 sceneManager.ActiveScene.Add(gameObject);
             }
+
 
             #endregion Belt
 
@@ -1230,29 +1250,71 @@ ObjectType.Static, RenderType.Opaque);
 
             string cashier_path = AppData.CHECKOUT_DESK_MODEL_BASE_PATH + "Cashier/cashier_";
 
-            for (int i = 1; i <= 3; i++)
+      
+            gameObject = new GameObject("cashier 2", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            model_path = cashier_path + "2";
+
+            renderer = InitializeRenderer(
+                model_path,
+                AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "cash_register",
+                gdBasicEffect,
+                1,
+                Color.White
+                );
+
+            gameObject.AddComponent(renderer);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+
+
+
+
+            gameObject = new GameObject("cashier 3", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(15.6f,2.4f,49.5f));
+
+            model_path = cashier_path + "3";
+
+            renderer = InitializeRenderer(
+                model_path,
+                AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "cash_register",
+                gdBasicEffect,
+                1,
+                Color.White
+                );
+
+            gameObject.AddComponent(renderer);
+
+
+            aisleScale = new Vector3(140f * gameObject.Transform.Scale.X, 160f * gameObject.Transform.Scale.Y, 100f * gameObject.Transform.Scale.Z);
+            collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+
+            for (int i = 0; i < 2; i++)
             {
-                gameObject = new GameObject("cashier " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = cashier_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    AppData.CHECKOUT_DESK_TEXTURE_BASE_PATH + "cash_register",
-                    gdBasicEffect,
-                    1,
-                    Color.White
-                    );
-
-                gameObject.AddComponent(renderer);
-
+                gameObject = CloneModelGameObject(gameObject, "Cashier ", new Vector3(-10.5f, 0, 0), aisleScale);
                 sceneManager.ActiveScene.Add(gameObject);
-
-                #endregion Cashier
-
-                #endregion Checkout Desks
             }
+
+            #endregion Cashier
+
+            #endregion Checkout Desks
+
         }
 
         private void InitializeBenches()
@@ -2416,11 +2478,11 @@ ObjectType.Static, RenderType.Opaque);
             #region Clothes Aisle Shelf
 
             var gameObject = new GameObject("clothes aisle shelf",
-                    ObjectType.Static, RenderType.Opaque);
+             ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(-13.6f, 2.6f, -28.2f));
 
-            var model_path = "Assets/Models/Aisles/Clothes/clothes_aisle_shelf";
+            var model_path = "Assets/Models/Aisles/aisle_4";
 
             Renderer renderer = InitializeRenderer(
                     model_path,
@@ -2430,6 +2492,19 @@ ObjectType.Static, RenderType.Opaque);
                     );
 
             gameObject.AddComponent(renderer);
+            var aisleScale = new Vector3(160f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 3000f * gameObject.Transform.Scale.Z);
+            Collider collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
