@@ -31,7 +31,7 @@ namespace GD.Engine
 
         #endregion Fields
 
-        #region Contructors
+        #region Constructors
 
         public OurCollidableFPController(GameObject gameObject,
             CharacterCollider characterCollider,
@@ -48,7 +48,7 @@ namespace GD.Engine
             characterBody = characterCollider.Body as Character;
         }
 
-        #endregion Contructors
+        #endregion Constructors
 
         #region Actions - Update
 
@@ -252,7 +252,7 @@ namespace GD.Engine
             characterCollider = defaultCollider;
             characterBody = defaultCollider.Body as Character;
 
-            transform.Translate(0, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y - 2, 0);
+            transform.Translate(0, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y, 0);
         }
 
         private void HandleJump(GameTime gameTime)
