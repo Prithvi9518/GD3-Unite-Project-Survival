@@ -44,7 +44,8 @@ namespace GD.App
         private BasicEffect exitSignEffect;
         private BasicEffect sideWallEffect;
         private BasicEffect floorEffect;
-        private BasicEffect fuseEffect;
+        private BasicEffect fuse220VEffect;
+        private BasicEffect fuse440VEffect;
 
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
@@ -566,29 +567,55 @@ namespace GD.App
 
             #endregion
 
-            #region Fuse Effect
+            #region Fuse 220V Effect
 
-            fuseEffect = new BasicEffect(_graphics.GraphicsDevice);
-            fuseEffect.TextureEnabled = true;
-            fuseEffect.LightingEnabled = true;
+            fuse220VEffect = new BasicEffect(_graphics.GraphicsDevice);
+            fuse220VEffect.TextureEnabled = true;
+            fuse220VEffect.LightingEnabled = true;
 
-            fuseEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+            fuse220VEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
 
-            Vector3 fuseDirection = Vector3.Normalize(AppData.FUSE_TRANSLATION - Vector3.Zero);
-            fuseEffect.DirectionalLight0.Direction = fuseDirection;
+            Vector3 fuseDirection = Vector3.Normalize(AppData.FUSE_220V_TRANSLATION - Vector3.Zero);
+            fuse220VEffect.DirectionalLight0.Direction = fuseDirection;
 
-            fuseEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+            fuse220VEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
 
-            fuseEffect.EmissiveColor = new Vector3(0 / 255f, 247 / 255f, 255 / 255f);
+            fuse220VEffect.EmissiveColor = new Vector3(0 / 255f, 247 / 255f, 255 / 255f);
 
-            fuseEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            fuse220VEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
 
-            fuseEffect.FogEnabled = true;
-            fuseEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
-            fuseEffect.FogStart = 0f;
-            fuseEffect.FogEnd = 25f;
+            fuse220VEffect.FogEnabled = true;
+            fuse220VEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            fuse220VEffect.FogStart = 0f;
+            fuse220VEffect.FogEnd = 25f;
 
-            fuseEffect.PreferPerPixelLighting = true;
+            fuse220VEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Fuse 440V Effect
+
+            fuse440VEffect = new BasicEffect(_graphics.GraphicsDevice);
+            fuse440VEffect.TextureEnabled = true;
+            fuse440VEffect.LightingEnabled = true;
+
+            fuse440VEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+
+            fuseDirection = Vector3.Normalize(AppData.FUSE_440V_TRANSLATION - Vector3.Zero);
+            fuse440VEffect.DirectionalLight0.Direction = fuseDirection;
+
+            fuse440VEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+
+            fuse440VEffect.EmissiveColor = new Vector3(252 / 255f, 92 / 255f, 0 / 255f);
+
+            fuse440VEffect.AmbientLightColor = new Vector3(238 / 255f, 114 / 255f, 42 / 255f);
+
+            fuse440VEffect.FogEnabled = true;
+            fuse440VEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            fuse440VEffect.FogStart = 0f;
+            fuse440VEffect.FogEnd = 25f;
+
+            fuse440VEffect.PreferPerPixelLighting = true;
 
             #endregion
         }
@@ -904,15 +931,15 @@ namespace GD.App
 
             #endregion
 
-            #region Fuse
+            #region Fuse 220V
 
-            gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
+            gameObject = new GameObject(AppData.FUSE_220V_NAME, ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform
                 (AppData.DEFAULT_OBJECT_SCALE * 0.05f * Vector3.One,
-                new Vector3(90, 0, 0),
-                AppData.FUSE_TRANSLATION);
+                new Vector3(90, 90, 0),
+                AppData.FUSE_220V_TRANSLATION);
 
             model_path = "Assets/Models/Fuse/fuse";
             texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
@@ -920,7 +947,45 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(fuseEffect),
+                    new GDBasicEffect(fuse220VEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            collider = new PickupCollider(gameObject, true, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 8000
+                ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Fuse
+
+            #region Fuse 440V
+
+            gameObject = new GameObject(AppData.FUSE_440V_NAME, ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+
+            gameObject.Transform = new Transform
+                (AppData.DEFAULT_OBJECT_SCALE * 0.05f * Vector3.One,
+                new Vector3(90, 0, 0),
+                AppData.FUSE_440V_TRANSLATION);
+
+            model_path = "Assets/Models/Fuse/fuse";
+            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(fuse440VEffect),
                     1
                     );
 
@@ -1269,18 +1334,18 @@ namespace GD.App
             gameObject.AddComponent(renderer);
 
             aisleScale = new Vector3(105f * gameObject.Transform.Scale.X, 550f * gameObject.Transform.Scale.Y, 1230f * gameObject.Transform.Scale.Z);
-            collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    aisleScale
-                    ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+            //collider = new Collider(gameObject, true);
+            //collider.AddPrimitive(
+            //    new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        aisleScale
+            //        ),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //    );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -1430,18 +1495,18 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(renderer);
 
             aisleScale = new Vector3(105f * gameObject.Transform.Scale.X, 550f * gameObject.Transform.Scale.Y, 1800f * gameObject.Transform.Scale.Z);
-            collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    aisleScale
-                    ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+            //collider = new Collider(gameObject, true);
+            //collider.AddPrimitive(
+            //    new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        aisleScale
+            //        ),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //    );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
 

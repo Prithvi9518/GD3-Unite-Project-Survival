@@ -211,7 +211,8 @@ namespace GD.App
 
         #region Pickup Variables
 
-        public static readonly Vector3 FUSE_TRANSLATION = new Vector3(-0.7f, 2.3f, -28f);
+        public static readonly Vector3 FUSE_220V_TRANSLATION = new Vector3(-2.4f, 2.3f, -74.8f);
+        public static readonly Vector3 FUSE_440V_TRANSLATION = new Vector3(-0.7f, 2.3f, -28f);
 
         #endregion
 
@@ -233,7 +234,8 @@ namespace GD.App
         public static readonly string KEYCARD_NAME = "office keycard";
         public static readonly string GENERATOR_DOOR_NAME = "generator door";
         public static readonly string FUSE_BOX_NAME = "fuse box";
-        public static readonly string FUSE_NAME = "fuse";
+        public static readonly string FUSE_220V_NAME = "fuse 220v";
+        public static readonly string FUSE_440V_NAME = "fuse 440v";
 
         public static readonly string EXIT_DOOR_NAME = "exit door";
         public static readonly string EXIT_DOOR_FRAME_NAME = "exit door frame";
