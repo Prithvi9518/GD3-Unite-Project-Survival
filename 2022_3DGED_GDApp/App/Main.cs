@@ -41,6 +41,7 @@ namespace GD.App
         private SpriteBatch _spriteBatch;
         private BasicEffect unlitEffect;
         private BasicEffect litEffect;
+        private BasicEffect exitSignEffect;
 
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
@@ -289,6 +290,18 @@ namespace GD.App
             litEffect.FogStart = 6f;
             litEffect.FogEnd = 22f;
             litEffect.PreferPerPixelLighting = true;
+
+            //exit sign emission effect
+            exitSignEffect = new BasicEffect(_graphics.GraphicsDevice);
+            exitSignEffect.TextureEnabled = true;
+            exitSignEffect.LightingEnabled = true;
+
+            exitSignEffect.EmissiveColor = new Vector3(226 / 255f, 41 / 255f, 41 / 255f);
+
+            exitSignEffect.DirectionalLight0.DiffuseColor = new Vector3(255 / 255f, 255 / 255f, 255 / 255f);
+            exitSignEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
+
+            exitSignEffect.AmbientLightColor = new Vector3(232 / 255f, 71 / 255f, 76 / 255f);
         }
 
         private void InitializeCameras()
@@ -1568,7 +1581,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign",
                     "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign",
-                    gdBasicEffect,
+                    new GDBasicEffect(exitSignEffect),
                     1
                     );
 
