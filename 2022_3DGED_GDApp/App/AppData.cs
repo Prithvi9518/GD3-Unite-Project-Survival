@@ -151,9 +151,9 @@ namespace GD.App
         // ENEMY 2 - Office Guarding Enemy
         // ENEMY 3 - Right Lane Enemy
 
-        public static readonly Vector3 ENEMY_1_INITIAL_POS = new Vector3(-16, AppData.ENEMY_POSITION_Y, -120);
-        public static readonly Vector3 ENEMY_2_INITIAL_POS = new Vector3(-39, AppData.ENEMY_POSITION_Y, -109);
-        public static readonly Vector3 ENEMY_3_INITIAL_POS = new Vector3(30, AppData.ENEMY_POSITION_Y, -108);
+        public static readonly Vector3 ENEMY_1_INITIAL_POS = new Vector3(6.8f, AppData.ENEMY_POSITION_Y, -79f);
+        public static readonly Vector3 ENEMY_2_INITIAL_POS = new Vector3(-23f, AppData.ENEMY_POSITION_Y, -71f);
+        public static readonly Vector3 ENEMY_3_INITIAL_POS = new Vector3(39f, AppData.ENEMY_POSITION_Y, -78f);
 
         public static readonly List<Vector3> ENEMY_INITIAL_POSITIONS = new List<Vector3>()
         {
@@ -174,21 +174,21 @@ namespace GD.App
             new List<Vector3>()
             {
             ENEMY_1_INITIAL_POS,
-            new Vector3(-16, AppData.ENEMY_POSITION_Y, -60),
-            new Vector3(-2, AppData.ENEMY_POSITION_Y, -60),
-            new Vector3(-2, AppData.ENEMY_POSITION_Y, -120)
+            new Vector3(6.8f, AppData.ENEMY_POSITION_Y, -20.3f),
+            new Vector3(24f, AppData.ENEMY_POSITION_Y, -20.3f),
+            new Vector3(24f, AppData.ENEMY_POSITION_Y, -79f)
             },
 
             new List<Vector3>()
             {
                 ENEMY_2_INITIAL_POS,
-                new Vector3(-39, AppData.ENEMY_POSITION_Y, -40)
+                new Vector3(-23f, AppData.ENEMY_POSITION_Y, -6f)
             },
 
             new List<Vector3>()
             {
                 ENEMY_3_INITIAL_POS,
-                new Vector3(30, AppData.ENEMY_POSITION_Y, -12)
+                new Vector3(39f, AppData.ENEMY_POSITION_Y, 23f)
             }
         };
 
