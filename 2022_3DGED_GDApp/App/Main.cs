@@ -575,7 +575,7 @@ namespace GD.App
             gameObject.GameObjectType = GameObjectType.Interactible;
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
-                new Vector3(38.9f, 3.5f, 42f));
+                new Vector3(48.75f, 3.5f, 80.3f));
 
             string texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
