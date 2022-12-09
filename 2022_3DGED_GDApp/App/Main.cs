@@ -280,11 +280,13 @@ namespace GD.App
             litEffect.DirectionalLight2.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
             litEffect.DirectionalLight2.Enabled = true;
 
-            litEffect.AmbientLightColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            //litEffect.AmbientLightColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            litEffect.AmbientLightColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
 
             litEffect.FogEnabled = true;
-            litEffect.FogColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
-            litEffect.FogStart = 10f;
+            //litEffect.FogColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            litEffect.FogColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
+            litEffect.FogStart = 6f;
             litEffect.FogEnd = 22f;
             litEffect.PreferPerPixelLighting = true;
         }
