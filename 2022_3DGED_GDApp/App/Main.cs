@@ -786,9 +786,9 @@ namespace GD.App
             gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform
-                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
-                new Vector3(MathHelper.PiOver2, 0, 0),
-                new Vector3(-10, 2.75f, -67));
+                (AppData.DEFAULT_OBJECT_SCALE * 0.05f * Vector3.One,
+                new Vector3(90, 0, 0),
+                new Vector3(-0.7f, 2.3f, -28f));
 
             model_path = "Assets/Models/Fuse/fuse";
             texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
@@ -806,7 +806,7 @@ namespace GD.App
             collider.AddPrimitive(new Box(
                 gameObject.Transform.Translation,
                 gameObject.Transform.Rotation,
-                gameObject.Transform.Scale * 2000
+                gameObject.Transform.Scale * 8000
                 ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
