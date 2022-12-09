@@ -105,6 +105,10 @@ namespace GD.App
 
         #region Movement Constants
 
+        public static readonly float OLD_PLAYER_MOVE_SPEED = 0.1f;
+        private static readonly float OLD_PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
+        public static readonly float OLD_PLAYER_STRAFE_SPEED = OLD_PLAYER_STRAFE_SPEED_MULTIPLIER * OLD_PLAYER_MOVE_SPEED;
+
         public static readonly float PLAYER_MOVE_SPEED = 0.05f;
         private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.6f;
         public static readonly float PLAYER_STRAFE_SPEED = PLAYER_STRAFE_SPEED_MULTIPLIER * PLAYER_MOVE_SPEED;
