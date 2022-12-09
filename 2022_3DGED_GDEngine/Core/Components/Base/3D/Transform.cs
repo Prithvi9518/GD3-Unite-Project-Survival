@@ -136,6 +136,16 @@ namespace GD.Engine
         }
 
         /// <summary>
+        /// Increases/decreases scale by adding/removing delta value
+        /// </summary>
+        /// <param name="delta"></param>
+        public void ScaleBy(float delta)
+        {
+            scale.Add(delta, delta, delta);
+            isWorldDirty = true;
+        }
+
+        /// <summary>
         /// Increases/decreases scale by adding/removing Vector3 passed by reference
         /// </summary>
         /// <param name="x"></param>

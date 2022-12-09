@@ -9,7 +9,7 @@ namespace GD.Engine
     /// <summary>
     /// Adds simple non-collidable 1st person controller to camera using keyboard and mouse input
     /// </summary>
-    public class FirstPersonController : Component
+    public class OurFirstPersonController : Component
     {
         #region Fields
 
@@ -22,12 +22,12 @@ namespace GD.Engine
 
         protected Vector2 rotationSpeed;
 
-        private bool isGrounded;
+        protected bool isGrounded;
 
-        private bool crouchEnabled = false;
-        private bool needsToCrouch = true;
+        protected bool crouchEnabled = false;
+        protected bool needsToCrouch = true;
 
-        private float smoothFactor;
+        protected float smoothFactor;
 
         #endregion Fields
 
@@ -41,12 +41,12 @@ namespace GD.Engine
 
         #region Constructors
 
-        public FirstPersonController(float moveSpeed, float strafeSpeed, float rotationSpeed, float smoothFactor = 0.25f, bool isGrounded = true)
+        public OurFirstPersonController(float moveSpeed, float strafeSpeed, float rotationSpeed, float smoothFactor = 0.25f, bool isGrounded = true)
     : this(moveSpeed, strafeSpeed, rotationSpeed * Vector2.One, smoothFactor, isGrounded)
         {
         }
 
-        public FirstPersonController(float moveSpeed, float strafeSpeed, Vector2 rotationSpeed, float smoothFactor, bool isGrounded)
+        public OurFirstPersonController(float moveSpeed, float strafeSpeed, Vector2 rotationSpeed, float smoothFactor, bool isGrounded)
         {
             this.moveSpeed = moveSpeed;
             this.strafeSpeed = strafeSpeed;

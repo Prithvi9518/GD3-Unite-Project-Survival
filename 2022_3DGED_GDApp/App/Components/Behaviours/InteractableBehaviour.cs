@@ -156,7 +156,7 @@ namespace GD.Engine
             object[] parameters = { "pickup-sound" };
             EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
 
-            // Raise event to take object out of inventory and use it
+            // Raise event to add item to inventory
             InventoryItemData itemData = new InventoryItemData(
                 this.gameObject.Name,
                 this.gameObject.Name,

@@ -1,7 +1,4 @@
-﻿using GD.Core.Types;
-using GD.Engine;
-using Microsoft.Xna.Framework;
-using SharpDX.Direct2D1.Effects;
+﻿using Microsoft.Xna.Framework;
 using System;
 
 /// <summary>
@@ -11,7 +8,7 @@ using System;
 ///<seealso cref="https://www.tutorialsteacher.com/csharp/csharp-extension-method"/>
 public static class Vector3Extensions
 {
-    public static Vector2 To2D(this ref Vector3 target)
+    public static Vector2 To2D(this Vector3 target)
     {
         return new Vector2(target.X, target.Y);
     }

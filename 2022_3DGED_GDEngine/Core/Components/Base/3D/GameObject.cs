@@ -70,6 +70,7 @@ namespace GD.Engine
         /// Gets a list of all components (e.g. controllers, behaviours, camera) of the current object
         /// </summary>
         public List<Component> Components { get => components; }
+
         public GameObjectType GameObjectType { get => gameObjectType; set => gameObjectType = value; }
 
         #endregion Properties
@@ -128,6 +129,18 @@ namespace GD.Engine
         }
 
         /// <summary>
+        /// Removes a component by type e.g. Camera
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public bool RemoveComponent<T>() where T : Component
+        {
+            Component target = GetComponent<T>();
+            components.Remove(target);
+            return target != null;
+        }
+
+        /// <summary>
         /// Removes a component by predicate
         /// </summary>
         /// <param name="predicate"></param>
@@ -140,15 +153,59 @@ namespace GD.Engine
         }
 
         /// <summary>
-        /// Removes a component by type e.g. Camera
+        /// Gets all components by type e.g. Camera
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public List<T> GetComponents<T>() where T : Component
+        {
+            List<T> found = new List<T>();
+
+            for (int i = 0; i < components.Count; i++)
+            {
+                if (components[i].GetType().Equals(typeof(T)))
+                    found.Add(components[i] as T);
+            }
+
+            return found.Count != 0 ? found : null;
+        }
+
+        /// <summary>
+        /// Removes all components by predicate
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public bool RemoveComponent<T>() where T : Component
+        public int RemoveComponents(Predicate<Component> predicate)
         {
-            Component target = GetComponent<T>();
-            components.Remove(target);
-            return target != null;
+            List<Component> found = components.FindAll(predicate);
+            int count = 0;
+            foreach (Component component in found)
+            {
+                components.Remove(component);
+                count++;
+            }
+
+            found.Clear();
+            return count;
+        }
+
+        /// <summary>
+        /// Removes all components by type e.g. Camera
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public int RemoveComponents<T>() where T : Component
+        {
+            List<T> found = GetComponents<T>();
+            int count = 0;
+            foreach (T component in found)
+            {
+                components.Remove(component);
+                count++;
+            }
+
+            found.Clear();
+            return count;
         }
 
         #endregion Actions - Add, Remove, Get Component

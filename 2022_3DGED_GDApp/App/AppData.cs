@@ -54,9 +54,7 @@ namespace GD.App
         #region Camera - First Person
 
         public static readonly string FIRST_PERSON_CAMERA_NAME = "fpc 1";
-        public static readonly float FIRST_PERSON_MOVE_SPEED = 0.009f;
-        public static readonly float FIRST_PERSON_STRAFE_SPEED = 0.6f * FIRST_PERSON_MOVE_SPEED;
-        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 3.5f, 35);
+        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 7f, 35);
 
         public static readonly float FIRST_PERSON_CAMERA_FCP = 3000;
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
@@ -107,8 +105,8 @@ namespace GD.App
 
         #region Movement Constants
 
-        public static readonly float PLAYER_MOVE_SPEED = 0.1f;
-        private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
+        public static readonly float PLAYER_MOVE_SPEED = 0.05f;
+        private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.6f;
         public static readonly float PLAYER_STRAFE_SPEED = PLAYER_STRAFE_SPEED_MULTIPLIER * PLAYER_MOVE_SPEED;
 
         //can use either same X-Y rotation for camera controller or different
@@ -122,18 +120,25 @@ namespace GD.App
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
         public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;
-        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.7f;
+        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.9f;
 
         public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1.75f;
 
-        public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
+        public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 0.2f;
+
+        public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
+
+        public static readonly float PLAYER_DEFAULT_CAPSULE_HEIGHT = 3.6f;
+
+        //public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.3f;
+        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.5f;
 
         #endregion Movement Constants
 
         #region Enemy Variables
 
-        public static readonly float ENEMY_POSITION_Y = 2f;
-        public static readonly float ENEMY_SCALE = 0.007f;
+        public static readonly float ENEMY_POSITION_Y = 4f;
+        public static readonly float ENEMY_SCALE = 0.015f;
 
         public static readonly float ENEMY_MOVEMENT_SPEED = 0.005f;
 
@@ -256,7 +261,7 @@ namespace GD.App
 
         #region Enemy Model Paths
 
-        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow";
+        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow01";
 
         #endregion Enemy Model Paths
 
@@ -287,7 +292,7 @@ namespace GD.App
 
         #region Enemy Texture Paths
 
-        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/black";
+        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/scales";
 
         #endregion Enemy Texture Paths
 

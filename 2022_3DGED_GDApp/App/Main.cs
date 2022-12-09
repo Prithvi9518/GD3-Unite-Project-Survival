@@ -2,7 +2,7 @@
 
 //#define DEMO
 #define SHOW_DEBUG_INFO
-#define SHOW_TIMER_TEXT
+//#define SHOW_TIMER_TEXT
 
 #endregion
 
@@ -50,7 +50,7 @@ namespace GD.App
         private EventDispatcher eventDispatcher;
         private StateManager stateManager;
         private SceneManager<Scene2D> uiManager;
-        private Render2DManager uiRenderManager;
+        private SceneManager<Scene2D> menuManager;
 
         private InventoryManager inventoryManager;
 
@@ -124,6 +124,10 @@ namespace GD.App
             //add non-collidable drawn stuff
             InitializeNonCollidableContent(worldScale);
 
+            //add UI and menu
+            //InitializeUI();
+            //InitializeMenu();
+
             //Raise all the events that I want to happen at the start
             object[] parameters = { "Ambient" };
             EventDispatcher.Raise(
@@ -136,6 +140,205 @@ namespace GD.App
                 new EventData(EventCategoryType.Sound,
                 EventActionType.OnPlay2D,
                 parameters2));
+        }
+
+        private void InitializeMenu()
+        {
+            GameObject menuGameObject = null;
+            Material2D material = null;
+            Renderer2D renderer2D = null;
+            Texture2D btnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Controls/genericbtn");
+            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/exitmenuwithtrans");
+            SpriteFont spriteFont = Content.Load<SpriteFont>("Assets/Fonts/menu");
+            Vector2 btnScale = new Vector2(0.8f, 0.8f);
+
+            #region Create new menu scene
+
+            //add new main menu scene
+            var mainMenuScene = new Scene2D("main menu");
+
+            #endregion
+
+            #region Add Background Texture
+
+            menuGameObject = new GameObject("background");
+            var scaleToWindow = _graphics.GetScaleFactorForResolution(backGroundtexture, Vector2.Zero);
+            //set transform
+            menuGameObject.Transform = new Transform(
+                new Vector3(scaleToWindow, 1), //s
+                new Vector3(0, 0, 0), //r
+                new Vector3(0, 0, 0)); //t
+
+            #region texture
+
+            //material and renderer
+            material = new TextureMaterial2D(backGroundtexture, Color.White, 1);
+            menuGameObject.AddComponent(new Renderer2D(material));
+
+            #endregion
+
+            //add to scene2D
+            mainMenuScene.Add(menuGameObject);
+
+            #endregion
+
+            #region Add Play button and text
+
+            menuGameObject = new GameObject("play");
+            menuGameObject.Transform = new Transform(
+            new Vector3(btnScale, 1), //s
+            new Vector3(0, 0, 0), //r
+            new Vector3(Application.Screen.ScreenCentre - btnScale * btnTexture.GetCenter() - new Vector2(0, 30), 0)); //t
+
+            #region texture
+
+            //material and renderer
+            material = new TextureMaterial2D(btnTexture, Color.Green, 0.9f);
+            //add renderer to draw the texture
+            renderer2D = new Renderer2D(material);
+            //add renderer as a component
+            menuGameObject.AddComponent(renderer2D);
+
+            #endregion
+
+            #region collider
+
+            //add bounding box for mouse collisions using the renderer for the texture (which will automatically correctly size the bounding box for mouse interactions)
+            var buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
+            //add any events on MouseButton (e.g. Left, Right, Hover)
+            buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnPlay));
+            menuGameObject.AddComponent(buttonCollider2D);
+
+            #endregion
+
+            #region text
+
+            //material and renderer
+            material = new TextMaterial2D(spriteFont, "Play", new Vector2(70, 5), Color.White, 0.8f);
+            //add renderer to draw the text
+            renderer2D = new Renderer2D(material);
+            menuGameObject.AddComponent(renderer2D);
+
+            #endregion
+
+            //add to scene2D
+            mainMenuScene.Add(menuGameObject);
+
+            #endregion
+
+            #region Add Exit button and text
+
+            menuGameObject = new GameObject("exit");
+
+            menuGameObject.Transform = new Transform(
+                new Vector3(btnScale, 1), //s
+                new Vector3(0, 0, 0), //r
+                new Vector3(Application.Screen.ScreenCentre - btnScale * btnTexture.GetCenter() + new Vector2(0, 30), 0)); //t
+
+            #region texture
+
+            //material and renderer
+            material = new TextureMaterial2D(btnTexture, Color.Red, 0.9f);
+            //add renderer to draw the texture
+            renderer2D = new Renderer2D(material);
+            //add renderer as a component
+            menuGameObject.AddComponent(renderer2D);
+
+            #endregion
+
+            #region collider
+
+            //add bounding box for mouse collisions using the renderer for the texture (which will automatically correctly size the bounding box for mouse interactions)
+            buttonCollider2D = new ButtonCollider2D(menuGameObject, renderer2D);
+            //add any events on MouseButton (e.g. Left, Right, Hover)
+            buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnExit));
+            menuGameObject.AddComponent(buttonCollider2D);
+
+            #endregion
+
+            #region text
+
+            //button material and renderer
+            material = new TextMaterial2D(spriteFont, "Exit", new Vector2(70, 5), Color.White, 0.8f);
+            //add renderer to draw the text
+            renderer2D = new Renderer2D(material);
+            menuGameObject.AddComponent(renderer2D);
+
+            #endregion
+
+            #region demo - color change button
+
+            // menuGameObject.AddComponent(new UIColorFlipOnTimeBehaviour(Color.Red, Color.Orange, 500));
+
+            #endregion
+
+            //add to scene2D
+            mainMenuScene.Add(menuGameObject);
+
+            #endregion
+
+            #region Add Scene to Manager and Set Active
+
+            //add scene2D to menu manager
+            menuManager.Add(mainMenuScene.ID, mainMenuScene);
+
+            //what menu do i see first?
+            menuManager.SetActiveScene(mainMenuScene.ID);
+
+            #endregion
+        }
+
+        private void InitializeUI()
+        {
+            GameObject uiGameObject = null;
+            Material2D material = null;
+            Texture2D texture = Content.Load<Texture2D>("Assets/Textures/Menu/Controls/progress_white");
+
+            var mainHUD = new Scene2D("game HUD");
+
+            #region Add UI Element
+
+            uiGameObject = new GameObject("progress bar - health - 1");
+            uiGameObject.Transform = new Transform(
+                new Vector3(1, 1, 0), //s
+                new Vector3(0, 0, 0), //r
+                new Vector3(_graphics.PreferredBackBufferWidth - texture.Width - 20,
+                20, 0)); //t
+
+            #region texture
+
+            //material and renderer
+            material = new TextureMaterial2D(texture, Color.White);
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            #endregion
+
+            #region progress controller
+
+            uiGameObject.AddComponent(new UIProgressBarController(5, 10));
+
+            #endregion
+
+            #region color change behaviour
+
+            uiGameObject.AddComponent(new UIColorFlipOnTimeBehaviour(Color.White, Color.Green, 500));
+
+            #endregion
+
+            //add to scene2D
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Add Scene to Manager and Set Active
+
+            //add scene2D to manager
+            uiManager.Add(mainHUD.ID, mainHUD);
+
+            //what ui do i see first?
+            uiManager.SetActiveScene(mainHUD.ID);
+
+            #endregion
         }
 
         private void SetTitle(string title)
@@ -287,10 +490,32 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
+            #region Collision - Add capsule
+
+            //adding a collidable surface that enables acceleration, jumping
+            var characterCollider = new CharacterCollider(cameraGameObject, true);
+
+            cameraGameObject.AddComponent(characterCollider);
+            characterCollider.AddPrimitive(new Capsule(
+                cameraGameObject.Transform.Translation,
+                Matrix.CreateRotationX(MathHelper.PiOver2),
+                1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
+                new MaterialProperties(0.2f, 0.8f, 0.7f));
+            characterCollider.Enable(cameraGameObject, false, 1);
+
+            #endregion
+
             // First person controller component
-            cameraGameObject.AddComponent(new FirstPersonController(
-                AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+            //cameraGameObject.AddComponent(new FirstPersonController(
+            //    AppData.FIRST_PERSON_MOVE_SPEED, AppData.FIRST_PERSON_STRAFE_SPEED,
+            //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+            cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
+                characterCollider,
+                AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
+                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
@@ -305,6 +530,34 @@ namespace GD.App
         private void InitializeCollidableContent(float worldScale)
         {
             //InitializeCollidableWalls();
+            InitializeCollidableGround(worldScale);
+            //InitializeCollidablePickups();
+            //InitializeCollidableInteractibles();
+        }
+
+        private void InitializeCollidableGround(float worldScale)
+        {
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var quadMesh = new QuadMesh(_graphics.GraphicsDevice);
+
+            //ground
+            var ground = new GameObject("ground");
+            ground.Transform = new Transform(new Vector3(worldScale, worldScale, 1),
+                new Vector3(-90, 0, 0), new Vector3(0, 0, 0));
+            var texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Ground/grass1");
+            ground.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
+
+            //add Collision Surface(s)
+            var collider = new Collider(ground);
+            collider.AddPrimitive(new Box(
+                    ground.Transform.Translation,
+                    ground.Transform.Rotation,
+                    ground.Transform.Scale),
+                    new MaterialProperties(0.8f, 0.8f, 0.7f));
+            collider.Enable(ground, true, 1);
+            ground.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(ground);
         }
 
         private void InitializeCollidableWalls()
@@ -483,6 +736,259 @@ namespace GD.App
                 new Material(texture, alpha, color),
                 mesh);
         }
+
+        //private void InitializeCollidableInteractibles()
+        //{
+        //    #region Gate Access Machine
+
+        //    var gameObject = new GameObject(AppData.GATE_ACCESS_MACHINE_NAME,
+        //                        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Interactible;
+
+        //    gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
+        //        new Vector3(38.9f, 3.5f, 42f));
+
+        //    string texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
+
+        //    string model_path = "Assets/Models/Generator Room/gate_access_machine_test_2";
+
+        //    Renderer renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(unlitEffect),
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    InteractibleCollider collider = new AccessMachineCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 230
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Fuse Box
+
+        //    gameObject = new GameObject(AppData.FUSE_BOX_NAME,
+        //                        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Interactible;
+
+        //    gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+        //        Vector3.Zero,
+        //        new Vector3(57.5f, 2.2f, 42.4f));
+
+        //    texture_path = "Assets/Textures/Props/Generator_Room/fuse_box_diffuse";
+
+        //    model_path = "Assets/Models/Generator Room/fuse_box_test";
+
+        //    renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(unlitEffect),
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    collider = new FuseboxCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 230
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Exit
+
+        //    var gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+        //    //var gameObject = new GameObject("exit door",
+        //    //        ObjectType.Static, RenderType.Opaque);
+
+        //    //gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //    #region Exit Door Frame
+
+        //    gameObject = new GameObject(AppData.EXIT_DOOR_FRAME_NAME,
+        //              ObjectType.Static, RenderType.Opaque);
+
+        //    gameObject.Transform = new Transform(
+        //        AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+        //        Vector3.Zero,
+        //        new Vector3(1.83f, 0.01f, -128.2f));
+
+        //    renderer = InitializeRenderer(
+        //            "Assets/Models/Shopping Centre/Doors/Exit Door/Test/frame",
+        //            "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door",
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Exit Door
+
+        //    gameObject = new GameObject(AppData.EXIT_DOOR_NAME,
+        //               ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Interactible;
+
+        //    gameObject.Transform = new Transform(
+        //        AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+        //        Vector3.Zero,
+        //        new Vector3(1.83f, 0f, -127.9f));
+
+        //    renderer = InitializeRenderer(
+        //            "Assets/Models/Shopping Centre/Doors/Exit Door/Test/door",
+        //            "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_door",
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    collider = new ExitDoorCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        230 * new Vector3(
+        //            gameObject.Transform.Scale.X * 2f,
+        //            gameObject.Transform.Scale.Y * 3,
+        //            gameObject.Transform.Scale.Z * 1.9f
+        //            )
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Exit Sign
+
+        //    gameObject = new GameObject("exit sign",
+        //            ObjectType.Static, RenderType.Opaque);
+
+        //    gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //    renderer = InitializeRenderer(
+        //            "Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign",
+        //            "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign",
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion Exit Sign
+
+        //    #endregion Exit
+        //}
+
+        //private void InitializeCollidablePickups()
+        //{
+        //    GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+
+        //    #region Office Keycard
+
+        //    var gameObject = new GameObject(AppData.KEYCARD_NAME,
+        //        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
+
+        //    gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+
+        //    string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
+        //    string model_path = "Assets/Models/Keycard/keycard_unapplied";
+
+        //    Renderer renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    var collider = new PickupCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 230
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion
+
+        //    #region Fuse
+
+        //    gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
+
+        //    gameObject.Transform = new Transform
+        //        (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
+        //        new Vector3(MathHelper.PiOver2, 0, 0),
+        //        new Vector3(-10, 2.75f, -67));
+
+        //    model_path = "Assets/Models/Fuse/fuse";
+        //    texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+
+        //    renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(unlitEffect),
+        //            1
+        //            );
+
+        //    gameObject.AddComponent(renderer);
+
+        //    collider = new PickupCollider(gameObject, true, true);
+        //    collider.AddPrimitive(new Box(
+        //        gameObject.Transform.Translation,
+        //        gameObject.Transform.Rotation,
+        //        gameObject.Transform.Scale * 2000
+        //        ),
+        //        new MaterialProperties(0.8f, 0.8f, 0.7f)
+        //        );
+
+        //    collider.Enable(gameObject, true, 5);
+        //    gameObject.AddComponent(collider);
+
+        //    sceneManager.ActiveScene.Add(gameObject);
+
+        //    #endregion Fuse
+        //}
 
         private void InitializePickups()
         {
@@ -2898,42 +3404,43 @@ ObjectType.Static, RenderType.Opaque);
             //skybox - back face
             quad = new GameObject("skybox back face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), null, new Vector3(0, 0, -halfWorldScale));
-            var texture = Content.Load<Texture2D>("Assets/Textures/Skybox/back");
+            var texture = Content.Load<Texture2D>("Assets/Textures/Skybox/gloomy_bk");
             quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - left face
             quad = new GameObject("skybox left face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(0, MathHelper.ToRadians(90), 0), new Vector3(-halfWorldScale, 0, 0));
-            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/left");
+            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/gloomy_lf");
             quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - right face
             quad = new GameObject("skybox right face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(0, MathHelper.ToRadians(-90), 0), new Vector3(halfWorldScale, 0, 0));
-            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/right");
+            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/gloomy_rt");
             quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - top face
             quad = new GameObject("skybox top face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(MathHelper.ToRadians(90), MathHelper.ToRadians(-90), 0), new Vector3(0, halfWorldScale, 0));
-            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/sky");
+            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/gloomy_up");
             quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //skybox - front face
             quad = new GameObject("skybox front face");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(0, MathHelper.ToRadians(-180), 0), new Vector3(0, 0, halfWorldScale));
-            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/front");
+            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/gloomy_ft");
             quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
             sceneManager.ActiveScene.Add(quad);
 
             //ground
             quad = new GameObject("ground");
             quad.Transform = new Transform(new Vector3(worldScale, worldScale, 1), new Vector3(MathHelper.ToRadians(-90), 0, 0), new Vector3(0, 0, 0));
-            texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Ground/grass1");
+            //texture = Content.Load<Texture2D>("Assets/Textures/Foliage/Ground/grass1");
+            texture = Content.Load<Texture2D>("Assets/Textures/Skybox/gloomy_dn");
             quad.AddComponent(new Renderer(gdBasicEffect, new Material(texture, 1), quadMesh));
             sceneManager.ActiveScene.Add(quad);
         }
