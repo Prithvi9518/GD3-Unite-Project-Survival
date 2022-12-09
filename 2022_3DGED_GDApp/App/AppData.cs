@@ -137,8 +137,8 @@ namespace GD.App
 
         #region Enemy Variables
 
-        public static readonly float ENEMY_POSITION_Y = 2f;
-        public static readonly float ENEMY_SCALE = 0.007f;
+        public static readonly float ENEMY_POSITION_Y = 4f;
+        public static readonly float ENEMY_SCALE = 0.015f;
 
         public static readonly float ENEMY_MOVEMENT_SPEED = 0.005f;
 
@@ -261,7 +261,7 @@ namespace GD.App
 
         #region Enemy Model Paths
 
-        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow";
+        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow01";
 
         #endregion Enemy Model Paths
 
@@ -292,7 +292,7 @@ namespace GD.App
 
         #region Enemy Texture Paths
 
-        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/black";
+        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/scales";
 
         #endregion Enemy Texture Paths
 
