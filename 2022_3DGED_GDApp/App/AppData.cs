@@ -129,7 +129,9 @@ namespace GD.App
         public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
 
         public static readonly float PLAYER_DEFAULT_CAPSULE_HEIGHT = 3.6f;
-        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.3f;
+
+        //public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.3f;
+        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.5f;
 
         #endregion Movement Constants
 
