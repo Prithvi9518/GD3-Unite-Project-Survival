@@ -107,6 +107,13 @@ namespace GD.App
 
                     break;
 
+                case GameState.Lose:
+                    System.Diagnostics.Debug.WriteLine("You Lose");
+                    // Alarm sound playing twice for some reason - will fix later
+                    RaiseAlarmEvent(EventActionType.OnStop);
+                    RaiseAlarmEvent(EventActionType.OnStop);
+                    break;
+
                 default:
                     break;
             }
@@ -128,6 +135,18 @@ namespace GD.App
             return false;
         }
 
+        private bool CheckLose()
+        {
+            if (totalElapsedTimeMS >= AppData.MAX_GAME_TIME_IN_MSECS
+                && currentState != GameState.Win)
+            {
+                HandleStateChange(GameState.Lose);
+                return true;
+            }
+
+            return false;
+        }
+
         private void RaiseAlarmEvent(EventActionType eventActionType)
         {
             object[] parameters = { "alarm-sound" };
@@ -142,6 +161,7 @@ namespace GD.App
             if (totalElapsedTimeMS >= maxTimeInMS)
             {
                 stopTime = true;
+                CheckLose();
                 //object[] parameters = { "You win!", totalElapsedTimeMS, "win_soundcue" };
                 //EventDispatcher.Raise(
                 //    new EventData(EventCategoryType.Player,
