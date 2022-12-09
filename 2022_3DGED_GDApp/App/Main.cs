@@ -271,7 +271,8 @@ namespace GD.App
             litEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
             litEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
 
-            litEffect.DirectionalLight1.DiffuseColor = new Vector3(154 / 255f, 158 / 255f, 157 / 255f);
+            //litEffect.DirectionalLight1.DiffuseColor = new Vector3(154 / 255f, 158 / 255f, 157 / 255f);
+            litEffect.DirectionalLight1.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
             litEffect.DirectionalLight1.Direction = new Vector3(0, -1, 0);
             litEffect.DirectionalLight1.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
             litEffect.DirectionalLight1.Enabled = true;
@@ -282,13 +283,16 @@ namespace GD.App
             litEffect.DirectionalLight2.Enabled = true;
 
             //litEffect.AmbientLightColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
-            litEffect.AmbientLightColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
+            litEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            //litEffect.AmbientLightColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
 
             litEffect.FogEnabled = true;
             //litEffect.FogColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
-            litEffect.FogColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
-            litEffect.FogStart = 6f;
-            litEffect.FogEnd = 22f;
+            litEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            //litEffect.FogColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
+            litEffect.FogStart = 0f;
+            litEffect.FogEnd = 25f;
+
             litEffect.PreferPerPixelLighting = true;
 
             //exit sign emission effect
