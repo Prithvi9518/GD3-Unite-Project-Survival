@@ -119,6 +119,8 @@ namespace GD.Engine
                 HandleCrouch();
             }
 
+            #region Front and Back Movement
+
             if (Input.Gamepad.GetAxis(Buttons.LeftStick).Y > 0.5f)
             {
                 restrictedLook = transform.World.Forward; //we use Up instead of Forward
@@ -136,6 +138,29 @@ namespace GD.Engine
                 characterBody.DesiredVelocity = Vector3.Zero;
             }
 
+            #endregion Front and Back Movement
+
+            #region Strafe Movement
+
+            if (Input.Gamepad.GetAxis(Buttons.LeftStick).X < -0.5f)
+            {
+                restrictedRight = transform.World.Right;
+                restrictedRight.Y = 0;
+                characterBody.Velocity -= (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else if (Input.Gamepad.GetAxis(Buttons.LeftStick).X > 0.5f)
+            {
+                restrictedRight = transform.World.Right;
+                restrictedRight.Y = 0;
+                characterBody.Velocity += (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else
+            {
+                characterBody.DesiredVelocity = Vector3.Zero;
+            }
+
+            #endregion Strafe Movement
+
             var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
 
             rotation.X += changeInRotation.Y * rotationSpeed.Y *
@@ -146,48 +171,27 @@ namespace GD.Engine
             rotation.Y -= changeInRotation.X * rotationSpeed.X *
                 AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
+            //characterBody.AddBodyTorque(new Vector3(rotation.Y, rotation.X, 0));
             transform.Rotate(rotation);
         }
 
         private void HandleStrafe(GameTime gameTime, bool usingGamepad)
         {
-            if (usingGamepad)
+            if (Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.Left))
             {
-                if (Input.Gamepad.GetAxis(Buttons.LeftStick).X < -0.5f)
-                {
-                    restrictedRight = transform.World.Right;
-                    restrictedRight.Y = 0;
-                    characterBody.Velocity -= (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else if (Input.Gamepad.GetAxis(Buttons.LeftStick).X > 0.5f)
-                {
-                    restrictedRight = transform.World.Right;
-                    restrictedRight.Y = 0;
-                    characterBody.Velocity += (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else
-                {
-                    characterBody.DesiredVelocity = Vector3.Zero;
-                }
+                restrictedRight = transform.World.Right;
+                restrictedRight.Y = 0;
+                characterBody.Velocity -= (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
+            }
+            else if (Input.Keys.IsPressed(Keys.D) || Input.Keys.IsPressed(Keys.Right))
+            {
+                restrictedRight = transform.World.Right;
+                restrictedRight.Y = 0;
+                characterBody.Velocity += (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
             }
             else
             {
-                if (Input.Keys.IsPressed(Keys.A) || Input.Keys.IsPressed(Keys.Left))
-                {
-                    restrictedRight = transform.World.Right;
-                    restrictedRight.Y = 0;
-                    characterBody.Velocity -= (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else if (Input.Keys.IsPressed(Keys.D) || Input.Keys.IsPressed(Keys.Right))
-                {
-                    restrictedRight = transform.World.Right;
-                    restrictedRight.Y = 0;
-                    characterBody.Velocity += (strafeSpeed * multiplier) * restrictedRight * gameTime.ElapsedGameTime.Milliseconds;
-                }
-                else
-                {
-                    characterBody.DesiredVelocity = Vector3.Zero;
-                }
+                characterBody.DesiredVelocity = Vector3.Zero;
             }
         }
 
