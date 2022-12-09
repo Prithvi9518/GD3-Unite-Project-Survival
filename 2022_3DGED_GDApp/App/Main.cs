@@ -42,6 +42,9 @@ namespace GD.App
         private BasicEffect unlitEffect;
         private BasicEffect litEffect;
         private BasicEffect exitSignEffect;
+        private BasicEffect sideWallEffect;
+        private BasicEffect floorEffect;
+        private BasicEffect fuseEffect;
 
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
@@ -463,12 +466,11 @@ namespace GD.App
             unlitEffect = new BasicEffect(_graphics.GraphicsDevice);
             unlitEffect.TextureEnabled = true;
 
-            //all other drawn objects
+            #region Standard Lit Effect
+
             litEffect = new BasicEffect(_graphics.GraphicsDevice);
             litEffect.TextureEnabled = true;
             litEffect.LightingEnabled = true;
-
-            //litEffect.EnableDefaultLighting();
 
             litEffect.DirectionalLight0.DiffuseColor = new Vector3(107 / 255f, 49 / 255f, 49 / 255f);
             litEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
@@ -498,7 +500,10 @@ namespace GD.App
 
             litEffect.PreferPerPixelLighting = true;
 
-            //exit sign emission effect
+            #endregion
+
+            #region Exit Sign Emission Effect
+
             exitSignEffect = new BasicEffect(_graphics.GraphicsDevice);
             exitSignEffect.TextureEnabled = true;
             exitSignEffect.LightingEnabled = true;
@@ -509,6 +514,83 @@ namespace GD.App
             exitSignEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
 
             exitSignEffect.AmbientLightColor = new Vector3(232 / 255f, 71 / 255f, 76 / 255f);
+
+            #endregion
+
+            #region Side Walls Effect
+
+            sideWallEffect = new BasicEffect(_graphics.GraphicsDevice);
+            sideWallEffect.TextureEnabled = true;
+            sideWallEffect.LightingEnabled = true;
+
+            sideWallEffect.DirectionalLight0.DiffuseColor = new Vector3(30 / 255f, 29 / 255f, 29 / 255f);
+            sideWallEffect.DirectionalLight0.Direction = new Vector3(1, 0, 0);
+            sideWallEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+
+            sideWallEffect.DirectionalLight1.DiffuseColor = new Vector3(30 / 255f, 29 / 255f, 29 / 255f);
+            sideWallEffect.DirectionalLight1.Direction = new Vector3(-1, 0, 0);
+            sideWallEffect.DirectionalLight1.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+            sideWallEffect.DirectionalLight1.Enabled = true;
+
+            sideWallEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            sideWallEffect.FogEnabled = true;
+            sideWallEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            sideWallEffect.FogStart = 0f;
+            sideWallEffect.FogEnd = 25f;
+
+            sideWallEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Floor Effect
+
+            floorEffect = new BasicEffect(_graphics.GraphicsDevice);
+            floorEffect.TextureEnabled = true;
+            floorEffect.LightingEnabled = true;
+
+            //floorEffect.DirectionalLight0.DiffuseColor = new Vector3(30 / 255f, 29 / 255f, 29 / 255f);
+            floorEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+            floorEffect.DirectionalLight0.Direction = new Vector3(0, -1, 0);
+            //floorEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+            floorEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+
+            floorEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            floorEffect.FogEnabled = true;
+            floorEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            floorEffect.FogStart = 0f;
+            floorEffect.FogEnd = 25f;
+
+            floorEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Fuse Effect
+
+            fuseEffect = new BasicEffect(_graphics.GraphicsDevice);
+            fuseEffect.TextureEnabled = true;
+            fuseEffect.LightingEnabled = true;
+
+            fuseEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+
+            Vector3 fuseDirection = Vector3.Normalize(AppData.FUSE_TRANSLATION - Vector3.Zero);
+            fuseEffect.DirectionalLight0.Direction = fuseDirection;
+
+            fuseEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+
+            fuseEffect.EmissiveColor = new Vector3(0 / 255f, 247 / 255f, 255 / 255f);
+
+            fuseEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            fuseEffect.FogEnabled = true;
+            fuseEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            fuseEffect.FogStart = 0f;
+            fuseEffect.FogEnd = 25f;
+
+            fuseEffect.PreferPerPixelLighting = true;
+
+            #endregion
         }
 
         private void InitializeCameras()
@@ -830,7 +912,7 @@ namespace GD.App
             gameObject.Transform = new Transform
                 (AppData.DEFAULT_OBJECT_SCALE * 0.05f * Vector3.One,
                 new Vector3(90, 0, 0),
-                new Vector3(-0.7f, 2.3f, -28f));
+                AppData.FUSE_TRANSLATION);
 
             model_path = "Assets/Models/Fuse/fuse";
             texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
@@ -838,7 +920,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(litEffect),
+                    new GDBasicEffect(fuseEffect),
                     1
                     );
 
@@ -861,63 +943,63 @@ namespace GD.App
             #endregion Fuse
         }
 
-        private void InitializePickups()
-        {
-            GDBasicEffect gdBasicEffect = new GDBasicEffect(litEffect);
+        //private void InitializePickups()
+        //{
+        //    GDBasicEffect gdBasicEffect = new GDBasicEffect(litEffect);
 
-            #region Office Keycard
+        //    #region Office Keycard
 
-            var gameObject = new GameObject(AppData.KEYCARD_NAME,
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.GameObjectType = GameObjectType.Collectible;
+        //    var gameObject = new GameObject(AppData.KEYCARD_NAME,
+        //        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
 
-            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
-            string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
+        //    gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+        //    string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
 
-            string model_path = "Assets/Models/Keycard/keycard_unapplied";
+        //    string model_path = "Assets/Models/Keycard/keycard_unapplied";
 
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
+        //    Renderer renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
 
-            gameObject.AddComponent(renderer);
+        //    gameObject.AddComponent(renderer);
 
-            gameObject.AddComponent(new InteractableBehaviour());
+        //    gameObject.AddComponent(new InteractableBehaviour());
 
-            sceneManager.ActiveScene.Add(gameObject);
+        //    sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion
+        //    #endregion
 
-            #region Fuse
+        //    #region Fuse
 
-            gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
-            gameObject.GameObjectType = GameObjectType.Collectible;
+        //    gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
 
-            gameObject.Transform = new Transform
-                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
-                new Vector3(MathHelper.PiOver2, 0, 0),
-                new Vector3(-10, 2.75f, -67));
+        //    gameObject.Transform = new Transform
+        //        (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
+        //        new Vector3(MathHelper.PiOver2, 0, 0),
+        //        new Vector3(-10, 2.75f, -67));
 
-            model_path = "Assets/Models/Fuse/fuse";
-            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+        //    model_path = "Assets/Models/Fuse/fuse";
+        //    texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
 
-            renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(litEffect),
-                    1
-                    );
+        //    renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(litEffect),
+        //            1
+        //            );
 
-            gameObject.AddComponent(renderer);
-            gameObject.AddComponent(new InteractableBehaviour());
+        //    gameObject.AddComponent(renderer);
+        //    gameObject.AddComponent(new InteractableBehaviour());
 
-            sceneManager.ActiveScene.Add(gameObject);
+        //    sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion Fuse
-        }
+        //    #endregion Fuse
+        //}
 
         private void InitializeEnemies()
         {
@@ -1212,7 +1294,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(litEffect),
+                    new GDBasicEffect(sideWallEffect),
                     1
                     );
 
@@ -1373,7 +1455,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(litEffect),
+                    new GDBasicEffect(sideWallEffect),
                     1
                     );
 
@@ -1445,7 +1527,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                 AppData.FLOOR_MODEL_PATH,
                 AppData.WALL_TEXTURE_PATH,
-                gdBasicEffect,
+                new GDBasicEffect(floorEffect),
                 1,
                 Color.White
                 );

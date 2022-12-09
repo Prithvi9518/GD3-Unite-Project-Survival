@@ -55,7 +55,7 @@ namespace GD.App
 
         public static readonly string FIRST_PERSON_CAMERA_NAME = "fpc 1";
 
-        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 7f, 35);
+        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0.4f, 7f, 76f);
         public static readonly Vector3 OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 3.5f, 35);
 
         public static readonly float FIRST_PERSON_CAMERA_FCP = 3000;
@@ -208,6 +208,12 @@ namespace GD.App
         public static readonly float INTERACTION_DISTANCE = 6.5f;
 
         #endregion Interactible Variables
+
+        #region Pickup Variables
+
+        public static readonly Vector3 FUSE_TRANSLATION = new Vector3(-0.7f, 2.3f, -28f);
+
+        #endregion
 
         #region Timer Variables
 
