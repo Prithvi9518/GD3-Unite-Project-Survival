@@ -247,6 +247,7 @@ namespace GD.App
         #region UI Object Names
 
         public static readonly string INFECTION_METER_NAME = "infection meter";
+        public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
 
         #endregion
 

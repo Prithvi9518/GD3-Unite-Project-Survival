@@ -335,6 +335,28 @@ namespace GD.App
 
             #endregion
 
+            #region Button Prompts UI
+
+            SpriteFont spriteFont = Content.Load<SpriteFont>(AppData.PERF_FONT_PATH);
+            Vector2 textScale = new Vector2(1.5f, 1.5f);
+
+            uiGameObject = new GameObject(AppData.INTERACT_PROMPT_NAME);
+            uiGameObject.Transform = new Transform(
+                new Vector3(textScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(0, 30), 0)
+                );
+
+            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.White, 0.8f);
+            //add renderer to draw the text
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new TextPromptController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
             #region Add Scene to Manager and Set Active
 
             //add scene2D to manager
@@ -3847,39 +3869,6 @@ ObjectType.Static, RenderType.Opaque);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //update all drawn game objects in the active scene
-            //sceneManager.Update(gameTime);
-
-            //update active camera
-            //cameraManager.Update(gameTime);
-
-#if DEMO
-
-            if (Input.Keys.WasJustPressed(Keys.B))
-            {
-                object[] parameters = { "boom1" };
-                EventDispatcher.Raise(
-                    new EventData(EventCategoryType.Player,
-                    EventActionType.OnWin,
-                    parameters));
-
-                //    Application.SoundManager.Play2D("boom1");
-            }
-
-            #region Demo - Camera switching
-
-            if (Input.Keys.IsPressed(Keys.F1))
-                cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
-            else if (Input.Keys.IsPressed(Keys.F2))
-                cameraManager.SetActiveCamera(AppData.SECURITY_CAMERA_NAME);
-            else if (Input.Keys.IsPressed(Keys.F3))
-                cameraManager.SetActiveCamera(AppData.CURVE_CAMERA_NAME);
-            else if (Input.Keys.IsPressed(Keys.F4))
-                cameraManager.SetActiveCamera(AppData.THIRD_PERSON_CAMERA_NAME);
-
-            #endregion Demo - Camera switching
-
-#endif
             //fixed a bug with components not getting Update called
             base.Update(gameTime);
         }

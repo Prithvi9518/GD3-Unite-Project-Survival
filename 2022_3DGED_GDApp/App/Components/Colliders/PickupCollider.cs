@@ -1,5 +1,7 @@
 ﻿using GD.App;
 using GD.Engine.Events;
+using GD.Engine.Globals;
+using Microsoft.Xna.Framework;
 
 namespace GD.Engine
 {
@@ -11,12 +13,23 @@ namespace GD.Engine
         {
         }
 
-        protected override void HandleInteraction()
+        protected override void RaiseButtonPromptUIEvent(bool isActive)
         {
-            RaiseCollectibleEvents();
+            string text = "";
+            if (isActive)
+                text = (Input.Gamepad.IsConnected()) ? "Press Y to pick up" : "Press E to pick up";
+
+            object[] parameters = { AppData.INTERACT_PROMPT_NAME, isActive, text, new Vector3(0, 0, 1) };
+
+            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleButtonPrompt, parameters));
         }
 
-        private void RaiseCollectibleEvents()
+        protected override void HandleInteraction()
+        {
+            RaiseItemPickupEvents();
+        }
+
+        private void RaiseItemPickupEvents()
         {
             // Play pickup sound effect
             object[] parameters = { "pickup-sound" };

@@ -173,7 +173,8 @@
 
         OnReachExit,
 
-        OnInfectionDelta
+        OnInfectionDelta,
+        OnToggleButtonPrompt
     }
 
     /// <summary>
