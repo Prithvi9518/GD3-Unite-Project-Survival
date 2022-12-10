@@ -129,6 +129,10 @@ namespace GD.App
             }
             else
             {
+                // Raise event to show subtitles related to having no power in the building
+                object[] parameters = { SubtitleState.ExitDoorNoPower };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
                 System.Diagnostics.Debug.WriteLine("Need to restore power first!");
             }
 

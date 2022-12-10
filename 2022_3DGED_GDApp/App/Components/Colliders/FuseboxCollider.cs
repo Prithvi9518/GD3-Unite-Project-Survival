@@ -34,7 +34,11 @@ namespace GD.Engine
             }
             else
             {
-                // otherwise, send message/hint to user that they need a fuse
+                // otherwise, use dialogue to hint to user that they need a fuse
+
+                object[] parameters = { SubtitleState.NeedFuse };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
                 System.Diagnostics.Debug.WriteLine("You need a fuse");
             }
         }

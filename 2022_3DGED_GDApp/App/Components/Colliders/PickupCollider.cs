@@ -16,8 +16,17 @@ namespace GD.Engine
         {
         }
 
-        protected override void RaiseCollisionResponseEvents()
+        protected override void CheckButtonPromptState()
         {
+            float distance = Vector3.Distance(playerGameObject.Transform.Translation, gameObject.Transform.Translation);
+            if (distance > AppData.INTERACTION_DISTANCE)
+            {
+                RaiseButtonPromptUIEvent(PromptState.NoPrompt);
+            }
+            else
+            {
+                RaiseButtonPromptUIEvent(PromptState.PickupPrompt);
+            }
         }
 
         protected override void HandleInteraction()

@@ -14,6 +14,7 @@ namespace GD.App
         Start2, //“Looks like there’s an exit door ahead. I can’t go back the way I came.”
 
         ExitDoorNoPower, //“The door isn’t opening. Looks I need to restore the power.”
+
         HollowBlockOffice, //“There is a hollow blocking the way. I need to distract it somehow.”
         NeedKeycardInOffice, //“I need a key card for the generator room. I hope there’s one in here.”
         NoteInOffice, //“Note mentions the generator being busted. Maybe this key card will open the generator room?”
@@ -46,12 +47,24 @@ namespace GD.App
         {
             [SubtitleState.Start1] = "I've got about three minutes to get out of here before the infection takes over.",
             [SubtitleState.Start2] = "Looks like there's an exit door ahead. I can't go back the way  I came.",
+
+            [SubtitleState.ExitDoorNoPower] = "The door isn't opening. Looks like I need to restore the power first.",
+
+            [SubtitleState.GeneratorRoomClosed] = "AHHH dammit! I can't get in here.",
+
+            [SubtitleState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?"
         };
 
         private Dictionary<SubtitleState, float> durationsDict = new Dictionary<SubtitleState, float>
         {
             [SubtitleState.Start1] = 4500,
-            [SubtitleState.Start2] = 4500
+            [SubtitleState.Start2] = 4500,
+
+            [SubtitleState.ExitDoorNoPower] = 4500,
+
+            [SubtitleState.GeneratorRoomClosed] = 3500,
+
+            [SubtitleState.NeedFuse] = 4000
         };
 
         private List<List<SubtitleState>> subtitleSequences = new List<List<SubtitleState>>()
@@ -78,6 +91,8 @@ namespace GD.App
             switch (eventData.EventActionType)
             {
                 case EventActionType.OnShowSubtitles:
+                    SubtitleState newState = (SubtitleState)eventData.Parameters[0];
+                    ChangeSubtitle(newState);
                     break;
 
                 default:
@@ -85,7 +100,7 @@ namespace GD.App
             }
         }
 
-        private void HandleSequencedSubtitleChange()
+        private bool HandleSequencedSubtitleChange()
         {
             // Check if the current subtitle is part of a sequence
             foreach (List<SubtitleState> sequence in subtitleSequences)
@@ -100,8 +115,12 @@ namespace GD.App
                         ChangeSubtitle(sequence[index + 1]);
                     else
                         ChangeSubtitle(SubtitleState.NoSubtitle);
+
+                    return true;
                 }
             }
+
+            return false;
         }
 
         private void ChangeSubtitle(SubtitleState newSubtitle)
@@ -116,15 +135,19 @@ namespace GD.App
             textMaterial2D = gameObject.GetComponent<Renderer2D>().Material as TextMaterial2D;
 
             textMaterial2D.StringBuilder.Clear();
-            textMaterial2D.StringBuilder.Append(subtitlesDict.GetValueOrDefault(currentSubtitle, ""));
+
+            string text = subtitlesDict.GetValueOrDefault(currentSubtitle, "");
+            text = (text != "") ? "Ava:  " + text : text;
+
+            textMaterial2D.StringBuilder.Append(text);
 
             if (currentSubtitle != SubtitleState.NoSubtitle)
                 totalElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
 
             if (totalElapsedTimeInMS > durationInMS)
             {
-                //currentSubtitle = SubtitleState.NoSubtitle;
-                HandleSequencedSubtitleChange();
+                if (!HandleSequencedSubtitleChange())
+                    ChangeSubtitle(SubtitleState.NoSubtitle);
             }
         }
     }

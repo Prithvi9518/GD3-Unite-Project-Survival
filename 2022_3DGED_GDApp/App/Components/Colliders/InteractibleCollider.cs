@@ -7,7 +7,7 @@ namespace GD.Engine
 {
     public class InteractibleCollider : Collider
     {
-        private GameObject playerGameObject;
+        protected GameObject playerGameObject;
 
         public InteractibleCollider(GameObject gameObject,
             bool isHandlingCollision = false, bool isTrigger = false)
@@ -27,7 +27,6 @@ namespace GD.Engine
             }
 
             playerGameObject = controller.gameObject;
-            RaiseCollisionResponseEvents();
 
             bool isInteracting = controller.IsInteracting;
 
@@ -37,18 +36,22 @@ namespace GD.Engine
             //base.HandleResponse(parentGameObject);
         }
 
-        protected virtual void RaiseCollisionResponseEvents()
+        protected virtual void CheckButtonPromptState()
         {
-            RaiseButtonPromptUIEvent(true);
+            float distance = Vector3.Distance(playerGameObject.Transform.Translation, gameObject.Transform.Translation);
+            if (distance > AppData.INTERACTION_DISTANCE)
+            {
+                RaiseButtonPromptUIEvent(PromptState.NoPrompt);
+            }
+            else
+            {
+                RaiseButtonPromptUIEvent(PromptState.InteractPrompt);
+            }
         }
 
-        protected virtual void RaiseButtonPromptUIEvent(bool isActive)
+        protected virtual void RaiseButtonPromptUIEvent(PromptState promptState)
         {
-            string text = "";
-            if (isActive)
-                text = (Input.Gamepad.IsConnected()) ? "Press Y to interact" : "Press E to interact";
-
-            object[] parameters = { AppData.INTERACT_PROMPT_NAME, isActive, text, new Vector3(0, 0, 1) };
+            object[] parameters = { AppData.INTERACT_PROMPT_NAME, promptState };
 
             EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleButtonPrompt, parameters));
         }
@@ -68,10 +71,7 @@ namespace GD.Engine
 
             if (playerGameObject != null)
             {
-                if (Vector3.Distance(playerGameObject.Transform.Translation, gameObject.Transform.Translation) > AppData.INTERACTION_DISTANCE)
-                {
-                    RaiseButtonPromptUIEvent(false);
-                }
+                CheckButtonPromptState();
             }
 
             base.Update(gameTime);

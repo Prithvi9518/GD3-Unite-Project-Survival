@@ -206,7 +206,7 @@ namespace GD.App
 
         #region Interactible Variables
 
-        public static readonly float INTERACTION_DISTANCE = 6.5f;
+        public static readonly float INTERACTION_DISTANCE = 3.5f;
 
         #endregion Interactible Variables
 

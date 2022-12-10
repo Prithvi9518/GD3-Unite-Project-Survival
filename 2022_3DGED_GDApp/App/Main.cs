@@ -360,7 +360,7 @@ namespace GD.App
 
             #region Dialogue Subtitles
 
-            textScale = new Vector2(1.3f, 1f);
+            textScale = new Vector2(1.5f, 1.5f);
 
             uiGameObject = new GameObject(AppData.SUBTITLES_NAME);
             uiGameObject.Transform = new Transform(
@@ -369,12 +369,9 @@ namespace GD.App
                 new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(-400, 250), 0)
                 );
 
-            string beginningSubtitles = "Ava: Riverside. I remember this place." +
-                " It used to be great during the Halloween break. Scared the crap out of me.";
-
-            material = new TextMaterial2D(spriteFont, new StringBuilder(beginningSubtitles),
+            material = new TextMaterial2D(spriteFont, new StringBuilder(""),
                 new Vector2(0, 0),
-                Color.White,
+                Color.LightGreen,
                 0.8f
                 );
 
