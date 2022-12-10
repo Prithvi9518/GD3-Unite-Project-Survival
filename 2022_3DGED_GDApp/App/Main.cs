@@ -1631,7 +1631,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Bench Bases
 
-            string benches_bottom_base_path = AppData.BENCH_MODELS_PATH + "Bench Bases/bench_base_1";
+            string benches_bottom_base_path = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base_1";
 
 
             gameObject = new GameObject("bench base 3", ObjectType.Static, RenderType.Opaque);
@@ -1663,7 +1663,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Bench Tops
 
-            string benches_top_base_path = AppData.BENCH_MODELS_PATH + "Bench Tops/bench_top_";
+            string benches_top_base_path = "Assets/Models/Shopping Centre/Benches/Bench Tops/bench_top_";
 
 
             gameObject = new GameObject("bench top 1", ObjectType.Static, RenderType.Opaque);
@@ -2008,30 +2008,28 @@ ObjectType.Static, RenderType.Opaque);
             #region Scaffolding
 
             var gdBasicEffect = new GDBasicEffect(unlitEffect);
-            GameObject gameObject = null;
-            Renderer renderer = null;
 
-            string scaffolding_base_path = "Assets/Models/Shopping Centre/Scaffolding/scaffolding_1";
+            GameObject gameObject = new GameObject("scaffolding 1", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, AppData.SCAFFOLDING_POSITION);
 
-            gameObject = new GameObject("scaffolding ", ObjectType.Static, RenderType.Opaque);
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(45.9f, 2.5f, 42.7f));
-
-            renderer = InitializeRenderer(
-                scaffolding_base_path,
-                "Assets/Textures/Shopping Centre/Scaffolding/scaffolding",
+            Renderer renderer = InitializeRenderer(
+                AppData.SCAFFOLDING_MDOEL_PATH,
+                AppData.SCAFFOLDING_TEXTURE_PATH,
                 gdBasicEffect,
                 1
                 );
 
             gameObject.AddComponent(renderer);
 
-            var aisleScale = new Vector3(115f * gameObject.Transform.Scale.X, 270f * gameObject.Transform.Scale.Y, 250f * gameObject.Transform.Scale.Z);
+            Vector3 colliderScale = new Vector3(AppData.SCAFFOLDING_COLLIDER_SCALE_X * gameObject.Transform.Scale.X, AppData.SCAFFOLDING_COLLIDER_SCALE_Y * gameObject.Transform.Scale.Y, 
+                            AppData.SCAFFOLDING_COLLIDER_SCALE_Z * gameObject.Transform.Scale.Z);
+
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
                     gameObject.Transform.Rotation,
-                    aisleScale
+                    colliderScale
                     ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
@@ -2043,7 +2041,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < 3; i++)
             {
-                gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, 5.4f), aisleScale);
+                gameObject = CloneModelGameObject(gameObject, "scaffolding " + (i + 1), AppData.SCAFFOLDING_OFFSET_Z, colliderScale);
                 sceneManager.ActiveScene.Add(gameObject);
             }
 
@@ -2054,29 +2052,28 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Fridges
 
-            var gameObject = new GameObject("Fridge",
+            GameObject gameObject = new GameObject("Fridge",
                        ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(47.5f, 2.6f, -82.4f));
-
-            var model_path = "Assets/Models/Shopping Centre/Fridges/fridge";
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, AppData.FRIDGE_POSITION);
 
             Renderer renderer = InitializeRenderer(
-                    model_path,
-                     "Assets/Textures/Shopping Centre/Fridge/fridge",
+                    AppData.FRIDGE_MDOEL_PATH,
+                     AppData.FRIDGE_TEXTURE_PATH,
                     new GDBasicEffect(unlitEffect),
                     1
                     );
 
             gameObject.AddComponent(renderer);
 
-            var aisleScale = new Vector3(115f * gameObject.Transform.Scale.X, 270f * gameObject.Transform.Scale.Y, 150f * gameObject.Transform.Scale.Z);
+            Vector3 colliderScale = new Vector3(AppData.FRIDGE_COLLIDER_SCALE_X * gameObject.Transform.Scale.X, AppData.FRIDGE_COLLIDER_SCALE_Y * gameObject.Transform.Scale.Y,
+                                         AppData.FRIDGE_COLLIDER_SCALE_Z * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
                     gameObject.Transform.Rotation,
-                    aisleScale
+                    colliderScale
                     ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
@@ -2088,7 +2085,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < 4; i++)
             {
-                gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, 3.4f), aisleScale);
+                gameObject = CloneModelGameObject(gameObject, "fridge " + (i + 1), AppData.FRIDGE_OFFSET_Z, colliderScale);
                 sceneManager.ActiveScene.Add(gameObject);
             }
 
@@ -2100,45 +2097,42 @@ ObjectType.Static, RenderType.Opaque);
             #region Lights
 
             var gdBasicEffect = new GDBasicEffect(unlitEffect);
-            GameObject gameObject = null;
-            string coffee_chairs_base_path = "Assets/Models/Shopping Centre/Lights/light_";
-            Renderer renderer = null;
 
+            GameObject gameObject = new GameObject("ligth 1" , ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                gameObject = new GameObject("ligth 1" , ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            Renderer renderer = InitializeRenderer
+            (
+                AppData.LIGHT_MODEL_PATH,
+                AppData.LIGHT_TEXTURE_PATH,
+                gdBasicEffect,
+                1,
+                Color.White
+            );
 
-                string model_path = coffee_chairs_base_path + "1";
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
 
-                renderer = InitializeRenderer(
-                    model_path,
-                    "Assets/Textures/Shopping Centre/Light/light_rust",
-                    gdBasicEffect,
-                    1,
-                    Color.White
-                    );
+            GameObject gameObjectLightTwo = CloneModelGameObject(gameObject, "light 2", AppData.LIGHT_OFFSET_X);
+            sceneManager.ActiveScene.Add(gameObjectLightTwo);
 
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-
-                GameObject gameObjectLightTwo = CloneModelGameObject(gameObject, "light 2", new Vector3(22f, 0, 0));
-                sceneManager.ActiveScene.Add(gameObjectLightTwo);
-
-            GameObject gameObjectLightThree = CloneModelGameObject(gameObjectLightTwo, "light 3", new Vector3(22f, 0, 0));
+            GameObject gameObjectLightThree = CloneModelGameObject(gameObjectLightTwo, "light 3", AppData.LIGHT_OFFSET_X);
             sceneManager.ActiveScene.Add(gameObjectLightThree);
 
+            int j = 0;
 
             for(int i = 0; i < 3; i++)
             {
-                gameObject = CloneModelGameObject(gameObject, "light 2", new Vector3(0, 0, 22f));
+                gameObject = CloneModelGameObject(gameObject, "light " + (j + i + 4), AppData.LIGHT_OFFSET_Z);
                 sceneManager.ActiveScene.Add(gameObject);
 
-                gameObjectLightTwo = CloneModelGameObject(gameObjectLightTwo, "light 2", new Vector3(0, 0, 22f));
+                gameObjectLightTwo = CloneModelGameObject(gameObjectLightTwo, "light " + (j + i + 5), AppData.LIGHT_OFFSET_Z);
                 sceneManager.ActiveScene.Add(gameObjectLightTwo);
 
-                gameObjectLightThree = CloneModelGameObject(gameObjectLightThree, "light 3", new Vector3(0, 0, 22f));
+                gameObjectLightThree = CloneModelGameObject(gameObjectLightThree, "light " + (j + i + 6), AppData.LIGHT_OFFSET_Z);
                 sceneManager.ActiveScene.Add(gameObjectLightThree);
+
+                j += 2;
             }
 
 
