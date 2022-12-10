@@ -131,7 +131,7 @@ namespace GD.App
             InitializeNonCollidableContent(worldScale);
 
             //add UI and menu
-            //InitializeUI();
+            InitializeUI();
             //InitializeMenu();
 
             //Raise all the events that I want to happen at the start
@@ -298,40 +298,38 @@ namespace GD.App
         {
             GameObject uiGameObject = null;
             Material2D material = null;
-            Texture2D texture = Content.Load<Texture2D>("Assets/Textures/Menu/Controls/progress_white");
+            Texture2D texture = Content.Load<Texture2D>("Assets/Textures/Infection Meter/progress_white");
 
             var mainHUD = new Scene2D("game HUD");
 
-            #region Add UI Element
+            #region Add Infection Meter UI
 
-            uiGameObject = new GameObject("progress bar - health - 1");
+            uiGameObject = new GameObject(AppData.INFECTION_METER_NAME);
+
+            // Set width and height of the meter here
+            var infectionMeterTexture = new Texture2D(Application.GraphicsDevice, 300, 30);
+
+            // Make sure the array size is width * height
+            var infectionMeterPixels = new Color[300 * 30];
+            for (int i = 0; i < infectionMeterPixels.Length; i++)
+            {
+                // Set the colour of meter here
+                infectionMeterPixels[i] = Color.Teal;
+            }
+
             uiGameObject.Transform = new Transform(
                 new Vector3(1, 1, 0), //s
                 new Vector3(0, 0, 0), //r
-                new Vector3(_graphics.PreferredBackBufferWidth - texture.Width - 20,
+                new Vector3(_graphics.PreferredBackBufferWidth - texture.Width - 100,
                 20, 0)); //t
 
-            #region texture
+            infectionMeterTexture.SetData(infectionMeterPixels);
 
-            //material and renderer
-            material = new TextureMaterial2D(texture, Color.White);
+            material = new TextureMaterial2D(infectionMeterTexture, Color.White);
             uiGameObject.AddComponent(new Renderer2D(material));
 
-            #endregion
+            uiGameObject.AddComponent(new InfectionMeterController((float)AppData.MAX_GAME_TIME_IN_MSECS, 0));
 
-            #region progress controller
-
-            uiGameObject.AddComponent(new UIProgressBarController(5, 10));
-
-            #endregion
-
-            #region color change behaviour
-
-            uiGameObject.AddComponent(new UIColorFlipOnTimeBehaviour(Color.White, Color.Green, 500));
-
-            #endregion
-
-            //add to scene2D
             mainHUD.Add(uiGameObject);
 
             #endregion
@@ -3455,9 +3453,12 @@ ObjectType.Static, RenderType.Opaque);
             Application.CameraManager = cameraManager;
             Application.SceneManager = sceneManager;
             Application.SoundManager = soundManager;
+            Application.PhysicsManager = physicsManager;
 
             Application.StateManager = stateManager;
-            //Application.UISceneManager = uiManager;
+
+            Application.UISceneManager = uiManager;
+            //Application.MenuSceneManager = menuManager;
 
             Application.InventoryManager = inventoryManager;
         }
@@ -3533,12 +3534,41 @@ ObjectType.Static, RenderType.Opaque);
             stateManager = new StateManager(this, AppData.MAX_GAME_TIME_IN_MSECS);
             Components.Add(stateManager);
 
-            //add ui managers
-            //uiManager = new SceneManager<Scene2D>(this);
-            //Components.Add(uiManager);
+            #region UI
 
-            //uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
-            //Components.Add(uiRenderManager);
+            uiManager = new SceneManager<Scene2D>(this);
+
+            // Change StatusType to Off when adding menus!
+            uiManager.StatusType = StatusType.Drawn | StatusType.Updated;
+
+            uiManager.IsPausedOnPlay = false;
+            Components.Add(uiManager);
+
+            var uiRenderManager = new Render2DManager(this, _spriteBatch, uiManager);
+
+            // Change StatusType to Off when adding menus!
+            uiRenderManager.StatusType = StatusType.Drawn | StatusType.Updated;
+
+            uiRenderManager.DrawOrder = 2;
+            uiRenderManager.IsPausedOnPlay = false;
+            Components.Add(uiRenderManager);
+
+            #endregion
+
+            #region Menu
+
+            //menuManager = new SceneManager<Scene2D>(this);
+            //menuManager.StatusType = StatusType.Updated;
+            //menuManager.IsPausedOnPlay = true;
+            //Components.Add(menuManager);
+
+            //var menuRenderManager = new Render2DManager(this, _spriteBatch, menuManager);
+            //menuRenderManager.StatusType = StatusType.Drawn;
+            //menuRenderManager.DrawOrder = 3;
+            //menuRenderManager.IsPausedOnPlay = true;
+            //Components.Add(menuRenderManager);
+
+            #endregion
 
             inventoryManager = new InventoryManager(this, StatusType.Drawn | StatusType.Updated);
             Components.Add(inventoryManager);

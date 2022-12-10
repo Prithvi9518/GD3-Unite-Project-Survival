@@ -242,6 +242,12 @@ namespace GD.App
 
         #endregion
 
+        #region UI Object Names
+
+        public static readonly string INFECTION_METER_NAME = "infection meter";
+
+        #endregion
+
         public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()
         {
             // Left wall

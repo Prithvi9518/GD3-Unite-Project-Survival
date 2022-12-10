@@ -156,7 +156,12 @@ namespace GD.App
         public override void Update(GameTime gameTime)
         {
             if (!stopTime)
+            {
                 totalElapsedTimeMS += gameTime.ElapsedGameTime.Milliseconds;
+            }
+
+            object[] parameters = { AppData.INFECTION_METER_NAME, (float)(totalElapsedTimeMS) };
+            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnInfectionDelta, parameters));
 
             if (totalElapsedTimeMS >= maxTimeInMS)
             {
