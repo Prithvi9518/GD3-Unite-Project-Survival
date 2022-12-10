@@ -171,7 +171,9 @@
 
         OnChangeState,
 
-        OnReachExit
+        OnReachExit,
+
+        OnInfectionDelta
     }
 
     /// <summary>
