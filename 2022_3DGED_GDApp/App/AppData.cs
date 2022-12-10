@@ -248,6 +248,7 @@ namespace GD.App
 
         public static readonly string INFECTION_METER_NAME = "infection meter";
         public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
+        public static readonly string SUBTITLES_NAME = "subtitles";
 
         #endregion
 

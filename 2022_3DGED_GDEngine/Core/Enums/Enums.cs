@@ -174,7 +174,8 @@
         OnReachExit,
 
         OnInfectionDelta,
-        OnToggleButtonPrompt
+        OnToggleButtonPrompt,
+        OnShowSubtitles
     }
 
     /// <summary>

@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Reflection;
+using System.Text;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -352,6 +353,34 @@ namespace GD.App
             uiGameObject.AddComponent(new Renderer2D(material));
 
             uiGameObject.AddComponent(new TextPromptController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Dialogue Subtitles
+
+            textScale = new Vector2(1.3f, 1f);
+
+            uiGameObject = new GameObject(AppData.SUBTITLES_NAME);
+            uiGameObject.Transform = new Transform(
+                new Vector3(textScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(-400, 250), 0)
+                );
+
+            string beginningSubtitles = "Ava: Riverside. I remember this place." +
+                " It used to be great during the Halloween break. Scared the crap out of me.";
+
+            material = new TextMaterial2D(spriteFont, new StringBuilder(beginningSubtitles),
+                new Vector2(0, 0),
+                Color.White,
+                0.8f
+                );
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new SubtitlesController());
 
             mainHUD.Add(uiGameObject);
 
