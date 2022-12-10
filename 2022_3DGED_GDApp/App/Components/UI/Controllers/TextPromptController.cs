@@ -7,7 +7,6 @@ namespace GD.App
     public class TextPromptController : Component
     {
         private bool isActive = false;
-        private bool setDisplayText = false;
 
         private Vector3 position;
         private string displayText;
