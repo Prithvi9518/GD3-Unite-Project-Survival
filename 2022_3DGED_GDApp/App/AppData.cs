@@ -284,7 +284,7 @@ namespace GD.App
 
         #region Enemy Model Paths
 
-        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow01";
+        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/Hollow01";
 
         #endregion Enemy Model Paths
 
@@ -336,6 +336,7 @@ namespace GD.App
         #endregion Texture Paths
 
         #region Lights
+
         public static readonly string LIGHT_MODEL_PATH = "Assets/Models/Shopping Centre/Light/light";
 
         public static readonly string LIGHT_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Light/light_rust";
@@ -347,6 +348,7 @@ namespace GD.App
         #endregion Lights
 
         #region Scaffolding
+
         public static readonly string SCAFFOLDING_MDOEL_PATH = "Assets/Models/Shopping Centre/Scaffolding/scaffolding";
 
         public static readonly string SCAFFOLDING_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Scaffolding/scaffolding";
@@ -357,9 +359,11 @@ namespace GD.App
 
         public static readonly Vector3 SCAFFOLDING_POSITION = new Vector3(45.9f, 2.5f, 42.7f);
         public static readonly Vector3 SCAFFOLDING_OFFSET_Z = new Vector3(0, 0, 5.4f);
+
         #endregion Scaffolding
 
         #region Fridges
+
         public static readonly string FRIDGE_MDOEL_PATH = "Assets/Models/Shopping Centre/Fridges/fridge";
 
         public static readonly string FRIDGE_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Fridge/fridge";
@@ -370,10 +374,13 @@ namespace GD.App
 
         public static readonly Vector3 FRIDGE_POSITION = new Vector3(47.5f, 2.6f, -82.4f);
         public static readonly Vector3 FRIDGE_OFFSET_Z = new Vector3(0, 0, 3.4f);
+
         #endregion Fridges
 
         #region Benches
+
         public static readonly string BENCH_BASE_MODEL_PATH = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base";
+
         #endregion Benches
 
         #region Font Paths

@@ -115,12 +115,6 @@ namespace GD.App
             //load sounds, textures, models etc
             LoadMediaAssets();
 
-            //initialize curves used by cameras
-            InitializeCurves();
-
-            //initialize rails used by cameras
-            InitializeRails();
-
             //add scene manager and starting scenes
             InitializeScenes();
 
@@ -445,16 +439,6 @@ namespace GD.App
             //load and add to dictionary
         }
 
-        private void InitializeCurves()
-        {
-            //load and add to dictionary
-        }
-
-        private void InitializeRails()
-        {
-            //load and add to dictionary
-        }
-
         private void InitializeScenes()
         {
             //initialize a scene
@@ -664,7 +648,7 @@ namespace GD.App
 
             cameraGameObject = new GameObject(AppData.FIRST_PERSON_CAMERA_NAME);
 
-            cameraGameObject.Transform = new Transform(null, null, AppData.OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION);
+            cameraGameObject.Transform = new Transform(null, null, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION);
 
             // Camera component
             cameraGameObject.AddComponent(
@@ -676,14 +660,11 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
-
-
             // First person controller component - non collidable
 
             //cameraGameObject.AddComponent(new OurFirstPersonController(
             //    AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
             //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
-
 
             #region Collision - Add capsule
 
@@ -728,7 +709,7 @@ namespace GD.App
             //create sky
             //InitializeSkyBoxAndGround(worldScale);
 
-            //InitializeEnemies();
+            InitializeEnemies();
 
             //InitializePickups();
         }
@@ -1713,7 +1694,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-           
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
@@ -1726,7 +1706,7 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
-           
+
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Office Note
@@ -1860,10 +1840,8 @@ ObjectType.Static, RenderType.Opaque);
 
             string benches_bottom_base_path = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base_1";
 
-
             gameObject = new GameObject("bench base 3", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
 
             renderer = InitializeRenderer(
                 benches_bottom_base_path,
@@ -1879,24 +1857,22 @@ ObjectType.Static, RenderType.Opaque);
             gameObject = CloneModelGameObject(gameObject, "bench_base_2", new Vector3(0, 0, -8.2f));
             sceneManager.ActiveScene.Add(gameObject);
 
-
             gameObject = CloneModelGameObject(gameObject, "bench_base_3", new Vector3(0, 0, -5.8f));
             sceneManager.ActiveScene.Add(gameObject);
 
-
             gameObject = CloneModelGameObject(gameObject, "bench_base_4", new Vector3(0, 0, -8.2f));
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Bench Bases
 
             #region Bench Tops
 
             string benches_top_base_path = "Assets/Models/Shopping Centre/Benches/Bench Tops/bench_top_";
 
-
             gameObject = new GameObject("bench top 1", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                string model_path = benches_top_base_path + "1";
+            string model_path = benches_top_base_path + "1";
 
             renderer = InitializeRenderer(
                 model_path,
@@ -1908,9 +1884,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
-
-
-
 
             gameObject = new GameObject("bench top 2", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-25.5f, 1.6f, 32.1f));
@@ -1927,7 +1900,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-
             var aisleScale = new Vector3(115f * gameObject.Transform.Scale.X, 40f * gameObject.Transform.Scale.Y, 505f * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
@@ -1943,12 +1915,8 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(collider);
             sceneManager.ActiveScene.Add(gameObject);
 
-
-   
-                gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -14f), aisleScale);
-                sceneManager.ActiveScene.Add(gameObject);
-            
-
+            gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -14f), aisleScale);
+            sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Bench Tops
 
@@ -2070,8 +2038,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-           
-
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Large Bin
@@ -2091,7 +2057,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-             aisleScale = new Vector3(350f * gameObject.Transform.Scale.X, 200f * gameObject.Transform.Scale.Y, 840f * gameObject.Transform.Scale.Z);
+            aisleScale = new Vector3(350f * gameObject.Transform.Scale.X, 200f * gameObject.Transform.Scale.Y, 840f * gameObject.Transform.Scale.Z);
             collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
@@ -2190,7 +2156,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-
             var aisleScale = new Vector3(450f * gameObject.Transform.Scale.X, 200f * gameObject.Transform.Scale.Y, 1300f * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
@@ -2222,7 +2187,6 @@ ObjectType.Static, RenderType.Opaque);
                 sceneManager.ActiveScene.Add(gameObjectLeft);
             }
 
-
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Trolleys
@@ -2248,7 +2212,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Vector3 colliderScale = new Vector3(AppData.SCAFFOLDING_COLLIDER_SCALE_X * gameObject.Transform.Scale.X, AppData.SCAFFOLDING_COLLIDER_SCALE_Y * gameObject.Transform.Scale.Y, 
+            Vector3 colliderScale = new Vector3(AppData.SCAFFOLDING_COLLIDER_SCALE_X * gameObject.Transform.Scale.X, AppData.SCAFFOLDING_COLLIDER_SCALE_Y * gameObject.Transform.Scale.Y,
                             AppData.SCAFFOLDING_COLLIDER_SCALE_Z * gameObject.Transform.Scale.Z);
 
             Collider collider = new Collider(gameObject, true);
@@ -2325,7 +2289,7 @@ ObjectType.Static, RenderType.Opaque);
 
             var gdBasicEffect = new GDBasicEffect(litEffect);
 
-            GameObject gameObject = new GameObject("ligth 1" , ObjectType.Static, RenderType.Opaque);
+            GameObject gameObject = new GameObject("ligth 1", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer
@@ -2348,7 +2312,7 @@ ObjectType.Static, RenderType.Opaque);
 
             int j = 0;
 
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 gameObject = CloneModelGameObject(gameObject, "light " + (j + i + 4), AppData.LIGHT_OFFSET_Z);
                 sceneManager.ActiveScene.Add(gameObject);
@@ -2361,7 +2325,6 @@ ObjectType.Static, RenderType.Opaque);
 
                 j += 2;
             }
-
 
             #endregion Lights
         }
@@ -2519,7 +2482,6 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-
             var aisleScale = new Vector3(160f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 250f * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
@@ -2536,16 +2498,13 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-            string[] texturePathsVendingMachines = new string[] { "coke", "pepsi", "sprite"};
+            string[] texturePathsVendingMachines = new string[] { "coke", "pepsi", "sprite" };
 
             for (int i = 0; i < 2; i++)
             {
                 gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -7f), aisleScale, model_path, texture_path + texturePathsVendingMachines[i + 1]);
                 sceneManager.ActiveScene.Add(gameObject);
             }
-
-  
-
 
             #endregion Vending Machines
         }
@@ -2961,7 +2920,6 @@ ObjectType.Static, RenderType.Opaque);
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
             sceneManager.ActiveScene.Add(gameObject);
-
 
             #endregion
 
@@ -3381,6 +3339,7 @@ ObjectType.Static, RenderType.Opaque);
             #endregion
 
             #region Office Table
+
             gameObject = new GameObject("office table 1",
              ObjectType.Static, RenderType.Opaque);
 
@@ -3415,7 +3374,6 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-
             #endregion
 
             #region Office Shelves
@@ -3423,24 +3381,21 @@ ObjectType.Static, RenderType.Opaque);
             texture_path = "Assets/Textures/Props/Office/metal";
             string model_base_path = "Assets/Models/Office/Shelves/office_shelf_";
 
-       
-                gameObject = new GameObject("office shelf 1", ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject = new GameObject("office shelf 1", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                model_path = model_base_path + "1";
+            model_path = model_base_path + "1";
 
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
+            renderer = InitializeRenderer(
+                model_path,
+                texture_path,
+                gdBasicEffect,
+                1
+                );
 
-                gameObject.AddComponent(renderer);
+            gameObject.AddComponent(renderer);
 
-                sceneManager.ActiveScene.Add(gameObject);
-
-
+            sceneManager.ActiveScene.Add(gameObject);
 
             gameObject = new GameObject("office shelf 2", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -3458,8 +3413,6 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-
-
             gameObject = new GameObject("office shelf 3", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-56.2f, 2.5f, -64.4f));
 
@@ -3474,8 +3427,8 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-             aisleScale = new Vector3(300f * gameObject.Transform.Scale.X, 220f * gameObject.Transform.Scale.Y, 100f * gameObject.Transform.Scale.Z);
-             collider = new Collider(gameObject, true);
+            aisleScale = new Vector3(300f * gameObject.Transform.Scale.X, 220f * gameObject.Transform.Scale.Y, 100f * gameObject.Transform.Scale.Z);
+            collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
@@ -3489,7 +3442,6 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
-
 
             gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -17f), aisleScale);
             sceneManager.ActiveScene.Add(gameObject);
