@@ -158,10 +158,14 @@ namespace GD.App
             if (!stopTime)
             {
                 totalElapsedTimeMS += gameTime.ElapsedGameTime.Milliseconds;
+                object[] parameters = { AppData.INFECTION_METER_NAME, (float)(totalElapsedTimeMS) };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnInfectionDelta, parameters));
             }
-
-            object[] parameters = { AppData.INFECTION_METER_NAME, (float)(totalElapsedTimeMS) };
-            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnInfectionDelta, parameters));
+            else
+            {
+                object[] parameters = { AppData.INFECTION_METER_NAME, (float)(maxTimeInMS) };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnInfectionDelta, parameters));
+            }
 
             if (totalElapsedTimeMS >= maxTimeInMS)
             {

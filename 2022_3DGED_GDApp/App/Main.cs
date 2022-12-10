@@ -307,15 +307,22 @@ namespace GD.App
             uiGameObject = new GameObject(AppData.INFECTION_METER_NAME);
 
             // Set width and height of the meter here
-            var infectionMeterTexture = new Texture2D(Application.GraphicsDevice, 300, 30);
+            var infectionMeterTexture = new Texture2D(Application.GraphicsDevice, 250, 30);
 
             // Make sure the array size is width * height
-            var infectionMeterPixels = new Color[300 * 30];
+            var infectionMeterPixels = new Color[250 * 30];
+
             for (int i = 0; i < infectionMeterPixels.Length; i++)
             {
                 // Set the colour of meter here
                 infectionMeterPixels[i] = Color.Teal;
             }
+
+            // Debug - Just to see the end of the bar
+            //for (int i = infectionMeterPixels.Length - 50; i < infectionMeterPixels.Length; i++)
+            //{
+            //    infectionMeterPixels[i] = Color.Red;
+            //}
 
             uiGameObject.Transform = new Transform(
                 new Vector3(1, 1, 0), //s
