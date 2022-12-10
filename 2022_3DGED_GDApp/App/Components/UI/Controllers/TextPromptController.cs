@@ -40,7 +40,6 @@ namespace GD.App
                         isActive = (bool)eventData.Parameters[1];
 
                         displayText = eventData.Parameters[2] as string;
-                        System.Diagnostics.Debug.WriteLine($"Display text : {displayText}");
 
                         //position = (Vector3)eventData.Parameters[3];
                         //System.Diagnostics.Debug.WriteLine($"position : {position}");
