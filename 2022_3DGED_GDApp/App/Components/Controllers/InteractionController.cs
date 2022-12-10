@@ -2,6 +2,7 @@
 //#define TEST_INVENTORY
 #define DEMO_STATES
 
+using GD.App;
 using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
