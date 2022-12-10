@@ -233,12 +233,12 @@ namespace GD.Engine
             var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
 
             rotation.X += changeInRotation.Y * rotationSpeed.Y *
-                AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
+                AppData.OLD_PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
             ClampRotationX();
 
             rotation.Y -= changeInRotation.X * rotationSpeed.X *
-                AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
+                AppData.OLD_PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
             transform.Rotate(rotation);
         }

@@ -11,6 +11,7 @@ using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace GD.App
 {
@@ -107,7 +108,7 @@ namespace GD.App
 
         #region Movement Constants
 
-        public static readonly float OLD_PLAYER_MOVE_SPEED = 0.1f;
+        public static readonly float OLD_PLAYER_MOVE_SPEED = 0.01f;
         private static readonly float OLD_PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
         public static readonly float OLD_PLAYER_STRAFE_SPEED = OLD_PLAYER_STRAFE_SPEED_MULTIPLIER * OLD_PLAYER_MOVE_SPEED;
 
@@ -302,8 +303,6 @@ namespace GD.App
 
         public static readonly string CHECKOUT_DESK_MODEL_BASE_PATH = "Assets/Models/Shopping Centre/Checkout Desks/";
 
-        public static readonly string BENCH_MODELS_PATH = "Assets/Models/Shopping Centre/Benches/";
-
         public static readonly string BIN_MODELS_PATH = "Assets/Models/Shopping Centre/Bins/";
 
         public static readonly string BARRICADE_MODELS_PATH = "Assets/Models/Shopping Centre/Shopping Cart/Barricades/barricade_";
@@ -335,6 +334,47 @@ namespace GD.App
         public static readonly string SHOPPING_CART_TEXTURES_PATH = "Assets/Textures/Shopping Centre/Shopping Cart/";
 
         #endregion Texture Paths
+
+        #region Lights
+        public static readonly string LIGHT_MODEL_PATH = "Assets/Models/Shopping Centre/Light/light";
+
+        public static readonly string LIGHT_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Light/light_rust";
+
+        public static readonly Vector3 LIGHT_OFFSET_X = new Vector3(22f, 0, 0);
+
+        public static readonly Vector3 LIGHT_OFFSET_Z = new Vector3(0, 0, 22f);
+
+        #endregion Lights
+
+        #region Scaffolding
+        public static readonly string SCAFFOLDING_MDOEL_PATH = "Assets/Models/Shopping Centre/Scaffolding/scaffolding";
+
+        public static readonly string SCAFFOLDING_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Scaffolding/scaffolding";
+
+        public static readonly float SCAFFOLDING_COLLIDER_SCALE_X = 115f;
+        public static readonly float SCAFFOLDING_COLLIDER_SCALE_Y = 270f;
+        public static readonly float SCAFFOLDING_COLLIDER_SCALE_Z = 250f;
+
+        public static readonly Vector3 SCAFFOLDING_POSITION = new Vector3(45.9f, 2.5f, 42.7f);
+        public static readonly Vector3 SCAFFOLDING_OFFSET_Z = new Vector3(0, 0, 5.4f);
+        #endregion Scaffolding
+
+        #region Fridges
+        public static readonly string FRIDGE_MDOEL_PATH = "Assets/Models/Shopping Centre/Fridges/fridge";
+
+        public static readonly string FRIDGE_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Fridge/fridge";
+
+        public static readonly float FRIDGE_COLLIDER_SCALE_X = 115f;
+        public static readonly float FRIDGE_COLLIDER_SCALE_Y = 270f;
+        public static readonly float FRIDGE_COLLIDER_SCALE_Z = 150f;
+
+        public static readonly Vector3 FRIDGE_POSITION = new Vector3(47.5f, 2.6f, -82.4f);
+        public static readonly Vector3 FRIDGE_OFFSET_Z = new Vector3(0, 0, 3.4f);
+        #endregion Fridges
+
+        #region Benches
+        public static readonly string BENCH_BASE_MODEL_PATH = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base";
+        #endregion Benches
 
         #region Font Paths
 
