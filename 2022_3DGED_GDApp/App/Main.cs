@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define SHOW_DEBUG_INFO
+#define SHOW_DEBUG_INFO
 //#define SHOW_TIMER_TEXT
 
 #endregion
@@ -676,32 +676,35 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
+
+
+            // First person controller component - non collidable
+
+            //cameraGameObject.AddComponent(new OurFirstPersonController(
+            //    AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
+            //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+
             #region Collision - Add capsule
 
             //adding a collidable surface that enables acceleration, jumping
-            //var characterCollider = new CharacterCollider(cameraGameObject, true);
+            var characterCollider = new CharacterCollider(cameraGameObject, true);
 
-            //cameraGameObject.AddComponent(characterCollider);
-            //characterCollider.AddPrimitive(new Capsule(
-            //    cameraGameObject.Transform.Translation,
-            //    Matrix.CreateRotationX(MathHelper.PiOver2),
-            //    1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
-            //    new MaterialProperties(0.2f, 0.8f, 0.7f));
-            //characterCollider.Enable(cameraGameObject, false, 1);
+            cameraGameObject.AddComponent(characterCollider);
+            characterCollider.AddPrimitive(new Capsule(
+                cameraGameObject.Transform.Translation,
+                Matrix.CreateRotationX(MathHelper.PiOver2),
+                1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
+                new MaterialProperties(0.2f, 0.8f, 0.7f));
+            characterCollider.Enable(cameraGameObject, false, 1);
 
             #endregion
 
-            // First person controller component
-
-            cameraGameObject.AddComponent(new OurFirstPersonController(
-                AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
-
-            //cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
-            //    characterCollider,
-            //    AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
-            //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
-            //    AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+            cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
+                characterCollider,
+                AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
+                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
@@ -717,7 +720,7 @@ namespace GD.App
         {
             InitializeShoppingCentre();
             InitializeCollidablePickups();
-            InitializeCollidableInteractibles();
+            //InitializeCollidableInteractibles();
         }
 
         private void InitializeNonCollidableContent(float worldScale)
@@ -2232,8 +2235,6 @@ ObjectType.Static, RenderType.Opaque);
             #region Scaffolding
 
             var gdBasicEffect = new GDBasicEffect(litEffect);
-            GameObject gameObject = null;
-            Renderer renderer = null;
 
             GameObject gameObject = new GameObject("scaffolding 1", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, AppData.SCAFFOLDING_POSITION);
@@ -2451,21 +2452,22 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(renderer);
 
             var aisleScale = new Vector3(360f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 200f * gameObject.Transform.Scale.Z);
-            Collider collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    aisleScale
-                    ),
+
+            Collider collider = new ExitDoorCollider(gameObject, true, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                230 * new Vector3(
+                    gameObject.Transform.Scale.X * 2f,
+                    gameObject.Transform.Scale.Y * 3,
+                    gameObject.Transform.Scale.Z * 1.9f
+                    )
+                ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
 
-            collider.Enable(gameObject, true, 10);
+            collider.Enable(gameObject, true, 5);
             gameObject.AddComponent(collider);
-
-            ////TODO: need to change this to a collider as the door doesnt require interaction
-            //gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -2871,18 +2873,17 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new FuseboxCollider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    90 * gameObject.Transform.Scale
-                    ),
+            InteractibleCollider interactibleCollider = new FuseboxCollider(gameObject, true, true);
+            interactibleCollider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 230
+                ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            interactibleCollider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(interactibleCollider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -2895,7 +2896,7 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Interactible;
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
-                Vector3.Zero);
+                new Vector3(48.75f, 3.5f, 80.3f));
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
@@ -2910,7 +2911,19 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            gameObject.AddComponent(new InteractableBehaviour());
+            interactibleCollider = new AccessMachineCollider(gameObject, true, true);
+            interactibleCollider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 230
+                ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            interactibleCollider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(interactibleCollider);
+
+            sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
 
@@ -2935,7 +2948,7 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(renderer);
 
             var aisleScale = new Vector3(200f * gameObject.Transform.Scale.X, 180f * gameObject.Transform.Scale.Y, 250f * gameObject.Transform.Scale.Z);
-            collider = new Collider(gameObject, true);
+            var collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
