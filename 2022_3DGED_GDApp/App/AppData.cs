@@ -257,6 +257,7 @@ namespace GD.App
         #region Sound Object Names
 
         public static readonly string GENERATOR_SOUND_NAME = "generator-sound";
+        public static readonly string GLASS_SHATTER_SOUND_NAME = "glass-shatter";
 
         #endregion
 
@@ -394,6 +395,7 @@ namespace GD.App
         #endregion Benches
 
         #region Aisle Labels
+
         private static readonly string LABEL_BASE_PATH = "Assets/Textures/Aisles/Labels/aisle_";
 
         public static readonly List<string> LABELS_LIST = new List<string>()
@@ -405,13 +407,12 @@ namespace GD.App
             LABEL_BASE_PATH + "5",
             LABEL_BASE_PATH + "6",
             LABEL_BASE_PATH + "7",
-
         };
-
 
         #endregion Aisle Labels
 
         #region Bottle Labels
+
         private static readonly string BOTTLE_LABELS_BASE_PATH = "Assets/Textures/Aisles/Beverages/";
 
         public static readonly List<string> BOTTLE_LABELS_LIST = new List<string>()
@@ -420,6 +421,7 @@ namespace GD.App
             BOTTLE_LABELS_BASE_PATH + "heineken_label",
             BOTTLE_LABELS_BASE_PATH + "coors_label",
         };
+
         #endregion Bottle Labels
 
         #region Font Paths
