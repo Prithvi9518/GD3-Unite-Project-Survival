@@ -471,23 +471,23 @@ namespace GD.App
 
             #endregion
 
-            var soundtrack = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack");
+            var sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack");
 
             //Add the new sound for background
             soundManager.Add(new Cue(
                 "HorrorMusic",
-                 soundtrack,
+                 sound,
                  SoundCategoryType.BackgroundMusic,
                  new Vector3(0.1f, 0, 0),
                  true));
 
             // Glass breaking sound
 
-            var glassBreakingSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
 
             soundManager.Add(new Cue(
                 "glass-shatter",
-                glassBreakingSound,
+                sound,
                 SoundCategoryType.Explosion,
                 new Vector3(1, 1, 0),
                 false
@@ -495,11 +495,11 @@ namespace GD.App
 
             #region Pickup Sound
 
-            var pickupSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
 
             soundManager.Add(new Cue(
                 "pickup-sound",
-                pickupSound,
+                sound,
                 SoundCategoryType.Pickup,
                 new Vector3(0.2f, 0, 0),
                 false
@@ -507,17 +507,33 @@ namespace GD.App
 
             #endregion
 
-            // Alarm sound
+            #region Alarm Sound
 
-            var alarmSound = Content.Load<SoundEffect>(
-                "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
+            sound = Content.Load<SoundEffect>(
+                    "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
 
             soundManager.Add(new Cue(
                 "alarm-sound",
-                alarmSound,
+                sound,
                 SoundCategoryType.Alarm,
                 new Vector3(0.2f, 0f, 0),
                 true));
+
+            #endregion
+
+            #region Generator Sound
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Generator/Generator");
+
+            soundManager.Add(new Cue(
+                "generator-sound",
+                sound,
+                SoundCategoryType.Generator,
+                new Vector3(0.2f, 0, 0),
+                true
+                ));
+
+            #endregion
         }
 
         private void LoadTextures()
