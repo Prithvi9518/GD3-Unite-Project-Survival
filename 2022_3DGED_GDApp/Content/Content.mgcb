@@ -37,6 +37,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/explode1.mp3
 
+#begin Assets/Audio/Diegetic/Generator/Generator.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Generator/Generator.wav
+
 #begin Assets/Audio/Diegetic/Glass/glass-shatter.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -66,6 +72,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong.wav
+
+#begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
 
 #begin Assets/Fonts/Perf.spritefont
 /importer:FontDescriptionImporter

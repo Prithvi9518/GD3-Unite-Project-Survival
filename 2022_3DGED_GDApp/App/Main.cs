@@ -432,72 +432,108 @@ namespace GD.App
 
         private void LoadSounds()
         {
-            var soundEffect =
-                Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
+            #region Demo Sound
 
-            //add the new sound effect
-            soundManager.Add(new Cue(
-                "boom1",
-                soundEffect,
-                SoundCategoryType.Alarm,
-                new Vector3(1, 1, 0),
-                false));
+            //var soundEffect =
+            //    Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
 
-            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+            ////add the new sound effect
+            //soundManager.Add(new Cue(
+            //    "boom1",
+            //    soundEffect,
+            //    SoundCategoryType.Alarm,
+            //    new Vector3(1, 1, 0),
+            //    false));
+
+            #endregion
+
+            #region Old music and ambience
+
+            //var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "HorrorMusic",
+            //     MusicSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     true));
+
+            //var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "Ambient",
+            //     AmbientSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     false));
+
+            #endregion
+
+            var sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack");
 
             //Add the new sound for background
             soundManager.Add(new Cue(
                 "HorrorMusic",
-                 MusicSound,
+                 sound,
                  SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
+                 new Vector3(0.1f, 0, 0),
                  true));
-
-            var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
-
-            //Add the new sound for background
-            soundManager.Add(new Cue(
-                "Ambient",
-                 AmbientSound,
-                 SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
-                 false));
 
             // Glass breaking sound
 
-            var glassBreakingSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
 
             soundManager.Add(new Cue(
                 "glass-shatter",
-                glassBreakingSound,
+                sound,
                 SoundCategoryType.Explosion,
                 new Vector3(1, 1, 0),
                 false
                 ));
 
-            // Pickup sound
+            #region Pickup Sound
 
-            var pickupSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
 
             soundManager.Add(new Cue(
                 "pickup-sound",
-                pickupSound,
+                sound,
                 SoundCategoryType.Pickup,
-                new Vector3(1, 1, 0),
+                new Vector3(0.2f, 0, 0),
                 false
                 ));
 
-            // Alarm sound
+            #endregion
 
-            var alarmSound = Content.Load<SoundEffect>(
-                "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
+            #region Alarm Sound
+
+            sound = Content.Load<SoundEffect>(
+                    "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
 
             soundManager.Add(new Cue(
                 "alarm-sound",
-                alarmSound,
+                sound,
                 SoundCategoryType.Alarm,
-                new Vector3(0.3f, 0.5f, 0),
+                new Vector3(0.08f, 0f, 0),
                 true));
+
+            #endregion
+
+            #region Generator Sound
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Generator/Generator");
+
+            soundManager.Add(new Cue(
+                AppData.GENERATOR_SOUND_NAME,
+                sound,
+                SoundCategoryType.Generator,
+                new Vector3(1f, 0, 0),
+                true
+                ));
+
+            #endregion
         }
 
         private void LoadTextures()
@@ -731,11 +767,13 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
-            // First person controller component - non collidable
+            #region Non-Collidable First Person Controller
 
             //cameraGameObject.AddComponent(new OurFirstPersonController(
             //    AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
             //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+            #endregion
 
             #region Collision - Add capsule
 
@@ -752,14 +790,25 @@ namespace GD.App
 
             #endregion
 
+            #region Collidable First Person Controller
+
             cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
-                characterCollider,
-                AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
-                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+                    characterCollider,
+                    AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
+                    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                    AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+
+            #endregion
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
+
+            #region 3D Sound
+
+            //added ability for camera to listen to 3D sounds
+            cameraGameObject.AddComponent(new AudioListenerBehaviour());
+
+            #endregion
 
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
@@ -2959,7 +3008,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Generator
 
-            gameObject = new GameObject("generator",
+            gameObject = new GameObject(AppData.GENERATOR_NAME,
                                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(64.6f, 2f, 85.2f));
@@ -2990,6 +3039,9 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
+
+            gameObject.AddComponent(new AudioEmitterBehaviour());
+
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion

@@ -234,6 +234,8 @@ namespace GD.App
 
         public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
         public static readonly string KEYCARD_NAME = "office keycard";
+
+        public static readonly string GENERATOR_NAME = "generator";
         public static readonly string GENERATOR_DOOR_NAME = "generator door";
         public static readonly string FUSE_BOX_NAME = "fuse box";
         public static readonly string FUSE_220V_NAME = "fuse 220v";
@@ -249,6 +251,12 @@ namespace GD.App
         public static readonly string INFECTION_METER_NAME = "infection meter";
         public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
         public static readonly string SUBTITLES_NAME = "subtitles";
+
+        #endregion
+
+        #region Sound Object Names
+
+        public static readonly string GENERATOR_SOUND_NAME = "generator-sound";
 
         #endregion
 

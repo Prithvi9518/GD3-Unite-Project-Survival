@@ -49,7 +49,8 @@
         Explosion,
         BackgroundMusic,
         Alarm,
-        Pickup
+        Pickup,
+        Generator
     }
 
     #region Unused

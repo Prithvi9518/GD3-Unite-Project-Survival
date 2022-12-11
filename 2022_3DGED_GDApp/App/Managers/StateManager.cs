@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System;
 using GD.Engine;
 using GD.Engine.Globals;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GD.App
 {
@@ -110,24 +111,30 @@ namespace GD.App
 
                 case GameState.GeneratorOn:
 
+                    //System.Diagnostics.Debug.WriteLine("Generator is now on");
+
                     // Send subtitles event
                     object[] parameters = { DialogueState.GeneratorWorking };
                     EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
-                    System.Diagnostics.Debug.WriteLine("Generator is now on");
-
+                    // Play alarm sound
                     RaiseAlarmEvent(EventActionType.OnPlay2D);
+
+                    // Play generator sound
+                    RaiseGeneratorSoundEvent(EventActionType.OnPlay3D);
 
                     break;
 
                 case GameState.Win:
 
-#if DEMO_STATES
                     System.Diagnostics.Debug.WriteLine("You Escaped");
-                    // Alarm sound playing twice for some reason - will fix later
+
+                    // Stop alarm sound: Alarm sound playing twice for some reason - will fix later
                     RaiseAlarmEvent(EventActionType.OnStop);
                     RaiseAlarmEvent(EventActionType.OnStop);
-#endif
+
+                    // Stop Generator Sound
+                    RaiseGeneratorSoundEvent(EventActionType.OnStop);
 
                     break;
 
@@ -196,6 +203,23 @@ namespace GD.App
         private void RaiseAlarmEvent(EventActionType eventActionType)
         {
             object[] parameters = { "alarm-sound" };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, eventActionType, parameters));
+        }
+
+        private void RaiseGeneratorSoundEvent(EventActionType eventActionType)
+        {
+            var cameraAudioListener = Application.CameraManager.ActiveCamera.gameObject
+                .GetComponent<AudioListenerBehaviour>().AudioListener;
+
+            GameObject generator = Application.SceneManager.ActiveScene.Find(
+                ObjectType.Static,
+                RenderType.Opaque,
+                (x) => x.Name == AppData.GENERATOR_NAME
+                );
+
+            var generatorAudioEmitter = generator.GetComponent<AudioEmitterBehaviour>()?.AudioEmitter;
+
+            object[] parameters = { AppData.GENERATOR_SOUND_NAME, cameraAudioListener, generatorAudioEmitter };
             EventDispatcher.Raise(new EventData(EventCategoryType.Sound, eventActionType, parameters));
         }
 
