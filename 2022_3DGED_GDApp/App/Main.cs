@@ -493,7 +493,7 @@ namespace GD.App
                 false
                 ));
 
-            // Pickup sound
+            #region Pickup Sound
 
             var pickupSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
 
@@ -501,9 +501,11 @@ namespace GD.App
                 "pickup-sound",
                 pickupSound,
                 SoundCategoryType.Pickup,
-                new Vector3(1, 1, 0),
+                new Vector3(0.2f, 0, 0),
                 false
                 ));
+
+            #endregion
 
             // Alarm sound
 
@@ -514,7 +516,7 @@ namespace GD.App
                 "alarm-sound",
                 alarmSound,
                 SoundCategoryType.Alarm,
-                new Vector3(0.3f, 0.5f, 0),
+                new Vector3(0.2f, 0f, 0),
                 true));
         }
 
