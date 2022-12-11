@@ -1,10 +1,7 @@
 ﻿using GD.Engine;
 using GD.Engine.Events;
-using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
-using System.Threading;
 
 namespace GD.App
 {
@@ -56,6 +53,9 @@ namespace GD.App
 
             [SubtitleState.GeneratorRoomClosed] = "AHHH dammit! I can't get in here.",
 
+            [SubtitleState.NeedKeycardInOffice] = "I need a keycard for the generator room. I hope there's one in here.",
+            [SubtitleState.NoteInOffice] = "Note mentions the generator being busted. Maybe this keycard will open the generator room?",
+
             [SubtitleState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?",
             [SubtitleState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
 
@@ -73,6 +73,9 @@ namespace GD.App
             [SubtitleState.ExitDoorNoPower] = 4500,
 
             [SubtitleState.GeneratorRoomClosed] = 3500,
+
+            [SubtitleState.NeedKeycardInOffice] = 3500,
+            [SubtitleState.NoteInOffice] = 4000,
 
             [SubtitleState.NeedFuse] = 4000,
             [SubtitleState.WhereFuse] = 4000,
