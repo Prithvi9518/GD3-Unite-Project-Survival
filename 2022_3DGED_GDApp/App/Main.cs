@@ -936,102 +936,101 @@ namespace GD.App
             InitializeOfficeModels();
             InitializeGeneratorRoomModels();
             InitializeFloors();
-            //InitializeWalls();
-            Initializew();
+            InitializeWalls();
             InitializeShoppingCentreAssets();
             InitializeAisles();
             InitializeCoffeeShop();
             InitializeGreens();
         }
 
+        //private void InitializeWalls()
+        //{
+        //    #region Shopping Centre Walls
+
+        //    var gdBasicEffect = new GDBasicEffect(litEffect);
+        //    var texture_path = "Assets/Textures/walls";
+        //    GameObject gameObject = null;
+        //    Renderer renderer = null;
+
+        //    #region Main Walls
+
+        //    string main_wall_base_path = "Assets/Models/Walls/wall_";
+
+        //    for (int i = 1; i <= 8; i++)
+        //    {
+        //        gameObject = new GameObject("wall " + i, ObjectType.Static, RenderType.Opaque);
+        //        gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //        string model_path = main_wall_base_path + i;
+
+        //        renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //        gameObject.AddComponent(renderer);
+
+        //        sceneManager.ActiveScene.Add(gameObject);
+        //    }
+
+        //    #endregion
+
+        //    #region Shutter Walls
+
+        //    string shutter_wall_base_path = "Assets/Models/Walls/Shutter Walls/shutter_wall_";
+
+        //    for (int i = 1; i <= 2; i++)
+        //    {
+        //        gameObject = new GameObject("shutter wall " + i, ObjectType.Static, RenderType.Opaque);
+        //        gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //        string model_path = shutter_wall_base_path + i;
+
+        //        renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //        gameObject.AddComponent(renderer);
+
+        //        sceneManager.ActiveScene.Add(gameObject);
+        //    }
+
+        //    #endregion
+
+        //    #region Door Walls
+
+        //    string doors_wall_base_path = "Assets/Models/Walls/Door Walls/door_wall_";
+
+        //    for (int i = 1; i <= 2; i++)
+        //    {
+        //        gameObject = new GameObject("door wall " + i, ObjectType.Static, RenderType.Opaque);
+        //        gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //        string model_path = doors_wall_base_path + i;
+
+        //        renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //        gameObject.AddComponent(renderer);
+
+        //        sceneManager.ActiveScene.Add(gameObject);
+        //    }
+
+        //    #endregion Door Walls
+
+        //    #endregion
+        //}
+
         private void InitializeWalls()
-        {
-            #region Shopping Centre Walls
-
-            var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture_path = "Assets/Textures/walls";
-            GameObject gameObject = null;
-            Renderer renderer = null;
-
-            #region Main Walls
-
-            string main_wall_base_path = "Assets/Models/Walls/wall_";
-
-            for (int i = 1; i <= 8; i++)
-            {
-                gameObject = new GameObject("wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = main_wall_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-
-            #endregion
-
-            #region Shutter Walls
-
-            string shutter_wall_base_path = "Assets/Models/Walls/Shutter Walls/shutter_wall_";
-
-            for (int i = 1; i <= 2; i++)
-            {
-                gameObject = new GameObject("shutter wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = shutter_wall_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-
-            #endregion
-
-            #region Door Walls
-
-            string doors_wall_base_path = "Assets/Models/Walls/Door Walls/door_wall_";
-
-            for (int i = 1; i <= 2; i++)
-            {
-                gameObject = new GameObject("door wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = doors_wall_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-
-            #endregion Door Walls
-
-            #endregion
-        }
-
-        private void Initializew()
         {
             var gameObject = new GameObject("Wall 1",
                        ObjectType.Static, RenderType.Opaque);
@@ -2634,8 +2633,137 @@ ObjectType.Static, RenderType.Opaque);
 
             InitializePreparedFoodsAisle();
             InitializeToysAisle();
+            InitializeBeveragesAisle();
 
             #endregion
+        }
+
+        private void InitializeBeveragesAisle()
+        {
+            #region Beverage Aisle
+
+            #region Broken Bottle
+            int brokeBottleNumber = 1;
+
+            var gameObject = new GameObject("broken bottle " + brokeBottleNumber,
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(38.3f, 0.3f, -32.6f));
+
+            string model_path = "Assets/Models/Aisles/Beverages/broken_bottle";
+
+            string texture_path = "Assets/Textures/Aisles/Beverages/broken_bottle";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            var aisleScale = new Vector3(100f * gameObject.Transform.Scale.X, 20f * gameObject.Transform.Scale.Y, 60f * gameObject.Transform.Scale.Z);
+            Collider collider = new Collider(gameObject, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            Random random = new Random();
+
+            brokeBottleNumber++;
+            for (int i = 0; i < 4; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(gameObject, "broken bottle " + brokeBottleNumber, new Vector3(random.Next(36, 43), 0.3f, random.Next(-76, -21)), aisleScale);
+                sceneManager.ActiveScene.Add(gameObject);
+                brokeBottleNumber++;
+            }
+
+            #endregion Broken Bottle
+
+            #region Bottle
+
+            int bottleNumber = 1;
+
+            gameObject = new GameObject("bottle " + bottleNumber,
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(31f, 4.2f, -72.3f));
+
+            model_path = "Assets/Models/Aisles/Beverages/bottle";
+
+            texture_path = "Assets/Textures/Aisles/Beverages/heineken_label";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> ginBottlesGameObjects = new List<GameObject>();
+            ginBottlesGameObjects.Add(gameObject);
+
+            random = new Random();
+
+            bottleNumber++;
+            for (int i = 0; i < 12; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "bottle " + brokeBottleNumber, new Vector3(0, 0, 3f));
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                ginBottlesGameObjects.Add(gameObject);
+                bottleNumber++;
+            }
+
+
+            for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+            for (int i = 0; i < ginBottlesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+
+            for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+            for (int i = 0; i < ginBottlesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+
+
+            #endregion Bottle
+
+            #endregion Beverage Aisle
         }
 
         private void InitializeLabels()
@@ -3785,6 +3913,48 @@ ObjectType.Static, RenderType.Opaque);
             }
 
             #endregion Manequins
+
+            #region Voltage Sign
+            gameObject = new GameObject("voltage sign",
+                                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-0.8f, 0, 0));
+
+            texture_path = "Assets/Textures/Props/Generator_Room/warning_volts";
+
+            model_path = "Assets/Models/Generator Room/warning_volts";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(litEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Voltage Sign
+
+            #region Fan
+            gameObject = new GameObject("fan",
+                                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-1f, 0, 0));
+
+            texture_path = "Assets/Textures/Props/Generator_Room/fan";
+
+            model_path = "Assets/Models/Generator Room/fan";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(litEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            #endregion Fan
         }
 
         #region Aisles
@@ -4029,7 +4199,39 @@ ObjectType.Static, RenderType.Opaque);
             return gameObjectClone;
         }
 
-        
+        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName, Vector3 newTranslation, Vector3 colliderScale)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                newTranslation
+                );
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
+
+            Collider cloneCollider = new Collider(gameObjectClone, true);
+
+            cloneCollider.AddPrimitive(
+                new Box(
+                    gameObjectClone.Transform.Translation,
+                    gameObjectClone.Transform.Rotation,
+                    colliderScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            cloneCollider.Enable(gameObjectClone, true, 10);
+            gameObjectClone.AddComponent(cloneCollider);
+
+            return gameObjectClone;
+        }
+
+
         private void InitializeFrontAisles(string texture_path)
         {
             #region Beauty Aisle Shelf

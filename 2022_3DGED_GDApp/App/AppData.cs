@@ -374,9 +374,20 @@ namespace GD.App
             LABEL_BASE_PATH + "7",
 
         };
-            
-            
+
+
         #endregion Aisle Labels
+
+        #region Bottle Labels
+        private static readonly string BOTTLE_LABELS_BASE_PATH = "Assets/Textures/Aisles/Beverages/";
+
+        public static readonly List<string> BOTTLE_LABELS_LIST = new List<string>()
+        {
+            BOTTLE_LABELS_BASE_PATH + "budweiser_label",
+            BOTTLE_LABELS_BASE_PATH + "heineken_label",
+            BOTTLE_LABELS_BASE_PATH + "coors_label",
+        };
+        #endregion Bottle Labels
 
         #region Font Paths
 
