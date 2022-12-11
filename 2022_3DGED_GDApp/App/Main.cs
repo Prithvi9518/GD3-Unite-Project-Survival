@@ -516,7 +516,7 @@ namespace GD.App
                 "alarm-sound",
                 sound,
                 SoundCategoryType.Alarm,
-                new Vector3(0.2f, 0f, 0),
+                new Vector3(0.08f, 0f, 0),
                 true));
 
             #endregion
@@ -526,10 +526,10 @@ namespace GD.App
             sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Generator/Generator");
 
             soundManager.Add(new Cue(
-                "generator-sound",
+                AppData.GENERATOR_SOUND_NAME,
                 sound,
                 SoundCategoryType.Generator,
-                new Vector3(0.2f, 0, 0),
+                new Vector3(1f, 0, 0),
                 true
                 ));
 
@@ -767,11 +767,13 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
-            // First person controller component - non collidable
+            #region Non-Collidable First Person Controller
 
             //cameraGameObject.AddComponent(new OurFirstPersonController(
             //    AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
             //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+            #endregion
 
             #region Collision - Add capsule
 
@@ -788,14 +790,25 @@ namespace GD.App
 
             #endregion
 
+            #region Collidable First Person Controller
+
             cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
-                characterCollider,
-                AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
-                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+                    characterCollider,
+                    AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
+                    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                    AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+
+            #endregion
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
+
+            #region 3D Sound
+
+            //added ability for camera to listen to 3D sounds
+            cameraGameObject.AddComponent(new AudioListenerBehaviour());
+
+            #endregion
 
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
@@ -2995,7 +3008,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Generator
 
-            gameObject = new GameObject("generator",
+            gameObject = new GameObject(AppData.GENERATOR_NAME,
                                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(64.6f, 2f, 85.2f));
@@ -3026,6 +3039,9 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
+
+            gameObject.AddComponent(new AudioEmitterBehaviour());
+
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
