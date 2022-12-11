@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Reflection;
+using System.Text;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -352,6 +353,54 @@ namespace GD.App
             uiGameObject.AddComponent(new Renderer2D(material));
 
             uiGameObject.AddComponent(new TextPromptController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Dialogue Subtitles
+
+            textScale = new Vector2(1.5f, 1.5f);
+
+            uiGameObject = new GameObject(AppData.SUBTITLES_NAME);
+            uiGameObject.Transform = new Transform(
+                new Vector3(textScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(-400, 250), 0)
+                );
+
+            material = new TextMaterial2D(spriteFont, new StringBuilder(""),
+                new Vector2(0, 0),
+                Color.LightGreen,
+                0.8f
+                );
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new SubtitlesController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Office Note Pop-Up
+
+            uiGameObject = new GameObject("office note ui");
+
+            Vector2 noteScale = new Vector2(0.6f, 1f);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(noteScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - noteScale + new Vector2(-300, -150), 0)
+                );
+
+            texture = Content.Load<Texture2D>(AppData.OFFICE_NOTE_TEXTURE_PATH);
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new NoteUIController());
 
             mainHUD.Add(uiGameObject);
 
@@ -1716,7 +1765,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new Collider(gameObject, true);
+            Collider collider = new NoteCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
