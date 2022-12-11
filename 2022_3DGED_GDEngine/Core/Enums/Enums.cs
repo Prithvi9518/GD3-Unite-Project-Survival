@@ -174,7 +174,9 @@
         OnReachExit,
 
         OnInfectionDelta,
-        OnToggleButtonPrompt
+        OnToggleButtonPrompt,
+        OnEnterControlsMenu,
+        OnExitControlsMenu
     }
 
     /// <summary>
