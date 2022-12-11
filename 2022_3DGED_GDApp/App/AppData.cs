@@ -206,7 +206,7 @@ namespace GD.App
 
         #region Interactible Variables
 
-        public static readonly float INTERACTION_DISTANCE = 6.5f;
+        public static readonly float INTERACTION_DISTANCE = 3.5f;
 
         #endregion Interactible Variables
 
@@ -220,7 +220,7 @@ namespace GD.App
         #region Timer Variables
 
         public static double MAX_GAME_TIME_IN_MSECS = 180000;
-        //public static double MAX_GAME_TIME_IN_MSECS = 5000;
+        //public static double MAX_GAME_TIME_IN_MSECS = 25000;
 
         #endregion Timer Variables
 
@@ -248,6 +248,7 @@ namespace GD.App
 
         public static readonly string INFECTION_METER_NAME = "infection meter";
         public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
+        public static readonly string SUBTITLES_NAME = "subtitles";
 
         #endregion
 

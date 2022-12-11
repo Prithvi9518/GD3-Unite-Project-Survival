@@ -1,23 +1,24 @@
 ﻿using GD.Engine;
 using GD.Engine.Events;
+using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 
 namespace GD.App
 {
+    public enum PromptState
+    {
+        NoPrompt,
+        InteractPrompt,
+        PickupPrompt
+    }
+
     public class TextPromptController : Component
     {
-        private bool isActive = false;
+        private PromptState currentPromptState;
 
         private Vector3 position;
-        private string displayText;
 
-        private TextMaterial2D textMaterial;
-
-        public string DisplayText
-        {
-            get => this.displayText;
-            set => this.displayText = value;
-        }
+        private TextMaterial2D textMaterial2D;
 
         public Vector3 Position
         {
@@ -37,11 +38,9 @@ namespace GD.App
                 case EventActionType.OnToggleButtonPrompt:
                     if (gameObject.Name.Equals(eventData.Parameters[0] as string))
                     {
-                        isActive = (bool)eventData.Parameters[1];
+                        currentPromptState = (PromptState)eventData.Parameters[1];
 
-                        displayText = eventData.Parameters[2] as string;
-
-                        //position = (Vector3)eventData.Parameters[3];
+                        //position = (Vector3)eventData.Parameters[2];
                         //System.Diagnostics.Debug.WriteLine($"position : {position}");
                     }
 
@@ -52,19 +51,31 @@ namespace GD.App
             }
         }
 
+        private string GetPromptText(bool gamepadConnected)
+        {
+            switch (currentPromptState)
+            {
+                case PromptState.NoPrompt:
+                    return "";
+
+                case PromptState.InteractPrompt:
+                    return (gamepadConnected) ? "Press Y to interact" : "Press E to interact";
+
+                case PromptState.PickupPrompt:
+                    return (gamepadConnected) ? "Press Y to pick up" : "Press E to pick up";
+
+                default:
+                    return "";
+            }
+        }
+
         public override void Update(GameTime gameTime)
         {
-            textMaterial = gameObject.GetComponent<Renderer2D>().Material as TextMaterial2D;
+            textMaterial2D = gameObject.GetComponent<Renderer2D>().Material as TextMaterial2D;
 
-            if (isActive)
-            {
-                textMaterial.StringBuilder.Clear();
-                textMaterial.StringBuilder.Append(displayText);
-            }
-            else
-            {
-                textMaterial.StringBuilder.Clear();
-            }
+            string text = GetPromptText(Input.Gamepad.IsConnected());
+            textMaterial2D.StringBuilder.Clear();
+            textMaterial2D.StringBuilder.Append(text);
         }
     }
 }
