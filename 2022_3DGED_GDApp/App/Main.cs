@@ -383,6 +383,27 @@ namespace GD.App
 
             #endregion
 
+            #region Office Note Pop-Up
+
+            uiGameObject = new GameObject("office note ui");
+
+            Vector2 noteScale = new Vector2(0.6f, 1f);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(noteScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - noteScale + new Vector2(-300, -150), 0)
+                );
+
+            texture = Content.Load<Texture2D>(AppData.OFFICE_NOTE_TEXTURE_PATH);
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
             #region Add Scene to Manager and Set Active
 
             //add scene2D to manager

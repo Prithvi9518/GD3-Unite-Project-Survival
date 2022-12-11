@@ -6,6 +6,8 @@ namespace GD.Engine
 {
     public class NoteCollider : InteractibleCollider
     {
+        private bool noteShown = false;
+
         public NoteCollider(GameObject gameObject,
             bool isHandlingCollision = false, bool isTrigger = false)
             : base(gameObject, isHandlingCollision, isTrigger)
@@ -14,9 +16,25 @@ namespace GD.Engine
 
         protected override void HandleInteraction()
         {
-            // Raise event to show subtitles
-            object[] parameters = { DialogueState.NoteInOffice };
-            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+            object[] parameters;
+            if (!noteShown)
+            {
+                parameters = new object[] { true };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleNote, parameters));
+
+                noteShown = true;
+            }
+            else
+            {
+                parameters = new object[] { false };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleNote, parameters));
+
+                // Raise event to show subtitles
+                parameters = new object[] { DialogueState.NoteInOffice };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
+                noteShown = false;
+            }
         }
     }
 }

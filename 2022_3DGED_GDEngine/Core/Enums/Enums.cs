@@ -175,7 +175,8 @@
 
         OnInfectionDelta,
         OnToggleButtonPrompt,
-        OnShowSubtitles
+        OnShowSubtitles,
+        OnToggleNote
     }
 
     /// <summary>
