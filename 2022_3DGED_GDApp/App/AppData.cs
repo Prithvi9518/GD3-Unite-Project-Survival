@@ -207,6 +207,7 @@ namespace GD.App
         #region Interactible Variables
 
         public static readonly float INTERACTION_DISTANCE = 3.5f;
+        public static readonly float LONG_INTERACTION_DISTANCE = 5.5f;
 
         #endregion Interactible Variables
 
@@ -232,6 +233,8 @@ namespace GD.App
 
         #region Object Names
 
+        public static readonly string FLOOR_NAME = "ground_floor";
+
         public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
         public static readonly string KEYCARD_NAME = "office keycard";
 
@@ -243,6 +246,8 @@ namespace GD.App
 
         public static readonly string EXIT_DOOR_NAME = "exit door";
         public static readonly string EXIT_DOOR_FRAME_NAME = "exit door frame";
+
+        public static readonly string TOY_RADIO_NAME = "toy radio";
 
         #endregion
 

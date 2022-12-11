@@ -14,6 +14,24 @@ namespace GD.Engine
             bool isHandlingCollision = false, bool isTrigger = false)
             : base(gameObject, isHandlingCollision, isTrigger)
         {
+            EventDispatcher.Subscribe(EventCategoryType.Inventory, HandleInventoryEvent);
+        }
+
+        private void HandleInventoryEvent(EventData eventData)
+        {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnRemoveInventory:
+                    string name = eventData.Parameters[0] as string;
+                    if (name == gameObject.Name)
+                    {
+                        pickedUp = false;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         protected override void CheckButtonPromptState()

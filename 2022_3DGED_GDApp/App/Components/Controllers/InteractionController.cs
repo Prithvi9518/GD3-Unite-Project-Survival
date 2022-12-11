@@ -1,6 +1,6 @@
 ﻿//#define ALPHA_DEMO
 //#define TEST_INVENTORY
-#define DEMO_STATES
+//#define DEMO_STATES
 
 using GD.App;
 using GD.Engine.Events;
@@ -38,18 +38,7 @@ namespace GD.Engine
         {
             CheckInteracting();
 
-#if ALPHA_DEMO
-            MakeOfficeEnemyMove();
-#endif
-
-#if TEST_INVENTORY
-            UseInventoryItems();
-#endif
-
-#if DEMO_STATES
-            StopGeneratorAlarm();
-
-#endif
+            UseRadio();
 
             //base.Update(gameTime);
         }
@@ -108,11 +97,11 @@ namespace GD.Engine
             }
         }
 
-        private void UseInventoryItems()
+        private void UseRadio()
         {
-            if (Input.Keys.IsPressed(Keys.F))
+            if (Input.Keys.IsPressed(Keys.R))
             {
-                object[] parameters = { "fuse" };
+                object[] parameters = { AppData.TOY_RADIO_NAME };
                 EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
             }
         }

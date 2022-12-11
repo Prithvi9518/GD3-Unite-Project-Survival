@@ -1723,7 +1723,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Floor
 
-            var gameObject = new GameObject("ground_floor",
+            var gameObject = new GameObject(AppData.FLOOR_NAME,
                ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -3515,8 +3515,9 @@ ObjectType.Static, RenderType.Opaque);
 
             #endregion Teddy Bears
 
-            gameObject = new GameObject("toy radio" + teddyBearNumber,
+            gameObject = new GameObject(AppData.TOY_RADIO_NAME,
                  ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(14.9f, 2.5f, -25f));
             texture_path = "Assets/Textures/Aisles/Toys/toy_radio";
@@ -3532,18 +3533,22 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new PickupCollider(gameObject, true, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    120 * gameObject.Transform.Scale
-                    ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+            //Collider collider = new PickupCollider(gameObject, true, true);
+            //collider.AddPrimitive(
+            //    new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        120 * gameObject.Transform.Scale
+            //        ),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //    );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
+
+            gameObject.AddComponent(new InteractableBehaviour());
+
+            gameObject.AddComponent(new RadioController());
 
             sceneManager.ActiveScene.Add(gameObject);
 
