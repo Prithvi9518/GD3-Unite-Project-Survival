@@ -32,8 +32,14 @@ namespace GD.Engine
             }
             else
             {
-                // otherwise, send message/hint to user that they need some sort of keycard
-                System.Diagnostics.Debug.WriteLine("You need a keycard");
+                // otherwise, use dialogue to hint to user that they need some sort of keycard
+                if (!(Application.StateManager.CurrentGameState == GameState.GeneratorRoomOpen))
+                {
+                    object[] parameters = { DialogueState.GeneratorRoomClosed };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
+                    System.Diagnostics.Debug.WriteLine("You need a keycard");
+                }
             }
         }
     }

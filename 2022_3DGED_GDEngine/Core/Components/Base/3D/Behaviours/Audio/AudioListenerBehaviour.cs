@@ -10,6 +10,11 @@ namespace GD.Engine
     {
         private AudioListener audioListener;
 
+        public AudioListener AudioListener
+        {
+            get { return audioListener; }
+        }
+
         public AudioListenerBehaviour()
         {
             audioListener = new AudioListener();

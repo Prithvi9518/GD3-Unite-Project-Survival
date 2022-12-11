@@ -7,6 +7,11 @@ namespace GD.Engine
     {
         private AudioEmitter audioEmitter;
 
+        public AudioEmitter AudioEmitter
+        {
+            get => audioEmitter;
+        }
+
         public AudioEmitterBehaviour()
         {
             audioEmitter = new AudioEmitter();
