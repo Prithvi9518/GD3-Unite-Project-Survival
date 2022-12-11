@@ -88,11 +88,13 @@ namespace GD.App
 
                 case GameState.GeneratorOn:
 
-#if DEMO_STATES
+                    // Send subtitles event
+                    object[] parameters = { SubtitleState.GeneratorWorking };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
                     System.Diagnostics.Debug.WriteLine("Generator is now on");
 
                     RaiseAlarmEvent(EventActionType.OnPlay2D);
-#endif
 
                     break;
 

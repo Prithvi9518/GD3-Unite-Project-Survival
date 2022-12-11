@@ -1,6 +1,7 @@
 ﻿using GD.Engine;
 using GD.Engine.Events;
 using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 
@@ -52,7 +53,11 @@ namespace GD.App
 
             [SubtitleState.GeneratorRoomClosed] = "AHHH dammit! I can't get in here.",
 
-            [SubtitleState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?"
+            [SubtitleState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?",
+            [SubtitleState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
+
+            [SubtitleState.GeneratorWorking] = "The generator is working again!!",
+            [SubtitleState.TimeToRun] = "Time to GET OUTTA HERE!!!"
         };
 
         private Dictionary<SubtitleState, float> durationsDict = new Dictionary<SubtitleState, float>
@@ -64,12 +69,17 @@ namespace GD.App
 
             [SubtitleState.GeneratorRoomClosed] = 3500,
 
-            [SubtitleState.NeedFuse] = 4000
+            [SubtitleState.NeedFuse] = 4000,
+            [SubtitleState.WhereFuse] = 4000,
+
+            [SubtitleState.GeneratorWorking] = 2500,
+            [SubtitleState.TimeToRun] = 2500
         };
 
         private List<List<SubtitleState>> subtitleSequences = new List<List<SubtitleState>>()
         {
-            new List<SubtitleState>(){SubtitleState.Start1, SubtitleState.Start2}
+            new List<SubtitleState>(){SubtitleState.Start1, SubtitleState.Start2},
+            new List<SubtitleState>(){SubtitleState.GeneratorWorking, SubtitleState.TimeToRun}
         };
 
         private SubtitleState currentSubtitle;
@@ -77,6 +87,9 @@ namespace GD.App
 
         private float durationInMS;
         private float totalElapsedTimeInMS;
+
+        private float tempTimerInMS = 5000;
+        private float tempElapsedTimeInMS;
 
         public SubtitlesController()
         {
@@ -146,8 +159,30 @@ namespace GD.App
 
             if (totalElapsedTimeInMS > durationInMS)
             {
-                if (!HandleSequencedSubtitleChange())
+                if (HandleSequencedSubtitleChange()) return;
+
+                SubtitleState prevSubtitle = currentSubtitle;
+
+                textMaterial2D.StringBuilder.Clear();
+
+                if (prevSubtitle == SubtitleState.NeedFuse)
+                {
+                    DelayBetweenSubtitles(SubtitleState.WhereFuse, gameTime);
+                }
+                else
+                {
+                    tempElapsedTimeInMS = 0;
                     ChangeSubtitle(SubtitleState.NoSubtitle);
+                }
+            }
+        }
+
+        private void DelayBetweenSubtitles(SubtitleState newSubtitle, GameTime gameTime)
+        {
+            tempElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
+            if (tempElapsedTimeInMS > tempTimerInMS)
+            {
+                ChangeSubtitle(SubtitleState.WhereFuse);
             }
         }
     }
