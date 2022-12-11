@@ -3532,7 +3532,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new Collider(gameObject, true);
+            Collider collider = new PickupCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,

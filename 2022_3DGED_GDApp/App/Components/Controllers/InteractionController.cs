@@ -72,6 +72,17 @@ namespace GD.Engine
                         (obj) => gameObject.Name.Equals(obj.Name)
                         );
 
+                    GameObject itemFound = Application.SceneManager.ActiveScene.Find(
+                        gameObject.ObjectType,
+                        gameObject.RenderType,
+                        (obj) => gameObject.Name.Equals(obj.Name)
+                        );
+                    if (itemFound == null)
+                    {
+                        object[] parameters = { AppData.INTERACT_PROMPT_NAME, PromptState.NoPrompt };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleButtonPrompt, parameters));
+                    }
+
                     break;
 
                 default:
