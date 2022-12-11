@@ -486,10 +486,10 @@ namespace GD.App
             sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
 
             soundManager.Add(new Cue(
-                "glass-shatter",
+                AppData.GLASS_SHATTER_SOUND_NAME,
                 sound,
                 SoundCategoryType.Explosion,
-                new Vector3(1, 1, 0),
+                new Vector3(0.5f, 0, 0),
                 false
                 ));
 
@@ -2200,7 +2200,6 @@ ObjectType.Static, RenderType.Opaque);
             int plasticBottleNumber = 1;
             string plastic_bottles_base_path = AppData.BIN_MODELS_PATH + "Plastic Bottles/plastic_bottle";
 
-
             gameObject = new GameObject("plastic bottle " + plasticBottleNumber, ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
@@ -2214,9 +2213,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
-           
 
-            
             plasticBottleNumber++;
             Random random = new Random();
             for (int i = 0; i < 40; i++)
@@ -2229,12 +2226,13 @@ ObjectType.Static, RenderType.Opaque);
             #endregion Plastic Bottles
 
             #region Trash Pile
+
             int trashPileNumber = 1;
 
             gameObject = new GameObject("trash pile " + trashPileNumber,
                   ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(0.02f * Vector3.One, new Vector3(90, 0 , 0), new Vector3(43.6f, 2.23f, -86.3f));
+            gameObject.Transform = new Transform(0.02f * Vector3.One, new Vector3(90, 0, 0), new Vector3(43.6f, 2.23f, -86.3f));
             string texture_path = "Assets/Textures/Shopping Centre/Bins/trash_pile";
 
             string trash_pile_model_path = "Assets/Models/Shopping Centre/Bins/trash_pile";
@@ -2250,8 +2248,6 @@ ObjectType.Static, RenderType.Opaque);
             sceneManager.ActiveScene.Add(gameObject);
 
             trashPileNumber++;
-
-           
 
             gameObject = CloneModelGameObjectRandom(gameObject, "trash pile " + trashPileNumber, new Vector3(-22.5f, 0.8f, -82.4f));
             sceneManager.ActiveScene.Add(gameObject);
@@ -2271,7 +2267,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform.SetRotation(0, 0, 0);
 
-            
             #endregion Trash Pile
 
             #endregion Bins
@@ -2950,6 +2945,7 @@ ObjectType.Static, RenderType.Opaque);
             #region Beverage Aisle
 
             #region Broken Bottle
+
             int brokeBottleNumber = 1;
 
             var gameObject = new GameObject("broken bottle " + brokeBottleNumber,
@@ -2969,8 +2965,11 @@ ObjectType.Static, RenderType.Opaque);
                     );
 
             gameObject.AddComponent(renderer);
-            var aisleScale = new Vector3(100f * gameObject.Transform.Scale.X, 20f * gameObject.Transform.Scale.Y, 60f * gameObject.Transform.Scale.Z);
-            Collider collider = new Collider(gameObject, true);
+
+            var aisleScale = new Vector3(100f * gameObject.Transform.Scale.X,
+                20f * gameObject.Transform.Scale.Y, 60f * gameObject.Transform.Scale.Z);
+
+            Collider collider = new BrokenGlassCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
@@ -2982,6 +2981,7 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
+
             sceneManager.ActiveScene.Add(gameObject);
 
             Random random = new Random();
@@ -2989,8 +2989,16 @@ ObjectType.Static, RenderType.Opaque);
             brokeBottleNumber++;
             for (int i = 0; i < 4; i++)
             {
-                gameObject = CloneModelGameObjectRandom(gameObject, "broken bottle " + brokeBottleNumber, new Vector3(random.Next(36, 43), 0.3f, random.Next(-76, -21)), aisleScale);
+                gameObject = CloneModelGameObjectRandom(
+                    gameObject,
+                    "broken bottle " + brokeBottleNumber,
+                    new Vector3(random.Next(36, 43), 0.3f, random.Next(-76, -21)),
+                    aisleScale,
+                    true,
+                    ColliderType.BrokenGlass);
+
                 sceneManager.ActiveScene.Add(gameObject);
+
                 brokeBottleNumber++;
             }
 
@@ -3032,7 +3040,6 @@ ObjectType.Static, RenderType.Opaque);
                 bottleNumber++;
             }
 
-
             for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
             {
                 gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
@@ -3048,7 +3055,6 @@ ObjectType.Static, RenderType.Opaque);
                 sceneManager.ActiveScene.Add(gameObject);
                 bottleNumber++;
             }
-
 
             for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
             {
@@ -3066,8 +3072,6 @@ ObjectType.Static, RenderType.Opaque);
                 bottleNumber++;
             }
 
-
-
             #endregion Bottle
 
             #endregion Beverage Aisle
@@ -3076,6 +3080,7 @@ ObjectType.Static, RenderType.Opaque);
         private void InitializeLabels()
         {
             #region Aisle Labels
+
             int labelNumber = 1;
 
             var gameObject = new GameObject("label " + labelNumber,
@@ -3119,7 +3124,6 @@ ObjectType.Static, RenderType.Opaque);
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Aisle Labels
-
         }
 
         private void InitializeGreens()
@@ -3128,6 +3132,7 @@ ObjectType.Static, RenderType.Opaque);
             int weedNumber = 1;
 
             #region Weed Tulip
+
             GameObject gameObject = new GameObject("weed " + weedNumber,
                   ObjectType.Static, RenderType.Opaque);
 
@@ -3145,21 +3150,20 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
-            
+
             weedNumber++;
 
-  
-            for(int i = 0; i < 200; i++)
+            for (int i = 0; i < 200; i++)
             {
-                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31,47), 0.4f, random.Next(-87, 87)));
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
                 sceneManager.ActiveScene.Add(gameObject);
                 weedNumber++;
             }
 
-
             #endregion Weed Tulip
 
             #region Weed Flower
+
             gameObject = new GameObject("weed " + weedNumber,
                  ObjectType.Static, RenderType.Opaque);
 
@@ -3180,17 +3184,17 @@ ObjectType.Static, RenderType.Opaque);
 
             weedNumber++;
 
-
             for (int i = 0; i < 200; i++)
             {
                 gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
                 sceneManager.ActiveScene.Add(gameObject);
                 weedNumber++;
             }
+
             #endregion Weed Flower
 
-
             #region Weed
+
             gameObject = new GameObject("weed " + weedNumber,
                 ObjectType.Static, RenderType.Opaque);
 
@@ -3211,16 +3215,17 @@ ObjectType.Static, RenderType.Opaque);
 
             weedNumber++;
 
-
             for (int i = 0; i < 200; i++)
             {
                 gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
                 sceneManager.ActiveScene.Add(gameObject);
                 weedNumber++;
             }
+
             #endregion Weed
 
             #region Bushes
+
             gameObject = new GameObject("weed " + weedNumber,
               ObjectType.Static, RenderType.Opaque);
 
@@ -3242,11 +3247,10 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < 20; i++)
             {
-                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-4, 1), random.Next(1,5), random.Next(-11, 35)));
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-4, 1), random.Next(1, 5), random.Next(-11, 35)));
                 sceneManager.ActiveScene.Add(gameObject);
                 weedNumber++;
             }
-
 
             for (int i = 0; i < 40; i++)
             {
@@ -3255,9 +3259,7 @@ ObjectType.Static, RenderType.Opaque);
                 weedNumber++;
             }
 
-
             #endregion Bushes
-
         }
 
         private void InitializeToysAisle()
@@ -3265,6 +3267,7 @@ ObjectType.Static, RenderType.Opaque);
             #region Toys
 
             #region Computer Games
+
             int computerGamesNumber = 1;
 
             GameObject gameObject = new GameObject("computer game " + computerGamesNumber,
@@ -3300,13 +3303,11 @@ ObjectType.Static, RenderType.Opaque);
             float zAxis = -0.7f;
             for (int i = 0; i < 3; i++)
             {
-
                 for (int j = 0; j < computerGameObjects.Count; j++)
                 {
                     gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0, 0, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/god_of_war");
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
-
                 }
 
                 for (int k = 0; k < computerGameObjects.Count; k++)
@@ -3317,7 +3318,6 @@ ObjectType.Static, RenderType.Opaque);
                 }
 
                 zAxis += -0.7f;
-
             }
 
             gameObject = CloneModelGameObject(gameObject, "computer game" + computerGamesNumber, new Vector3(0.1f, -0.4f, -1.6f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/farcry_4");
@@ -3334,7 +3334,6 @@ ObjectType.Static, RenderType.Opaque);
                 computerGamesNumber++;
             }
 
-
             for (int i = 0; i < computerGameObjectsTwo.Count - 1; i++)
             {
                 gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -1f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/tekken_7");
@@ -3342,7 +3341,6 @@ ObjectType.Static, RenderType.Opaque);
                 computerGamesNumber++;
             }
 
-            
             for (int i = 0; i < computerGameObjectsTwo.Count; i++)
             {
                 gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -2.2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/fallout_76");
@@ -3362,18 +3360,14 @@ ObjectType.Static, RenderType.Opaque);
             zAxis = 0.01f;
             for (int i = 0; i < 2; i++)
             {
-
-               
                 for (int j = 0; j < computerGameObjects.Count; j++)
                 {
                     gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -1.7f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/uncharted");
                     gameObject.Transform.SetRotation(45f, 0, 0);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
-
                 }
 
-               
                 for (int k = 0; k < computerGameObjects.Count; k++)
                 {
                     gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/outlast");
@@ -3391,23 +3385,18 @@ ObjectType.Static, RenderType.Opaque);
                 }
 
                 zAxis += -0.7f;
-
             }
 
             zAxis = -9f;
             for (int i = 0; i < 2; i++)
             {
-
-
                 for (int j = 0; j < computerGameObjects.Count; j++)
                 {
                     gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -0.2f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/farcry");
                     gameObject.Transform.SetRotation(58f, 0, 0);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
-
                 }
-
 
                 for (int k = 0; k < computerGameObjects.Count; k++)
                 {
@@ -3426,12 +3415,12 @@ ObjectType.Static, RenderType.Opaque);
                 }
 
                 zAxis += -0.7f;
-
             }
 
             #endregion Computer Games
 
             #region R2-D2
+
             int r2d2Number = 1;
             gameObject = new GameObject("R2-D2 " + r2d2Number,
                   ObjectType.Static, RenderType.Opaque);
@@ -3459,21 +3448,22 @@ ObjectType.Static, RenderType.Opaque);
             r2d2GameObjects.Add(gameObject);
             r2d2Number++;
 
-            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f),"Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_red");
+            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_red");
             sceneManager.ActiveScene.Add(gameObject);
             r2d2GameObjects.Add(gameObject);
             r2d2Number++;
 
-
-            for(int i =0; i < r2d2GameObjects.Count; i++)
+            for (int i = 0; i < r2d2GameObjects.Count; i++)
             {
                 gameObject = CloneModelGameObject(r2d2GameObjects[i], "R2-D2 " + r2d2Number, new Vector3(0, 0, 6f));
                 sceneManager.ActiveScene.Add(gameObject);
                 r2d2Number++;
             }
+
             #endregion R2-D2
 
             #region Board Games
+
             gameObject = new GameObject("Board Games" + r2d2Number,
                   ObjectType.Static, RenderType.Opaque);
 
@@ -3491,9 +3481,11 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Board Games
 
             #region Teddy Bears
+
             int teddyBearNumber = 1;
             gameObject = new GameObject("teddy bear " + teddyBearNumber,
                   ObjectType.Static, RenderType.Opaque);
@@ -3520,11 +3512,9 @@ ObjectType.Static, RenderType.Opaque);
                 sceneManager.ActiveScene.Add(gameObject);
                 teddyBearNumber++;
             }
+
             #endregion Teddy Bears
 
-            #region Toy Radio
-
-            #endregion Toy Radio
             gameObject = new GameObject("toy radio" + teddyBearNumber,
                  ObjectType.Static, RenderType.Opaque);
 
@@ -3556,6 +3546,7 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Toys
         }
 
@@ -3564,6 +3555,7 @@ ObjectType.Static, RenderType.Opaque);
             #region Prepared Foods
 
             #region Cereal Box
+
             int cerealNumber = 1;
 
             var gameObject = new GameObject("cereal box " + cerealNumber,
@@ -3638,14 +3630,12 @@ ObjectType.Static, RenderType.Opaque);
                 cerealNumber++;
             }
 
-
             for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
             {
                 gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, -3f, 1f));
                 sceneManager.ActiveScene.Add(gameObject);
                 cerealNumber++;
             }
-
 
             for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
             {
@@ -3654,12 +3644,10 @@ ObjectType.Static, RenderType.Opaque);
                 cerealNumber++;
             }
 
-
-
-
             #endregion Cereal Box
 
             #region Energy Drink
+
             int energyDrinkNumber = 1;
 
             gameObject = new GameObject("energy drink " + energyDrinkNumber,
@@ -3692,7 +3680,6 @@ ObjectType.Static, RenderType.Opaque);
                 energyDrinkNumber++;
             }
 
-
             for (int i = 0; i < energyDrinksGameObjects.Count - 4; i++)
             {
                 gameObject = CloneModelGameObject(energyDrinksGameObjects[i], "energy drink " + energyDrinkNumber, new Vector3(0f, -1.5f, 1f));
@@ -3717,6 +3704,7 @@ ObjectType.Static, RenderType.Opaque);
             #endregion Energy Drink
 
             #region Juice Carton
+
             int juiceCartonNumber = 1;
 
             gameObject = new GameObject("juice carton " + energyDrinkNumber,
@@ -3749,7 +3737,6 @@ ObjectType.Static, RenderType.Opaque);
                 juiceCartonNumber++;
             }
 
-
             for (int i = 0; i < juiceCartonsGameObjects.Count - 1; i++)
             {
                 gameObject = CloneModelGameObject(juiceCartonsGameObjects[i], "juice carton  " + juiceCartonNumber, new Vector3(0f, -1.5f, 1f));
@@ -3763,9 +3750,11 @@ ObjectType.Static, RenderType.Opaque);
                 sceneManager.ActiveScene.Add(gameObject);
                 juiceCartonNumber++;
             }
+
             #endregion Juice Carton
 
             #region Crisps
+
             int crispsNumber = 1;
 
             gameObject = new GameObject("crisps " + crispsNumber,
@@ -3798,9 +3787,8 @@ ObjectType.Static, RenderType.Opaque);
                 crispsNumber++;
             }
 
-            for(int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++)
             {
-               
                 for (int j = 0; j < crispsGameObjects.Count; j++)
                 {
                     gameObject = CloneModelGameObject(crispsGameObjects[j], "crisps " + crispsNumber, new Vector3(0f, 0, 1f + i));
@@ -3814,13 +3802,12 @@ ObjectType.Static, RenderType.Opaque);
                     sceneManager.ActiveScene.Add(gameObject);
                     crispsNumber++;
                 }
-
             }
 
-    
             #endregion Crisps
 
             #region Cans
+
             int canNumber = 1;
 
             gameObject = new GameObject("can " + canNumber,
@@ -3830,7 +3817,6 @@ ObjectType.Static, RenderType.Opaque);
             model_path = "Assets/Models/Aisles/Prepared Foods/can";
             texture_path = "Assets/Textures/Aisles/Prepared Foods/can_tomato_soup";
 
-           
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
@@ -3864,13 +3850,11 @@ ObjectType.Static, RenderType.Opaque);
             float zAxis = 0;
             for (int i = 0; i < 3; i++)
             {
-
                 for (int j = 0; j < cansGameObjects.Count; j++)
                 {
                     gameObject = CloneModelGameObject(cansGameObjects[j], "can " + canNumber, new Vector3(0, -1.38f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_ministrone");
                     sceneManager.ActiveScene.Add(gameObject);
                     canNumber++;
-    
                 }
 
                 for (int k = 0; k < cansGameObjects.Count; k++)
@@ -3881,13 +3865,12 @@ ObjectType.Static, RenderType.Opaque);
                 }
 
                 zAxis += -7f;
-
             }
-
 
             #endregion Cans
 
             #region Olive Oil
+
             int oliveOilNumber = 1;
 
             gameObject = new GameObject("olive oil " + oliveOilNumber,
@@ -3896,7 +3879,6 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0, 1f));
             model_path = "Assets/Models/Aisles/Prepared Foods/olive_oil";
             texture_path = "Assets/Textures/Aisles/Prepared Foods/olive_oil";
-
 
             renderer = InitializeRenderer(
                     model_path,
@@ -3931,7 +3913,7 @@ ObjectType.Static, RenderType.Opaque);
             for (int i = 0; i < oliveOilGameObjects.Count; i++)
             {
                 gameObject = CloneModelGameObject(oliveOilGameObjects[i], "olive oil " + oliveOilNumber, new Vector3(0, -1.5f, 0.5f));
-                sceneManager.ActiveScene.Add(gameObject);         
+                sceneManager.ActiveScene.Add(gameObject);
                 oliveOilNumber++;
             }
 
@@ -4192,6 +4174,7 @@ ObjectType.Static, RenderType.Opaque);
             #endregion
 
             #region Manequins
+
             int manequinNumber = 1;
             gameObject = new GameObject("manequin " + manequinNumber,
                                         ObjectType.Static, RenderType.Opaque);
@@ -4213,7 +4196,7 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-            List<GameObject>manequinsGameObject = new List<GameObject>();
+            List<GameObject> manequinsGameObject = new List<GameObject>();
             manequinsGameObject.Add(gameObject);
 
             manequinNumber++;
@@ -4235,6 +4218,7 @@ ObjectType.Static, RenderType.Opaque);
             #endregion Manequins
 
             #region Voltage Sign
+
             gameObject = new GameObject("voltage sign",
                                         ObjectType.Static, RenderType.Opaque);
 
@@ -4253,9 +4237,11 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Voltage Sign
 
             #region Fan
+
             gameObject = new GameObject("fan",
                                         ObjectType.Static, RenderType.Opaque);
 
@@ -4274,6 +4260,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Fan
         }
 
@@ -4450,7 +4437,6 @@ ObjectType.Static, RenderType.Opaque);
             return gameObjectClone;
         }
 
-
         private GameObject CloneModelGameObject(GameObject gameObject, string newName, Vector3 offset, Vector3 colliderScale, Vector3 rotation)
         {
             GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
@@ -4519,7 +4505,8 @@ ObjectType.Static, RenderType.Opaque);
             return gameObjectClone;
         }
 
-        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName, Vector3 newTranslation, Vector3 colliderScale)
+        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName,
+            Vector3 newTranslation, Vector3 colliderScale)
         {
             GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
             gameObjectClone.GameObjectType = gameObject.GameObjectType;
@@ -4551,6 +4538,53 @@ ObjectType.Static, RenderType.Opaque);
             return gameObjectClone;
         }
 
+        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName,
+            Vector3 newTranslation, Vector3 colliderScale, bool isTrigger, ColliderType colliderType)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                newTranslation
+                );
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
+
+            Collider cloneCollider;
+
+            switch (colliderType)
+            {
+                case ColliderType.Default:
+                    cloneCollider = new Collider(gameObjectClone, true, isTrigger);
+                    break;
+
+                case ColliderType.BrokenGlass:
+                    cloneCollider = new BrokenGlassCollider(gameObjectClone, true, isTrigger);
+                    break;
+
+                default:
+                    cloneCollider = new Collider(gameObjectClone, true, isTrigger);
+                    break;
+            }
+
+            cloneCollider.AddPrimitive(
+                new Box(
+                    gameObjectClone.Transform.Translation,
+                    gameObjectClone.Transform.Rotation,
+                    colliderScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            cloneCollider.Enable(gameObjectClone, true, 10);
+            gameObjectClone.AddComponent(cloneCollider);
+
+            return gameObjectClone;
+        }
 
         private void InitializeFrontAisles(string texture_path)
         {
