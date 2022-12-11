@@ -53,6 +53,7 @@ namespace GD.App
 
             [DialogueState.GeneratorRoomClosed] = "AHHH dammit! I can't get in here.",
 
+            [DialogueState.HollowBlockOffice] = "There is a hollow blocking the way. I need to distract it somehow.",
             [DialogueState.NeedKeycardInOffice] = "I need a keycard for the generator room. I hope there's one in here.",
             [DialogueState.NoteInOffice] = "Note mentions the generator being busted. Maybe this keycard will open the generator room?",
 
@@ -79,6 +80,7 @@ namespace GD.App
 
             [DialogueState.GeneratorRoomClosed] = 3500,
 
+            [DialogueState.HollowBlockOffice] = 4500,
             [DialogueState.NeedKeycardInOffice] = 3500,
             [DialogueState.NoteInOffice] = 4000,
 

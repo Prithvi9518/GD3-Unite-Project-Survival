@@ -31,6 +31,7 @@ namespace GD.Engine
         private Vector3 restrictedLook, restrictedRight;
 
         private bool insideOffice = false;
+        private bool seenOfficeHollow = false;
 
         #endregion Fields
 
@@ -72,6 +73,7 @@ namespace GD.Engine
             }
 
             CheckInsideOffice();
+            CheckSeenOfficeHollow();
 
             //HandleJump(gameTime);
         }
@@ -282,6 +284,18 @@ namespace GD.Engine
                 object[] parameters = { DialogueState.NeedKeycardInOffice };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
                 insideOffice = true;
+            }
+        }
+
+        private void CheckSeenOfficeHollow()
+        {
+            if (transform.Translation.Z <= -51.6f
+                && transform.Translation.X <= -4
+                && !seenOfficeHollow)
+            {
+                object[] parameters = { DialogueState.HollowBlockOffice };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                seenOfficeHollow = true;
             }
         }
 
