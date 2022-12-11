@@ -360,6 +360,24 @@ namespace GD.App
         public static readonly string BENCH_BASE_MODEL_PATH = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base";
         #endregion Benches
 
+        #region Aisle Labels
+        private static readonly string LABEL_BASE_PATH = "Assets/Textures/Aisles/Labels/aisle_";
+
+        public static readonly List<string> LABELS_LIST = new List<string>()
+        {
+            LABEL_BASE_PATH + "1",
+            LABEL_BASE_PATH + "2",
+            LABEL_BASE_PATH + "3",
+            LABEL_BASE_PATH + "4",
+            LABEL_BASE_PATH + "5",
+            LABEL_BASE_PATH + "6",
+            LABEL_BASE_PATH + "7",
+
+        };
+            
+            
+        #endregion Aisle Labels
+
         #region Font Paths
 
         public static readonly string PERF_FONT_PATH = "Assets/Fonts/Perf";

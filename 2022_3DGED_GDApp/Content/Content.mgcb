@@ -245,6 +245,25 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Aisles/Electronics/electronics_aisle_shelf.fbx
 
+#begin Assets/Models/Aisles/Label/label.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Aisles/Label/label.fbx
+
 #begin Assets/Models/Aisles/Prepared Foods/can.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -263,25 +282,6 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Aisles/Prepared Foods/can.fbx
-
-#begin Assets/Models/Aisles/Prepared Foods/cereal_box.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Prepared Foods/cereal_box.fbx
 
 #begin Assets/Models/Aisles/Prepared Foods/cereal_box.fbx
 /importer:FbxImporter
@@ -340,44 +340,6 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Aisles/Prepared Foods/energy_drink.fbx
 
-#begin Assets/Models/Aisles/Prepared Foods/energy_drink.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Prepared Foods/energy_drink.fbx
-
-#begin Assets/Models/Aisles/Prepared Foods/juice_carton.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Prepared Foods/juice_carton.fbx
-
 #begin Assets/Models/Aisles/Prepared Foods/juice_carton.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
@@ -435,7 +397,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf.fbx
 
-#begin Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf.fbx
+#begin Assets/Models/Aisles/Toys/board_games.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -452,45 +414,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Prepared Foods/prepared_foods_aisle_shelf.fbx
-
-#begin Assets/Models/Aisles/Produced Foods/produced_foods_aisle_shelf.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Produced Foods/produced_foods_aisle_shelf.fbx
-
-#begin Assets/Models/Aisles/Toys/computer_game.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Toys/computer_game.fbx
+/build:Assets/Models/Aisles/Toys/board_games.fbx
 
 #begin Assets/Models/Aisles/Toys/computer_game.fbx
 /importer:FbxImporter
@@ -530,7 +454,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Aisles/Toys/r2_d2.fbx
 
-#begin Assets/Models/Aisles/Toys/r2_d2.fbx
+#begin Assets/Models/Aisles/Toys/teddy_bear.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -547,9 +471,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Toys/r2_d2.fbx
+/build:Assets/Models/Aisles/Toys/teddy_bear.fbx
 
-#begin Assets/Models/Aisles/Toys/r2_d2.fbx
+#begin Assets/Models/Aisles/Toys/toy_radio.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -566,7 +490,26 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Aisles/Toys/r2_d2.fbx
+/build:Assets/Models/Aisles/Toys/toy_radio.fbx
+
+#begin Assets/Models/Aisles/Toys/toy_radio.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Aisles/Toys/toy_radio.fbx
 
 #begin Assets/Models/Aisles/Toys/toys_aisle_shelf.fbx
 /importer:FbxImporter
@@ -1099,6 +1042,25 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Generator Room/lever.fbx
+
+#begin Assets/Models/Generator Room/manequin.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Generator Room/manequin.fbx
 
 #begin Assets/Models/Generator Room/old_generator.fbx
 /importer:FbxImporter
@@ -1860,7 +1822,7 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Bins/Pallet/pallet.fbx
 
-#begin Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_1.fbx
+#begin Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -1877,9 +1839,9 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_1.fbx
+/build:Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle.fbx
 
-#begin Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_2.fbx
+#begin Assets/Models/Shopping Centre/Bins/trash_pile.fbx
 /importer:FbxImporter
 /processor:ModelProcessor
 /processorParam:ColorKeyColor=0,0,0,0
@@ -1896,45 +1858,7 @@
 /processorParam:Scale=1
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
-/build:Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_2.fbx
-
-#begin Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_3.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_3.fbx
-
-#begin Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_4.fbx
-/importer:FbxImporter
-/processor:ModelProcessor
-/processorParam:ColorKeyColor=0,0,0,0
-/processorParam:ColorKeyEnabled=True
-/processorParam:DefaultEffect=BasicEffect
-/processorParam:GenerateMipmaps=True
-/processorParam:GenerateTangentFrames=False
-/processorParam:PremultiplyTextureAlpha=True
-/processorParam:PremultiplyVertexColors=True
-/processorParam:ResizeTexturesToPowerOfTwo=False
-/processorParam:RotationX=0
-/processorParam:RotationY=0
-/processorParam:RotationZ=0
-/processorParam:Scale=1
-/processorParam:SwapWindingOrder=False
-/processorParam:TextureFormat=Compressed
-/build:Assets/Models/Shopping Centre/Bins/Plastic Bottles/plastic_bottle_4.fbx
+/build:Assets/Models/Shopping Centre/Bins/trash_pile.fbx
 
 #begin Assets/Models/Shopping Centre/Checkout Desks/Belt/belt_1.fbx
 /importer:FbxImporter
@@ -2296,6 +2220,82 @@
 /processorParam:SwapWindingOrder=False
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Shopping Centre/Fridges/fridge.fbx
+
+#begin Assets/Models/Shopping Centre/Greens/bush.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Greens/bush.fbx
+
+#begin Assets/Models/Shopping Centre/Greens/weed_flower.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Greens/weed_flower.fbx
+
+#begin Assets/Models/Shopping Centre/Greens/weed_tulip.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Greens/weed_tulip.fbx
+
+#begin Assets/Models/Shopping Centre/Greens/weed.fbx
+/importer:FbxImporter
+/processor:ModelProcessor
+/processorParam:ColorKeyColor=0,0,0,0
+/processorParam:ColorKeyEnabled=True
+/processorParam:DefaultEffect=BasicEffect
+/processorParam:GenerateMipmaps=True
+/processorParam:GenerateTangentFrames=False
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:PremultiplyVertexColors=True
+/processorParam:ResizeTexturesToPowerOfTwo=False
+/processorParam:RotationX=0
+/processorParam:RotationY=0
+/processorParam:RotationZ=0
+/processorParam:Scale=1
+/processorParam:SwapWindingOrder=False
+/processorParam:TextureFormat=Compressed
+/build:Assets/Models/Shopping Centre/Greens/weed.fbx
 
 #begin Assets/Models/Shopping Centre/Light/light.fbx
 /importer:FbxImporter
@@ -3228,6 +3228,90 @@
 /processorParam:TextureFormat=Compressed
 /build:Assets/Models/Walls/wall_8.fbx
 
+#begin Assets/Textures/Aisles/Labels/aisle_1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_1.png
+
+#begin Assets/Textures/Aisles/Labels/aisle_2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_2.png
+
+#begin Assets/Textures/Aisles/Labels/aisle_3.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_3.png
+
+#begin Assets/Textures/Aisles/Labels/aisle_4.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_4.png
+
+#begin Assets/Textures/Aisles/Labels/aisle_5.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_5.png
+
+#begin Assets/Textures/Aisles/Labels/aisle_6.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_6.png
+
+#begin Assets/Textures/Aisles/Labels/aisle_7.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Labels/aisle_7.png
+
 #begin Assets/Textures/Aisles/Prepared Foods/can_ministrone.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3276,18 +3360,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Aisles/Prepared Foods/cereal_box.png
 
-#begin Assets/Textures/Aisles/Prepared Foods/cereal_box.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Aisles/Prepared Foods/cereal_box.png
-
 #begin Assets/Textures/Aisles/Prepared Foods/crisps.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3312,30 +3384,6 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Aisles/Prepared Foods/energy_drink.png
 
-#begin Assets/Textures/Aisles/Prepared Foods/energy_drink.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Aisles/Prepared Foods/energy_drink.png
-
-#begin Assets/Textures/Aisles/Prepared Foods/juice_carton.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Assets/Textures/Aisles/Prepared Foods/juice_carton.png
-
 #begin Assets/Textures/Aisles/Prepared Foods/juice_carton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3359,6 +3407,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Aisles/Prepared Foods/olive_oil.png
+
+#begin Assets/Textures/Aisles/Toys/board_games.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Toys/board_games.png
 
 #begin Assets/Textures/Aisles/Toys/Computer Games/cod_ww2.jpg
 /importer:TextureImporter
@@ -3551,6 +3611,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Aisles/Toys/R2-D2/r2_red.png
+
+#begin Assets/Textures/Aisles/Toys/teddy_bear.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Toys/teddy_bear.jpg
+
+#begin Assets/Textures/Aisles/Toys/teddy_bear.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Toys/teddy_bear.jpg
+
+#begin Assets/Textures/Aisles/Toys/toy_radio.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Aisles/Toys/toy_radio.png
 
 #begin Assets/Textures/Enemies/black.png
 /importer:TextureImporter
@@ -3780,6 +3876,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Props/Generator_Room/lever_base_colour.png
 
+#begin Assets/Textures/Props/Generator_Room/manequin.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Props/Generator_Room/manequin.jpg
+
 #begin Assets/Textures/Props/Generator_Room/metal.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -3972,6 +4080,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Bins/Plastic Bottle/plastic_bottle.jpg
 
+#begin Assets/Textures/Shopping Centre/Bins/trash_pile.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Bins/trash_pile.png
+
 #begin Assets/Textures/Shopping Centre/Checkout Desk/belt.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -4103,6 +4223,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Shopping Centre/Fridge/fridge.png
+
+#begin Assets/Textures/Shopping Centre/Greens/bush.jpg
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Greens/bush.jpg
+
+#begin Assets/Textures/Shopping Centre/Greens/weed_flower.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Greens/weed_flower.png
+
+#begin Assets/Textures/Shopping Centre/Greens/weed_tulip.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Greens/weed_tulip.png
+
+#begin Assets/Textures/Shopping Centre/Greens/weed.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Shopping Centre/Greens/weed.png
 
 #begin Assets/Textures/Shopping Centre/Light/light_rust.jpg
 /importer:TextureImporter
