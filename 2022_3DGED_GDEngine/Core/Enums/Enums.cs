@@ -1,5 +1,13 @@
 ﻿namespace GD.Engine
 {
+    public enum ColliderType : sbyte
+    {
+        Default,
+        Interactible,
+        Pickup,
+        BrokenGlass
+    }
+
     public enum GameObjectType : sbyte
     {
         Interactible,
