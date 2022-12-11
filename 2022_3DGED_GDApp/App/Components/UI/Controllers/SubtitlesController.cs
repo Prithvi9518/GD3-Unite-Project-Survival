@@ -1,5 +1,6 @@
 ﻿using GD.Engine;
 using GD.Engine.Events;
+using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -44,6 +45,8 @@ namespace GD.App
 
     public class SubtitlesController : Component
     {
+        #region Dictionaries
+
         private Dictionary<SubtitleState, string> subtitlesDict = new Dictionary<SubtitleState, string>
         {
             [SubtitleState.Start1] = "I've got about three minutes to get out of here before the infection takes over.",
@@ -57,7 +60,9 @@ namespace GD.App
             [SubtitleState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
 
             [SubtitleState.GeneratorWorking] = "The generator is working again!!",
-            [SubtitleState.TimeToRun] = "Time to GET OUTTA HERE!!!"
+            [SubtitleState.TimeToRun] = "Time to GET OUTTA HERE!!!",
+
+            [SubtitleState.Time1] = "I don't have much time left! I need to find a way out."
         };
 
         private Dictionary<SubtitleState, float> durationsDict = new Dictionary<SubtitleState, float>
@@ -73,8 +78,12 @@ namespace GD.App
             [SubtitleState.WhereFuse] = 4000,
 
             [SubtitleState.GeneratorWorking] = 2500,
-            [SubtitleState.TimeToRun] = 2500
+            [SubtitleState.TimeToRun] = 2500,
+
+            [SubtitleState.Time1] = 4000
         };
+
+        #endregion Dictionaries
 
         private List<List<SubtitleState>> subtitleSequences = new List<List<SubtitleState>>()
         {
