@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Reflection;
+using System.Text;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -41,6 +42,12 @@ namespace GD.App
         private SpriteBatch _spriteBatch;
         private BasicEffect unlitEffect;
         private BasicEffect litEffect;
+        private BasicEffect exitSignEffect;
+        private BasicEffect sideWallEffect;
+        private BasicEffect floorEffect;
+        private BasicEffect fuse220VEffect;
+        private BasicEffect fuse440VEffect;
+        private BasicEffect enemyEffect;
 
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
@@ -109,12 +116,6 @@ namespace GD.App
             //load sounds, textures, models etc
             LoadMediaAssets();
 
-            //initialize curves used by cameras
-            InitializeCurves();
-
-            //initialize rails used by cameras
-            InitializeRails();
-
             //add scene manager and starting scenes
             InitializeScenes();
 
@@ -125,7 +126,7 @@ namespace GD.App
             InitializeNonCollidableContent(worldScale);
 
             //add UI and menu
-            //InitializeUI();
+            InitializeUI();
             //InitializeMenu();
 
             //Raise all the events that I want to happen at the start
@@ -292,40 +293,115 @@ namespace GD.App
         {
             GameObject uiGameObject = null;
             Material2D material = null;
-            Texture2D texture = Content.Load<Texture2D>("Assets/Textures/Menu/Controls/progress_white");
+            Texture2D texture = Content.Load<Texture2D>("Assets/Textures/Infection Meter/progress_white");
 
             var mainHUD = new Scene2D("game HUD");
 
-            #region Add UI Element
+            #region Add Infection Meter UI
 
-            uiGameObject = new GameObject("progress bar - health - 1");
+            uiGameObject = new GameObject(AppData.INFECTION_METER_NAME);
+
+            // Set width and height of the meter here
+            var infectionMeterTexture = new Texture2D(Application.GraphicsDevice, 250, 30);
+
+            // Make sure the array size is width * height
+            var infectionMeterPixels = new Color[250 * 30];
+
+            for (int i = 0; i < infectionMeterPixels.Length; i++)
+            {
+                // Set the colour of meter here
+                infectionMeterPixels[i] = Color.Teal;
+            }
+
+            // Debug - Just to see the end of the bar
+            //for (int i = infectionMeterPixels.Length - 50; i < infectionMeterPixels.Length; i++)
+            //{
+            //    infectionMeterPixels[i] = Color.Red;
+            //}
+
             uiGameObject.Transform = new Transform(
                 new Vector3(1, 1, 0), //s
                 new Vector3(0, 0, 0), //r
-                new Vector3(_graphics.PreferredBackBufferWidth - texture.Width - 20,
+                new Vector3(_graphics.PreferredBackBufferWidth - texture.Width - 100,
                 20, 0)); //t
 
-            #region texture
+            infectionMeterTexture.SetData(infectionMeterPixels);
 
-            //material and renderer
-            material = new TextureMaterial2D(texture, Color.White);
+            material = new TextureMaterial2D(infectionMeterTexture, Color.White);
             uiGameObject.AddComponent(new Renderer2D(material));
 
-            #endregion
+            uiGameObject.AddComponent(new InfectionMeterController((float)AppData.MAX_GAME_TIME_IN_MSECS, 0));
 
-            #region progress controller
-
-            uiGameObject.AddComponent(new UIProgressBarController(5, 10));
+            mainHUD.Add(uiGameObject);
 
             #endregion
 
-            #region color change behaviour
+            #region Button Prompts UI
 
-            uiGameObject.AddComponent(new UIColorFlipOnTimeBehaviour(Color.White, Color.Green, 500));
+            SpriteFont spriteFont = Content.Load<SpriteFont>(AppData.PERF_FONT_PATH);
+            Vector2 textScale = new Vector2(1.5f, 1.5f);
+
+            uiGameObject = new GameObject(AppData.INTERACT_PROMPT_NAME);
+            uiGameObject.Transform = new Transform(
+                new Vector3(textScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(0, 30), 0)
+                );
+
+            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.White, 0.8f);
+            //add renderer to draw the text
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new TextPromptController());
+
+            mainHUD.Add(uiGameObject);
 
             #endregion
 
-            //add to scene2D
+            #region Dialogue Subtitles
+
+            textScale = new Vector2(1.5f, 1.5f);
+
+            uiGameObject = new GameObject(AppData.SUBTITLES_NAME);
+            uiGameObject.Transform = new Transform(
+                new Vector3(textScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(-400, 250), 0)
+                );
+
+            material = new TextMaterial2D(spriteFont, new StringBuilder(""),
+                new Vector2(0, 0),
+                Color.LightGreen,
+                0.8f
+                );
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new SubtitlesController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Office Note Pop-Up
+
+            uiGameObject = new GameObject("office note ui");
+
+            Vector2 noteScale = new Vector2(0.6f, 1f);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(noteScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - noteScale + new Vector2(-300, -150), 0)
+                );
+
+            texture = Content.Load<Texture2D>(AppData.OFFICE_NOTE_TEXTURE_PATH);
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new NoteUIController());
+
             mainHUD.Add(uiGameObject);
 
             #endregion
@@ -356,72 +432,108 @@ namespace GD.App
 
         private void LoadSounds()
         {
-            var soundEffect =
-                Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
+            #region Demo Sound
 
-            //add the new sound effect
-            soundManager.Add(new Cue(
-                "boom1",
-                soundEffect,
-                SoundCategoryType.Alarm,
-                new Vector3(1, 1, 0),
-                false));
+            //var soundEffect =
+            //    Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
 
-            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+            ////add the new sound effect
+            //soundManager.Add(new Cue(
+            //    "boom1",
+            //    soundEffect,
+            //    SoundCategoryType.Alarm,
+            //    new Vector3(1, 1, 0),
+            //    false));
+
+            #endregion
+
+            #region Old music and ambience
+
+            //var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "HorrorMusic",
+            //     MusicSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     true));
+
+            //var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "Ambient",
+            //     AmbientSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     false));
+
+            #endregion
+
+            var sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack");
 
             //Add the new sound for background
             soundManager.Add(new Cue(
                 "HorrorMusic",
-                 MusicSound,
+                 sound,
                  SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
+                 new Vector3(0.1f, 0, 0),
                  true));
-
-            var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
-
-            //Add the new sound for background
-            soundManager.Add(new Cue(
-                "Ambient",
-                 AmbientSound,
-                 SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
-                 false));
 
             // Glass breaking sound
 
-            var glassBreakingSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
 
             soundManager.Add(new Cue(
                 "glass-shatter",
-                glassBreakingSound,
+                sound,
                 SoundCategoryType.Explosion,
                 new Vector3(1, 1, 0),
                 false
                 ));
 
-            // Pickup sound
+            #region Pickup Sound
 
-            var pickupSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
 
             soundManager.Add(new Cue(
                 "pickup-sound",
-                pickupSound,
+                sound,
                 SoundCategoryType.Pickup,
-                new Vector3(1, 1, 0),
+                new Vector3(0.2f, 0, 0),
                 false
                 ));
 
-            // Alarm sound
+            #endregion
 
-            var alarmSound = Content.Load<SoundEffect>(
-                "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
+            #region Alarm Sound
+
+            sound = Content.Load<SoundEffect>(
+                    "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
 
             soundManager.Add(new Cue(
                 "alarm-sound",
-                alarmSound,
+                sound,
                 SoundCategoryType.Alarm,
-                new Vector3(0.3f, 0.5f, 0),
+                new Vector3(0.08f, 0f, 0),
                 true));
+
+            #endregion
+
+            #region Generator Sound
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Generator/Generator");
+
+            soundManager.Add(new Cue(
+                AppData.GENERATOR_SOUND_NAME,
+                sound,
+                SoundCategoryType.Generator,
+                new Vector3(1f, 0, 0),
+                true
+                ));
+
+            #endregion
         }
 
         private void LoadTextures()
@@ -430,16 +542,6 @@ namespace GD.App
         }
 
         private void LoadModels()
-        {
-            //load and add to dictionary
-        }
-
-        private void InitializeCurves()
-        {
-            //load and add to dictionary
-        }
-
-        private void InitializeRails()
         {
             //load and add to dictionary
         }
@@ -462,11 +564,186 @@ namespace GD.App
             unlitEffect = new BasicEffect(_graphics.GraphicsDevice);
             unlitEffect.TextureEnabled = true;
 
-            //all other drawn objects
+            #region Standard Lit Effect
+
             litEffect = new BasicEffect(_graphics.GraphicsDevice);
             litEffect.TextureEnabled = true;
             litEffect.LightingEnabled = true;
-            litEffect.EnableDefaultLighting();
+
+            litEffect.DirectionalLight0.DiffuseColor = new Vector3(107 / 255f, 49 / 255f, 49 / 255f);
+            litEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
+            litEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+
+            //litEffect.DirectionalLight1.DiffuseColor = new Vector3(154 / 255f, 158 / 255f, 157 / 255f);
+            litEffect.DirectionalLight1.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            litEffect.DirectionalLight1.Direction = new Vector3(0, -1, 0);
+            litEffect.DirectionalLight1.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
+            litEffect.DirectionalLight1.Enabled = true;
+
+            litEffect.DirectionalLight2.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            litEffect.DirectionalLight2.Direction = new Vector3(0, 1, 0);
+            litEffect.DirectionalLight2.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
+            litEffect.DirectionalLight2.Enabled = true;
+
+            //litEffect.AmbientLightColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            litEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            //litEffect.AmbientLightColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
+
+            litEffect.FogEnabled = true;
+            //litEffect.FogColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            litEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            //litEffect.FogColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
+            litEffect.FogStart = 7f;
+            litEffect.FogEnd = 30f;
+
+            litEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Exit Sign Emission Effect
+
+            exitSignEffect = new BasicEffect(_graphics.GraphicsDevice);
+            exitSignEffect.TextureEnabled = true;
+            exitSignEffect.LightingEnabled = true;
+
+            exitSignEffect.EmissiveColor = new Vector3(226 / 255f, 41 / 255f, 41 / 255f);
+
+            exitSignEffect.DirectionalLight0.DiffuseColor = new Vector3(255 / 255f, 255 / 255f, 255 / 255f);
+            exitSignEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
+
+            exitSignEffect.AmbientLightColor = new Vector3(232 / 255f, 71 / 255f, 76 / 255f);
+
+            #endregion
+
+            #region Side Walls Effect
+
+            sideWallEffect = new BasicEffect(_graphics.GraphicsDevice);
+            sideWallEffect.TextureEnabled = true;
+            sideWallEffect.LightingEnabled = true;
+
+            sideWallEffect.DirectionalLight0.DiffuseColor = new Vector3(30 / 255f, 29 / 255f, 29 / 255f);
+            sideWallEffect.DirectionalLight0.Direction = new Vector3(1, 0, 0);
+            sideWallEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+
+            sideWallEffect.DirectionalLight1.DiffuseColor = new Vector3(30 / 255f, 29 / 255f, 29 / 255f);
+            sideWallEffect.DirectionalLight1.Direction = new Vector3(-1, 0, 0);
+            sideWallEffect.DirectionalLight1.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+            sideWallEffect.DirectionalLight1.Enabled = true;
+
+            sideWallEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            sideWallEffect.FogEnabled = true;
+            sideWallEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            sideWallEffect.FogStart = 0f;
+            sideWallEffect.FogEnd = 25f;
+
+            sideWallEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Floor Effect
+
+            floorEffect = new BasicEffect(_graphics.GraphicsDevice);
+            floorEffect.TextureEnabled = true;
+            floorEffect.LightingEnabled = true;
+
+            //floorEffect.DirectionalLight0.DiffuseColor = new Vector3(30 / 255f, 29 / 255f, 29 / 255f);
+            floorEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+            floorEffect.DirectionalLight0.Direction = new Vector3(0, -1, 0);
+            //floorEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+            floorEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+
+            floorEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            floorEffect.FogEnabled = true;
+            floorEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            floorEffect.FogStart = 0f;
+            floorEffect.FogEnd = 25f;
+
+            floorEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Fuse 220V Effect
+
+            fuse220VEffect = new BasicEffect(_graphics.GraphicsDevice);
+            fuse220VEffect.TextureEnabled = true;
+            fuse220VEffect.LightingEnabled = true;
+
+            fuse220VEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+
+            Vector3 fuseDirection = Vector3.Normalize(AppData.FUSE_220V_TRANSLATION - Vector3.Zero);
+            fuse220VEffect.DirectionalLight0.Direction = fuseDirection;
+
+            fuse220VEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+
+            fuse220VEffect.EmissiveColor = new Vector3(0 / 255f, 247 / 255f, 255 / 255f);
+
+            fuse220VEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            fuse220VEffect.FogEnabled = true;
+            fuse220VEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            fuse220VEffect.FogStart = 0f;
+            fuse220VEffect.FogEnd = 25f;
+
+            fuse220VEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Fuse 440V Effect
+
+            fuse440VEffect = new BasicEffect(_graphics.GraphicsDevice);
+            fuse440VEffect.TextureEnabled = true;
+            fuse440VEffect.LightingEnabled = true;
+
+            fuse440VEffect.DirectionalLight0.DiffuseColor = new Vector3(40 / 255f, 36 / 255f, 36 / 255f);
+
+            fuseDirection = Vector3.Normalize(AppData.FUSE_440V_TRANSLATION - Vector3.Zero);
+            fuse440VEffect.DirectionalLight0.Direction = fuseDirection;
+
+            fuse440VEffect.DirectionalLight0.SpecularColor = new Vector3(33 / 255f, 30 / 255f, 30 / 255f);
+
+            fuse440VEffect.EmissiveColor = new Vector3(252 / 255f, 92 / 255f, 0 / 255f);
+
+            fuse440VEffect.AmbientLightColor = new Vector3(238 / 255f, 114 / 255f, 42 / 255f);
+
+            fuse440VEffect.FogEnabled = true;
+            fuse440VEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            fuse440VEffect.FogStart = 0f;
+            fuse440VEffect.FogEnd = 25f;
+
+            fuse440VEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            enemyEffect = new BasicEffect(_graphics.GraphicsDevice);
+            enemyEffect.TextureEnabled = true;
+            enemyEffect.LightingEnabled = true;
+
+            enemyEffect.DirectionalLight0.DiffuseColor = new Vector3(156 / 255f, 149 / 255f, 196 / 255f);
+            enemyEffect.DirectionalLight0.Direction = new Vector3(0, -1, 0);
+            enemyEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+
+            enemyEffect.DirectionalLight1.DiffuseColor = new Vector3(82 / 255f, 59 / 255f, 228 / 255f);
+            enemyEffect.DirectionalLight1.Direction = new Vector3(0, 0, -1);
+            enemyEffect.DirectionalLight1.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+            enemyEffect.DirectionalLight1.Enabled = true;
+
+            //enemyEffect.DirectionalLight2.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            //enemyEffect.DirectionalLight2.Direction = new Vector3(0, 1, 0);
+            //enemyEffect.DirectionalLight2.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
+            //enemyEffect.DirectionalLight2.Enabled = true;
+
+            enemyEffect.EmissiveColor = new Vector3(29 / 255f, 26 / 255f, 51 / 255f);
+
+            enemyEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            enemyEffect.FogEnabled = true;
+            enemyEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+            enemyEffect.FogStart = 10f;
+            enemyEffect.FogEnd = 70f;
+
+            enemyEffect.PreferPerPixelLighting = true;
         }
 
         private void InitializeCameras()
@@ -478,7 +755,7 @@ namespace GD.App
 
             cameraGameObject = new GameObject(AppData.FIRST_PERSON_CAMERA_NAME);
 
-            cameraGameObject.Transform = new Transform(null, null, AppData.OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION);
+            cameraGameObject.Transform = new Transform(null, null, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION);
 
             // Camera component
             cameraGameObject.AddComponent(
@@ -490,35 +767,48 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
-            #region Collision - Add capsule
+            #region Non-Collidable First Person Controller
 
-            //adding a collidable surface that enables acceleration, jumping
-            //var characterCollider = new CharacterCollider(cameraGameObject, true);
-
-            //cameraGameObject.AddComponent(characterCollider);
-            //characterCollider.AddPrimitive(new Capsule(
-            //    cameraGameObject.Transform.Translation,
-            //    Matrix.CreateRotationX(MathHelper.PiOver2),
-            //    1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
-            //    new MaterialProperties(0.2f, 0.8f, 0.7f));
-            //characterCollider.Enable(cameraGameObject, false, 1);
+            //cameraGameObject.AddComponent(new OurFirstPersonController(
+            //    AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
+            //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
 
             #endregion
 
-            // First person controller component
+            #region Collision - Add capsule
 
-            cameraGameObject.AddComponent(new OurFirstPersonController(
-                AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+            //adding a collidable surface that enables acceleration, jumping
+            var characterCollider = new CharacterCollider(cameraGameObject, true);
 
-            //cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
-            //    characterCollider,
-            //    AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
-            //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
-            //    AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+            cameraGameObject.AddComponent(characterCollider);
+            characterCollider.AddPrimitive(new Capsule(
+                cameraGameObject.Transform.Translation,
+                Matrix.CreateRotationX(MathHelper.PiOver2),
+                1, AppData.PLAYER_DEFAULT_CAPSULE_HEIGHT),
+                new MaterialProperties(0.2f, 0.8f, 0.7f));
+            characterCollider.Enable(cameraGameObject, false, 1);
+
+            #endregion
+
+            #region Collidable First Person Controller
+
+            cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
+                    characterCollider,
+                    AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
+                    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                    AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+
+            #endregion
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
+
+            #region 3D Sound
+
+            //added ability for camera to listen to 3D sounds
+            cameraGameObject.AddComponent(new AudioListenerBehaviour());
+
+            #endregion
 
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
@@ -531,7 +821,7 @@ namespace GD.App
         {
             InitializeShoppingCentre();
             InitializeCollidablePickups();
-            InitializeCollidableInteractibles();
+            //InitializeCollidableInteractibles();
         }
 
         private void InitializeNonCollidableContent(float worldScale)
@@ -539,7 +829,7 @@ namespace GD.App
             //create sky
             //InitializeSkyBoxAndGround(worldScale);
 
-            //InitializeEnemies();
+            InitializeEnemies();
 
             //InitializePickups();
         }
@@ -575,7 +865,7 @@ namespace GD.App
             gameObject.GameObjectType = GameObjectType.Interactible;
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
-                new Vector3(38.9f, 3.5f, 42f));
+                new Vector3(48.75f, 3.5f, 80.3f));
 
             string texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
@@ -584,7 +874,7 @@ namespace GD.App
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -623,7 +913,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -647,7 +937,7 @@ namespace GD.App
 
             #region Exit
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             //var gameObject = new GameObject("exit door",
             //        ObjectType.Static, RenderType.Opaque);
@@ -727,7 +1017,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign",
                     "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign",
-                    gdBasicEffect,
+                    new GDBasicEffect(exitSignEffect),
                     1
                     );
 
@@ -742,7 +1032,7 @@ namespace GD.App
 
         private void InitializeCollidablePickups()
         {
-            GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+            GDBasicEffect gdBasicEffect = new GDBasicEffect(litEffect);
 
             #region Office Keycard
 
@@ -780,15 +1070,15 @@ namespace GD.App
 
             #endregion
 
-            #region Fuse
+            #region Fuse 220V
 
-            gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
+            gameObject = new GameObject(AppData.FUSE_220V_NAME, ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Collectible;
 
             gameObject.Transform = new Transform
-                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
-                new Vector3(MathHelper.PiOver2, 0, 0),
-                new Vector3(-10, 2.75f, -67));
+                (AppData.DEFAULT_OBJECT_SCALE * 0.05f * Vector3.One,
+                new Vector3(90, 90, 0),
+                AppData.FUSE_220V_TRANSLATION);
 
             model_path = "Assets/Models/Fuse/fuse";
             texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
@@ -796,7 +1086,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(fuse220VEffect),
                     1
                     );
 
@@ -806,7 +1096,45 @@ namespace GD.App
             collider.AddPrimitive(new Box(
                 gameObject.Transform.Translation,
                 gameObject.Transform.Rotation,
-                gameObject.Transform.Scale * 2000
+                gameObject.Transform.Scale * 8000
+                ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Fuse
+
+            #region Fuse 440V
+
+            gameObject = new GameObject(AppData.FUSE_440V_NAME, ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+
+            gameObject.Transform = new Transform
+                (AppData.DEFAULT_OBJECT_SCALE * 0.05f * Vector3.One,
+                new Vector3(90, 0, 0),
+                AppData.FUSE_440V_TRANSLATION);
+
+            model_path = "Assets/Models/Fuse/fuse";
+            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(fuse440VEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            collider = new PickupCollider(gameObject, true, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 8000
                 ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
@@ -819,69 +1147,69 @@ namespace GD.App
             #endregion Fuse
         }
 
-        private void InitializePickups()
-        {
-            GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+        //private void InitializePickups()
+        //{
+        //    GDBasicEffect gdBasicEffect = new GDBasicEffect(litEffect);
 
-            #region Office Keycard
+        //    #region Office Keycard
 
-            var gameObject = new GameObject(AppData.KEYCARD_NAME,
-                ObjectType.Static, RenderType.Opaque);
-            gameObject.GameObjectType = GameObjectType.Collectible;
+        //    var gameObject = new GameObject(AppData.KEYCARD_NAME,
+        //        ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
 
-            gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
-            string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
+        //    gameObject.Transform = new Transform(0.04f * Vector3.One, Vector3.Zero, new Vector3(-67, 2f, -109));
+        //    string texture_path = "Assets/Textures/Props/Office/keycard_albedo";
 
-            string model_path = "Assets/Models/Keycard/keycard_unapplied";
+        //    string model_path = "Assets/Models/Keycard/keycard_unapplied";
 
-            Renderer renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
+        //    Renderer renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
 
-            gameObject.AddComponent(renderer);
+        //    gameObject.AddComponent(renderer);
 
-            gameObject.AddComponent(new InteractableBehaviour());
+        //    gameObject.AddComponent(new InteractableBehaviour());
 
-            sceneManager.ActiveScene.Add(gameObject);
+        //    sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion
+        //    #endregion
 
-            #region Fuse
+        //    #region Fuse
 
-            gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
-            gameObject.GameObjectType = GameObjectType.Collectible;
+        //    gameObject = new GameObject(AppData.FUSE_NAME, ObjectType.Static, RenderType.Opaque);
+        //    gameObject.GameObjectType = GameObjectType.Collectible;
 
-            gameObject.Transform = new Transform
-                (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
-                new Vector3(MathHelper.PiOver2, 0, 0),
-                new Vector3(-10, 2.75f, -67));
+        //    gameObject.Transform = new Transform
+        //        (AppData.DEFAULT_OBJECT_SCALE * 0.1f * Vector3.One,
+        //        new Vector3(MathHelper.PiOver2, 0, 0),
+        //        new Vector3(-10, 2.75f, -67));
 
-            model_path = "Assets/Models/Fuse/fuse";
-            texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
+        //    model_path = "Assets/Models/Fuse/fuse";
+        //    texture_path = "Assets/Textures/Props/Fuse/Material_Base_Color";
 
-            renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    new GDBasicEffect(unlitEffect),
-                    1
-                    );
+        //    renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            new GDBasicEffect(litEffect),
+        //            1
+        //            );
 
-            gameObject.AddComponent(renderer);
-            gameObject.AddComponent(new InteractableBehaviour());
+        //    gameObject.AddComponent(renderer);
+        //    gameObject.AddComponent(new InteractableBehaviour());
 
-            sceneManager.ActiveScene.Add(gameObject);
+        //    sceneManager.ActiveScene.Add(gameObject);
 
-            #endregion Fuse
-        }
+        //    #endregion Fuse
+        //}
 
         private void InitializeEnemies()
         {
             Renderer enemyRenderer = null;
             GameObject gameObject = null;
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(enemyEffect);
 
             for (int i = 0; i < AppData.ENEMY_WAYPOINTS_LIST.Count; i++)
             {
@@ -1042,7 +1370,7 @@ namespace GD.App
             Renderer renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1074,7 +1402,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1106,7 +1434,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1138,25 +1466,25 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
             gameObject.AddComponent(renderer);
 
             aisleScale = new Vector3(105f * gameObject.Transform.Scale.X, 550f * gameObject.Transform.Scale.Y, 1230f * gameObject.Transform.Scale.Z);
-            collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    aisleScale
-                    ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+            //collider = new Collider(gameObject, true);
+            //collider.AddPrimitive(
+            //    new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        aisleScale
+            //        ),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //    );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -1170,7 +1498,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(sideWallEffect),
                     1
                     );
 
@@ -1202,7 +1530,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1234,7 +1562,7 @@ namespace GD.App
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1266,7 +1594,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1299,25 +1627,25 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
             gameObject.AddComponent(renderer);
 
             aisleScale = new Vector3(105f * gameObject.Transform.Scale.X, 550f * gameObject.Transform.Scale.Y, 1800f * gameObject.Transform.Scale.Z);
-            collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    aisleScale
-                    ),
-                new MaterialProperties(0.8f, 0.8f, 0.7f)
-                );
+            //collider = new Collider(gameObject, true);
+            //collider.AddPrimitive(
+            //    new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        aisleScale
+            //        ),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //    );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -1331,7 +1659,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(sideWallEffect),
                     1
                     );
 
@@ -1363,7 +1691,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                      "Assets/Textures/walls",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -1403,7 +1731,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                 AppData.FLOOR_MODEL_PATH,
                 AppData.WALL_TEXTURE_PATH,
-                gdBasicEffect,
+                new GDBasicEffect(floorEffect),
                 1,
                 Color.White
                 );
@@ -1468,7 +1796,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Notes
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             #region Office Note
 
@@ -1486,8 +1814,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-           
-            Collider collider = new Collider(gameObject, true);
+            Collider collider = new NoteCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
@@ -1499,7 +1826,7 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
-           
+
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Office Note
@@ -1511,7 +1838,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Checkout Desks
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             GameObject gameObject = null;
             Renderer renderer = null;
 
@@ -1625,7 +1952,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Benches
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             GameObject gameObject = null;
             Renderer renderer = null;
 
@@ -1633,10 +1960,8 @@ ObjectType.Static, RenderType.Opaque);
 
             string benches_bottom_base_path = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base_1";
 
-
             gameObject = new GameObject("bench base 3", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
 
             renderer = InitializeRenderer(
                 benches_bottom_base_path,
@@ -1652,24 +1977,22 @@ ObjectType.Static, RenderType.Opaque);
             gameObject = CloneModelGameObject(gameObject, "bench_base_2", new Vector3(0, 0, -8.2f));
             sceneManager.ActiveScene.Add(gameObject);
 
-
             gameObject = CloneModelGameObject(gameObject, "bench_base_3", new Vector3(0, 0, -5.8f));
             sceneManager.ActiveScene.Add(gameObject);
 
-
             gameObject = CloneModelGameObject(gameObject, "bench_base_4", new Vector3(0, 0, -8.2f));
             sceneManager.ActiveScene.Add(gameObject);
+
             #endregion Bench Bases
 
             #region Bench Tops
 
             string benches_top_base_path = "Assets/Models/Shopping Centre/Benches/Bench Tops/bench_top_";
 
-
             gameObject = new GameObject("bench top 1", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                string model_path = benches_top_base_path + "1";
+            string model_path = benches_top_base_path + "1";
 
             renderer = InitializeRenderer(
                 model_path,
@@ -1681,9 +2004,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
             sceneManager.ActiveScene.Add(gameObject);
-
-
-
 
             gameObject = new GameObject("bench top 2", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-25.5f, 1.6f, 32.1f));
@@ -1700,7 +2020,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-
             var aisleScale = new Vector3(115f * gameObject.Transform.Scale.X, 40f * gameObject.Transform.Scale.Y, 505f * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
@@ -1716,12 +2035,8 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(collider);
             sceneManager.ActiveScene.Add(gameObject);
 
-
-   
-                gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -14f), aisleScale);
-                sceneManager.ActiveScene.Add(gameObject);
-            
-
+            gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -14f), aisleScale);
+            sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Bench Tops
 
@@ -1732,7 +2047,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Bins
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             GameObject gameObject = null;
             Renderer renderer = null;
 
@@ -1843,8 +2158,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-           
-
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Large Bin
@@ -1864,7 +2177,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-             aisleScale = new Vector3(350f * gameObject.Transform.Scale.X, 200f * gameObject.Transform.Scale.Y, 840f * gameObject.Transform.Scale.Z);
+            aisleScale = new Vector3(350f * gameObject.Transform.Scale.X, 200f * gameObject.Transform.Scale.Y, 840f * gameObject.Transform.Scale.Z);
             collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
@@ -1968,7 +2281,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Shopping Cart
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             GameObject gameObject = null;
             Renderer renderer = null;
 
@@ -2016,7 +2329,6 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-
             var aisleScale = new Vector3(450f * gameObject.Transform.Scale.X, 200f * gameObject.Transform.Scale.Y, 1300f * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
@@ -2048,7 +2360,6 @@ ObjectType.Static, RenderType.Opaque);
                 sceneManager.ActiveScene.Add(gameObjectLeft);
             }
 
-
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion Trolleys
@@ -2060,7 +2371,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Scaffolding
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             GameObject gameObject = new GameObject("scaffolding 1", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, AppData.SCAFFOLDING_POSITION);
@@ -2074,7 +2385,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Vector3 colliderScale = new Vector3(AppData.SCAFFOLDING_COLLIDER_SCALE_X * gameObject.Transform.Scale.X, AppData.SCAFFOLDING_COLLIDER_SCALE_Y * gameObject.Transform.Scale.Y, 
+            Vector3 colliderScale = new Vector3(AppData.SCAFFOLDING_COLLIDER_SCALE_X * gameObject.Transform.Scale.X, AppData.SCAFFOLDING_COLLIDER_SCALE_Y * gameObject.Transform.Scale.Y,
                             AppData.SCAFFOLDING_COLLIDER_SCALE_Z * gameObject.Transform.Scale.Z);
 
             Collider collider = new Collider(gameObject, true);
@@ -2113,7 +2424,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     AppData.FRIDGE_MDOEL_PATH,
                      AppData.FRIDGE_TEXTURE_PATH,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -2149,9 +2460,9 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Lights
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
-            GameObject gameObject = new GameObject("ligth 1" , ObjectType.Static, RenderType.Opaque);
+            GameObject gameObject = new GameObject("ligth 1", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
             Renderer renderer = InitializeRenderer
@@ -2174,7 +2485,7 @@ ObjectType.Static, RenderType.Opaque);
 
             int j = 0;
 
-            for(int i = 0; i < 3; i++)
+            for (int i = 0; i < 3; i++)
             {
                 gameObject = CloneModelGameObject(gameObject, "light " + (j + i + 4), AppData.LIGHT_OFFSET_Z);
                 sceneManager.ActiveScene.Add(gameObject);
@@ -2187,7 +2498,6 @@ ObjectType.Static, RenderType.Opaque);
 
                 j += 2;
             }
-
 
             #endregion Lights
         }
@@ -2211,7 +2521,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Generator Room Door/generator_room_door",
                     "Assets/Textures/Shopping Centre/Doors/Generator Room Door/generator_room_door",
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1,
                     Color.White
                     );
@@ -2227,7 +2537,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Exit
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             //var gameObject = new GameObject("exit door",
             //        ObjectType.Static, RenderType.Opaque);
@@ -2278,21 +2588,22 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(renderer);
 
             var aisleScale = new Vector3(360f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 200f * gameObject.Transform.Scale.Z);
-            Collider collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    aisleScale
-                    ),
+
+            Collider collider = new ExitDoorCollider(gameObject, true, true);
+            collider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                230 * new Vector3(
+                    gameObject.Transform.Scale.X * 2f,
+                    gameObject.Transform.Scale.Y * 3,
+                    gameObject.Transform.Scale.Z * 1.9f
+                    )
+                ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
 
-            collider.Enable(gameObject, true, 10);
+            collider.Enable(gameObject, true, 5);
             gameObject.AddComponent(collider);
-
-            ////TODO: need to change this to a collider as the door doesnt require interaction
-            //gameObject.AddComponent(new InteractableBehaviour());
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -2308,7 +2619,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     "Assets/Models/Shopping Centre/Doors/Exit Door/Exit Sign/exit_sign",
                     "Assets/Textures/Shopping Centre/Doors/Exit Door/exit_sign",
-                    gdBasicEffect,
+                    new GDBasicEffect(exitSignEffect),
                     1
                     );
 
@@ -2325,7 +2636,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Vending Machines
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             string model_path = "Assets/Models/Shopping Centre/Vending Machines/vending_machine_1";
             string texture_path = "Assets/Textures/Shopping Centre/Vending Machines/";
@@ -2344,7 +2655,6 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-
             var aisleScale = new Vector3(160f * gameObject.Transform.Scale.X, 260f * gameObject.Transform.Scale.Y, 250f * gameObject.Transform.Scale.Z);
             Collider collider = new Collider(gameObject, true);
             collider.AddPrimitive(
@@ -2361,16 +2671,13 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-            string[] texturePathsVendingMachines = new string[] { "coke", "pepsi", "sprite"};
+            string[] texturePathsVendingMachines = new string[] { "coke", "pepsi", "sprite" };
 
             for (int i = 0; i < 2; i++)
             {
                 gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -7f), aisleScale, model_path, texture_path + texturePathsVendingMachines[i + 1]);
                 sceneManager.ActiveScene.Add(gameObject);
             }
-
-  
-
 
             #endregion Vending Machines
         }
@@ -2387,7 +2694,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Water Dispensers
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             GameObject gameObject = null;
             Renderer renderer = null;
 
@@ -2437,7 +2744,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Coffee Shop
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             Renderer renderer = null;
 
             string model_path = "Assets/Models/Coffee Shop/coffee_shop/coffee_shop_";
@@ -2525,7 +2832,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Chairs
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             var texture_path = "Assets/Textures/Shopping Centre/Coffee Shop/Chair/chair_wood";
 
             GameObject gameObject = null;
@@ -2577,7 +2884,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Tables
 
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
 
             var model_base_path = "Assets/Models/Coffee Shop/tables/table_";
             var texture_path = "Assets/Textures/Shopping Centre/Coffee Shop/Table/table_wood";
@@ -3655,7 +3962,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3699,24 +4006,23 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new Collider(gameObject, true);
-            collider.AddPrimitive(
-                new Box(
-                    gameObject.Transform.Translation,
-                    gameObject.Transform.Rotation,
-                    90 * gameObject.Transform.Scale
-                    ),
+            InteractibleCollider interactibleCollider = new FuseboxCollider(gameObject, true, true);
+            interactibleCollider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 230
+                ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
 
-            collider.Enable(gameObject, true, 10);
-            gameObject.AddComponent(collider);
+            interactibleCollider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(interactibleCollider);
 
             sceneManager.ActiveScene.Add(gameObject);
 
@@ -3729,7 +4035,7 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.GameObjectType = GameObjectType.Interactible;
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero,
-                Vector3.Zero);
+                new Vector3(48.75f, 3.5f, 80.3f));
 
             texture_path = "Assets/Textures/Props/Generator_Room/access_card_machine_emission";
 
@@ -3738,19 +4044,31 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
             gameObject.AddComponent(renderer);
 
-            gameObject.AddComponent(new InteractableBehaviour());
+            interactibleCollider = new AccessMachineCollider(gameObject, true, true);
+            interactibleCollider.AddPrimitive(new Box(
+                gameObject.Transform.Translation,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Scale * 230
+                ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            interactibleCollider.Enable(gameObject, true, 5);
+            gameObject.AddComponent(interactibleCollider);
+
+            sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
 
             #region Generator
 
-            gameObject = new GameObject("generator",
+            gameObject = new GameObject(AppData.GENERATOR_NAME,
                                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(64.6f, 2f, 85.2f));
@@ -3762,14 +4080,14 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
             gameObject.AddComponent(renderer);
 
             var aisleScale = new Vector3(200f * gameObject.Transform.Scale.X, 180f * gameObject.Transform.Scale.Y, 250f * gameObject.Transform.Scale.Z);
-            collider = new Collider(gameObject, true);
+            var collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
@@ -3781,8 +4099,10 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
-            sceneManager.ActiveScene.Add(gameObject);
 
+            gameObject.AddComponent(new AudioEmitterBehaviour());
+
+            sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
 
@@ -3800,7 +4120,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3824,7 +4144,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3971,7 +4291,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -4008,7 +4328,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -4246,7 +4566,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -4291,7 +4611,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -4319,7 +4639,7 @@ ObjectType.Static, RenderType.Opaque);
 
         private void InitializeOfficeModels()
         {
-            GDBasicEffect gdBasicEffect = new GDBasicEffect(unlitEffect);
+            GDBasicEffect gdBasicEffect = new GDBasicEffect(litEffect);
 
             #region Office Chair
 
@@ -4361,6 +4681,7 @@ ObjectType.Static, RenderType.Opaque);
             #endregion
 
             #region Office Table
+
             gameObject = new GameObject("office table 1",
              ObjectType.Static, RenderType.Opaque);
 
@@ -4395,7 +4716,6 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-
             #endregion
 
             #region Office Shelves
@@ -4403,24 +4723,21 @@ ObjectType.Static, RenderType.Opaque);
             texture_path = "Assets/Textures/Props/Office/metal";
             string model_base_path = "Assets/Models/Office/Shelves/office_shelf_";
 
-       
-                gameObject = new GameObject("office shelf 1", ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject = new GameObject("office shelf 1", ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
 
-                model_path = model_base_path + "1";
+            model_path = model_base_path + "1";
 
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
+            renderer = InitializeRenderer(
+                model_path,
+                texture_path,
+                gdBasicEffect,
+                1
+                );
 
-                gameObject.AddComponent(renderer);
+            gameObject.AddComponent(renderer);
 
-                sceneManager.ActiveScene.Add(gameObject);
-
-
+            sceneManager.ActiveScene.Add(gameObject);
 
             gameObject = new GameObject("office shelf 2", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -4438,8 +4755,6 @@ ObjectType.Static, RenderType.Opaque);
 
             sceneManager.ActiveScene.Add(gameObject);
 
-
-
             gameObject = new GameObject("office shelf 3", ObjectType.Static, RenderType.Opaque);
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-56.2f, 2.5f, -64.4f));
 
@@ -4454,8 +4769,8 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-             aisleScale = new Vector3(300f * gameObject.Transform.Scale.X, 220f * gameObject.Transform.Scale.Y, 100f * gameObject.Transform.Scale.Z);
-             collider = new Collider(gameObject, true);
+            aisleScale = new Vector3(300f * gameObject.Transform.Scale.X, 220f * gameObject.Transform.Scale.Y, 100f * gameObject.Transform.Scale.Z);
+            collider = new Collider(gameObject, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
@@ -4469,7 +4784,6 @@ ObjectType.Static, RenderType.Opaque);
             gameObject.AddComponent(collider);
 
             sceneManager.ActiveScene.Add(gameObject);
-
 
             gameObject = CloneModelGameObject(gameObject, "Aisle ", new Vector3(0, 0, -17f), aisleScale);
             sceneManager.ActiveScene.Add(gameObject);
@@ -4606,7 +4920,7 @@ ObjectType.Static, RenderType.Opaque);
             float halfWorldScale = worldScale / 2.0f;
 
             GameObject quad = null;
-            var gdBasicEffect = new GDBasicEffect(unlitEffect);
+            var gdBasicEffect = new GDBasicEffect(litEffect);
             var quadMesh = new QuadMesh(_graphics.GraphicsDevice);
 
             //skybox - back face
@@ -4693,9 +5007,12 @@ ObjectType.Static, RenderType.Opaque);
             Application.CameraManager = cameraManager;
             Application.SceneManager = sceneManager;
             Application.SoundManager = soundManager;
+            Application.PhysicsManager = physicsManager;
 
             Application.StateManager = stateManager;
-            //Application.UISceneManager = uiManager;
+
+            Application.UISceneManager = uiManager;
+            //Application.MenuSceneManager = menuManager;
 
             Application.InventoryManager = inventoryManager;
         }
@@ -4771,12 +5088,41 @@ ObjectType.Static, RenderType.Opaque);
             stateManager = new StateManager(this, AppData.MAX_GAME_TIME_IN_MSECS);
             Components.Add(stateManager);
 
-            //add ui managers
-            //uiManager = new SceneManager<Scene2D>(this);
-            //Components.Add(uiManager);
+            #region UI
 
-            //uiRenderManager = new Render2DManager(this, StatusType.Drawn | StatusType.Updated, _spriteBatch);
-            //Components.Add(uiRenderManager);
+            uiManager = new SceneManager<Scene2D>(this);
+
+            // Change StatusType to Off when adding menus!
+            uiManager.StatusType = StatusType.Drawn | StatusType.Updated;
+
+            uiManager.IsPausedOnPlay = false;
+            Components.Add(uiManager);
+
+            var uiRenderManager = new Render2DManager(this, _spriteBatch, uiManager);
+
+            // Change StatusType to Off when adding menus!
+            uiRenderManager.StatusType = StatusType.Drawn | StatusType.Updated;
+
+            uiRenderManager.DrawOrder = 2;
+            uiRenderManager.IsPausedOnPlay = false;
+            Components.Add(uiRenderManager);
+
+            #endregion
+
+            #region Menu
+
+            //menuManager = new SceneManager<Scene2D>(this);
+            //menuManager.StatusType = StatusType.Updated;
+            //menuManager.IsPausedOnPlay = true;
+            //Components.Add(menuManager);
+
+            //var menuRenderManager = new Render2DManager(this, _spriteBatch, menuManager);
+            //menuRenderManager.StatusType = StatusType.Drawn;
+            //menuRenderManager.DrawOrder = 3;
+            //menuRenderManager.IsPausedOnPlay = true;
+            //Components.Add(menuRenderManager);
+
+            #endregion
 
             inventoryManager = new InventoryManager(this, StatusType.Drawn | StatusType.Updated);
             Components.Add(inventoryManager);
@@ -4843,46 +5189,13 @@ ObjectType.Static, RenderType.Opaque);
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            //update all drawn game objects in the active scene
-            //sceneManager.Update(gameTime);
-
-            //update active camera
-            //cameraManager.Update(gameTime);
-
-#if DEMO
-
-            if (Input.Keys.WasJustPressed(Keys.B))
-            {
-                object[] parameters = { "boom1" };
-                EventDispatcher.Raise(
-                    new EventData(EventCategoryType.Player,
-                    EventActionType.OnWin,
-                    parameters));
-
-                //    Application.SoundManager.Play2D("boom1");
-            }
-
-            #region Demo - Camera switching
-
-            if (Input.Keys.IsPressed(Keys.F1))
-                cameraManager.SetActiveCamera(AppData.FIRST_PERSON_CAMERA_NAME);
-            else if (Input.Keys.IsPressed(Keys.F2))
-                cameraManager.SetActiveCamera(AppData.SECURITY_CAMERA_NAME);
-            else if (Input.Keys.IsPressed(Keys.F3))
-                cameraManager.SetActiveCamera(AppData.CURVE_CAMERA_NAME);
-            else if (Input.Keys.IsPressed(Keys.F4))
-                cameraManager.SetActiveCamera(AppData.THIRD_PERSON_CAMERA_NAME);
-
-            #endregion Demo - Camera switching
-
-#endif
             //fixed a bug with components not getting Update called
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Black);
 
             //get active scene, get camera, and call the draw on the active scene
             //sceneManager.ActiveScene.Draw(gameTime, cameraManager.ActiveCamera);

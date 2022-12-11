@@ -49,7 +49,8 @@
         Explosion,
         BackgroundMusic,
         Alarm,
-        Pickup
+        Pickup,
+        Generator
     }
 
     #region Unused
@@ -171,7 +172,12 @@
 
         OnChangeState,
 
-        OnReachExit
+        OnReachExit,
+
+        OnInfectionDelta,
+        OnToggleButtonPrompt,
+        OnShowSubtitles,
+        OnToggleNote
     }
 
     /// <summary>

@@ -2,6 +2,7 @@
 //#define TEST_INVENTORY
 #define DEMO_STATES
 
+using GD.App;
 using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
@@ -82,14 +83,14 @@ namespace GD.Engine
         {
             if (Input.Gamepad.IsConnected())
             {
-                if (Input.Gamepad.IsPressed(Buttons.Y))
+                if (Input.Gamepad.WasJustPressed(Buttons.Y))
                     isInteracting = true;
                 else
                     isInteracting = false;
             }
             else
             {
-                if (Input.Keys.IsPressed(Keys.E))
+                if (Input.Keys.WasJustPressed(Keys.E))
                     isInteracting = true;
                 else
                     isInteracting = false;

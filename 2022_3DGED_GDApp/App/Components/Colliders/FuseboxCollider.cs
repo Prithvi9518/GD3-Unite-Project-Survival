@@ -15,7 +15,7 @@ namespace GD.Engine
         protected override void HandleInteraction()
         {
             // Check whether fuse is present in inventory
-            InventoryItem fuse = Application.InventoryManager.FindByName(AppData.FUSE_NAME);
+            InventoryItem fuse = Application.InventoryManager.FindByName(AppData.FUSE_220V_NAME);
             if (fuse != null)
             {
                 // Check whether generator room has been opened with keycard first
@@ -23,7 +23,7 @@ namespace GD.Engine
                     return;
 
                 // Send event to remove fuse
-                object[] parameters = { AppData.FUSE_NAME };
+                object[] parameters = { AppData.FUSE_220V_NAME };
                 EventDispatcher.Raise(new EventData(EventCategoryType.Inventory,
                     EventActionType.OnObjectPicked, parameters));
 
@@ -34,8 +34,14 @@ namespace GD.Engine
             }
             else
             {
-                // otherwise, send message/hint to user that they need a fuse
-                System.Diagnostics.Debug.WriteLine("You need a fuse");
+                // otherwise, use dialogue to hint to user that they need a fuse
+                if (!(Application.StateManager.CurrentGameState == GameState.GeneratorOn))
+                {
+                    object[] parameters = { DialogueState.NeedFuse };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
+                    System.Diagnostics.Debug.WriteLine("You need a fuse");
+                }
             }
         }
     }

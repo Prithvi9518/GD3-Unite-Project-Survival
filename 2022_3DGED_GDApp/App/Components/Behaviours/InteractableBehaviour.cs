@@ -114,7 +114,7 @@ namespace GD.Engine
 
                 case "fuse box":
                     // Check whether fuse is present in inventory
-                    InventoryItem fuse = Application.InventoryManager.FindByName(AppData.FUSE_NAME);
+                    InventoryItem fuse = Application.InventoryManager.FindByName(AppData.FUSE_220V_NAME);
                     if (fuse != null)
                     {
                         // Check whether generator room has been opened with keycard first
@@ -122,7 +122,7 @@ namespace GD.Engine
                             return;
 
                         // Send event to remove fuse
-                        object[] parameters = { AppData.FUSE_NAME };
+                        object[] parameters = { AppData.FUSE_220V_NAME };
                         EventDispatcher.Raise(new EventData(EventCategoryType.Inventory,
                             EventActionType.OnObjectPicked, parameters));
 
