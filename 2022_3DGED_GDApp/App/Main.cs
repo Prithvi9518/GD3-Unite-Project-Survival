@@ -483,7 +483,7 @@ namespace GD.App
 
             // Glass breaking sound
 
-            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass_smash_3");
 
             soundManager.Add(new Cue(
                 AppData.GLASS_SHATTER_SOUND_NAME,
