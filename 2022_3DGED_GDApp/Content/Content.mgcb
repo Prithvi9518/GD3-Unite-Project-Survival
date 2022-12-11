@@ -67,6 +67,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong.wav
 
+#begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+
 #begin Assets/Fonts/Perf.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

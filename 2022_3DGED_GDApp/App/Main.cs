@@ -432,36 +432,54 @@ namespace GD.App
 
         private void LoadSounds()
         {
-            var soundEffect =
-                Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
+            #region Demo Sound
 
-            //add the new sound effect
-            soundManager.Add(new Cue(
-                "boom1",
-                soundEffect,
-                SoundCategoryType.Alarm,
-                new Vector3(1, 1, 0),
-                false));
+            //var soundEffect =
+            //    Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
 
-            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+            ////add the new sound effect
+            //soundManager.Add(new Cue(
+            //    "boom1",
+            //    soundEffect,
+            //    SoundCategoryType.Alarm,
+            //    new Vector3(1, 1, 0),
+            //    false));
+
+            #endregion
+
+            #region Old music and ambience
+
+            //var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "HorrorMusic",
+            //     MusicSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     true));
+
+            //var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "Ambient",
+            //     AmbientSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     false));
+
+            #endregion
+
+            var soundtrack = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack");
 
             //Add the new sound for background
             soundManager.Add(new Cue(
                 "HorrorMusic",
-                 MusicSound,
+                 soundtrack,
                  SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
+                 new Vector3(0.1f, 0, 0),
                  true));
-
-            var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
-
-            //Add the new sound for background
-            soundManager.Add(new Cue(
-                "Ambient",
-                 AmbientSound,
-                 SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
-                 false));
 
             // Glass breaking sound
 
