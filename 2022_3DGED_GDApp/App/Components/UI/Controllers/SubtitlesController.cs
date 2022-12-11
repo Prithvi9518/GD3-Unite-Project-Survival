@@ -62,6 +62,9 @@ namespace GD.App
             [SubtitleState.GeneratorWorking] = "The generator is working again!!",
             [SubtitleState.TimeToRun] = "Time to GET OUTTA HERE!!!",
 
+            [SubtitleState.GeneralDialogue1] = "Riverside. I remember this place. It used to be great during the Halloween break." +
+            " Scared the crap out of me.",
+
             [SubtitleState.Time1] = "I don't have much time left! I need to find a way out."
         };
 
@@ -83,14 +86,23 @@ namespace GD.App
             [SubtitleState.GeneratorWorking] = 2500,
             [SubtitleState.TimeToRun] = 2500,
 
+            [SubtitleState.GeneralDialogue1] = 5000,
+
             [SubtitleState.Time1] = 4000
+        };
+
+        private Dictionary<SubtitleState, float> delayedSubtitlesDurations = new Dictionary<SubtitleState, float>
+        {
+            [SubtitleState.GeneralDialogue1] = 5000,
+            [SubtitleState.WhereFuse] = 5000
         };
 
         #endregion Dictionaries
 
         private List<List<SubtitleState>> subtitleSequences = new List<List<SubtitleState>>()
         {
-            new List<SubtitleState>(){SubtitleState.Start1, SubtitleState.Start2},
+            new List<SubtitleState>(){SubtitleState.Start1, SubtitleState.Start2, SubtitleState.GeneralDialogue1},
+            new List<SubtitleState>(){SubtitleState.NeedFuse, SubtitleState.WhereFuse},
             new List<SubtitleState>(){SubtitleState.GeneratorWorking, SubtitleState.TimeToRun}
         };
 
@@ -100,7 +112,6 @@ namespace GD.App
         private float durationInMS;
         private float totalElapsedTimeInMS;
 
-        private float tempTimerInMS = 5000;
         private float tempElapsedTimeInMS;
 
         public SubtitlesController()
@@ -125,7 +136,7 @@ namespace GD.App
             }
         }
 
-        private bool HandleSequencedSubtitleChange()
+        private bool HandleSequencedSubtitleChange(GameTime gameTime)
         {
             // Check if the current subtitle is part of a sequence
             foreach (List<SubtitleState> sequence in subtitleSequences)
@@ -137,7 +148,23 @@ namespace GD.App
 
                     // If it's not the last subtitle in the sequence, then move to the next subtitle
                     if (index != sequence.Count - 1)
-                        ChangeSubtitle(sequence[index + 1]);
+                    {
+                        SubtitleState newSubtitle = sequence[index + 1];
+
+                        // Check if there needs to be a delay between the current and next subtitles
+                        if (delayedSubtitlesDurations.ContainsKey(newSubtitle))
+                        {
+                            textMaterial2D.StringBuilder.Clear();
+                            DelayBetweenSubtitles(newSubtitle,
+                                gameTime,
+                                delayedSubtitlesDurations.GetValueOrDefault(newSubtitle, 0)
+                                );
+                        }
+                        else
+                        {
+                            ChangeSubtitle(sequence[index + 1]);
+                        }
+                    }
                     else
                         ChangeSubtitle(SubtitleState.NoSubtitle);
 
@@ -171,30 +198,36 @@ namespace GD.App
 
             if (totalElapsedTimeInMS > durationInMS)
             {
-                if (HandleSequencedSubtitleChange()) return;
+                if (HandleSequencedSubtitleChange(gameTime)) return;
 
-                SubtitleState prevSubtitle = currentSubtitle;
+                ChangeSubtitle(SubtitleState.NoSubtitle);
 
-                textMaterial2D.StringBuilder.Clear();
+                //SubtitleState prevSubtitle = currentSubtitle;
 
-                if (prevSubtitle == SubtitleState.NeedFuse)
-                {
-                    DelayBetweenSubtitles(SubtitleState.WhereFuse, gameTime);
-                }
-                else
-                {
-                    tempElapsedTimeInMS = 0;
-                    ChangeSubtitle(SubtitleState.NoSubtitle);
-                }
+                //textMaterial2D.StringBuilder.Clear();
+
+                //if (prevSubtitle == SubtitleState.NeedFuse)
+                //{
+                //    DelayBetweenSubtitles(SubtitleState.WhereFuse,
+                //        gameTime,
+                //        delayedSubtitlesDurations.GetValueOrDefault(SubtitleState.WhereFuse)
+                //        );
+                //}
+                //else
+                //{
+                //    tempElapsedTimeInMS = 0;
+                //    ChangeSubtitle(SubtitleState.NoSubtitle);
+                //}
             }
         }
 
-        private void DelayBetweenSubtitles(SubtitleState newSubtitle, GameTime gameTime)
+        private void DelayBetweenSubtitles(SubtitleState newSubtitle, GameTime gameTime, float delayInMS)
         {
             tempElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
-            if (tempElapsedTimeInMS > tempTimerInMS)
+            if (tempElapsedTimeInMS > delayInMS)
             {
-                ChangeSubtitle(SubtitleState.WhereFuse);
+                ChangeSubtitle(newSubtitle);
+                tempElapsedTimeInMS = 0;
             }
         }
     }
