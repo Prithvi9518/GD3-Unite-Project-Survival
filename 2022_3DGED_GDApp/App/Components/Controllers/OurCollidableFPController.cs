@@ -279,7 +279,7 @@ namespace GD.Engine
             if (transform.Translation.X <= -34 && !insideOffice)
             {
                 // Raise event to display subtitles in office
-                object[] parameters = { SubtitleState.NeedKeycardInOffice };
+                object[] parameters = { DialogueState.NeedKeycardInOffice };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
                 insideOffice = true;
             }

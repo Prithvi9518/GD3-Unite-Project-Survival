@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace GD.App
 {
-    public enum SubtitleState
+    public enum DialogueState
     {
         NoSubtitle,
 
@@ -44,69 +44,83 @@ namespace GD.App
     {
         #region Dictionaries
 
-        private Dictionary<SubtitleState, string> subtitlesDict = new Dictionary<SubtitleState, string>
+        private Dictionary<DialogueState, string> subtitlesDict = new Dictionary<DialogueState, string>
         {
-            [SubtitleState.Start1] = "I've got about three minutes to get out of here before the infection takes over.",
-            [SubtitleState.Start2] = "Looks like there's an exit door ahead. I can't go back the way  I came.",
+            [DialogueState.Start1] = "I've got about three minutes to get out of here before the infection takes over.",
+            [DialogueState.Start2] = "Looks like there's an exit door ahead. I can't go back the way  I came.",
 
-            [SubtitleState.ExitDoorNoPower] = "The door isn't opening. Looks like I need to restore the power first.",
+            [DialogueState.ExitDoorNoPower] = "The door isn't opening. Looks like I need to restore the power first.",
 
-            [SubtitleState.GeneratorRoomClosed] = "AHHH dammit! I can't get in here.",
+            [DialogueState.GeneratorRoomClosed] = "AHHH dammit! I can't get in here.",
 
-            [SubtitleState.NeedKeycardInOffice] = "I need a keycard for the generator room. I hope there's one in here.",
-            [SubtitleState.NoteInOffice] = "Note mentions the generator being busted. Maybe this keycard will open the generator room?",
+            [DialogueState.NeedKeycardInOffice] = "I need a keycard for the generator room. I hope there's one in here.",
+            [DialogueState.NoteInOffice] = "Note mentions the generator being busted. Maybe this keycard will open the generator room?",
 
-            [SubtitleState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?",
-            [SubtitleState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
+            [DialogueState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?",
+            [DialogueState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
 
-            [SubtitleState.GeneratorWorking] = "The generator is working again!!",
-            [SubtitleState.TimeToRun] = "Time to GET OUTTA HERE!!!",
+            [DialogueState.GeneratorWorking] = "The generator is working again!!",
+            [DialogueState.TimeToRun] = "Time to GET OUTTA HERE!!!",
 
-            [SubtitleState.GeneralDialogue1] = "Riverside. I remember this place. It used to be great during the Halloween break." +
+            [DialogueState.GeneralDialogue1] = "Riverside. I remember this place. It used to be great during the Halloween break." +
             " Scared the crap out of me.",
+            [DialogueState.GeneralDialogue2] = "I have to get out of here. I'm not going to die in a supermarket.",
+            [DialogueState.GeneralDialogue3] = "I have to get out of here. This can't be the end of me.",
 
-            [SubtitleState.Time1] = "I don't have much time left! I need to find a way out."
+            [DialogueState.Time1] = "I don't have much time left! I need to find a way out."
         };
 
-        private Dictionary<SubtitleState, float> durationsDict = new Dictionary<SubtitleState, float>
+        private Dictionary<DialogueState, float> durationsDict = new Dictionary<DialogueState, float>
         {
-            [SubtitleState.Start1] = 4500,
-            [SubtitleState.Start2] = 4500,
+            [DialogueState.Start1] = 4500,
+            [DialogueState.Start2] = 4500,
 
-            [SubtitleState.ExitDoorNoPower] = 4500,
+            [DialogueState.ExitDoorNoPower] = 4500,
 
-            [SubtitleState.GeneratorRoomClosed] = 3500,
+            [DialogueState.GeneratorRoomClosed] = 3500,
 
-            [SubtitleState.NeedKeycardInOffice] = 3500,
-            [SubtitleState.NoteInOffice] = 4000,
+            [DialogueState.NeedKeycardInOffice] = 3500,
+            [DialogueState.NoteInOffice] = 4000,
 
-            [SubtitleState.NeedFuse] = 4000,
-            [SubtitleState.WhereFuse] = 4000,
+            [DialogueState.NeedFuse] = 4000,
+            [DialogueState.WhereFuse] = 4000,
 
-            [SubtitleState.GeneratorWorking] = 2500,
-            [SubtitleState.TimeToRun] = 2500,
+            [DialogueState.GeneratorWorking] = 2500,
+            [DialogueState.TimeToRun] = 2500,
 
-            [SubtitleState.GeneralDialogue1] = 5000,
+            [DialogueState.GeneralDialogue1] = 5000,
+            [DialogueState.GeneralDialogue2] = 3500,
+            [DialogueState.GeneralDialogue3] = 3500,
 
-            [SubtitleState.Time1] = 4000
+            [DialogueState.Time1] = 4000
         };
 
-        private Dictionary<SubtitleState, float> delayedSubtitlesDurations = new Dictionary<SubtitleState, float>
+        private Dictionary<DialogueState, float> delayedSubtitlesDurations = new Dictionary<DialogueState, float>
         {
-            [SubtitleState.GeneralDialogue1] = 5000,
-            [SubtitleState.WhereFuse] = 5000
+            [DialogueState.GeneralDialogue1] = 5000,
+            [DialogueState.GeneralDialogue3] = 15000,
+            [DialogueState.WhereFuse] = 5000
         };
 
         #endregion Dictionaries
 
-        private List<List<SubtitleState>> subtitleSequences = new List<List<SubtitleState>>()
+        private List<List<DialogueState>> subtitleSequences = new List<List<DialogueState>>()
         {
-            new List<SubtitleState>(){SubtitleState.Start1, SubtitleState.Start2, SubtitleState.GeneralDialogue1},
-            new List<SubtitleState>(){SubtitleState.NeedFuse, SubtitleState.WhereFuse},
-            new List<SubtitleState>(){SubtitleState.GeneratorWorking, SubtitleState.TimeToRun}
+            // Starting and general dialogues
+            new List<DialogueState>(){
+                DialogueState.Start1,
+                DialogueState.Start2,
+                DialogueState.GeneralDialogue1,
+                DialogueState.GeneralDialogue3
+            },
+
+            new List<DialogueState>(){DialogueState.NeedFuse, DialogueState.WhereFuse},
+
+            // Dialogue when generator turns on
+            new List<DialogueState>(){DialogueState.GeneratorWorking, DialogueState.TimeToRun}
         };
 
-        private SubtitleState currentSubtitle;
+        private DialogueState currentSubtitle;
         private TextMaterial2D textMaterial2D;
 
         private float durationInMS;
@@ -116,7 +130,7 @@ namespace GD.App
 
         public SubtitlesController()
         {
-            this.currentSubtitle = SubtitleState.Start1;
+            this.currentSubtitle = DialogueState.Start1;
             this.durationInMS = durationsDict.GetValueOrDefault(currentSubtitle, 0);
 
             EventDispatcher.Subscribe(EventCategoryType.UI, HandleUIEvent);
@@ -127,7 +141,7 @@ namespace GD.App
             switch (eventData.EventActionType)
             {
                 case EventActionType.OnShowSubtitles:
-                    SubtitleState newState = (SubtitleState)eventData.Parameters[0];
+                    DialogueState newState = (DialogueState)eventData.Parameters[0];
                     ChangeSubtitle(newState);
                     break;
 
@@ -139,7 +153,7 @@ namespace GD.App
         private bool HandleSequencedSubtitleChange(GameTime gameTime)
         {
             // Check if the current subtitle is part of a sequence
-            foreach (List<SubtitleState> sequence in subtitleSequences)
+            foreach (List<DialogueState> sequence in subtitleSequences)
             {
                 // If it is, check it's index in the sequence
                 if (sequence.Contains(currentSubtitle))
@@ -149,7 +163,7 @@ namespace GD.App
                     // If it's not the last subtitle in the sequence, then move to the next subtitle
                     if (index != sequence.Count - 1)
                     {
-                        SubtitleState newSubtitle = sequence[index + 1];
+                        DialogueState newSubtitle = sequence[index + 1];
 
                         // Check if there needs to be a delay between the current and next subtitles
                         if (delayedSubtitlesDurations.ContainsKey(newSubtitle))
@@ -166,7 +180,7 @@ namespace GD.App
                         }
                     }
                     else
-                        ChangeSubtitle(SubtitleState.NoSubtitle);
+                        ChangeSubtitle(DialogueState.NoSubtitle);
 
                     return true;
                 }
@@ -175,7 +189,7 @@ namespace GD.App
             return false;
         }
 
-        private void ChangeSubtitle(SubtitleState newSubtitle)
+        private void ChangeSubtitle(DialogueState newSubtitle)
         {
             currentSubtitle = newSubtitle;
             totalElapsedTimeInMS = 0;
@@ -193,14 +207,14 @@ namespace GD.App
 
             textMaterial2D.StringBuilder.Append(text);
 
-            if (currentSubtitle != SubtitleState.NoSubtitle)
+            if (currentSubtitle != DialogueState.NoSubtitle)
                 totalElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
 
             if (totalElapsedTimeInMS > durationInMS)
             {
                 if (HandleSequencedSubtitleChange(gameTime)) return;
 
-                ChangeSubtitle(SubtitleState.NoSubtitle);
+                ChangeSubtitle(DialogueState.NoSubtitle);
 
                 //SubtitleState prevSubtitle = currentSubtitle;
 
@@ -221,7 +235,7 @@ namespace GD.App
             }
         }
 
-        private void DelayBetweenSubtitles(SubtitleState newSubtitle, GameTime gameTime, float delayInMS)
+        private void DelayBetweenSubtitles(DialogueState newSubtitle, GameTime gameTime, float delayInMS)
         {
             tempElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
             if (tempElapsedTimeInMS > delayInMS)

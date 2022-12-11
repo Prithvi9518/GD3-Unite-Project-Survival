@@ -15,7 +15,7 @@ namespace GD.Engine
         protected override void HandleInteraction()
         {
             // Raise event to show subtitles
-            object[] parameters = { SubtitleState.NoteInOffice };
+            object[] parameters = { DialogueState.NoteInOffice };
             EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
         }
     }

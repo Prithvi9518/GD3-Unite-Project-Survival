@@ -111,7 +111,7 @@ namespace GD.App
                 case GameState.GeneratorOn:
 
                     // Send subtitles event
-                    object[] parameters = { SubtitleState.GeneratorWorking };
+                    object[] parameters = { DialogueState.GeneratorWorking };
                     EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
                     System.Diagnostics.Debug.WriteLine("Generator is now on");
@@ -151,7 +151,7 @@ namespace GD.App
                 case TimeState.HalfTime:
 
                     // Send event to show half-time subtitle
-                    object[] parameters = { SubtitleState.Time1 };
+                    object[] parameters = { DialogueState.Time1 };
                     EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
                     break;
@@ -172,7 +172,7 @@ namespace GD.App
             else
             {
                 // Raise event to show subtitles related to having no power in the building
-                object[] parameters = { SubtitleState.ExitDoorNoPower };
+                object[] parameters = { DialogueState.ExitDoorNoPower };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
                 System.Diagnostics.Debug.WriteLine("Need to restore power first!");
