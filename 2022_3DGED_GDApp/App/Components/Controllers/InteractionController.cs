@@ -83,14 +83,14 @@ namespace GD.Engine
         {
             if (Input.Gamepad.IsConnected())
             {
-                if (Input.Gamepad.IsPressed(Buttons.Y))
+                if (Input.Gamepad.WasJustPressed(Buttons.Y))
                     isInteracting = true;
                 else
                     isInteracting = false;
             }
             else
             {
-                if (Input.Keys.IsPressed(Keys.E))
+                if (Input.Keys.WasJustPressed(Keys.E))
                     isInteracting = true;
                 else
                     isInteracting = false;

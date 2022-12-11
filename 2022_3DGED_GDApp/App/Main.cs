@@ -400,6 +400,8 @@ namespace GD.App
 
             uiGameObject.AddComponent(new Renderer2D(material));
 
+            uiGameObject.AddComponent(new NoteUIController());
+
             mainHUD.Add(uiGameObject);
 
             #endregion
@@ -1763,7 +1765,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new Collider(gameObject, true);
+            Collider collider = new NoteCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
