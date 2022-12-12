@@ -112,6 +112,11 @@ namespace GD.App
             [SubtitleState.PickRightFuse] = 2000
         };
 
+        private Dictionary<SubtitleState, string> subtitleDialogueDict = new Dictionary<SubtitleState, string>
+        {
+            [SubtitleState.Start1] = AppData.INTRO_DIALOGUE
+        };
+
         #endregion Dictionaries
 
         private List<List<SubtitleState>> subtitleSequences = new List<List<SubtitleState>>()
@@ -137,6 +142,8 @@ namespace GD.App
         private float totalElapsedTimeInMS;
 
         private float tempElapsedTimeInMS;
+
+        private bool dialoguePlayed = false;
 
         public SubtitlesController()
         {
@@ -217,6 +224,8 @@ namespace GD.App
 
             textMaterial2D.StringBuilder.Append(text);
 
+            PlayCurrentDialogue();
+
             if (currentSubtitle != SubtitleState.NoSubtitle)
                 totalElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
 
@@ -252,6 +261,18 @@ namespace GD.App
             {
                 ChangeSubtitle(newSubtitle);
                 tempElapsedTimeInMS = 0;
+            }
+        }
+
+        private void PlayCurrentDialogue()
+        {
+            if (!dialoguePlayed)
+            {
+                string currentDialogue = subtitleDialogueDict.GetValueOrDefault(currentSubtitle, "");
+                object[] parameters = { currentDialogue };
+                EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                dialoguePlayed = true;
             }
         }
     }

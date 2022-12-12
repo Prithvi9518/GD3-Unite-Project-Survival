@@ -61,7 +61,6 @@ namespace GD.App
         private SceneManager<Scene2D> menuManager;
 
         private InventoryManager inventoryManager;
-        private DialogueManager dialogueManager;
 
         #endregion Fields
 
@@ -5103,7 +5102,6 @@ ObjectType.Static, RenderType.Opaque);
             //Application.MenuSceneManager = menuManager;
 
             Application.InventoryManager = inventoryManager;
-            Application.DialogueManager = dialogueManager;
         }
 
         private void InitializeInput()
@@ -5216,10 +5214,6 @@ ObjectType.Static, RenderType.Opaque);
 
             inventoryManager = new InventoryManager(this, StatusType.Drawn | StatusType.Updated);
             Components.Add(inventoryManager);
-
-            dialogueManager = new DialogueManager(this, StatusType.Drawn | StatusType.Updated);
-            dialogueManager.IsPausedOnPlay = true;
-            Components.Add(dialogueManager);
         }
 
         private void InitializeDictionaries()
