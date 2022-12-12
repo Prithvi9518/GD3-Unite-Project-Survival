@@ -52,6 +52,8 @@ namespace GD.Engine
             this.characterCollider = characterCollider;
             //get the body so that we can change its position when keys
             characterBody = characterCollider.Body as Character;
+
+            //Input.Gamepad.DeadZone = new Vector2(1f, 1f);
         }
 
         #endregion Constructors
@@ -188,15 +190,27 @@ namespace GD.Engine
             //    AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
             //}
 
+            rotation = Vector3.Zero;
+
             rotation.X += newChangeInRotation.Y * rotationSpeed.Y *
                 AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
+            rotation.Y -= newChangeInRotation.X * rotationSpeed.X *
+                    AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
+
             ClampRotationX();
 
-            rotation.Y -= newChangeInRotation.X * rotationSpeed.X *
-                AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
+            //if (MathF.Abs(rotation.Y) < 0.1f)
+            //{
+            //    if (MathF.Abs(rotation.X) < 0.1f)
+            //    {
+            //        rotation.Y = 0;
+            //        rotation.X = 0;
+            //    }
+            //}
 
             //characterBody.AddBodyTorque(new Vector3(rotation.Y, rotation.X, 0));
+            //characterCollider.transform.Rotate(rotation);
             transform.Rotate(rotation);
 
             oldGamepadAxis = newChangeInRotation;
