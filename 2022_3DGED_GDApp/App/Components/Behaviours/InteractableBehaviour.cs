@@ -18,8 +18,28 @@ namespace GD.Engine
         private GameObject target;
         private InteractionController controller;
 
+        private bool pickedUp = false;
+
         public InteractableBehaviour()
         {
+            EventDispatcher.Subscribe(EventCategoryType.Inventory, HandleInventoryEvent);
+        }
+
+        private void HandleInventoryEvent(EventData eventData)
+        {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnRemoveInventory:
+                    string name = eventData.Parameters[0] as string;
+                    if (name == gameObject.Name)
+                    {
+                        pickedUp = false;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
         }
 
         public override void Update(GameTime gameTime)
@@ -52,7 +72,7 @@ namespace GD.Engine
 
             float targetDist = GetDistance();
 
-            if (targetDist <= AppData.INTERACTION_DISTANCE)
+            if (targetDist <= AppData.LONG_INTERACTION_DISTANCE)
             {
                 if (isInteracting)
                     HandleInteraction();
@@ -66,7 +86,7 @@ namespace GD.Engine
 
         private void HandleInteraction()
         {
-            switch (this.gameObject.GameObjectType)
+            switch (gameObject.GameObjectType)
             {
                 case GameObjectType.Collectible:
                     RaiseCollectibleEvents();
@@ -81,12 +101,42 @@ namespace GD.Engine
             }
         }
 
+        private void RaiseCollectibleEvents()
+        {
+            if (!pickedUp)
+            {
+                // Play pickup sound effect
+                object[] parameters = { "pickup-sound" };
+                EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                // Raise event to add item to inventory
+                InventoryItemData itemData = new InventoryItemData(
+                    this.gameObject.Name,
+                    this.gameObject.Name,
+                    ItemType.Quest,
+                    "test",
+                    null,
+                    null,
+                    this.gameObject
+                    );
+                parameters = new object[] { gameObject, itemData };
+                EventDispatcher.Raise(
+                    new EventData(EventCategoryType.Pickup, EventActionType.OnPickup, parameters)
+                    );
+            }
+
+            pickedUp = true;
+        }
+
+        /// <summary>
+        /// Unused, just to experiment
+        /// </summary>
         private void RaiseInteractibleEvents()
         {
             // NEED TO REFACTOR THIS CODE - once colliders are in place, use separate collider classes for each object
 
             // Raise event based on what object it is.
-            switch (this.gameObject.Name)
+            switch (gameObject.Name)
             {
                 case "gate access machine":
 
@@ -148,28 +198,6 @@ namespace GD.Engine
                 default:
                     break;
             }
-        }
-
-        private void RaiseCollectibleEvents()
-        {
-            // Play pickup sound effect
-            object[] parameters = { "pickup-sound" };
-            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
-
-            // Raise event to add item to inventory
-            InventoryItemData itemData = new InventoryItemData(
-                this.gameObject.Name,
-                this.gameObject.Name,
-                ItemType.Quest,
-                "test",
-                null,
-                null,
-                this.gameObject
-                );
-            parameters = new object[] { gameObject, itemData };
-            EventDispatcher.Raise(
-                new EventData(EventCategoryType.Pickup, EventActionType.OnPickup, parameters)
-                );
         }
     }
 }
