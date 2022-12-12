@@ -1,4 +1,5 @@
-﻿using GD.Engine;
+﻿using GD.App;
+using GD.Engine;
 using GD.Engine.Events;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -111,7 +112,6 @@ namespace GD.App
             [DialogueState.GeneralDialogue1] = 5000,
             [DialogueState.GeneralDialogue3] = 25000,
             [DialogueState.WhereFuse] = 5000,
-            [DialogueState.PickRightFuse] = 2000
         };
 
         private Dictionary<DialogueState, string> dialogueObjectDict = new Dictionary<DialogueState, string>
@@ -144,7 +144,7 @@ namespace GD.App
                 DialogueState.GeneralDialogue1
             },
 
-            new List<DialogueState>(){DialogueState.NeedFuse, DialogueState.WhereFuse, DialogueState.PickRightFuse},
+            new List<DialogueState>(){DialogueState.NeedFuse, DialogueState.WhereFuse},
 
             // Dialogue when generator turns on
             new List<DialogueState>(){DialogueState.GeneratorWorking, DialogueState.TimeToRun}
@@ -167,8 +167,8 @@ namespace GD.App
 
         public DialogueController()
         {
-            this.currentDialogue = DialogueState.Start1;
-            this.durationInMS = durationsDict.GetValueOrDefault(currentDialogue, 0);
+            currentDialogue = DialogueState.Start1;
+            durationInMS = durationsDict.GetValueOrDefault(currentDialogue, 0);
 
             EventDispatcher.Subscribe(EventCategoryType.UI, HandleUIEvent);
         }
@@ -246,8 +246,11 @@ namespace GD.App
             {
                 textMaterial2D.TextOffset = new Vector2(-200, 0);
             }
+            else
+                textMaterial2D.TextOffset = new Vector2(0, 0);
+
             string text = subtitlesDict.GetValueOrDefault(currentDialogue, "");
-            text = (text != "") ? "Ava:  " + text : text;
+            text = text != "" ? "Ava:  " + text : text;
 
             textMaterial2D.StringBuilder.Append(text);
 
@@ -295,7 +298,7 @@ namespace GD.App
         {
             if (!dialoguePlayed)
             {
-                string dialogueObjectName = dialogueObjectDict.GetValueOrDefault(this.currentDialogue, "");
+                string dialogueObjectName = dialogueObjectDict.GetValueOrDefault(currentDialogue, "");
                 object[] parameters = { dialogueObjectName };
                 EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
 

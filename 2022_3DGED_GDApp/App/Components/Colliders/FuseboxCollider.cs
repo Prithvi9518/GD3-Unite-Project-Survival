@@ -34,13 +34,29 @@ namespace GD.Engine
             }
             else
             {
-                // otherwise, use dialogue to hint to user that they need a fuse
-                if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
+                // Check whether fuse is present in inventory
+                InventoryItem wrongFuse = Application.InventoryManager.FindByName(AppData.FUSE_440V_NAME);
+                if (wrongFuse != null)
                 {
-                    object[] parameters = { DialogueState.NeedFuse };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                    // use dialogue to hint to user that they have the wrong fuse
+                    if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
+                    {
+                        object[] parameters = { DialogueState.PickRightFuse };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
-                    System.Diagnostics.Debug.WriteLine("You need a fuse");
+                        System.Diagnostics.Debug.WriteLine("You have the wrong fuse");
+                    }
+                }
+                else
+                {
+                    // otherwise, use dialogue to hint to user that they need a fuse
+                    if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
+                    {
+                        object[] parameters = { DialogueState.NeedFuse };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
+                        System.Diagnostics.Debug.WriteLine("You need a fuse");
+                    }
                 }
             }
         }
