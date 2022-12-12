@@ -109,27 +109,57 @@ namespace GD.Engine
 
         private void PlaceRadio()
         {
-            if (Input.Keys.WasJustPressed(Keys.R))
+            if (Input.Gamepad.IsConnected())
             {
-                InventoryItem radio = Application.InventoryManager.FindByName(AppData.TOY_RADIO_NAME);
-                if (radio != null)
+                if (Input.Gamepad.WasJustPressed(Buttons.RightShoulder))
                 {
-                    object[] parameters = { AppData.TOY_RADIO_NAME };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+                    InventoryItem radio = Application.InventoryManager.FindByName(AppData.TOY_RADIO_NAME);
+                    if (radio != null)
+                    {
+                        object[] parameters = { AppData.TOY_RADIO_NAME };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
 
-                    radioPlaced = true;
+                        radioPlaced = true;
+                    }
+                }
+            }
+            else
+            {
+                if (Input.Keys.WasJustPressed(Keys.R))
+                {
+                    InventoryItem radio = Application.InventoryManager.FindByName(AppData.TOY_RADIO_NAME);
+                    if (radio != null)
+                    {
+                        object[] parameters = { AppData.TOY_RADIO_NAME };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+
+                        radioPlaced = true;
+                    }
                 }
             }
         }
 
         private void UseRadio()
         {
-            if (Input.Keys.WasJustPressed(Keys.R) && radioPlaced)
+            if (Input.Gamepad.IsConnected())
             {
-                object[] parameters = { AppData.RADIO_SOUND_NAME };
-                EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+                if (Input.Gamepad.WasJustPressed(Buttons.RightShoulder) && radioPlaced)
+                {
+                    object[] parameters = { AppData.RADIO_SOUND_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
 
-                RaiseEnemyMoveEvents();
+                    RaiseEnemyMoveEvents();
+                }
+            }
+            else
+            {
+                if (Input.Keys.WasJustPressed(Keys.R) && radioPlaced)
+                {
+                    object[] parameters = { AppData.RADIO_SOUND_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                    RaiseEnemyMoveEvents();
+                }
             }
         }
 
