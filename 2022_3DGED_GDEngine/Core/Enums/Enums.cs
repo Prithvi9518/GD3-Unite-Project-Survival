@@ -185,8 +185,7 @@
         OnInfectionDelta,
         OnToggleButtonPrompt,
         OnShowSubtitles,
-        OnToggleNote
-        OnToggleButtonPrompt,
+        OnToggleNote,
         OnEnterControlsMenu,
         OnExitControlsMenu
     }
