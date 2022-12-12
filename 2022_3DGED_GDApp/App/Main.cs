@@ -395,7 +395,7 @@ namespace GD.App
             Material2D material = null;
             Renderer2D renderer2D = null;
             Texture2D btnTexture = Content.Load<Texture2D>("Assets/Textures/Menu/Buttons/btn_256x64");
-            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/mainmenu");
+            Texture2D backGroundtexture = Content.Load<Texture2D>("Assets/Textures/Menu/Backgrounds/controls-menu");
             SpriteFont spriteFont = Content.Load<SpriteFont>("Assets/Fonts/INFECTED");
             Vector2 btnScale = Vector2.One;
 
@@ -435,7 +435,7 @@ namespace GD.App
             menuGameObject.Transform = new Transform(
             new Vector3(btnScale, 1), //s
             new Vector3(0, 0, 0), //r
-            new Vector3(Application.Screen.ScreenCentre - btnScale * btnTexture.GetCenter() + new Vector2(-0, 180), 0)); //t
+            new Vector3(Application.Screen.ScreenCentre - btnScale * btnTexture.GetCenter() + new Vector2(-0, 300), 0)); //t
 
             #region texture
 
