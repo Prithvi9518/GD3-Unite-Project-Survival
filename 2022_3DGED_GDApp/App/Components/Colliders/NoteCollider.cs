@@ -30,7 +30,7 @@ namespace GD.Engine
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleNote, parameters));
 
                 // Raise event to show subtitles
-                parameters = new object[] { SubtitleState.NoteInOffice };
+                parameters = new object[] { DialogueState.NoteInOffice };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
                 noteShown = false;

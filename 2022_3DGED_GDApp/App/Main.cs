@@ -572,7 +572,7 @@ namespace GD.App
 
             uiGameObject.AddComponent(new Renderer2D(material));
 
-            uiGameObject.AddComponent(new SubtitlesController());
+            uiGameObject.AddComponent(new DialogueController());
 
             mainHUD.Add(uiGameObject);
 
