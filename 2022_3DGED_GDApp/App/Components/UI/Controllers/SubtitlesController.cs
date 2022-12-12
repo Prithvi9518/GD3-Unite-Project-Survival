@@ -57,6 +57,8 @@ namespace GD.App
             [DialogueState.NeedKeycardInOffice] = "I need a keycard for the generator room. I hope there's one in here.",
             [DialogueState.NoteInOffice] = "Note mentions the generator being busted. Maybe this keycard will open the generator room?",
 
+            [DialogueState.GeneratorNotWorking] = "Of course the generator isn't working!!",
+
             [DialogueState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?",
             [DialogueState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
 
@@ -83,6 +85,8 @@ namespace GD.App
             [DialogueState.HollowBlockOffice] = 4500,
             [DialogueState.NeedKeycardInOffice] = 3500,
             [DialogueState.NoteInOffice] = 4000,
+
+            [DialogueState.GeneratorNotWorking] = 4000,
 
             [DialogueState.NeedFuse] = 4000,
             [DialogueState.WhereFuse] = 4000,

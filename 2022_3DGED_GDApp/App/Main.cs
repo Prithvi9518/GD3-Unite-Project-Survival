@@ -257,6 +257,7 @@ namespace GD.App
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnPlay));
             menuGameObject.AddComponent(buttonCollider2D);
+
             #endregion
 
             #region text
@@ -352,7 +353,6 @@ namespace GD.App
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnExit));
             menuGameObject.AddComponent(buttonCollider2D);
-
 
             #endregion
 
@@ -454,6 +454,7 @@ namespace GD.App
             //add any events on MouseButton (e.g. Left, Right, Hover)
             buttonCollider2D.AddEvent(MouseButton.Left, new EventData(EventCategoryType.Menu, EventActionType.OnExitControlsMenu));
             menuGameObject.AddComponent(buttonCollider2D);
+
             #endregion
 
             #region text
@@ -4330,7 +4331,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            collider = new Collider(gameObject, true);
+            collider = new LeverCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
