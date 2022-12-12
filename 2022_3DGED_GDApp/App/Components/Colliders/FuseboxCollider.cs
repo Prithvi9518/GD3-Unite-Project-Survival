@@ -27,17 +27,17 @@ namespace GD.Engine
                 EventDispatcher.Raise(new EventData(EventCategoryType.Inventory,
                     EventActionType.OnObjectPicked, parameters));
 
-                // Send event to StateManager - change state to reflect that generator is now on.
-                parameters = new object[] { GameState.GeneratorOn };
+                // Send event to StateManager - change state to reflect that fuse is now in.
+                parameters = new object[] { GameState.FuseIn };
                 EventDispatcher.Raise(new EventData(EventCategoryType.GameState,
                     EventActionType.OnChangeState, parameters));
             }
             else
             {
                 // otherwise, use dialogue to hint to user that they need a fuse
-                if (!(Application.StateManager.CurrentGameState == GameState.GeneratorOn))
+                if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
                 {
-                    object[] parameters = { DialogueState.NeedFuse };
+                    object[] parameters = { SubtitleState.NeedFuse };
                     EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
                     System.Diagnostics.Debug.WriteLine("You need a fuse");

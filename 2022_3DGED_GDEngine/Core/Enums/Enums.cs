@@ -58,7 +58,9 @@
         BackgroundMusic,
         Alarm,
         Pickup,
-        Generator
+        Generator,
+        Enemy,
+        Dialogue
     }
 
     #region Unused
