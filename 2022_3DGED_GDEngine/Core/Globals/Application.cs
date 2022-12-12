@@ -80,6 +80,7 @@ namespace GD.Engine.Globals
         public static SceneManager<Scene2D> MenuSceneManager { get; internal set; }
 
         public static InventoryManager InventoryManager { get; internal set; }
+        public static DialogueManager DialogueManager { get; internal set; }
 
         #endregion Properties
     }

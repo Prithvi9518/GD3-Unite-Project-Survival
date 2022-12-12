@@ -37,7 +37,7 @@ namespace GD.Engine
                 // otherwise, use dialogue to hint to user that they need a fuse
                 if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
                 {
-                    object[] parameters = { DialogueState.NeedFuse };
+                    object[] parameters = { SubtitleState.NeedFuse };
                     EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
                     System.Diagnostics.Debug.WriteLine("You need a fuse");

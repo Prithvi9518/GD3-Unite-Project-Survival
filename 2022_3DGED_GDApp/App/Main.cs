@@ -61,6 +61,7 @@ namespace GD.App
         private SceneManager<Scene2D> menuManager;
 
         private InventoryManager inventoryManager;
+        private DialogueManager dialogueManager;
 
         #endregion Fields
 
@@ -739,6 +740,19 @@ namespace GD.App
                 sound,
                 SoundCategoryType.Enemy,
                 new Vector3(0.5f, 0, 0),
+                false
+                ));
+
+            #endregion
+
+            #region Player Dialogue
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue");
+            soundManager.Add(new Cue(
+                AppData.INTRO_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
                 false
                 ));
 
@@ -5089,6 +5103,7 @@ ObjectType.Static, RenderType.Opaque);
             //Application.MenuSceneManager = menuManager;
 
             Application.InventoryManager = inventoryManager;
+            Application.DialogueManager = dialogueManager;
         }
 
         private void InitializeInput()
@@ -5201,6 +5216,10 @@ ObjectType.Static, RenderType.Opaque);
 
             inventoryManager = new InventoryManager(this, StatusType.Drawn | StatusType.Updated);
             Components.Add(inventoryManager);
+
+            dialogueManager = new DialogueManager(this, StatusType.Drawn | StatusType.Updated);
+            dialogueManager.IsPausedOnPlay = true;
+            Components.Add(dialogueManager);
         }
 
         private void InitializeDictionaries()

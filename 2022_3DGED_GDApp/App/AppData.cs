@@ -266,6 +266,8 @@ namespace GD.App
 
         public static readonly string ENEMY_SOUND_1_NAME = "enemy-sound-1";
 
+        public static readonly string INTRO_DIALOGUE = "intro_dialogue";
+
         #endregion
 
         public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()

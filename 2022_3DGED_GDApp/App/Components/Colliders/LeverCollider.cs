@@ -18,7 +18,7 @@ namespace GD.App
 
             if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
             {
-                parameters = new object[] { DialogueState.GeneratorNotWorking };
+                parameters = new object[] { SubtitleState.GeneratorNotWorking };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
             }
             else

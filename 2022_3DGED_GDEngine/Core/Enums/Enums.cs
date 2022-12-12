@@ -59,7 +59,8 @@
         Alarm,
         Pickup,
         Generator,
-        Enemy
+        Enemy,
+        Dialogue
     }
 
     #region Unused
