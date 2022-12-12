@@ -22,7 +22,9 @@ namespace GD.App
     public enum TimeState
     {
         Beginning,
+        QuarterTime,
         HalfTime,
+        ThreeFourthTime,
         End
     }
 
@@ -158,14 +160,22 @@ namespace GD.App
         private void HandleTimeStateChange(TimeState newState)
         {
             this.timeState = newState;
+            object[] parameters;
+
             switch (timeState)
             {
                 case TimeState.HalfTime:
 
                     // Send event to show half-time subtitle
-                    object[] parameters = { SubtitleState.Time1 };
+                    parameters = new object[] { SubtitleState.Time1 };
                     EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
 
+                    break;
+
+                case TimeState.ThreeFourthTime:
+
+                    parameters = new object[] { SubtitleState.Time2 };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
                     break;
 
                 default:
@@ -253,9 +263,13 @@ namespace GD.App
                 //    parameters));
             }
 
-            if (totalElapsedTimeMS >= maxTimeInMS / 2 && timeState != TimeState.HalfTime)
+            if (totalElapsedTimeMS >= maxTimeInMS / 2 && timeState < TimeState.HalfTime)
             {
                 HandleTimeStateChange(TimeState.HalfTime);
+            }
+            else if (totalElapsedTimeMS >= 0.75f * maxTimeInMS && timeState < TimeState.ThreeFourthTime)
+            {
+                HandleTimeStateChange(TimeState.ThreeFourthTime);
             }
 
             double countdownTime = Math.Abs((maxTimeInMS - totalElapsedTimeMS) / 1000d);
