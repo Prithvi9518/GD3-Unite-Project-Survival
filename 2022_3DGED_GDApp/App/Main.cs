@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-#define SHOW_DEBUG_INFO
+//#define SHOW_DEBUG_INFO
 //#define SHOW_TIMER_TEXT
 
 #endregion
@@ -48,6 +48,7 @@ namespace GD.App
         private BasicEffect fuse220VEffect;
         private BasicEffect fuse440VEffect;
         private BasicEffect enemyEffect;
+        private BasicEffect labelEffect;
 
         private CameraManager cameraManager;
         private SceneManager<Scene> sceneManager;
@@ -802,7 +803,7 @@ namespace GD.App
             litEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
             //litEffect.FogColor = new Vector3(38 / 255f, 37 / 255f, 37 / 255f);
             litEffect.FogStart = 7f;
-            litEffect.FogEnd = 30f;
+            litEffect.FogEnd = 49.5f;
 
             litEffect.PreferPerPixelLighting = true;
 
@@ -924,6 +925,8 @@ namespace GD.App
 
             #endregion
 
+            #region Enemy Effect
+
             enemyEffect = new BasicEffect(_graphics.GraphicsDevice);
             enemyEffect.TextureEnabled = true;
             enemyEffect.LightingEnabled = true;
@@ -952,6 +955,41 @@ namespace GD.App
             enemyEffect.FogEnd = 70f;
 
             enemyEffect.PreferPerPixelLighting = true;
+
+            #endregion
+
+            #region Label Effect
+
+            labelEffect = new BasicEffect(_graphics.GraphicsDevice);
+            labelEffect.TextureEnabled = true;
+            labelEffect.LightingEnabled = true;
+
+            labelEffect.DirectionalLight0.DiffuseColor = new Vector3(107 / 255f, 49 / 255f, 49 / 255f);
+            labelEffect.DirectionalLight0.Direction = new Vector3(0, 0, -1);
+            labelEffect.DirectionalLight0.SpecularColor = new Vector3(229 / 255f, 142 / 255f, 142 / 255f);
+
+            labelEffect.DirectionalLight1.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            labelEffect.DirectionalLight1.Direction = new Vector3(0, -1, 0);
+            labelEffect.DirectionalLight1.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
+            labelEffect.DirectionalLight1.Enabled = true;
+
+            labelEffect.DirectionalLight2.DiffuseColor = new Vector3(10 / 255f, 10 / 255f, 9 / 255f);
+            labelEffect.DirectionalLight2.Direction = new Vector3(0, 1, 0);
+            labelEffect.DirectionalLight2.SpecularColor = new Vector3(101 / 255f, 105 / 255f, 105 / 255f);
+            labelEffect.DirectionalLight2.Enabled = true;
+
+            labelEffect.AmbientLightColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            labelEffect.FogEnabled = true;
+
+            labelEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
+
+            labelEffect.FogStart = 30f;
+            labelEffect.FogEnd = 60f;
+
+            labelEffect.PreferPerPixelLighting = true;
+
+            #endregion
         }
 
         private void InitializeCameras()
@@ -2448,7 +2486,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     trash_pile_model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3168,7 +3206,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3228,7 +3266,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
             gameObject.AddComponent(renderer);
@@ -3250,7 +3288,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
             {
-                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)], enemyEffect);
                 gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
                 sceneManager.ActiveScene.Add(gameObject);
                 bottleNumber++;
@@ -3258,7 +3296,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < ginBottlesGameObjects.Count; i++)
             {
-                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)], enemyEffect);
                 gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
                 sceneManager.ActiveScene.Add(gameObject);
                 bottleNumber++;
@@ -3266,7 +3304,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
             {
-                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)], enemyEffect);
                 gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
                 sceneManager.ActiveScene.Add(gameObject);
                 bottleNumber++;
@@ -3274,7 +3312,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < ginBottlesGameObjects.Count; i++)
             {
-                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)], enemyEffect);
                 gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
                 sceneManager.ActiveScene.Add(gameObject);
                 bottleNumber++;
@@ -3352,7 +3390,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3383,7 +3421,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3414,7 +3452,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -3445,7 +3483,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3489,7 +3527,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3513,14 +3551,14 @@ ObjectType.Static, RenderType.Opaque);
             {
                 for (int j = 0; j < computerGameObjects.Count; j++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0, 0, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/god_of_war");
+                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0, 0, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/god_of_war", enemyEffect);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
                 }
 
                 for (int k = 0; k < computerGameObjects.Count; k++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, 0, zAxis - 2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/gta_v");
+                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, 0, zAxis - 2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/gta_v", enemyEffect);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
                 }
@@ -3544,14 +3582,14 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < computerGameObjectsTwo.Count - 1; i++)
             {
-                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -1f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/tekken_7");
+                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -1f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/tekken_7", enemyEffect);
                 sceneManager.ActiveScene.Add(gameObject);
                 computerGamesNumber++;
             }
 
             for (int i = 0; i < computerGameObjectsTwo.Count; i++)
             {
-                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -2.2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/fallout_76");
+                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -2.2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/fallout_76", enemyEffect);
                 gameObject.Transform.SetRotation(90, 45, 0);
                 sceneManager.ActiveScene.Add(gameObject);
                 computerGamesNumber++;
@@ -3559,7 +3597,7 @@ ObjectType.Static, RenderType.Opaque);
 
             for (int i = 0; i < computerGameObjectsTwo.Count - 1; i++)
             {
-                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.04f, 0, -2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/deus");
+                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.04f, 0, -2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/deus", enemyEffect);
                 gameObject.Transform.SetRotation(85, -50, 0);
                 sceneManager.ActiveScene.Add(gameObject);
                 computerGamesNumber++;
@@ -3570,7 +3608,7 @@ ObjectType.Static, RenderType.Opaque);
             {
                 for (int j = 0; j < computerGameObjects.Count; j++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -1.7f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/uncharted");
+                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -1.7f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/uncharted", enemyEffect);
                     gameObject.Transform.SetRotation(45f, 0, 0);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
@@ -3578,7 +3616,7 @@ ObjectType.Static, RenderType.Opaque);
 
                 for (int k = 0; k < computerGameObjects.Count; k++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/outlast");
+                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/outlast", enemyEffect);
                     gameObject.Transform.SetRotation(50f, 0, 1.2f);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
@@ -3586,7 +3624,7 @@ ObjectType.Static, RenderType.Opaque);
 
                 for (int l = 0; l < computerGameObjects.Count; l++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[l], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 3f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/hellblade");
+                    gameObject = CloneModelGameObject(computerGameObjects[l], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 3f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/hellblade", enemyEffect);
                     gameObject.Transform.SetRotation(50f, 0, 1.2f);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
@@ -3600,7 +3638,7 @@ ObjectType.Static, RenderType.Opaque);
             {
                 for (int j = 0; j < computerGameObjects.Count; j++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -0.2f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/farcry");
+                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -0.2f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/farcry", enemyEffect);
                     gameObject.Transform.SetRotation(58f, 0, 0);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
@@ -3608,7 +3646,7 @@ ObjectType.Static, RenderType.Opaque);
 
                 for (int k = 0; k < computerGameObjects.Count; k++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -0.2f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/mad_max");
+                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -0.2f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/mad_max", enemyEffect);
                     gameObject.Transform.SetRotation(58f, 0, 1.2f);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
@@ -3616,7 +3654,7 @@ ObjectType.Static, RenderType.Opaque);
 
                 for (int l = 0; l < computerGameObjects.Count; l++)
                 {
-                    gameObject = CloneModelGameObject(computerGameObjects[l], "computer game " + computerGamesNumber, new Vector3(0, -0.2f, zAxis - 3f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/infamous");
+                    gameObject = CloneModelGameObject(computerGameObjects[l], "computer game " + computerGamesNumber, new Vector3(0, -0.2f, zAxis - 3f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/infamous", enemyEffect);
                     gameObject.Transform.SetRotation(58f, 0, 1.2f);
                     sceneManager.ActiveScene.Add(gameObject);
                     computerGamesNumber++;
@@ -3641,7 +3679,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3651,12 +3689,12 @@ ObjectType.Static, RenderType.Opaque);
             r2d2GameObjects.Add(gameObject);
             r2d2Number++;
 
-            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_green");
+            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_green", enemyEffect);
             sceneManager.ActiveScene.Add(gameObject);
             r2d2GameObjects.Add(gameObject);
             r2d2Number++;
 
-            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_red");
+            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_red", enemyEffect);
             sceneManager.ActiveScene.Add(gameObject);
             r2d2GameObjects.Add(gameObject);
             r2d2Number++;
@@ -3683,7 +3721,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3735,7 +3773,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3782,7 +3820,7 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3874,7 +3912,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3931,7 +3969,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -3981,7 +4019,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -4033,7 +4071,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(enemyEffect),
                     1
                     );
 
@@ -4065,14 +4103,14 @@ ObjectType.Static, RenderType.Opaque);
             {
                 for (int j = 0; j < cansGameObjects.Count; j++)
                 {
-                    gameObject = CloneModelGameObject(cansGameObjects[j], "can " + canNumber, new Vector3(0, -1.38f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_ministrone");
+                    gameObject = CloneModelGameObject(cansGameObjects[j], "can " + canNumber, new Vector3(0, -1.38f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_ministrone", enemyEffect);
                     sceneManager.ActiveScene.Add(gameObject);
                     canNumber++;
                 }
 
                 for (int k = 0; k < cansGameObjects.Count; k++)
                 {
-                    gameObject = CloneModelGameObject(cansGameObjects[k], "can " + canNumber, new Vector3(0, -2.9f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_pea_stew");
+                    gameObject = CloneModelGameObject(cansGameObjects[k], "can " + canNumber, new Vector3(0, -2.9f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_pea_stew", enemyEffect);
                     sceneManager.ActiveScene.Add(gameObject);
                     canNumber++;
                 }
@@ -4096,7 +4134,7 @@ ObjectType.Static, RenderType.Opaque);
             renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    new GDBasicEffect(unlitEffect),
+                    new GDBasicEffect(litEffect),
                     1
                     );
 
@@ -4643,6 +4681,28 @@ ObjectType.Static, RenderType.Opaque);
                    meshPath,
                    texturePath,
                    new GDBasicEffect(unlitEffect),
+                   1
+                   );
+
+            gameObjectClone.AddComponent(cloneRenderer);
+            return gameObjectClone;
+        }
+
+        private GameObject CloneModelGameObject(GameObject gameObject, string newName, Vector3 offset, string meshPath, string texturePath, BasicEffect effect)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Translation + offset
+                );
+
+            Renderer cloneRenderer = InitializeRenderer(
+                   meshPath,
+                   texturePath,
+                   new GDBasicEffect(effect),
                    1
                    );
 
