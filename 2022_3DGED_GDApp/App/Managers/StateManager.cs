@@ -13,6 +13,7 @@ namespace GD.App
     {
         Default,
         GeneratorRoomOpen,
+        FuseIn,
         GeneratorOn,
         Win,
         Lose
@@ -107,6 +108,10 @@ namespace GD.App
                         RenderType.Opaque,
                         (x) => x.Name == AppData.GENERATOR_DOOR_NAME);
 #endif
+                    break;
+
+                case GameState.FuseIn:
+                    System.Diagnostics.Debug.WriteLine("Fuse In");
                     break;
 
                 case GameState.GeneratorOn:

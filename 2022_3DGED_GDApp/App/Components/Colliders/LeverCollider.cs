@@ -14,17 +14,19 @@ namespace GD.App
 
         protected override void HandleInteraction()
         {
-            InventoryItem fuse = Application.InventoryManager.FindByName(AppData.FUSE_220V_NAME);
-            if (fuse != null)
+            object[] parameters;
+
+            if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
             {
+                parameters = new object[] { DialogueState.GeneratorNotWorking };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
             }
             else
             {
-                if (!(Application.StateManager.CurrentGameState == GameState.GeneratorOn))
-                {
-                    object[] parameters = { DialogueState.GeneratorNotWorking };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
-                }
+                // Send event to StateManager - change state to reflect that generator is now on.
+                parameters = new object[] { GameState.GeneratorOn };
+                EventDispatcher.Raise(new EventData(EventCategoryType.GameState,
+                    EventActionType.OnChangeState, parameters));
             }
         }
     }
