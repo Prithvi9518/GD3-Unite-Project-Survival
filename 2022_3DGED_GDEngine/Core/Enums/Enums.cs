@@ -1,5 +1,13 @@
 ﻿namespace GD.Engine
 {
+    public enum ColliderType : sbyte
+    {
+        Default,
+        Interactible,
+        Pickup,
+        BrokenGlass
+    }
+
     public enum GameObjectType : sbyte
     {
         Interactible,
@@ -49,7 +57,8 @@
         Explosion,
         BackgroundMusic,
         Alarm,
-        Pickup
+        Pickup,
+        Generator
     }
 
     #region Unused
@@ -174,6 +183,9 @@
         OnReachExit,
 
         OnInfectionDelta,
+        OnToggleButtonPrompt,
+        OnShowSubtitles,
+        OnToggleNote
         OnToggleButtonPrompt,
         OnEnterControlsMenu,
         OnExitControlsMenu

@@ -14,10 +14,37 @@ namespace GD.Engine
             bool isHandlingCollision = false, bool isTrigger = false)
             : base(gameObject, isHandlingCollision, isTrigger)
         {
+            EventDispatcher.Subscribe(EventCategoryType.Inventory, HandleInventoryEvent);
         }
 
-        protected override void RaiseCollisionResponseEvents()
+        private void HandleInventoryEvent(EventData eventData)
         {
+            switch (eventData.EventActionType)
+            {
+                case EventActionType.OnRemoveInventory:
+                    string name = eventData.Parameters[0] as string;
+                    if (name == gameObject.Name)
+                    {
+                        pickedUp = false;
+                    }
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
+        protected override void CheckButtonPromptState()
+        {
+            float distance = Vector3.Distance(playerGameObject.Transform.Translation, gameObject.Transform.Translation);
+            if (distance > AppData.INTERACTION_DISTANCE)
+            {
+                RaiseButtonPromptUIEvent(PromptState.NoPrompt);
+            }
+            else
+            {
+                RaiseButtonPromptUIEvent(PromptState.PickupPrompt);
+            }
         }
 
         protected override void HandleInteraction()

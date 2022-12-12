@@ -1,6 +1,8 @@
 ﻿using GD.Engine;
 using GD.Engine.Events;
 using GD.Engine.Globals;
+using JigLibX.Collision;
+using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -154,15 +156,59 @@ namespace GD.App
             if (inventory.Exists(uniqueIDMatch))
             {
                 InventoryItem item = inventory.Find(uniqueIDMatch);
+                System.Diagnostics.Debug.WriteLine("Using " + item.itemData.name);
 
-                //GameObject gameObject = item.itemData.gameObject;
+                GameObject gameObject = item.itemData.gameObject;
 
-                //Transform playerTransform = Application.CameraManager.ActiveCamera.transform;
-                //gameObject.Transform.SetTranslation(
-                //    playerTransform.Translation + playerTransform.World.Forward * 3
-                //    );
+                #region Check for PickupCollider
 
-                //Application.SceneManager.ActiveScene.Add(gameObject);
+                PickupCollider pickupCollider = gameObject.GetComponent<PickupCollider>();
+                if (pickupCollider != null)
+                {
+                    object[] parameters = { gameObject.Name };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnRemoveInventory, parameters));
+                }
+
+                #endregion Check for PickupCollider
+
+                #region Check for InteractableBehaviour - used when having problems with collider
+
+                InteractableBehaviour interactableBehaviour = gameObject.GetComponent<InteractableBehaviour>();
+                if (interactableBehaviour != null)
+                {
+                    System.Diagnostics.Debug.WriteLine("InteractableBehaviour found");
+
+                    object[] parameters = { gameObject.Name };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnRemoveInventory, parameters));
+                }
+
+                #endregion Check for InteractableBehaviour - used when having problems with collider
+
+                #region Check For Radio
+
+                RadioController radioController = gameObject.GetComponent<RadioController>();
+
+                if (radioController != null)
+                {
+                    Transform playerTransform = Application.CameraManager.ActiveCamera.transform;
+
+                    if (interactableBehaviour != null)
+                    {
+                        gameObject.Transform.SetTranslation(
+                        playerTransform.Translation + playerTransform.World.Forward * 5
+                        );
+
+                        gameObject.Transform.SetTranslation(
+                            gameObject.Transform.Translation.X,
+                            AppData.OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y - 3.2f,
+                            gameObject.Transform.Translation.Z
+                            );
+                    }
+
+                    Application.SceneManager.ActiveScene.Add(gameObject);
+                }
+
+                #endregion Check For Radio
 
                 Remove(item.itemData);
             }

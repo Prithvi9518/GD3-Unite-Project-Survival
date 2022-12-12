@@ -1,5 +1,6 @@
 ﻿using GD.App;
 using GD.Engine;
+using GD.Engine.Events;
 using GD.Engine.Globals;
 using JigLibX.Collision;
 using JigLibX.Geometry;
@@ -28,6 +29,9 @@ namespace GD.Engine
 
         //temp vars
         private Vector3 restrictedLook, restrictedRight;
+
+        private bool insideOffice = false;
+        private bool seenOfficeHollow = false;
 
         #endregion Fields
 
@@ -67,6 +71,9 @@ namespace GD.Engine
                 HandleMouseInput(gameTime);
                 HandleStrafe(gameTime, false);
             }
+
+            CheckInsideOffice();
+            CheckSeenOfficeHollow();
 
             //HandleJump(gameTime);
         }
@@ -195,6 +202,8 @@ namespace GD.Engine
             }
         }
 
+        #region Crouch/Uncrouch
+
         protected override void HandleCrouch()
         {
             if (crouchEnabled)
@@ -259,10 +268,35 @@ namespace GD.Engine
             transform.Translate(0, AppData.FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y, 0);
         }
 
+        #endregion Crouch/Uncrouch
+
         private void HandleJump(GameTime gameTime)
         {
             if (Input.Keys.IsPressed(Keys.Space))
                 characterBody.DoJump(jumpHeight);
+        }
+
+        private void CheckInsideOffice()
+        {
+            if (transform.Translation.X <= -34 && !insideOffice)
+            {
+                // Raise event to display subtitles in office
+                object[] parameters = { DialogueState.NeedKeycardInOffice };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                insideOffice = true;
+            }
+        }
+
+        private void CheckSeenOfficeHollow()
+        {
+            if (transform.Translation.Z <= -51.6f
+                && transform.Translation.X <= -4
+                && !seenOfficeHollow)
+            {
+                object[] parameters = { DialogueState.HollowBlockOffice };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                seenOfficeHollow = true;
+            }
         }
 
         #endregion Actions - Input

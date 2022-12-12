@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using System;
 using GD.Engine;
 using GD.Engine.Globals;
+using Microsoft.Xna.Framework.Audio;
 
 namespace GD.App
 {
@@ -17,6 +18,13 @@ namespace GD.App
         Lose
     }
 
+    public enum TimeState
+    {
+        Beginning,
+        HalfTime,
+        End
+    }
+
     public class StateManager : GameComponent
     {
         private double maxTimeInMS;
@@ -26,6 +34,14 @@ namespace GD.App
         private bool stopTime = false;
 
         private GameState currentState;
+        private TimeState timeState;
+
+        #region Properties
+
+        public double TotalElapsedTimeMS
+        {
+            get => totalElapsedTimeMS;
+        }
 
         public double CountdownTimeSecs
         {
@@ -42,6 +58,13 @@ namespace GD.App
             get => currentState;
         }
 
+        public TimeState CurrentTimeState
+        {
+            get => timeState;
+        }
+
+        #endregion Properties
+
         public StateManager(Game game, double maxTimeInMS) : base(game)
         {
             this.maxTimeInMS = maxTimeInMS;
@@ -57,7 +80,7 @@ namespace GD.App
             {
                 case EventActionType.OnChangeState:
                     GameState newState = (GameState)eventData.Parameters[0];
-                    HandleStateChange(newState);
+                    HandleGameStateChange(newState);
                     break;
 
                 case EventActionType.OnReachExit:
@@ -69,7 +92,7 @@ namespace GD.App
             }
         }
 
-        private void HandleStateChange(GameState newState)
+        private void HandleGameStateChange(GameState newState)
         {
             this.currentState = newState;
             switch (currentState)
@@ -88,22 +111,30 @@ namespace GD.App
 
                 case GameState.GeneratorOn:
 
-#if DEMO_STATES
-                    System.Diagnostics.Debug.WriteLine("Generator is now on");
+                    //System.Diagnostics.Debug.WriteLine("Generator is now on");
 
+                    // Send subtitles event
+                    object[] parameters = { DialogueState.GeneratorWorking };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
+                    // Play alarm sound
                     RaiseAlarmEvent(EventActionType.OnPlay2D);
-#endif
+
+                    // Play generator sound
+                    RaiseGeneratorSoundEvent(EventActionType.OnPlay3D);
 
                     break;
 
                 case GameState.Win:
 
-#if DEMO_STATES
                     System.Diagnostics.Debug.WriteLine("You Escaped");
-                    // Alarm sound playing twice for some reason - will fix later
+
+                    // Stop alarm sound: Alarm sound playing twice for some reason - will fix later
                     RaiseAlarmEvent(EventActionType.OnStop);
                     RaiseAlarmEvent(EventActionType.OnStop);
-#endif
+
+                    // Stop Generator Sound
+                    RaiseGeneratorSoundEvent(EventActionType.OnStop);
 
                     break;
 
@@ -119,16 +150,38 @@ namespace GD.App
             }
         }
 
+        private void HandleTimeStateChange(TimeState newState)
+        {
+            this.timeState = newState;
+            switch (timeState)
+            {
+                case TimeState.HalfTime:
+
+                    // Send event to show half-time subtitle
+                    object[] parameters = { DialogueState.Time1 };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
+                    break;
+
+                default:
+                    break;
+            }
+        }
+
         private bool CheckWin()
         {
             if ((currentState == GameState.GeneratorOn || currentState == GameState.Win)
                 && totalElapsedTimeMS < AppData.MAX_GAME_TIME_IN_MSECS)
             {
-                HandleStateChange(GameState.Win);
+                HandleGameStateChange(GameState.Win);
                 return true;
             }
             else
             {
+                // Raise event to show subtitles related to having no power in the building
+                object[] parameters = { DialogueState.ExitDoorNoPower };
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+
                 System.Diagnostics.Debug.WriteLine("Need to restore power first!");
             }
 
@@ -138,9 +191,9 @@ namespace GD.App
         private bool CheckLose()
         {
             if (totalElapsedTimeMS >= AppData.MAX_GAME_TIME_IN_MSECS
-                && currentState != GameState.Win)
+                && currentState != GameState.Win && currentState != GameState.Lose)
             {
-                HandleStateChange(GameState.Lose);
+                HandleGameStateChange(GameState.Lose);
                 return true;
             }
 
@@ -150,6 +203,23 @@ namespace GD.App
         private void RaiseAlarmEvent(EventActionType eventActionType)
         {
             object[] parameters = { "alarm-sound" };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, eventActionType, parameters));
+        }
+
+        private void RaiseGeneratorSoundEvent(EventActionType eventActionType)
+        {
+            var cameraAudioListener = Application.CameraManager.ActiveCamera.gameObject
+                .GetComponent<AudioListenerBehaviour>().AudioListener;
+
+            GameObject generator = Application.SceneManager.ActiveScene.Find(
+                ObjectType.Static,
+                RenderType.Opaque,
+                (x) => x.Name == AppData.GENERATOR_NAME
+                );
+
+            var generatorAudioEmitter = generator.GetComponent<AudioEmitterBehaviour>()?.AudioEmitter;
+
+            object[] parameters = { AppData.GENERATOR_SOUND_NAME, cameraAudioListener, generatorAudioEmitter };
             EventDispatcher.Raise(new EventData(EventCategoryType.Sound, eventActionType, parameters));
         }
 
@@ -176,6 +246,11 @@ namespace GD.App
                 //    new EventData(EventCategoryType.Player,
                 //    EventActionType.OnLose,
                 //    parameters));
+            }
+
+            if (totalElapsedTimeMS >= maxTimeInMS / 2 && timeState != TimeState.HalfTime)
+            {
+                HandleTimeStateChange(TimeState.HalfTime);
             }
 
             double countdownTime = Math.Abs((maxTimeInMS - totalElapsedTimeMS) / 1000d);

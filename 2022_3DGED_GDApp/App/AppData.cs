@@ -206,7 +206,8 @@ namespace GD.App
 
         #region Interactible Variables
 
-        public static readonly float INTERACTION_DISTANCE = 6.5f;
+        public static readonly float INTERACTION_DISTANCE = 3.5f;
+        public static readonly float LONG_INTERACTION_DISTANCE = 5.5f;
 
         #endregion Interactible Variables
 
@@ -220,7 +221,7 @@ namespace GD.App
         #region Timer Variables
 
         public static double MAX_GAME_TIME_IN_MSECS = 180000;
-        //public static double MAX_GAME_TIME_IN_MSECS = 5000;
+        //public static double MAX_GAME_TIME_IN_MSECS = 25000;
 
         #endregion Timer Variables
 
@@ -232,8 +233,12 @@ namespace GD.App
 
         #region Object Names
 
+        public static readonly string FLOOR_NAME = "ground_floor";
+
         public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
         public static readonly string KEYCARD_NAME = "office keycard";
+
+        public static readonly string GENERATOR_NAME = "generator";
         public static readonly string GENERATOR_DOOR_NAME = "generator door";
         public static readonly string FUSE_BOX_NAME = "fuse box";
         public static readonly string FUSE_220V_NAME = "fuse 220v";
@@ -242,12 +247,22 @@ namespace GD.App
         public static readonly string EXIT_DOOR_NAME = "exit door";
         public static readonly string EXIT_DOOR_FRAME_NAME = "exit door frame";
 
+        public static readonly string TOY_RADIO_NAME = "toy radio";
+
         #endregion
 
         #region UI Object Names
 
         public static readonly string INFECTION_METER_NAME = "infection meter";
         public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
+        public static readonly string SUBTITLES_NAME = "subtitles";
+
+        #endregion
+
+        #region Sound Object Names
+
+        public static readonly string GENERATOR_SOUND_NAME = "generator-sound";
+        public static readonly string GLASS_SHATTER_SOUND_NAME = "glass-shatter";
 
         #endregion
 
@@ -383,6 +398,36 @@ namespace GD.App
         public static readonly string BENCH_BASE_MODEL_PATH = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base";
 
         #endregion Benches
+
+        #region Aisle Labels
+
+        private static readonly string LABEL_BASE_PATH = "Assets/Textures/Aisles/Labels/aisle_";
+
+        public static readonly List<string> LABELS_LIST = new List<string>()
+        {
+            LABEL_BASE_PATH + "1",
+            LABEL_BASE_PATH + "2",
+            LABEL_BASE_PATH + "3",
+            LABEL_BASE_PATH + "4",
+            LABEL_BASE_PATH + "5",
+            LABEL_BASE_PATH + "6",
+            LABEL_BASE_PATH + "7",
+        };
+
+        #endregion Aisle Labels
+
+        #region Bottle Labels
+
+        private static readonly string BOTTLE_LABELS_BASE_PATH = "Assets/Textures/Aisles/Beverages/";
+
+        public static readonly List<string> BOTTLE_LABELS_LIST = new List<string>()
+        {
+            BOTTLE_LABELS_BASE_PATH + "budweiser_label",
+            BOTTLE_LABELS_BASE_PATH + "heineken_label",
+            BOTTLE_LABELS_BASE_PATH + "coors_label",
+        };
+
+        #endregion Bottle Labels
 
         #region Font Paths
 

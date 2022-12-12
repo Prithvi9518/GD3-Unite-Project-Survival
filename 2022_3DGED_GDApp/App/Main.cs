@@ -26,6 +26,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing.Text;
 using System.Reflection;
+using System.Text;
 using Application = GD.Engine.Globals.Application;
 using ButtonState = Microsoft.Xna.Framework.Input.ButtonState;
 using Cue = GD.Engine.Managers.Cue;
@@ -550,6 +551,54 @@ namespace GD.App
 
             #endregion
 
+            #region Dialogue Subtitles
+
+            textScale = new Vector2(1.5f, 1.5f);
+
+            uiGameObject = new GameObject(AppData.SUBTITLES_NAME);
+            uiGameObject.Transform = new Transform(
+                new Vector3(textScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(-400, 250), 0)
+                );
+
+            material = new TextMaterial2D(spriteFont, new StringBuilder(""),
+                new Vector2(0, 0),
+                Color.LightGreen,
+                0.8f
+                );
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new SubtitlesController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Office Note Pop-Up
+
+            uiGameObject = new GameObject("office note ui");
+
+            Vector2 noteScale = new Vector2(0.6f, 1f);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(noteScale, 1),
+                Vector3.Zero,
+                new Vector3(Application.Screen.ScreenCentre - noteScale + new Vector2(-300, -150), 0)
+                );
+
+            texture = Content.Load<Texture2D>(AppData.OFFICE_NOTE_TEXTURE_PATH);
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new NoteUIController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
             #region Add Scene to Manager and Set Active
 
             //add scene2D to manager
@@ -576,72 +625,108 @@ namespace GD.App
 
         private void LoadSounds()
         {
-            var soundEffect =
-                Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
+            #region Demo Sound
 
-            //add the new sound effect
-            soundManager.Add(new Cue(
-                "boom1",
-                soundEffect,
-                SoundCategoryType.Alarm,
-                new Vector3(1, 1, 0),
-                false));
+            //var soundEffect =
+            //    Content.Load<SoundEffect>("Assets/Audio/Diegetic/explode1");
 
-            var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+            ////add the new sound effect
+            //soundManager.Add(new Cue(
+            //    "boom1",
+            //    soundEffect,
+            //    SoundCategoryType.Alarm,
+            //    new Vector3(1, 1, 0),
+            //    false));
+
+            #endregion
+
+            #region Old music and ambience
+
+            //var MusicSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "HorrorMusic",
+            //     MusicSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     true));
+
+            //var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
+
+            ////Add the new sound for background
+            //soundManager.Add(new Cue(
+            //    "Ambient",
+            //     AmbientSound,
+            //     SoundCategoryType.BackgroundMusic,
+            //     new Vector3(0.1f, 1, 0),
+            //     false));
+
+            #endregion
+
+            var sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack");
 
             //Add the new sound for background
             soundManager.Add(new Cue(
                 "HorrorMusic",
-                 MusicSound,
+                 sound,
                  SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
+                 new Vector3(0.1f, 0, 0),
                  true));
-
-            var AmbientSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Ambient/horror-ambience-7");
-
-            //Add the new sound for background
-            soundManager.Add(new Cue(
-                "Ambient",
-                 AmbientSound,
-                 SoundCategoryType.BackgroundMusic,
-                 new Vector3(0.1f, 1, 0),
-                 false));
 
             // Glass breaking sound
 
-            var glassBreakingSound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass-shatter");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Glass/glass_smash_3");
 
             soundManager.Add(new Cue(
-                "glass-shatter",
-                glassBreakingSound,
+                AppData.GLASS_SHATTER_SOUND_NAME,
+                sound,
                 SoundCategoryType.Explosion,
-                new Vector3(1, 1, 0),
+                new Vector3(0.5f, 0, 0),
                 false
                 ));
 
-            // Pickup sound
+            #region Pickup Sound
 
-            var pickupSound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");
 
             soundManager.Add(new Cue(
                 "pickup-sound",
-                pickupSound,
+                sound,
                 SoundCategoryType.Pickup,
-                new Vector3(1, 1, 0),
+                new Vector3(0.2f, 0, 0),
                 false
                 ));
 
-            // Alarm sound
+            #endregion
 
-            var alarmSound = Content.Load<SoundEffect>(
-                "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
+            #region Alarm Sound
+
+            sound = Content.Load<SoundEffect>(
+                    "Assets/Audio/Diegetic/Alarm/381957__jsilversound__security-alarm");
 
             soundManager.Add(new Cue(
                 "alarm-sound",
-                alarmSound,
+                sound,
                 SoundCategoryType.Alarm,
-                new Vector3(0.3f, 0.5f, 0),
+                new Vector3(0.08f, 0f, 0),
                 true));
+
+            #endregion
+
+            #region Generator Sound
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Generator/Generator");
+
+            soundManager.Add(new Cue(
+                AppData.GENERATOR_SOUND_NAME,
+                sound,
+                SoundCategoryType.Generator,
+                new Vector3(1f, 0, 0),
+                true
+                ));
+
+            #endregion
         }
 
         private void LoadTextures()
@@ -875,11 +960,13 @@ namespace GD.App
                 new Viewport(0, 0, _graphics.PreferredBackBufferWidth,
                 _graphics.PreferredBackBufferHeight))); // 3000
 
-            // First person controller component - non collidable
+            #region Non-Collidable First Person Controller
 
             //cameraGameObject.AddComponent(new OurFirstPersonController(
             //    AppData.OLD_PLAYER_MOVE_SPEED, AppData.OLD_PLAYER_STRAFE_SPEED,
             //    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true));
+
+            #endregion
 
             #region Collision - Add capsule
 
@@ -896,14 +983,25 @@ namespace GD.App
 
             #endregion
 
+            #region Collidable First Person Controller
+
             cameraGameObject.AddComponent(new OurCollidableFPController(cameraGameObject,
-                characterCollider,
-                AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
-                AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
-                AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+                    characterCollider,
+                    AppData.PLAYER_MOVE_SPEED, AppData.PLAYER_STRAFE_SPEED,
+                    AppData.PLAYER_ROTATE_SPEED_VECTOR2, AppData.FIRST_PERSON_CAMERA_SMOOTH_FACTOR, true,
+                    AppData.PLAYER_COLLIDABLE_JUMP_HEIGHT));
+
+            #endregion
 
             // Item interaction controller component
             cameraGameObject.AddComponent(new InteractionController());
+
+            #region 3D Sound
+
+            //added ability for camera to listen to 3D sounds
+            cameraGameObject.AddComponent(new AudioListenerBehaviour());
+
+            #endregion
 
             cameraManager.Add(cameraGameObject.Name, cameraGameObject);
 
@@ -1359,101 +1457,101 @@ namespace GD.App
             InitializeOfficeModels();
             InitializeGeneratorRoomModels();
             InitializeFloors();
-            //InitializeWalls();
-            Initializew();
+            InitializeWalls();
             InitializeShoppingCentreAssets();
             InitializeAisles();
             InitializeCoffeeShop();
+            InitializeGreens();
         }
+
+        //private void InitializeWalls()
+        //{
+        //    #region Shopping Centre Walls
+
+        //    var gdBasicEffect = new GDBasicEffect(litEffect);
+        //    var texture_path = "Assets/Textures/walls";
+        //    GameObject gameObject = null;
+        //    Renderer renderer = null;
+
+        //    #region Main Walls
+
+        //    string main_wall_base_path = "Assets/Models/Walls/wall_";
+
+        //    for (int i = 1; i <= 8; i++)
+        //    {
+        //        gameObject = new GameObject("wall " + i, ObjectType.Static, RenderType.Opaque);
+        //        gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //        string model_path = main_wall_base_path + i;
+
+        //        renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //        gameObject.AddComponent(renderer);
+
+        //        sceneManager.ActiveScene.Add(gameObject);
+        //    }
+
+        //    #endregion
+
+        //    #region Shutter Walls
+
+        //    string shutter_wall_base_path = "Assets/Models/Walls/Shutter Walls/shutter_wall_";
+
+        //    for (int i = 1; i <= 2; i++)
+        //    {
+        //        gameObject = new GameObject("shutter wall " + i, ObjectType.Static, RenderType.Opaque);
+        //        gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //        string model_path = shutter_wall_base_path + i;
+
+        //        renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //        gameObject.AddComponent(renderer);
+
+        //        sceneManager.ActiveScene.Add(gameObject);
+        //    }
+
+        //    #endregion
+
+        //    #region Door Walls
+
+        //    string doors_wall_base_path = "Assets/Models/Walls/Door Walls/door_wall_";
+
+        //    for (int i = 1; i <= 2; i++)
+        //    {
+        //        gameObject = new GameObject("door wall " + i, ObjectType.Static, RenderType.Opaque);
+        //        gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+        //        string model_path = doors_wall_base_path + i;
+
+        //        renderer = InitializeRenderer(
+        //            model_path,
+        //            texture_path,
+        //            gdBasicEffect,
+        //            1
+        //            );
+
+        //        gameObject.AddComponent(renderer);
+
+        //        sceneManager.ActiveScene.Add(gameObject);
+        //    }
+
+        //    #endregion Door Walls
+
+        //    #endregion
+        //}
 
         private void InitializeWalls()
-        {
-            #region Shopping Centre Walls
-
-            var gdBasicEffect = new GDBasicEffect(litEffect);
-            var texture_path = "Assets/Textures/walls";
-            GameObject gameObject = null;
-            Renderer renderer = null;
-
-            #region Main Walls
-
-            string main_wall_base_path = "Assets/Models/Walls/wall_";
-
-            for (int i = 1; i <= 8; i++)
-            {
-                gameObject = new GameObject("wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = main_wall_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-
-            #endregion
-
-            #region Shutter Walls
-
-            string shutter_wall_base_path = "Assets/Models/Walls/Shutter Walls/shutter_wall_";
-
-            for (int i = 1; i <= 2; i++)
-            {
-                gameObject = new GameObject("shutter wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = shutter_wall_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-
-            #endregion
-
-            #region Door Walls
-
-            string doors_wall_base_path = "Assets/Models/Walls/Door Walls/door_wall_";
-
-            for (int i = 1; i <= 2; i++)
-            {
-                gameObject = new GameObject("door wall " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = doors_wall_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    texture_path,
-                    gdBasicEffect,
-                    1
-                    );
-
-                gameObject.AddComponent(renderer);
-
-                sceneManager.ActiveScene.Add(gameObject);
-            }
-
-            #endregion Door Walls
-
-            #endregion
-        }
-
-        private void Initializew()
         {
             var gameObject = new GameObject("Wall 1",
                        ObjectType.Static, RenderType.Opaque);
@@ -1818,7 +1916,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Floor
 
-            var gameObject = new GameObject("ground_floor",
+            var gameObject = new GameObject(AppData.FLOOR_NAME,
                ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
@@ -1909,7 +2007,7 @@ ObjectType.Static, RenderType.Opaque);
 
             gameObject.AddComponent(renderer);
 
-            Collider collider = new Collider(gameObject, true);
+            Collider collider = new NoteCollider(gameObject, true, true);
             collider.AddPrimitive(
                 new Box(
                     gameObject.Transform.Translation,
@@ -2292,29 +2390,77 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Plastic Bottles
 
-            string plastic_bottles_base_path = AppData.BIN_MODELS_PATH + "Plastic Bottles/plastic_bottle_";
+            int plasticBottleNumber = 1;
+            string plastic_bottles_base_path = AppData.BIN_MODELS_PATH + "Plastic Bottles/plastic_bottle";
 
-            for (int i = 1; i <= 4; i++)
+            gameObject = new GameObject("plastic bottle " + plasticBottleNumber, ObjectType.Static, RenderType.Opaque);
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            renderer = InitializeRenderer(
+                plastic_bottles_base_path,
+                AppData.BIN_TEXTURES_PATH + "Plastic Bottle/plastic_bottle",
+                gdBasicEffect,
+                1,
+                Color.White
+                );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            plasticBottleNumber++;
+            Random random = new Random();
+            for (int i = 0; i < 40; i++)
             {
-                gameObject = new GameObject("plastic bottle " + i, ObjectType.Static, RenderType.Opaque);
-                gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
-
-                string model_path = plastic_bottles_base_path + i;
-
-                renderer = InitializeRenderer(
-                    model_path,
-                    AppData.BIN_TEXTURES_PATH + "Plastic Bottle/plastic_bottle",
-                    gdBasicEffect,
-                    1,
-                    Color.White
-                    );
-
-                gameObject.AddComponent(renderer);
-
+                gameObject = CloneModelGameObjectRandom(gameObject, "plastic bottle " + plasticBottleNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
                 sceneManager.ActiveScene.Add(gameObject);
+                plasticBottleNumber++;
             }
 
             #endregion Plastic Bottles
+
+            #region Trash Pile
+
+            int trashPileNumber = 1;
+
+            gameObject = new GameObject("trash pile " + trashPileNumber,
+                  ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, new Vector3(90, 0, 0), new Vector3(43.6f, 2.23f, -86.3f));
+            string texture_path = "Assets/Textures/Shopping Centre/Bins/trash_pile";
+
+            string trash_pile_model_path = "Assets/Models/Shopping Centre/Bins/trash_pile";
+
+            renderer = InitializeRenderer(
+                    trash_pile_model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            trashPileNumber++;
+
+            gameObject = CloneModelGameObjectRandom(gameObject, "trash pile " + trashPileNumber, new Vector3(-22.5f, 0.8f, -82.4f));
+            sceneManager.ActiveScene.Add(gameObject);
+            trashPileNumber++;
+
+            gameObject.Transform.SetRotation(0, 180, 0);
+
+            gameObject = CloneModelGameObject(gameObject, "trash pile " + trashPileNumber, new Vector3(-2f, 0, -0.5f));
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = CloneModelGameObjectRandom(gameObject, "trash pile " + trashPileNumber, new Vector3(-18.6f, 0.8f, 41.1f));
+            sceneManager.ActiveScene.Add(gameObject);
+
+            gameObject = CloneModelGameObjectRandom(gameObject, "trash pile " + trashPileNumber, new Vector3(38.9f, 0.8f, 43.3f));
+            sceneManager.ActiveScene.Add(gameObject);
+            trashPileNumber++;
+
+            gameObject.Transform.SetRotation(0, 0, 0);
+
+            #endregion Trash Pile
 
             #endregion Bins
         }
@@ -2978,8 +3124,1007 @@ ObjectType.Static, RenderType.Opaque);
             InitializeFrontAisles(texture_path);
             InitializeBackAisles(texture_path);
             InitializeWallAisle(texture_path);
+            InitializeLabels();
+
+            InitializePreparedFoodsAisle();
+            InitializeToysAisle();
+            InitializeBeveragesAisle();
 
             #endregion
+        }
+
+        private void InitializeBeveragesAisle()
+        {
+            #region Beverage Aisle
+
+            #region Broken Bottle
+
+            int brokeBottleNumber = 1;
+
+            var gameObject = new GameObject("broken bottle " + brokeBottleNumber,
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(38.3f, 0.3f, -32.6f));
+
+            string model_path = "Assets/Models/Aisles/Beverages/broken_bottle";
+
+            string texture_path = "Assets/Textures/Aisles/Beverages/broken_bottle";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            var aisleScale = new Vector3(100f * gameObject.Transform.Scale.X,
+                20f * gameObject.Transform.Scale.Y, 60f * gameObject.Transform.Scale.Z);
+
+            Collider collider = new BrokenGlassCollider(gameObject, true, true);
+            collider.AddPrimitive(
+                new Box(
+                    gameObject.Transform.Translation,
+                    gameObject.Transform.Rotation,
+                    aisleScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            collider.Enable(gameObject, true, 10);
+            gameObject.AddComponent(collider);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            Random random = new Random();
+
+            brokeBottleNumber++;
+            for (int i = 0; i < 4; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(
+                    gameObject,
+                    "broken bottle " + brokeBottleNumber,
+                    new Vector3(random.Next(36, 43), 0.3f, random.Next(-76, -21)),
+                    aisleScale,
+                    true,
+                    ColliderType.BrokenGlass);
+
+                sceneManager.ActiveScene.Add(gameObject);
+
+                brokeBottleNumber++;
+            }
+
+            #endregion Broken Bottle
+
+            #region Bottle
+
+            int bottleNumber = 1;
+
+            gameObject = new GameObject("bottle " + bottleNumber,
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(31f, 4.2f, -72.3f));
+
+            model_path = "Assets/Models/Aisles/Beverages/bottle";
+
+            texture_path = "Assets/Textures/Aisles/Beverages/heineken_label";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> ginBottlesGameObjects = new List<GameObject>();
+            ginBottlesGameObjects.Add(gameObject);
+
+            random = new Random();
+
+            bottleNumber++;
+            for (int i = 0; i < 12; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "bottle " + brokeBottleNumber, new Vector3(0, 0, 3f));
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                ginBottlesGameObjects.Add(gameObject);
+                bottleNumber++;
+            }
+
+            for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+            for (int i = 0; i < ginBottlesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(0, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+            for (int i = 0; i < ginBottlesGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -1.4f, 3.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+            for (int i = 0; i < ginBottlesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(ginBottlesGameObjects[i], "bottle " + brokeBottleNumber, new Vector3(1.5f, -2.9f, 4.2f), model_path, AppData.BOTTLE_LABELS_LIST[random.Next(0, AppData.BOTTLE_LABELS_LIST.Count)]);
+                gameObject.Transform.SetRotation(0, random.Next(0, 180), 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                bottleNumber++;
+            }
+
+            #endregion Bottle
+
+            #endregion Beverage Aisle
+        }
+
+        private void InitializeLabels()
+        {
+            #region Aisle Labels
+
+            int labelNumber = 1;
+
+            var gameObject = new GameObject("label " + labelNumber,
+                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+
+            string model_path = "Assets/Models/Aisles/Label/label";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    AppData.LABELS_LIST[0],
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            List<GameObject> labelGameObjects = new List<GameObject>();
+            labelGameObjects.Add(gameObject);
+
+            labelNumber++;
+
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "label " + labelNumber, new Vector3(16.5f, 0, 0), "Assets/Models/Aisles/Label/label", AppData.LABELS_LIST[i + 1]);
+                labelGameObjects.Add(gameObject);
+                sceneManager.ActiveScene.Add(gameObject);
+                labelNumber++;
+            }
+
+            for (int i = 0; i < labelGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(labelGameObjects[i], "label " + labelNumber, new Vector3(0, 0, -52.2f), "Assets/Models/Aisles/Label/label", AppData.LABELS_LIST[i + 4]);
+                sceneManager.ActiveScene.Add(gameObject);
+                labelNumber++;
+            }
+
+            gameObject = CloneModelGameObject(labelGameObjects[0], "label " + labelNumber, new Vector3(-11.9f, 0, -26.5f), "Assets/Models/Aisles/Label/label", AppData.LABELS_LIST[3]);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Aisle Labels
+        }
+
+        private void InitializeGreens()
+        {
+            Random random = new Random();
+            int weedNumber = 1;
+
+            #region Weed Tulip
+
+            GameObject gameObject = new GameObject("weed " + weedNumber,
+                  ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0.4f, 1f));
+            string texture_path = "Assets/Textures/Shopping Centre/Greens/weed_tulip";
+
+            string model_path = "Assets/Models/Shopping Centre/Greens/weed_tulip";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            weedNumber++;
+
+            for (int i = 0; i < 200; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
+                sceneManager.ActiveScene.Add(gameObject);
+                weedNumber++;
+            }
+
+            #endregion Weed Tulip
+
+            #region Weed Flower
+
+            gameObject = new GameObject("weed " + weedNumber,
+                 ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0.4f, 1f));
+            texture_path = "Assets/Textures/Shopping Centre/Greens/weed_flower";
+
+            model_path = "Assets/Models/Shopping Centre/Greens/weed_flower";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            weedNumber++;
+
+            for (int i = 0; i < 200; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
+                sceneManager.ActiveScene.Add(gameObject);
+                weedNumber++;
+            }
+
+            #endregion Weed Flower
+
+            #region Weed
+
+            gameObject = new GameObject("weed " + weedNumber,
+                ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0.4f, 1f));
+            texture_path = "Assets/Textures/Shopping Centre/Greens/weed";
+
+            model_path = "Assets/Models/Shopping Centre/Greens/weed_flower";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            weedNumber++;
+
+            for (int i = 0; i < 200; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), 0.4f, random.Next(-87, 87)));
+                sceneManager.ActiveScene.Add(gameObject);
+                weedNumber++;
+            }
+
+            #endregion Weed
+
+            #region Bushes
+
+            gameObject = new GameObject("weed " + weedNumber,
+              ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 2.5f, 1f));
+            texture_path = "Assets/Textures/Shopping Centre/Greens/bush";
+
+            model_path = "Assets/Models/Shopping Centre/Greens/bush";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            weedNumber++;
+
+            for (int i = 0; i < 20; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-4, 1), random.Next(1, 5), random.Next(-11, 35)));
+                sceneManager.ActiveScene.Add(gameObject);
+                weedNumber++;
+            }
+
+            for (int i = 0; i < 40; i++)
+            {
+                gameObject = CloneModelGameObjectRandom(gameObject, "weed " + weedNumber, new Vector3(random.Next(-31, 47), random.Next(1, 2), random.Next(-87, 87)));
+                sceneManager.ActiveScene.Add(gameObject);
+                weedNumber++;
+            }
+
+            #endregion Bushes
+        }
+
+        private void InitializeToysAisle()
+        {
+            #region Toys
+
+            #region Computer Games
+
+            int computerGamesNumber = 1;
+
+            GameObject gameObject = new GameObject("computer game " + computerGamesNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, new Vector3(15f, 0, 0), new Vector3(15.6f, 2.6f, -26.4f));
+            string texture_path = "Assets/Textures/Aisles/Toys/Computer Games/cod_ww2";
+
+            string model_path = "Assets/Models/Aisles/Toys/computer_game";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> computerGameObjects = new List<GameObject>();
+            computerGameObjects.Add(gameObject);
+
+            computerGamesNumber++;
+
+            for (int i = 0; i < 6; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "computer game " + computerGamesNumber, new Vector3(0, 0, -0.1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                computerGameObjects.Add(gameObject);
+                computerGamesNumber++;
+            }
+
+            float zAxis = -0.7f;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < computerGameObjects.Count; j++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0, 0, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/god_of_war");
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                for (int k = 0; k < computerGameObjects.Count; k++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, 0, zAxis - 2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/gta_v");
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                zAxis += -0.7f;
+            }
+
+            gameObject = CloneModelGameObject(gameObject, "computer game" + computerGamesNumber, new Vector3(0.1f, -0.4f, -1.6f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/farcry_4");
+            gameObject.Transform.SetRotation(90, -90, 0);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> computerGameObjectsTwo = new List<GameObject>();
+            computerGameObjectsTwo.Add(gameObject);
+
+            for (int i = 0; i < 5; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "computer game " + computerGamesNumber, new Vector3(0, 0.1f, 0.02f));
+                sceneManager.ActiveScene.Add(gameObject);
+                computerGameObjectsTwo.Add(gameObject);
+                computerGamesNumber++;
+            }
+
+            for (int i = 0; i < computerGameObjectsTwo.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -1f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/tekken_7");
+                sceneManager.ActiveScene.Add(gameObject);
+                computerGamesNumber++;
+            }
+
+            for (int i = 0; i < computerGameObjectsTwo.Count; i++)
+            {
+                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.02f, -1.5f, -2.2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/fallout_76");
+                gameObject.Transform.SetRotation(90, 45, 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                computerGamesNumber++;
+            }
+
+            for (int i = 0; i < computerGameObjectsTwo.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(computerGameObjectsTwo[i], "computer game " + computerGamesNumber, new Vector3(0.04f, 0, -2f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/deus");
+                gameObject.Transform.SetRotation(85, -50, 0);
+                sceneManager.ActiveScene.Add(gameObject);
+                computerGamesNumber++;
+            }
+
+            zAxis = 0.01f;
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < computerGameObjects.Count; j++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -1.7f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/uncharted");
+                    gameObject.Transform.SetRotation(45f, 0, 0);
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                for (int k = 0; k < computerGameObjects.Count; k++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/outlast");
+                    gameObject.Transform.SetRotation(50f, 0, 1.2f);
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                for (int l = 0; l < computerGameObjects.Count; l++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[l], "computer game " + computerGamesNumber, new Vector3(0, -1.7f, zAxis - 3f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/hellblade");
+                    gameObject.Transform.SetRotation(50f, 0, 1.2f);
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                zAxis += -0.7f;
+            }
+
+            zAxis = -9f;
+            for (int i = 0; i < 2; i++)
+            {
+                for (int j = 0; j < computerGameObjects.Count; j++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[j], "computer game" + computerGamesNumber, new Vector3(0f, -0.2f, zAxis), model_path, "Assets/Textures/Aisles/Toys/Computer Games/farcry");
+                    gameObject.Transform.SetRotation(58f, 0, 0);
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                for (int k = 0; k < computerGameObjects.Count; k++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[k], "computer game " + computerGamesNumber, new Vector3(0, -0.2f, zAxis - 1.5f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/mad_max");
+                    gameObject.Transform.SetRotation(58f, 0, 1.2f);
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                for (int l = 0; l < computerGameObjects.Count; l++)
+                {
+                    gameObject = CloneModelGameObject(computerGameObjects[l], "computer game " + computerGamesNumber, new Vector3(0, -0.2f, zAxis - 3f), model_path, "Assets/Textures/Aisles/Toys/Computer Games/infamous");
+                    gameObject.Transform.SetRotation(58f, 0, 1.2f);
+                    sceneManager.ActiveScene.Add(gameObject);
+                    computerGamesNumber++;
+                }
+
+                zAxis += -0.7f;
+            }
+
+            #endregion Computer Games
+
+            #region R2-D2
+
+            int r2d2Number = 1;
+            gameObject = new GameObject("R2-D2 " + r2d2Number,
+                  ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture_path = "Assets/Textures/Aisles/Toys/R2-D2/r2_blue";
+
+            model_path = "Assets/Models/Aisles/Toys/r2_d2";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> r2d2GameObjects = new List<GameObject>();
+            r2d2GameObjects.Add(gameObject);
+            r2d2Number++;
+
+            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_green");
+            sceneManager.ActiveScene.Add(gameObject);
+            r2d2GameObjects.Add(gameObject);
+            r2d2Number++;
+
+            gameObject = CloneModelGameObject(gameObject, "R2-D2 " + r2d2Number, new Vector3(0, 0, 2f), "Assets/Models/Aisles/Toys/r2_d2", "Assets/Textures/Aisles/Toys/R2-D2/r2_red");
+            sceneManager.ActiveScene.Add(gameObject);
+            r2d2GameObjects.Add(gameObject);
+            r2d2Number++;
+
+            for (int i = 0; i < r2d2GameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(r2d2GameObjects[i], "R2-D2 " + r2d2Number, new Vector3(0, 0, 6f));
+                sceneManager.ActiveScene.Add(gameObject);
+                r2d2Number++;
+            }
+
+            #endregion R2-D2
+
+            #region Board Games
+
+            gameObject = new GameObject("Board Games" + r2d2Number,
+                  ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture_path = "Assets/Textures/Aisles/Toys/board_games";
+
+            model_path = "Assets/Models/Aisles/Toys/board_games";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Board Games
+
+            #region Teddy Bears
+
+            int teddyBearNumber = 1;
+            gameObject = new GameObject("teddy bear " + teddyBearNumber,
+                  ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, -0.2f, 0));
+            texture_path = "Assets/Textures/Aisles/Toys/teddy_bear";
+
+            model_path = "Assets/Models/Aisles/Toys/teddy_bear";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            teddyBearNumber++;
+
+            for (int i = 0; i < 10; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "teddy bear " + teddyBearNumber, new Vector3(0, 0, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                teddyBearNumber++;
+            }
+
+            #endregion Teddy Bears
+
+            gameObject = new GameObject(AppData.TOY_RADIO_NAME,
+                 ObjectType.Static, RenderType.Opaque);
+            gameObject.GameObjectType = GameObjectType.Collectible;
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(14.9f, 2.5f, -25f));
+            texture_path = "Assets/Textures/Aisles/Toys/toy_radio";
+
+            model_path = "Assets/Models/Aisles/Toys/toy_radio";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            //Collider collider = new PickupCollider(gameObject, true, true);
+            //collider.AddPrimitive(
+            //    new Box(
+            //        gameObject.Transform.Translation,
+            //        gameObject.Transform.Rotation,
+            //        120 * gameObject.Transform.Scale
+            //        ),
+            //    new MaterialProperties(0.8f, 0.8f, 0.7f)
+            //    );
+
+            //collider.Enable(gameObject, true, 10);
+            //gameObject.AddComponent(collider);
+
+            gameObject.AddComponent(new InteractableBehaviour());
+
+            gameObject.AddComponent(new RadioController());
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Toys
+        }
+
+        private void InitializePreparedFoodsAisle()
+        {
+            #region Prepared Foods
+
+            #region Cereal Box
+
+            int cerealNumber = 1;
+
+            var gameObject = new GameObject("cereal box " + cerealNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            var texture_path = "Assets/Textures/Aisles/Prepared Foods/cereal_box";
+
+            var model_path = "Assets/Models/Aisles/Prepared Foods/cereal_box";
+
+            Renderer renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> cerealBoxesGameObjects = new List<GameObject>();
+            cerealBoxesGameObjects.Add(gameObject);
+
+            cerealNumber++;
+
+            for (int i = 0; i < 2; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "cereal box " + cerealNumber, new Vector3(-0.26f, 0, 0));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealBoxesGameObjects.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, 0, -2f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, 0, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < 1; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, 0, 3f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, -1.5f, -2f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, -1.5f, -3f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, -1.5f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, -3f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            for (int i = 0; i < cerealBoxesGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(cerealBoxesGameObjects[i], "cereal box " + cerealNumber, new Vector3(0, -3f, -2f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cerealNumber++;
+            }
+
+            #endregion Cereal Box
+
+            #region Energy Drink
+
+            int energyDrinkNumber = 1;
+
+            gameObject = new GameObject("energy drink " + energyDrinkNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture_path = "Assets/Textures/Aisles/Prepared Foods/energy_drink";
+
+            model_path = "Assets/Models/Aisles/Prepared Foods/energy_drink";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> energyDrinksGameObjects = new List<GameObject>();
+            energyDrinksGameObjects.Add(gameObject);
+
+            energyDrinkNumber++;
+
+            for (int i = 0; i < 10; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "energy drink " + energyDrinkNumber, new Vector3(0f, 0, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                energyDrinksGameObjects.Add(gameObject);
+                energyDrinkNumber++;
+            }
+
+            for (int i = 0; i < energyDrinksGameObjects.Count - 4; i++)
+            {
+                gameObject = CloneModelGameObject(energyDrinksGameObjects[i], "energy drink " + energyDrinkNumber, new Vector3(0f, -1.5f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                energyDrinkNumber++;
+            }
+
+            for (int i = 0; i < energyDrinksGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(energyDrinksGameObjects[i], "energy drink " + energyDrinkNumber, new Vector3(-1.4f, -3f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                energyDrinkNumber++;
+            }
+
+            for (int i = 2; i < energyDrinksGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(energyDrinksGameObjects[i], "energy drink " + energyDrinkNumber, new Vector3(0f, -3f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                energyDrinkNumber++;
+            }
+
+            #endregion Energy Drink
+
+            #region Juice Carton
+
+            int juiceCartonNumber = 1;
+
+            gameObject = new GameObject("juice carton " + energyDrinkNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0, 5f));
+            texture_path = "Assets/Textures/Aisles/Prepared Foods/juice_carton";
+
+            model_path = "Assets/Models/Aisles/Prepared Foods/juice_carton";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> juiceCartonsGameObjects = new List<GameObject>();
+            juiceCartonsGameObjects.Add(gameObject);
+
+            juiceCartonNumber++;
+
+            for (int i = 0; i < 4; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "juice carton " + juiceCartonNumber, new Vector3(0f, 0, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                juiceCartonsGameObjects.Add(gameObject);
+                juiceCartonNumber++;
+            }
+
+            for (int i = 0; i < juiceCartonsGameObjects.Count - 1; i++)
+            {
+                gameObject = CloneModelGameObject(juiceCartonsGameObjects[i], "juice carton  " + juiceCartonNumber, new Vector3(0f, -1.5f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                juiceCartonNumber++;
+            }
+
+            for (int i = 0; i < juiceCartonsGameObjects.Count - 2; i++)
+            {
+                gameObject = CloneModelGameObject(juiceCartonsGameObjects[i], "juice carton  " + juiceCartonNumber, new Vector3(0f, -3f, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                juiceCartonNumber++;
+            }
+
+            #endregion Juice Carton
+
+            #region Crisps
+
+            int crispsNumber = 1;
+
+            gameObject = new GameObject("crisps " + crispsNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, Vector3.Zero);
+            texture_path = "Assets/Textures/Aisles/Prepared Foods/crisps";
+
+            model_path = "Assets/Models/Aisles/Prepared Foods/crisps";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> crispsGameObjects = new List<GameObject>();
+            crispsGameObjects.Add(gameObject);
+
+            crispsNumber++;
+
+            for (int i = 0; i < 6; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "crisps " + crispsNumber, new Vector3(0.1f, 0, 0f));
+                sceneManager.ActiveScene.Add(gameObject);
+                crispsGameObjects.Add(gameObject);
+                crispsNumber++;
+            }
+
+            for (int i = 0; i < 10; i++)
+            {
+                for (int j = 0; j < crispsGameObjects.Count; j++)
+                {
+                    gameObject = CloneModelGameObject(crispsGameObjects[j], "crisps " + crispsNumber, new Vector3(0f, 0, 1f + i));
+                    sceneManager.ActiveScene.Add(gameObject);
+                    crispsNumber++;
+                }
+
+                for (int k = 0; k < crispsGameObjects.Count; k++)
+                {
+                    gameObject = CloneModelGameObject(crispsGameObjects[k], "crisps " + crispsNumber, new Vector3(0f, 0, -1f - i));
+                    sceneManager.ActiveScene.Add(gameObject);
+                    crispsNumber++;
+                }
+            }
+
+            #endregion Crisps
+
+            #region Cans
+
+            int canNumber = 1;
+
+            gameObject = new GameObject("can " + canNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0, -2f));
+            model_path = "Assets/Models/Aisles/Prepared Foods/can";
+            texture_path = "Assets/Textures/Aisles/Prepared Foods/can_tomato_soup";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> cansGameObjects = new List<GameObject>();
+            cansGameObjects.Add(gameObject);
+
+            canNumber++;
+
+            for (int i = 0; i < 12; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "can " + canNumber, new Vector3(0, 0, -0.5f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cansGameObjects.Add(gameObject);
+                canNumber++;
+            }
+
+            for (int i = 0; i < 12; i++)
+            {
+                gameObject = CloneModelGameObject(cansGameObjects[i], "can " + canNumber, new Vector3(0.5f, 0, 2f));
+                sceneManager.ActiveScene.Add(gameObject);
+                cansGameObjects.Add(gameObject);
+                canNumber++;
+            }
+
+            float zAxis = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                for (int j = 0; j < cansGameObjects.Count; j++)
+                {
+                    gameObject = CloneModelGameObject(cansGameObjects[j], "can " + canNumber, new Vector3(0, -1.38f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_ministrone");
+                    sceneManager.ActiveScene.Add(gameObject);
+                    canNumber++;
+                }
+
+                for (int k = 0; k < cansGameObjects.Count; k++)
+                {
+                    gameObject = CloneModelGameObject(cansGameObjects[k], "can " + canNumber, new Vector3(0, -2.9f, zAxis), model_path, "Assets/Textures/Aisles/Prepared Foods/can_pea_stew");
+                    sceneManager.ActiveScene.Add(gameObject);
+                    canNumber++;
+                }
+
+                zAxis += -7f;
+            }
+
+            #endregion Cans
+
+            #region Olive Oil
+
+            int oliveOilNumber = 1;
+
+            gameObject = new GameObject("olive oil " + oliveOilNumber,
+                   ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(0.02f * Vector3.One, Vector3.Zero, new Vector3(0, 0, 1f));
+            model_path = "Assets/Models/Aisles/Prepared Foods/olive_oil";
+            texture_path = "Assets/Textures/Aisles/Prepared Foods/olive_oil";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(unlitEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+            List<GameObject> oliveOilGameObjects = new List<GameObject>();
+            cansGameObjects.Add(gameObject);
+
+            oliveOilNumber++;
+
+            for (int i = 0; i < 6; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "olive oil " + oliveOilNumber, new Vector3(0, 0, -1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                oliveOilGameObjects.Add(gameObject);
+                oliveOilNumber++;
+            }
+
+            for (int i = 0; i < 6; i++)
+            {
+                gameObject = CloneModelGameObject(oliveOilGameObjects[i], "olive oil " + oliveOilNumber, new Vector3(-0.5f, 0, 2f));
+                sceneManager.ActiveScene.Add(gameObject);
+                oliveOilGameObjects.Add(gameObject);
+                oliveOilNumber++;
+            }
+
+            for (int i = 0; i < oliveOilGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(oliveOilGameObjects[i], "olive oil " + oliveOilNumber, new Vector3(0, -1.5f, 0.5f));
+                sceneManager.ActiveScene.Add(gameObject);
+                oliveOilNumber++;
+            }
+
+            for (int i = 0; i < oliveOilGameObjects.Count; i++)
+            {
+                gameObject = CloneModelGameObject(oliveOilGameObjects[i], "olive oil " + oliveOilNumber, new Vector3(0, -3f, -1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                oliveOilNumber++;
+            }
+
+            #endregion Olive Oil
+
+            #endregion Prepared Foods
         }
 
         private void InitializeShutter()
@@ -3103,7 +4248,7 @@ ObjectType.Static, RenderType.Opaque);
 
             #region Generator
 
-            gameObject = new GameObject("generator",
+            gameObject = new GameObject(AppData.GENERATOR_NAME,
                                     ObjectType.Static, RenderType.Opaque);
 
             gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(64.6f, 2f, 85.2f));
@@ -3134,6 +4279,9 @@ ObjectType.Static, RenderType.Opaque);
 
             collider.Enable(gameObject, true, 10);
             gameObject.AddComponent(collider);
+
+            gameObject.AddComponent(new AudioEmitterBehaviour());
+
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
@@ -3222,6 +4370,96 @@ ObjectType.Static, RenderType.Opaque);
             sceneManager.ActiveScene.Add(gameObject);
 
             #endregion
+
+            #region Manequins
+
+            int manequinNumber = 1;
+            gameObject = new GameObject("manequin " + manequinNumber,
+                                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-0.8f, 0, 0));
+
+            texture_path = "Assets/Textures/Props/Generator_Room/manequin";
+
+            model_path = "Assets/Models/Generator Room/manequin";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(litEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+
+            sceneManager.ActiveScene.Add(gameObject);
+
+            List<GameObject> manequinsGameObject = new List<GameObject>();
+            manequinsGameObject.Add(gameObject);
+
+            manequinNumber++;
+            for (int i = 0; i < 3; i++)
+            {
+                gameObject = CloneModelGameObject(gameObject, "manequin ", new Vector3(3f, 0, 0));
+                sceneManager.ActiveScene.Add(gameObject);
+                manequinsGameObject.Add(gameObject);
+                manequinNumber++;
+            }
+
+            for (int i = 0; i < manequinsGameObject.Count; i++)
+            {
+                gameObject = CloneModelGameObject(manequinsGameObject[i], "manequin ", new Vector3(0, 0, 1f));
+                sceneManager.ActiveScene.Add(gameObject);
+                manequinNumber++;
+            }
+
+            #endregion Manequins
+
+            #region Voltage Sign
+
+            gameObject = new GameObject("voltage sign",
+                                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-0.8f, 0, 0));
+
+            texture_path = "Assets/Textures/Props/Generator_Room/warning_volts";
+
+            model_path = "Assets/Models/Generator Room/warning_volts";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(litEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Voltage Sign
+
+            #region Fan
+
+            gameObject = new GameObject("fan",
+                                        ObjectType.Static, RenderType.Opaque);
+
+            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, new Vector3(-1f, 0, 0));
+
+            texture_path = "Assets/Textures/Props/Generator_Room/fan";
+
+            model_path = "Assets/Models/Generator Room/fan";
+
+            renderer = InitializeRenderer(
+                    model_path,
+                    texture_path,
+                    new GDBasicEffect(litEffect),
+                    1
+                    );
+
+            gameObject.AddComponent(renderer);
+            sceneManager.ActiveScene.Add(gameObject);
+
+            #endregion Fan
         }
 
         #region Aisles
@@ -3375,6 +4613,28 @@ ObjectType.Static, RenderType.Opaque);
             return gameObjectClone;
         }
 
+        private GameObject CloneModelGameObject(GameObject gameObject, string newName, Vector3 offset, string meshPath, string texturePath)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                gameObject.Transform.Translation + offset
+                );
+
+            Renderer cloneRenderer = InitializeRenderer(
+                   meshPath,
+                   texturePath,
+                   new GDBasicEffect(unlitEffect),
+                   1
+                   );
+
+            gameObjectClone.AddComponent(cloneRenderer);
+            return gameObjectClone;
+        }
+
         private GameObject CloneModelGameObject(GameObject gameObject, string newName, Vector3 offset, Vector3 colliderScale, Vector3 rotation)
         {
             GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
@@ -3421,6 +4681,105 @@ ObjectType.Static, RenderType.Opaque);
             Renderer renderer = gameObject.GetComponent<Renderer>();
             Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
             gameObjectClone.AddComponent(cloneRenderer);
+
+            return gameObjectClone;
+        }
+
+        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName, Vector3 newTranslation)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                newTranslation
+                );
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
+
+            return gameObjectClone;
+        }
+
+        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName,
+            Vector3 newTranslation, Vector3 colliderScale)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                newTranslation
+                );
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
+
+            Collider cloneCollider = new Collider(gameObjectClone, true);
+
+            cloneCollider.AddPrimitive(
+                new Box(
+                    gameObjectClone.Transform.Translation,
+                    gameObjectClone.Transform.Rotation,
+                    colliderScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            cloneCollider.Enable(gameObjectClone, true, 10);
+            gameObjectClone.AddComponent(cloneCollider);
+
+            return gameObjectClone;
+        }
+
+        private GameObject CloneModelGameObjectRandom(GameObject gameObject, string newName,
+            Vector3 newTranslation, Vector3 colliderScale, bool isTrigger, ColliderType colliderType)
+        {
+            GameObject gameObjectClone = new GameObject(newName, gameObject.ObjectType, gameObject.RenderType);
+            gameObjectClone.GameObjectType = gameObject.GameObjectType;
+
+            gameObjectClone.Transform = new Transform(
+                gameObject.Transform.Scale,
+                gameObject.Transform.Rotation,
+                newTranslation
+                );
+
+            Renderer renderer = gameObject.GetComponent<Renderer>();
+            Renderer cloneRenderer = new Renderer(renderer.Effect, renderer.Material, renderer.Mesh);
+            gameObjectClone.AddComponent(cloneRenderer);
+
+            Collider cloneCollider;
+
+            switch (colliderType)
+            {
+                case ColliderType.Default:
+                    cloneCollider = new Collider(gameObjectClone, true, isTrigger);
+                    break;
+
+                case ColliderType.BrokenGlass:
+                    cloneCollider = new BrokenGlassCollider(gameObjectClone, true, isTrigger);
+                    break;
+
+                default:
+                    cloneCollider = new Collider(gameObjectClone, true, isTrigger);
+                    break;
+            }
+
+            cloneCollider.AddPrimitive(
+                new Box(
+                    gameObjectClone.Transform.Translation,
+                    gameObjectClone.Transform.Rotation,
+                    colliderScale
+                    ),
+                new MaterialProperties(0.8f, 0.8f, 0.7f)
+                );
+
+            cloneCollider.Enable(gameObjectClone, true, 10);
+            gameObjectClone.AddComponent(cloneCollider);
 
             return gameObjectClone;
         }
