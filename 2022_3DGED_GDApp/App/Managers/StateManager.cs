@@ -159,28 +159,41 @@ namespace GD.App
 
         private void HandleTimeStateChange(TimeState newState)
         {
-            this.timeState = newState;
-            object[] parameters;
+            //this.timeState = newState;
+            //object[] parameters;
 
-            switch (timeState)
-            {
-                case TimeState.HalfTime:
+            //GameObject dialogue = Application.SceneManager.ActiveScene.Find(
+            //    ObjectType.Static,
+            //    RenderType.Opaque,
+            //    (x) => x.Name == AppData.SUBTITLES_NAME
+            //    );
 
-                    // Send event to show half-time subtitle
-                    parameters = new object[] { DialogueState.Time1 };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+            //DialogueController dialogueController = dialogue.GetComponent<DialogueController>();
 
-                    break;
+            //switch (timeState)
+            //{
+            //    case TimeState.HalfTime:
+            //        if (dialogueController.CurrentSubtitle == DialogueState.NoDialogue)
+            //        {
+            //            // Send event to show half-time subtitle
+            //            parameters = new object[] { DialogueState.Time1 };
+            //            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+            //        }
 
-                case TimeState.ThreeFourthTime:
+            //        break;
 
-                    parameters = new object[] { DialogueState.Time2 };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
-                    break;
+            //    case TimeState.ThreeFourthTime:
+            //        if (dialogueController.CurrentSubtitle == DialogueState.NoDialogue)
+            //        {
+            //            parameters = new object[] { DialogueState.Time2 };
+            //            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+            //        }
 
-                default:
-                    break;
-            }
+            //        break;
+
+            //    default:
+            //        break;
+            //}
         }
 
         private bool CheckWin()
