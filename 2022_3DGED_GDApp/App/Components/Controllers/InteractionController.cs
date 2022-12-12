@@ -24,6 +24,8 @@ namespace GD.Engine
     {
         private bool isInteracting = false;
 
+        private bool radioPlaced = false;
+
         public InteractionController()
         {
             EventDispatcher.Subscribe(EventCategoryType.Pickup, HandlePickup);
@@ -38,7 +40,12 @@ namespace GD.Engine
         {
             CheckInteracting();
 
-            UseRadio();
+            if (radioPlaced)
+                UseRadio();
+            else
+            {
+                PlaceRadio();
+            }
 
             //base.Update(gameTime);
         }
@@ -54,6 +61,9 @@ namespace GD.Engine
                 case EventActionType.OnPickup:
 
                     GameObject gameObject = eventData.Parameters[0] as GameObject;
+
+                    if (gameObject.Name == AppData.TOY_RADIO_NAME)
+                        radioPlaced = false;
 
                     Application.SceneManager.ActiveScene.Remove(
                         gameObject.ObjectType,
@@ -97,12 +107,27 @@ namespace GD.Engine
             }
         }
 
+        private void PlaceRadio()
+        {
+            if (Input.Keys.WasJustPressed(Keys.R))
+            {
+                InventoryItem radio = Application.InventoryManager.FindByName(AppData.TOY_RADIO_NAME);
+                if (radio != null)
+                {
+                    object[] parameters = { AppData.TOY_RADIO_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+
+                    radioPlaced = true;
+                }
+            }
+        }
+
         private void UseRadio()
         {
-            if (Input.Keys.IsPressed(Keys.R))
+            if (Input.Keys.WasJustPressed(Keys.R) && radioPlaced)
             {
-                object[] parameters = { AppData.TOY_RADIO_NAME };
-                EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+                object[] parameters = { AppData.GLASS_SHATTER_SOUND_NAME };
+                EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
             }
         }
 
