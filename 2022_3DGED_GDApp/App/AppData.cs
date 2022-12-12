@@ -264,6 +264,8 @@ namespace GD.App
         public static readonly string GENERATOR_SOUND_NAME = "generator-sound";
         public static readonly string GLASS_SHATTER_SOUND_NAME = "glass-shatter";
 
+        public static readonly string ENEMY_SOUND_1_NAME = "enemy-sound-1";
+
         #endregion
 
         public static readonly List<Vector3> WALL_TRANSLATIONS = new List<Vector3>()

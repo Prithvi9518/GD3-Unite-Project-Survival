@@ -728,6 +728,20 @@ namespace GD.App
                 ));
 
             #endregion
+
+            #region Enemy Sounds
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Enemies/false_notes");
+
+            soundManager.Add(new Cue(
+                AppData.ENEMY_SOUND_1_NAME,
+                sound,
+                SoundCategoryType.Enemy,
+                new Vector3(0.5f, 0, 0),
+                false
+                ));
+
+            #endregion
         }
 
         private void LoadTextures()

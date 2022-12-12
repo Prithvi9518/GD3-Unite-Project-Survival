@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Ambient/horror-ambience-7.wav
 
+#begin Assets/Audio/Diegetic/Enemies/false_notes.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Enemies/false_notes.wav
+
 #begin Assets/Audio/Diegetic/explode1.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -79,6 +85,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong.wav
 
+#begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+
 #begin Assets/Fonts/INFECTED.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -92,12 +104,6 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Assets/Fonts/menu.spritefont
-
-#begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
 
 #begin Assets/Fonts/Perf.spritefont
 /importer:FontDescriptionImporter

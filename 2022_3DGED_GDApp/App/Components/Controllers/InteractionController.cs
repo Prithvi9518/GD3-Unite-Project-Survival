@@ -128,6 +128,8 @@ namespace GD.Engine
             {
                 object[] parameters = { AppData.GLASS_SHATTER_SOUND_NAME };
                 EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                RaiseEnemyMoveEvents();
             }
         }
 
@@ -149,16 +151,16 @@ namespace GD.Engine
         {
             // Event to play glass breaking sound
 
-            object[] parameters = { "glass-shatter" };
+            //object[] parameters = { "glass-shatter" };
 
-            EventDispatcher.Raise(
-                new EventData(EventCategoryType.Sound,
-                EventActionType.OnPlay2D,
-                parameters)
-                );
+            //EventDispatcher.Raise(
+            //    new EventData(EventCategoryType.Sound,
+            //    EventActionType.OnPlay2D,
+            //    parameters)
+            //    );
 
             // Event to make enemy move
-            parameters = new object[] { "true" };
+            object[] parameters = { "true" };
             EventDispatcher.Raise(
                 new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
                 );
