@@ -126,7 +126,7 @@ namespace GD.Engine
         {
             if (Input.Keys.WasJustPressed(Keys.R) && radioPlaced)
             {
-                object[] parameters = { AppData.GLASS_SHATTER_SOUND_NAME };
+                object[] parameters = { AppData.RADIO_SOUND_NAME };
                 EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
 
                 RaiseEnemyMoveEvents();

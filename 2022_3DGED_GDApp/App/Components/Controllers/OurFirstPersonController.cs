@@ -174,6 +174,8 @@ namespace GD.Engine
 
         protected virtual void HandleMouseInput(GameTime gameTime)
         {
+            if (Input.Gamepad.IsConnected()) return;
+
             rotation = Vector3.Zero;
             var currentDelta = Input.Mouse.Delta;
 
