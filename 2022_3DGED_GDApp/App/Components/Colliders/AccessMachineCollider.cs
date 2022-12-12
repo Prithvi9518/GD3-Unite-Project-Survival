@@ -36,7 +36,7 @@ namespace GD.Engine
                 if (!(Application.StateManager.CurrentGameState == GameState.GeneratorRoomOpen))
                 {
                     object[] parameters = { DialogueState.GeneratorRoomClosed };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
                     System.Diagnostics.Debug.WriteLine("You need a keycard");
                 }

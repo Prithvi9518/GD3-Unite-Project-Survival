@@ -122,7 +122,7 @@ namespace GD.App
 
                     // Send subtitles event
                     object[] parameters = { DialogueState.GeneratorWorking };
-                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
                     // Play alarm sound
                     RaiseAlarmEvent(EventActionType.OnPlay2D);
@@ -208,7 +208,7 @@ namespace GD.App
             {
                 // Raise event to show subtitles related to having no power in the building
                 object[] parameters = { DialogueState.ExitDoorNoPower };
-                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
                 System.Diagnostics.Debug.WriteLine("Need to restore power first!");
             }

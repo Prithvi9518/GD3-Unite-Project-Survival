@@ -42,7 +42,7 @@ namespace GD.Engine
                     if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
                     {
                         object[] parameters = { DialogueState.PickRightFuse };
-                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
                         System.Diagnostics.Debug.WriteLine("You have the wrong fuse");
                     }
@@ -53,7 +53,7 @@ namespace GD.Engine
                     if (!(Application.StateManager.CurrentGameState == GameState.FuseIn))
                     {
                         object[] parameters = { DialogueState.NeedFuse };
-                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
                         System.Diagnostics.Debug.WriteLine("You need a fuse");
                     }

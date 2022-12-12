@@ -31,7 +31,7 @@ namespace GD.Engine
 
                 // Raise event to show subtitles
                 parameters = new object[] { DialogueState.NoteInOffice };
-                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
                 noteShown = false;
             }

@@ -177,7 +177,7 @@ namespace GD.App
         {
             switch (eventData.EventActionType)
             {
-                case EventActionType.OnShowSubtitles:
+                case EventActionType.OnTriggerDialogue:
                     DialogueState newState = (DialogueState)eventData.Parameters[0];
                     ChangeSubtitle(newState);
                     break;

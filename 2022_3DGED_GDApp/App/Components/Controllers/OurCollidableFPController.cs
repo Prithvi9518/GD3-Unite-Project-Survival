@@ -316,7 +316,7 @@ namespace GD.Engine
             {
                 // Raise event to display subtitles in office
                 object[] parameters = { DialogueState.NeedKeycardInOffice };
-                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
                 insideOffice = true;
             }
         }
@@ -328,7 +328,7 @@ namespace GD.Engine
                 && !seenOfficeHollow)
             {
                 object[] parameters = { DialogueState.HollowBlockOffice };
-                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
                 seenOfficeHollow = true;
             }
         }
