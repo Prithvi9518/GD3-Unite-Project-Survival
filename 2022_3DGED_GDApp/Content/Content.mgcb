@@ -79,6 +79,20 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong.wav
 
+#begin Assets/Fonts/INFECTED.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/Fonts/INFECTED.spritefont
+
+#begin Assets/Fonts/menu.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Assets/Fonts/menu.spritefont
+
 #begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -3945,6 +3959,66 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Infection Meter/progress_white.png
+
+#begin Assets/Textures/Menu/Backgrounds/main_menu_bg_1280x720.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/main_menu_bg_1280x720.png
+
+#begin Assets/Textures/Menu/Backgrounds/main_menu_bg_407x280.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/main_menu_bg_407x280.png
+
+#begin Assets/Textures/Menu/Backgrounds/mainmenu.PNG
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/mainmenu.PNG
+
+#begin Assets/Textures/Menu/Buttons/btn_256x64.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Buttons/btn_256x64.png
+
+#begin Assets/Textures/Menu/Buttons/genericbtn.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Buttons/genericbtn.png
 
 #begin Assets/Textures/Props/Crates/crate1.jpg
 /importer:TextureImporter
