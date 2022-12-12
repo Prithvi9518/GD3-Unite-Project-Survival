@@ -267,6 +267,19 @@ namespace GD.App
         public static readonly string ENEMY_SOUND_1_NAME = "enemy-sound-1";
 
         public static readonly string INTRO_DIALOGUE = "intro_dialogue";
+        public static readonly string RIVERSIDE_MONOLOGUE_DIALOGUE = "riverside_monologue";
+
+        public static readonly string GENERATOR_NOT_WORKING_DIALOGUE = "generator_not_working";
+        public static readonly string FUSE_SOMEWHERE_DIALOGUE = "fuse_somewhere";
+        public static readonly string WHERE_FIND_FUSE_DIALOGUE = "where_find_fuse";
+        public static readonly string PICK_RIGHT_FUSE_DIALOGUE = "pick_right_fuse";
+
+        public static readonly string HOLLOW_IN_THE_WAY_DIALOGUE = "hollow_in_the_way";
+        public static readonly string GENERATOR_BUSTED_DIALOGUE = "generator_busted";
+
+        public static readonly string FIND_A_WAY_OUT_DIALOGUE = "find_a_way_out";
+        public static readonly string CANT_BE_THE_END_OF_ME_DIALOGUE = "cannot_be_the_end_of_me";
+        public static readonly string TIME_TO_GET_OUT_OF_HERE_DIALOGUE = "time_to_get_out_of_here";
 
         #endregion
 

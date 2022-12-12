@@ -72,7 +72,8 @@ namespace GD.App
             [SubtitleState.GeneralDialogue2] = "I have to get out of here. I'm not going to die in a supermarket.",
             [SubtitleState.GeneralDialogue3] = "I have to get out of here. This can't be the end of me.",
 
-            [SubtitleState.Time1] = "I don't have much time left! I need to find a way out."
+            [SubtitleState.Time1] = "I don't have much time left! I need to find a way out.",
+            [SubtitleState.Time2] = "I have to get out of here. This can't be the end of me."
         };
 
         private Dictionary<SubtitleState, float> durationsDict = new Dictionary<SubtitleState, float>
@@ -91,25 +92,45 @@ namespace GD.App
             [SubtitleState.GeneratorNotWorking] = 4000,
 
             [SubtitleState.NeedFuse] = 4000,
-            [SubtitleState.WhereFuse] = 4000,
+            [SubtitleState.WhereFuse] = 4500,
             [SubtitleState.PickRightFuse] = 4000,
 
-            [SubtitleState.GeneratorWorking] = 2500,
+            [SubtitleState.GeneratorWorking] = 2000,
             [SubtitleState.TimeToRun] = 2500,
 
-            [SubtitleState.GeneralDialogue1] = 5000,
+            [SubtitleState.GeneralDialogue1] = 5500,
             [SubtitleState.GeneralDialogue2] = 3500,
             [SubtitleState.GeneralDialogue3] = 3500,
 
-            [SubtitleState.Time1] = 4000
+            [SubtitleState.Time1] = 4000,
+            [SubtitleState.Time2] = 4000
         };
 
         private Dictionary<SubtitleState, float> delayedSubtitlesDurations = new Dictionary<SubtitleState, float>
         {
             [SubtitleState.GeneralDialogue1] = 5000,
-            [SubtitleState.GeneralDialogue3] = 15000,
+            [SubtitleState.GeneralDialogue3] = 25000,
             [SubtitleState.WhereFuse] = 5000,
             [SubtitleState.PickRightFuse] = 2000
+        };
+
+        private Dictionary<SubtitleState, string> subtitleDialogueDict = new Dictionary<SubtitleState, string>
+        {
+            [SubtitleState.Start1] = AppData.INTRO_DIALOGUE,
+            [SubtitleState.GeneralDialogue1] = AppData.RIVERSIDE_MONOLOGUE_DIALOGUE,
+
+            [SubtitleState.GeneratorNotWorking] = AppData.GENERATOR_NOT_WORKING_DIALOGUE,
+            [SubtitleState.NeedFuse] = AppData.FUSE_SOMEWHERE_DIALOGUE,
+            [SubtitleState.WhereFuse] = AppData.WHERE_FIND_FUSE_DIALOGUE,
+            [SubtitleState.PickRightFuse] = AppData.PICK_RIGHT_FUSE_DIALOGUE,
+
+            [SubtitleState.HollowBlockOffice] = AppData.HOLLOW_IN_THE_WAY_DIALOGUE,
+            [SubtitleState.NoteInOffice] = AppData.GENERATOR_BUSTED_DIALOGUE,
+
+            [SubtitleState.TimeToRun] = AppData.TIME_TO_GET_OUT_OF_HERE_DIALOGUE,
+
+            [SubtitleState.Time1] = AppData.FIND_A_WAY_OUT_DIALOGUE,
+            [SubtitleState.Time2] = AppData.CANT_BE_THE_END_OF_ME_DIALOGUE,
         };
 
         #endregion Dictionaries
@@ -120,8 +141,7 @@ namespace GD.App
             new List<SubtitleState>(){
                 SubtitleState.Start1,
                 SubtitleState.Start2,
-                SubtitleState.GeneralDialogue1,
-                SubtitleState.GeneralDialogue3
+                SubtitleState.GeneralDialogue1
             },
 
             new List<SubtitleState>(){SubtitleState.NeedFuse, SubtitleState.WhereFuse, SubtitleState.PickRightFuse},
@@ -137,6 +157,13 @@ namespace GD.App
         private float totalElapsedTimeInMS;
 
         private float tempElapsedTimeInMS;
+
+        private bool dialoguePlayed = false;
+
+        public SubtitleState CurrentSubtitle
+        {
+            get => currentSubtitle;
+        }
 
         public SubtitlesController()
         {
@@ -204,6 +231,9 @@ namespace GD.App
             currentSubtitle = newSubtitle;
             totalElapsedTimeInMS = 0;
             durationInMS = durationsDict.GetValueOrDefault(currentSubtitle, 0);
+
+            if (subtitleDialogueDict.ContainsKey(currentSubtitle))
+                dialoguePlayed = false;
         }
 
         public override void Update(GameTime gameTime)
@@ -216,6 +246,8 @@ namespace GD.App
             text = (text != "") ? "Ava:  " + text : text;
 
             textMaterial2D.StringBuilder.Append(text);
+
+            PlayCurrentDialogue();
 
             if (currentSubtitle != SubtitleState.NoSubtitle)
                 totalElapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
@@ -252,6 +284,18 @@ namespace GD.App
             {
                 ChangeSubtitle(newSubtitle);
                 tempElapsedTimeInMS = 0;
+            }
+        }
+
+        private void PlayCurrentDialogue()
+        {
+            if (!dialoguePlayed)
+            {
+                string currentDialogue = subtitleDialogueDict.GetValueOrDefault(currentSubtitle, "");
+                object[] parameters = { currentDialogue };
+                EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                dialoguePlayed = true;
             }
         }
     }

@@ -61,7 +61,6 @@ namespace GD.App
         private SceneManager<Scene2D> menuManager;
 
         private InventoryManager inventoryManager;
-        private DialogueManager dialogueManager;
 
         #endregion Fields
 
@@ -747,6 +746,8 @@ namespace GD.App
 
             #region Player Dialogue
 
+            #region Intro
+
             sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue");
             soundManager.Add(new Cue(
                 AppData.INTRO_DIALOGUE,
@@ -755,6 +756,114 @@ namespace GD.App
                 new Vector3(0.8f, 0, 0),
                 false
                 ));
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/General Dialogue/riverside_monologue");
+            soundManager.Add(new Cue(
+                AppData.RIVERSIDE_MONOLOGUE_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            #endregion
+
+            #region Generator Room Dialogue
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Generator Room/off_course_the_generator_is_not_working");
+            soundManager.Add(new Cue(
+                AppData.GENERATOR_NOT_WORKING_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Generator Room/fuse_somewhere_supermarket");
+            soundManager.Add(new Cue(
+                AppData.FUSE_SOMEWHERE_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            #endregion
+
+            #region Electronic Aisle
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/find_a_fuse");
+            soundManager.Add(new Cue(
+                AppData.WHERE_FIND_FUSE_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Generator Room/caution_voltage");
+            soundManager.Add(new Cue(
+                AppData.PICK_RIGHT_FUSE_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(1f, 0, 0),
+                false
+                ));
+
+            #endregion
+
+            #region Office Room
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Office Room/hollow_in_the_way");
+            soundManager.Add(new Cue(
+                AppData.HOLLOW_IN_THE_WAY_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Office Room/generator_busted");
+            soundManager.Add(new Cue(
+                AppData.GENERATOR_BUSTED_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            #endregion
+
+            #region Timer
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Timer/find_a_way_out");
+            soundManager.Add(new Cue(
+                AppData.FIND_A_WAY_OUT_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_get_out_of_here");
+            soundManager.Add(new Cue(
+                AppData.TIME_TO_GET_OUT_OF_HERE_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Timer/cannot_be_the_end_of_me");
+            soundManager.Add(new Cue(
+                AppData.CANT_BE_THE_END_OF_ME_DIALOGUE,
+                sound,
+                SoundCategoryType.Dialogue,
+                new Vector3(0.8f, 0, 0),
+                false
+                ));
+
+            #endregion
 
             #endregion
         }
@@ -5103,7 +5212,6 @@ ObjectType.Static, RenderType.Opaque);
             //Application.MenuSceneManager = menuManager;
 
             Application.InventoryManager = inventoryManager;
-            Application.DialogueManager = dialogueManager;
         }
 
         private void InitializeInput()
@@ -5216,10 +5324,6 @@ ObjectType.Static, RenderType.Opaque);
 
             inventoryManager = new InventoryManager(this, StatusType.Drawn | StatusType.Updated);
             Components.Add(inventoryManager);
-
-            dialogueManager = new DialogueManager(this, StatusType.Drawn | StatusType.Updated);
-            dialogueManager.IsPausedOnPlay = true;
-            Components.Add(dialogueManager);
         }
 
         private void InitializeDictionaries()
