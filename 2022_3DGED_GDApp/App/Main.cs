@@ -688,6 +688,20 @@ namespace GD.App
                 false
                 ));
 
+            #region Radio Sound
+
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Radio/516618__arialfa07__radio-1");
+
+            soundManager.Add(new Cue(
+                AppData.RADIO_SOUND_NAME,
+                sound,
+                SoundCategoryType.Explosion,
+                new Vector3(0.5f, 0, 0),
+                false
+                ));
+
+            #endregion
+
             #region Pickup Sound
 
             sound = Content.Load<SoundEffect>("Assets/Audio/Non-Diegetic/Pickups/422709__niamhd00145229__inspect-item");

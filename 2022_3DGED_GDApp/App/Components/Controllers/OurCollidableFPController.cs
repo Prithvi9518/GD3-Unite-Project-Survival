@@ -30,6 +30,8 @@ namespace GD.Engine
         //temp vars
         private Vector3 restrictedLook, restrictedRight;
 
+        private Vector2 oldGamepadAxis = Vector2.Zero;
+
         private bool insideOffice = false;
         private bool seenOfficeHollow = false;
 
@@ -84,6 +86,8 @@ namespace GD.Engine
 
         protected override void HandleKeyboardInput(GameTime gameTime)
         {
+            if (Input.Gamepad.IsConnected()) return;
+
             if (!crouchEnabled)
             {
                 HandleRun(false);
@@ -170,16 +174,32 @@ namespace GD.Engine
 
             var changeInRotation = Input.Gamepad.GetAxis(Buttons.RightStick);
 
-            rotation.X += changeInRotation.Y * rotationSpeed.Y *
+            var newChangeInRotation = oldGamepadAxis.Lerp(changeInRotation, smoothFactor);
+
+            //if (MathF.Abs(changeInRotation.Y - oldGamepadAxis.Y) > 0.01f)
+            //{
+            //    rotation.X += changeInRotation.Y * rotationSpeed.Y *
+            //    AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
+            //}
+
+            //if (MathF.Abs(changeInRotation.X - oldGamepadAxis.X) > 0.01f)
+            //{
+            //    rotation.Y -= changeInRotation.X * rotationSpeed.X *
+            //    AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
+            //}
+
+            rotation.X += newChangeInRotation.Y * rotationSpeed.Y *
                 AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
             ClampRotationX();
 
-            rotation.Y -= changeInRotation.X * rotationSpeed.X *
+            rotation.Y -= newChangeInRotation.X * rotationSpeed.X *
                 AppData.PLAYER_ROTATE_GAMEPAD_MULTIPLIER * gameTime.ElapsedGameTime.Milliseconds;
 
             //characterBody.AddBodyTorque(new Vector3(rotation.Y, rotation.X, 0));
             transform.Rotate(rotation);
+
+            oldGamepadAxis = newChangeInRotation;
         }
 
         private void HandleStrafe(GameTime gameTime, bool usingGamepad)

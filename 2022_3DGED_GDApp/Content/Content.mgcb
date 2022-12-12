@@ -169,6 +169,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_get_out_of_here.wav
 
+#begin Assets/Audio/Diegetic/Radio/516618__arialfa07__radio-1.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Radio/516618__arialfa07__radio-1.wav
+
 #begin Assets/Audio/Diegetic/smokealarm1.ogg
 /importer:OggImporter
 /processor:SoundEffectProcessor

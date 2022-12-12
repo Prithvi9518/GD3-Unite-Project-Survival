@@ -112,7 +112,7 @@ namespace GD.App
         private static readonly float OLD_PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
         public static readonly float OLD_PLAYER_STRAFE_SPEED = OLD_PLAYER_STRAFE_SPEED_MULTIPLIER * OLD_PLAYER_MOVE_SPEED;
 
-        public static readonly float PLAYER_MOVE_SPEED = 0.05f;
+        public static readonly float PLAYER_MOVE_SPEED = 0.036f;
         private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.6f;
         public static readonly float PLAYER_STRAFE_SPEED = PLAYER_STRAFE_SPEED_MULTIPLIER * PLAYER_MOVE_SPEED;
 
@@ -126,8 +126,8 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_MIN_X = -10f;
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
-        public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;
-        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.9f;
+        public static readonly float PLAYER_RUN_MULTIPLIER = 1.4f;
+        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.6f;
 
         public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1.75f;
 
@@ -263,6 +263,7 @@ namespace GD.App
 
         public static readonly string GENERATOR_SOUND_NAME = "generator-sound";
         public static readonly string GLASS_SHATTER_SOUND_NAME = "glass-shatter";
+        public static readonly string RADIO_SOUND_NAME = "radio-sound";
 
         public static readonly string ENEMY_SOUND_1_NAME = "enemy-sound-1";
 
