@@ -22,6 +22,7 @@ namespace GD.App
         GeneratorNotWorking, //“Off course the generator isn’t working!!!!!!”
         NeedFuse, //“I need a fuse. Surely there’s one in here somewhere?”
         WhereFuse, //“Where would I find the fuse? Maybe I’ll check the electronic aisle.”
+        PickRightFuse,
         GeneratorWorking, //“The generator is working again!!!”.
         TimeToRun, //“Time to GET OUTTA HERE!
 
@@ -61,6 +62,7 @@ namespace GD.App
 
             [DialogueState.NeedFuse] = "I need a fuse. Surely there's one in here somewhere?",
             [DialogueState.WhereFuse] = "Where would I find a fuse? Maybe I'll check the electronic aisle.",
+            [DialogueState.PickRightFuse] = "The fuse box only takes 220 volts. I have to be careful not to take the wrong one.",
 
             [DialogueState.GeneratorWorking] = "The generator is working again!!",
             [DialogueState.TimeToRun] = "Time to GET OUTTA HERE!!!",
@@ -90,6 +92,7 @@ namespace GD.App
 
             [DialogueState.NeedFuse] = 4000,
             [DialogueState.WhereFuse] = 4000,
+            [DialogueState.PickRightFuse] = 4000,
 
             [DialogueState.GeneratorWorking] = 2500,
             [DialogueState.TimeToRun] = 2500,
@@ -105,7 +108,8 @@ namespace GD.App
         {
             [DialogueState.GeneralDialogue1] = 5000,
             [DialogueState.GeneralDialogue3] = 15000,
-            [DialogueState.WhereFuse] = 5000
+            [DialogueState.WhereFuse] = 5000,
+            [DialogueState.PickRightFuse] = 2000
         };
 
         #endregion Dictionaries
@@ -120,7 +124,7 @@ namespace GD.App
                 DialogueState.GeneralDialogue3
             },
 
-            new List<DialogueState>(){DialogueState.NeedFuse, DialogueState.WhereFuse},
+            new List<DialogueState>(){DialogueState.NeedFuse, DialogueState.WhereFuse, DialogueState.PickRightFuse},
 
             // Dialogue when generator turns on
             new List<DialogueState>(){DialogueState.GeneratorWorking, DialogueState.TimeToRun}
