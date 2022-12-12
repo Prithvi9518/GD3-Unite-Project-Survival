@@ -17,6 +17,8 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.1.303" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Components\Audio\" />
+    <Folder Include="Content\Assets\Audio\Diegetic\Player\Dialogue\Exit Door\" />
     <Folder Include="Content\Assets\Models\Aisles\Clothes\" />
     <Folder Include="Content\Assets\Models\Aisles\Beverages\" />
     <Folder Include="Content\Assets\Models\Aisles\Beauty\" />

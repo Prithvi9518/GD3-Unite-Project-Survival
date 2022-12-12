@@ -11,6 +11,7 @@ using JigLibX.Geometry;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace GD.App
 {
@@ -54,9 +55,9 @@ namespace GD.App
         #region Camera - First Person
 
         public static readonly string FIRST_PERSON_CAMERA_NAME = "fpc 1";
-        public static readonly float FIRST_PERSON_MOVE_SPEED = 0.009f;
-        public static readonly float FIRST_PERSON_STRAFE_SPEED = 0.6f * FIRST_PERSON_MOVE_SPEED;
-        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 3.5f, 35);
+
+        public static readonly Vector3 FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(0.4f, 7f, 76f);
+        public static readonly Vector3 OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION = new Vector3(-10, 3.5f, 35);
 
         public static readonly float FIRST_PERSON_CAMERA_FCP = 3000;
         public static readonly float FIRST_PERSON_CAMERA_NCP = 0.1f;
@@ -107,8 +108,12 @@ namespace GD.App
 
         #region Movement Constants
 
-        public static readonly float PLAYER_MOVE_SPEED = 0.1f;
-        private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
+        public static readonly float OLD_PLAYER_MOVE_SPEED = 0.01f;
+        private static readonly float OLD_PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
+        public static readonly float OLD_PLAYER_STRAFE_SPEED = OLD_PLAYER_STRAFE_SPEED_MULTIPLIER * OLD_PLAYER_MOVE_SPEED;
+
+        public static readonly float PLAYER_MOVE_SPEED = 0.036f;
+        private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.6f;
         public static readonly float PLAYER_STRAFE_SPEED = PLAYER_STRAFE_SPEED_MULTIPLIER * PLAYER_MOVE_SPEED;
 
         //can use either same X-Y rotation for camera controller or different
@@ -121,19 +126,27 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_MIN_X = -10f;
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
-        public static readonly float PLAYER_RUN_MULTIPLIER = 2.5f;
-        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.7f;
+        public static readonly float PLAYER_RUN_MULTIPLIER = 1.4f;
+        public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.6f;
 
         public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1.75f;
 
+        public static readonly float OLD_PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
         public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
+
+        public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
+
+        public static readonly float PLAYER_DEFAULT_CAPSULE_HEIGHT = 3.6f;
+
+        //public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.3f;
+        public static readonly float PLAYER_CROUCHED_CAPSULE_HEIGHT = 2.5f;
 
         #endregion Movement Constants
 
         #region Enemy Variables
 
-        public static readonly float ENEMY_POSITION_Y = 2f;
-        public static readonly float ENEMY_SCALE = 0.007f;
+        public static readonly float ENEMY_POSITION_Y = 4f;
+        public static readonly float ENEMY_SCALE = 0.015f;
 
         public static readonly float ENEMY_MOVEMENT_SPEED = 0.005f;
 
@@ -141,9 +154,9 @@ namespace GD.App
         // ENEMY 2 - Office Guarding Enemy
         // ENEMY 3 - Right Lane Enemy
 
-        public static readonly Vector3 ENEMY_1_INITIAL_POS = new Vector3(-16, AppData.ENEMY_POSITION_Y, -120);
-        public static readonly Vector3 ENEMY_2_INITIAL_POS = new Vector3(-39, AppData.ENEMY_POSITION_Y, -109);
-        public static readonly Vector3 ENEMY_3_INITIAL_POS = new Vector3(30, AppData.ENEMY_POSITION_Y, -108);
+        public static readonly Vector3 ENEMY_1_INITIAL_POS = new Vector3(6.8f, AppData.ENEMY_POSITION_Y, -79f);
+        public static readonly Vector3 ENEMY_2_INITIAL_POS = new Vector3(-23f, AppData.ENEMY_POSITION_Y, -71f);
+        public static readonly Vector3 ENEMY_3_INITIAL_POS = new Vector3(39f, AppData.ENEMY_POSITION_Y, -78f);
 
         public static readonly List<Vector3> ENEMY_INITIAL_POSITIONS = new List<Vector3>()
         {
@@ -164,21 +177,21 @@ namespace GD.App
             new List<Vector3>()
             {
             ENEMY_1_INITIAL_POS,
-            new Vector3(-16, AppData.ENEMY_POSITION_Y, -60),
-            new Vector3(-2, AppData.ENEMY_POSITION_Y, -60),
-            new Vector3(-2, AppData.ENEMY_POSITION_Y, -120)
+            new Vector3(6.8f, AppData.ENEMY_POSITION_Y, -20.3f),
+            new Vector3(24f, AppData.ENEMY_POSITION_Y, -20.3f),
+            new Vector3(24f, AppData.ENEMY_POSITION_Y, -79f)
             },
 
             new List<Vector3>()
             {
                 ENEMY_2_INITIAL_POS,
-                new Vector3(-39, AppData.ENEMY_POSITION_Y, -40)
+                new Vector3(-23f, AppData.ENEMY_POSITION_Y, -6f)
             },
 
             new List<Vector3>()
             {
                 ENEMY_3_INITIAL_POS,
-                new Vector3(30, AppData.ENEMY_POSITION_Y, -12)
+                new Vector3(39f, AppData.ENEMY_POSITION_Y, 23f)
             }
         };
 
@@ -193,13 +206,22 @@ namespace GD.App
 
         #region Interactible Variables
 
-        public static readonly float INTERACTION_DISTANCE = 6.5f;
+        public static readonly float INTERACTION_DISTANCE = 3.5f;
+        public static readonly float LONG_INTERACTION_DISTANCE = 5.5f;
 
         #endregion Interactible Variables
 
+        #region Pickup Variables
+
+        public static readonly Vector3 FUSE_220V_TRANSLATION = new Vector3(-2.4f, 2.3f, -74.8f);
+        public static readonly Vector3 FUSE_440V_TRANSLATION = new Vector3(-0.7f, 2.3f, -28f);
+
+        #endregion
+
         #region Timer Variables
 
-        internal static double MAX_GAME_TIME_IN_MSECS = 180000;
+        public static double MAX_GAME_TIME_IN_MSECS = 180000;
+        //public static double MAX_GAME_TIME_IN_MSECS = 25000;
 
         #endregion Timer Variables
 
@@ -211,14 +233,54 @@ namespace GD.App
 
         #region Object Names
 
+        public static readonly string FLOOR_NAME = "ground_floor";
+
         public static readonly string GATE_ACCESS_MACHINE_NAME = "gate access machine";
         public static readonly string KEYCARD_NAME = "office keycard";
+
+        public static readonly string GENERATOR_NAME = "generator";
         public static readonly string GENERATOR_DOOR_NAME = "generator door";
         public static readonly string FUSE_BOX_NAME = "fuse box";
-        public static readonly string FUSE_NAME = "fuse";
+        public static readonly string FUSE_220V_NAME = "fuse 220v";
+        public static readonly string FUSE_440V_NAME = "fuse 440v";
 
         public static readonly string EXIT_DOOR_NAME = "exit door";
         public static readonly string EXIT_DOOR_FRAME_NAME = "exit door frame";
+
+        public static readonly string TOY_RADIO_NAME = "toy radio";
+
+        #endregion
+
+        #region UI Object Names
+
+        public static readonly string INFECTION_METER_NAME = "infection meter";
+        public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
+        public static readonly string SUBTITLES_NAME = "subtitles";
+
+        #endregion
+
+        #region Sound Object Names
+
+        public static readonly string GENERATOR_SOUND_NAME = "generator-sound";
+        public static readonly string GLASS_SHATTER_SOUND_NAME = "glass-shatter";
+        public static readonly string RADIO_SOUND_NAME = "radio-sound";
+
+        public static readonly string ENEMY_SOUND_1_NAME = "enemy-sound-1";
+
+        public static readonly string INTRO_DIALOGUE = "intro_dialogue";
+        public static readonly string RIVERSIDE_MONOLOGUE_DIALOGUE = "riverside_monologue";
+
+        public static readonly string GENERATOR_NOT_WORKING_DIALOGUE = "generator_not_working";
+        public static readonly string FUSE_SOMEWHERE_DIALOGUE = "fuse_somewhere";
+        public static readonly string WHERE_FIND_FUSE_DIALOGUE = "where_find_fuse";
+        public static readonly string PICK_RIGHT_FUSE_DIALOGUE = "pick_right_fuse";
+
+        public static readonly string HOLLOW_IN_THE_WAY_DIALOGUE = "hollow_in_the_way";
+        public static readonly string GENERATOR_BUSTED_DIALOGUE = "generator_busted";
+
+        public static readonly string FIND_A_WAY_OUT_DIALOGUE = "find_a_way_out";
+        public static readonly string CANT_BE_THE_END_OF_ME_DIALOGUE = "cannot_be_the_end_of_me";
+        public static readonly string TIME_TO_GET_OUT_OF_HERE_DIALOGUE = "time_to_get_out_of_here";
 
         #endregion
 
@@ -256,7 +318,7 @@ namespace GD.App
 
         #region Enemy Model Paths
 
-        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/hollow";
+        public static readonly string ENEMY_MODEL_PATH = "Assets/Models/Enemies/Hollow01";
 
         #endregion Enemy Model Paths
 
@@ -275,8 +337,6 @@ namespace GD.App
 
         public static readonly string CHECKOUT_DESK_MODEL_BASE_PATH = "Assets/Models/Shopping Centre/Checkout Desks/";
 
-        public static readonly string BENCH_MODELS_PATH = "Assets/Models/Shopping Centre/Benches/";
-
         public static readonly string BIN_MODELS_PATH = "Assets/Models/Shopping Centre/Bins/";
 
         public static readonly string BARRICADE_MODELS_PATH = "Assets/Models/Shopping Centre/Shopping Cart/Barricades/barricade_";
@@ -287,7 +347,7 @@ namespace GD.App
 
         #region Enemy Texture Paths
 
-        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/black";
+        public static readonly string ENEMY_TEXTURE_PATH = "Assets/Textures/Enemies/scales";
 
         #endregion Enemy Texture Paths
 
@@ -308,6 +368,84 @@ namespace GD.App
         public static readonly string SHOPPING_CART_TEXTURES_PATH = "Assets/Textures/Shopping Centre/Shopping Cart/";
 
         #endregion Texture Paths
+
+        #region Lights
+
+        public static readonly string LIGHT_MODEL_PATH = "Assets/Models/Shopping Centre/Light/light";
+
+        public static readonly string LIGHT_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Light/light_rust";
+
+        public static readonly Vector3 LIGHT_OFFSET_X = new Vector3(22f, 0, 0);
+
+        public static readonly Vector3 LIGHT_OFFSET_Z = new Vector3(0, 0, 22f);
+
+        #endregion Lights
+
+        #region Scaffolding
+
+        public static readonly string SCAFFOLDING_MDOEL_PATH = "Assets/Models/Shopping Centre/Scaffolding/scaffolding";
+
+        public static readonly string SCAFFOLDING_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Scaffolding/scaffolding";
+
+        public static readonly float SCAFFOLDING_COLLIDER_SCALE_X = 115f;
+        public static readonly float SCAFFOLDING_COLLIDER_SCALE_Y = 270f;
+        public static readonly float SCAFFOLDING_COLLIDER_SCALE_Z = 250f;
+
+        public static readonly Vector3 SCAFFOLDING_POSITION = new Vector3(45.9f, 2.5f, 42.7f);
+        public static readonly Vector3 SCAFFOLDING_OFFSET_Z = new Vector3(0, 0, 5.4f);
+
+        #endregion Scaffolding
+
+        #region Fridges
+
+        public static readonly string FRIDGE_MDOEL_PATH = "Assets/Models/Shopping Centre/Fridges/fridge";
+
+        public static readonly string FRIDGE_TEXTURE_PATH = "Assets/Textures/Shopping Centre/Fridge/fridge";
+
+        public static readonly float FRIDGE_COLLIDER_SCALE_X = 115f;
+        public static readonly float FRIDGE_COLLIDER_SCALE_Y = 270f;
+        public static readonly float FRIDGE_COLLIDER_SCALE_Z = 150f;
+
+        public static readonly Vector3 FRIDGE_POSITION = new Vector3(47.5f, 2.6f, -82.4f);
+        public static readonly Vector3 FRIDGE_OFFSET_Z = new Vector3(0, 0, 3.4f);
+
+        #endregion Fridges
+
+        #region Benches
+
+        public static readonly string BENCH_BASE_MODEL_PATH = "Assets/Models/Shopping Centre/Benches/Bench Bases/bench_base";
+
+        #endregion Benches
+
+        #region Aisle Labels
+
+        private static readonly string LABEL_BASE_PATH = "Assets/Textures/Aisles/Labels/aisle_";
+
+        public static readonly List<string> LABELS_LIST = new List<string>()
+        {
+            LABEL_BASE_PATH + "1",
+            LABEL_BASE_PATH + "2",
+            LABEL_BASE_PATH + "3",
+            LABEL_BASE_PATH + "4",
+            LABEL_BASE_PATH + "5",
+            LABEL_BASE_PATH + "6",
+            LABEL_BASE_PATH + "7",
+        };
+
+        #endregion Aisle Labels
+
+        #region Bottle Labels
+
+        private static readonly string BOTTLE_LABELS_BASE_PATH = "Assets/Textures/Aisles/Beverages/";
+
+        public static readonly List<string> BOTTLE_LABELS_LIST = new List<string>()
+        {
+            BOTTLE_LABELS_BASE_PATH + "budweiser_label",
+            BOTTLE_LABELS_BASE_PATH + "heineken_label",
+            BOTTLE_LABELS_BASE_PATH + "coors_label",
+        };
+
+        #endregion Bottle Labels
 
         #region Font Paths
 

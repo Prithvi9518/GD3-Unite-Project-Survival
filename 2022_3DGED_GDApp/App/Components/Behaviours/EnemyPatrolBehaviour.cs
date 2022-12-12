@@ -1,4 +1,5 @@
-﻿using GD.Engine.Events;
+﻿using GD.App;
+using GD.Engine.Events;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,9 @@ namespace GD.Engine
         private bool isMoving;
 
         private float margin = 0.05f;
+
+        private float elapsedTimeInMS;
+        private float soundIntervalInMS = 10000;
 
         public EnemyPatrolBehaviour(List<Vector3> waypoints, float enemyMovementSpeed) :
             this(waypoints, enemyMovementSpeed, true)
@@ -92,10 +96,25 @@ namespace GD.Engine
             }
         }
 
+        private void PlayEnemySounds()
+        {
+            object[] parameters = { AppData.ENEMY_SOUND_1_NAME };
+            EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+        }
+
         public override void Update(GameTime gameTime)
         {
             if (isMoving)
                 MoveToNextWaypoint(gameTime);
+
+            elapsedTimeInMS += gameTime.ElapsedGameTime.Milliseconds;
+
+            if (elapsedTimeInMS > soundIntervalInMS)
+            {
+                PlayEnemySounds();
+                elapsedTimeInMS = 0;
+            }
+
             //base.Update(gameTime);
         }
     }

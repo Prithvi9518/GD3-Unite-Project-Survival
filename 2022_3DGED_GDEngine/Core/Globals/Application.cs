@@ -70,9 +70,14 @@ namespace GD.Engine.Globals
         public static StateManager StateManager { get; internal set; }
 
         /// <summary>
-        /// For the UI
+        /// Stores and updates all UI elements
         /// </summary>
         public static SceneManager<Scene2D> UISceneManager { get; internal set; }
+
+        /// <summary>
+        /// Stores and updates all Menu elements
+        /// </summary>
+        public static SceneManager<Scene2D> MenuSceneManager { get; internal set; }
 
         public static InventoryManager InventoryManager { get; internal set; }
 

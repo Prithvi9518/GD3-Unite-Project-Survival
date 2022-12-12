@@ -1,7 +1,8 @@
 ﻿//#define ALPHA_DEMO
 //#define TEST_INVENTORY
-#define DEMO_STATES
+//#define DEMO_STATES
 
+using GD.App;
 using GD.Engine.Events;
 using GD.Engine.Globals;
 using Microsoft.Xna.Framework;
@@ -23,6 +24,8 @@ namespace GD.Engine
     {
         private bool isInteracting = false;
 
+        private bool radioPlaced = false;
+
         public InteractionController()
         {
             EventDispatcher.Subscribe(EventCategoryType.Pickup, HandlePickup);
@@ -37,18 +40,12 @@ namespace GD.Engine
         {
             CheckInteracting();
 
-#if ALPHA_DEMO
-            MakeOfficeEnemyMove();
-#endif
-
-#if TEST_INVENTORY
-            UseInventoryItems();
-#endif
-
-#if DEMO_STATES
-            StopGeneratorAlarm();
-
-#endif
+            if (radioPlaced)
+                UseRadio();
+            else
+            {
+                PlaceRadio();
+            }
 
             //base.Update(gameTime);
         }
@@ -65,11 +62,25 @@ namespace GD.Engine
 
                     GameObject gameObject = eventData.Parameters[0] as GameObject;
 
+                    if (gameObject.Name == AppData.TOY_RADIO_NAME)
+                        radioPlaced = false;
+
                     Application.SceneManager.ActiveScene.Remove(
                         gameObject.ObjectType,
                         gameObject.RenderType,
                         (obj) => gameObject.Name.Equals(obj.Name)
                         );
+
+                    GameObject itemFound = Application.SceneManager.ActiveScene.Find(
+                        gameObject.ObjectType,
+                        gameObject.RenderType,
+                        (obj) => gameObject.Name.Equals(obj.Name)
+                        );
+                    if (itemFound == null)
+                    {
+                        object[] parameters = { AppData.INTERACT_PROMPT_NAME, PromptState.NoPrompt };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleButtonPrompt, parameters));
+                    }
 
                     break;
 
@@ -82,26 +93,73 @@ namespace GD.Engine
         {
             if (Input.Gamepad.IsConnected())
             {
-                if (Input.Gamepad.IsPressed(Buttons.Y))
+                if (Input.Gamepad.WasJustPressed(Buttons.Y))
                     isInteracting = true;
                 else
                     isInteracting = false;
             }
             else
             {
-                if (Input.Keys.IsPressed(Keys.E))
+                if (Input.Keys.WasJustPressed(Keys.E))
                     isInteracting = true;
                 else
                     isInteracting = false;
             }
         }
 
-        private void UseInventoryItems()
+        private void PlaceRadio()
         {
-            if (Input.Keys.IsPressed(Keys.F))
+            if (Input.Gamepad.IsConnected())
             {
-                object[] parameters = { "fuse" };
-                EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+                if (Input.Gamepad.WasJustPressed(Buttons.RightShoulder))
+                {
+                    InventoryItem radio = Application.InventoryManager.FindByName(AppData.TOY_RADIO_NAME);
+                    if (radio != null)
+                    {
+                        object[] parameters = { AppData.TOY_RADIO_NAME };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+
+                        radioPlaced = true;
+                    }
+                }
+            }
+            else
+            {
+                if (Input.Keys.WasJustPressed(Keys.R))
+                {
+                    InventoryItem radio = Application.InventoryManager.FindByName(AppData.TOY_RADIO_NAME);
+                    if (radio != null)
+                    {
+                        object[] parameters = { AppData.TOY_RADIO_NAME };
+                        EventDispatcher.Raise(new EventData(EventCategoryType.Inventory, EventActionType.OnObjectPicked, parameters));
+
+                        radioPlaced = true;
+                    }
+                }
+            }
+        }
+
+        private void UseRadio()
+        {
+            if (Input.Gamepad.IsConnected())
+            {
+                if (Input.Gamepad.WasJustPressed(Buttons.RightShoulder) && radioPlaced)
+                {
+                    object[] parameters = { AppData.RADIO_SOUND_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                    RaiseEnemyMoveEvents();
+                }
+            }
+            else
+            {
+                if (Input.Keys.WasJustPressed(Keys.R) && radioPlaced)
+                {
+                    object[] parameters = { AppData.RADIO_SOUND_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.Sound, EventActionType.OnPlay2D, parameters));
+
+                    RaiseEnemyMoveEvents();
+                }
             }
         }
 
@@ -123,16 +181,16 @@ namespace GD.Engine
         {
             // Event to play glass breaking sound
 
-            object[] parameters = { "glass-shatter" };
+            //object[] parameters = { "glass-shatter" };
 
-            EventDispatcher.Raise(
-                new EventData(EventCategoryType.Sound,
-                EventActionType.OnPlay2D,
-                parameters)
-                );
+            //EventDispatcher.Raise(
+            //    new EventData(EventCategoryType.Sound,
+            //    EventActionType.OnPlay2D,
+            //    parameters)
+            //    );
 
             // Event to make enemy move
-            parameters = new object[] { "true" };
+            object[] parameters = { "true" };
             EventDispatcher.Raise(
                 new EventData(EventCategoryType.NonPlayer, EventActionType.OnEnemyAlert, parameters)
                 );
