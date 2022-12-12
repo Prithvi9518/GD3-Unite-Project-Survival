@@ -281,7 +281,7 @@ namespace GD.Engine
             if (transform.Translation.X <= -34 && !insideOffice)
             {
                 // Raise event to display subtitles in office
-                object[] parameters = { DialogueState.NeedKeycardInOffice };
+                object[] parameters = { SubtitleState.NeedKeycardInOffice };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
                 insideOffice = true;
             }
@@ -293,7 +293,7 @@ namespace GD.Engine
                 && transform.Translation.X <= -4
                 && !seenOfficeHollow)
             {
-                object[] parameters = { DialogueState.HollowBlockOffice };
+                object[] parameters = { SubtitleState.HollowBlockOffice };
                 EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
                 seenOfficeHollow = true;
             }

@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Ambient/horror-ambience-7.wav
 
+#begin Assets/Audio/Diegetic/Enemies/false_notes.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Enemies/false_notes.wav
+
 #begin Assets/Audio/Diegetic/explode1.mp3
 /importer:Mp3Importer
 /processor:SoundEffectProcessor
@@ -54,6 +60,102 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Glass/glass-shatter.mp3
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Beverage Aisle/use_bottle_to_distract_the_hollow.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Beverage Aisle/use_bottle_to_distract_the_hollow.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/check_electronic_aisle.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/check_electronic_aisle.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/find_a_fuse.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/find_a_fuse.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/take_mutiple_fuses.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Electronic Aisle/take_mutiple_fuses.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/General Dialogue/riverside_monologue.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/General Dialogue/riverside_monologue.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Generator Room/fuse_somewhere_supermarket.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Generator Room/fuse_somewhere_supermarket.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Generator Room/off_course_the_generator_is_not_working.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Generator Room/off_course_the_generator_is_not_working.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Office Room/hollow_in_the_way.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Office Room/hollow_in_the_way.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/cannot_be_the_end_of_me.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/cannot_be_the_end_of_me.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/don't_feel_so_good.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/don't_feel_so_good.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/find_a_way_out.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/find_a_way_out.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/not_die_in_a_supermarket.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/not_die_in_a_supermarket.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/painful.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/painful.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/skin_is_starting_to_itch.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/skin_is_starting_to_itch.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_get_out_of_here.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_get_out_of_here.wav
 
 #begin Assets/Audio/Diegetic/smokealarm1.ogg
 /importer:OggImporter
@@ -79,6 +181,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Non-Diegetic/SoundTracks/HorrorSong.wav
 
+#begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
+
 #begin Assets/Fonts/INFECTED.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -92,12 +200,6 @@
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
 /build:Assets/Fonts/menu.spritefont
-
-#begin Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
-/importer:WavImporter
-/processor:SoundEffectProcessor
-/processorParam:Quality=Best
-/build:Assets/Audio/Non-Diegetic/SoundTracks/Soundtrack.wav
 
 #begin Assets/Fonts/Perf.spritefont
 /importer:FontDescriptionImporter
