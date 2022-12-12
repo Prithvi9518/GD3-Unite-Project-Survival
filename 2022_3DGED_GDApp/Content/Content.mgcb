@@ -4080,6 +4080,18 @@
 /processorParam:TextureFormat=Color
 /build:Assets/Textures/Infection Meter/progress_white.png
 
+#begin Assets/Textures/Menu/Backgrounds/controls-menu.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Assets/Textures/Menu/Backgrounds/controls-menu.png
+
 #begin Assets/Textures/Menu/Backgrounds/main_menu_bg_1280x720.png
 /importer:TextureImporter
 /processor:TextureProcessor
