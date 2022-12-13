@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-#define SHOW_DEBUG_INFO
+//#define SHOW_DEBUG_INFO
 //#define SHOW_TIMER_TEXT
 
 #endregion
