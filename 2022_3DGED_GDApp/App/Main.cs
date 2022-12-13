@@ -4153,7 +4153,7 @@ ObjectType.Static, RenderType.Opaque);
             interactibleCollider.AddPrimitive(new Box(
                 gameObject.Transform.Translation,
                 gameObject.Transform.Rotation,
-                gameObject.Transform.Scale * 550
+                gameObject.Transform.Scale * 200
                 ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
@@ -4292,7 +4292,7 @@ ObjectType.Static, RenderType.Opaque);
                 new Box(
                     gameObject.Transform.Translation,
                     gameObject.Transform.Rotation,
-                    400 * gameObject.Transform.Scale
+                    190 * gameObject.Transform.Scale
                     ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );

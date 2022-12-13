@@ -76,6 +76,8 @@ namespace GD.Engine
             {
                 if (gameObject.GameObjectType == GameObjectType.Collectible)
                     RaiseButtonPromptUIEvent(PromptState.PickupPrompt);
+                else if (gameObject.GameObjectType == GameObjectType.Collectible)
+                    RaiseButtonPromptUIEvent(PromptState.InteractPrompt);
 
                 if (isInteracting)
                     HandleInteraction();
