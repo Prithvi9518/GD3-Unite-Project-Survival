@@ -815,12 +815,12 @@ namespace GD.App
                 false
                 ));
 
-            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Generator Room/caution_voltage");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Generator Room/wrong_fuse");
             soundManager.Add(new Cue(
                 AppData.PICK_RIGHT_FUSE_DIALOGUE,
                 sound,
                 SoundCategoryType.Dialogue,
-                new Vector3(1f, 0, 0),
+                new Vector3(0.8f, 0, 0),
                 false
                 ));
 
@@ -859,9 +859,9 @@ namespace GD.App
                 false
                 ));
 
-            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_get_out_of_here");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_go");
             soundManager.Add(new Cue(
-                AppData.TIME_TO_GET_OUT_OF_HERE_DIALOGUE,
+                AppData.TIME_TO_GO_DIALOGUE,
                 sound,
                 SoundCategoryType.Dialogue,
                 new Vector3(0.8f, 0, 0),

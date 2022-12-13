@@ -109,6 +109,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Player/Dialogue/Generator Room/off_course_the_generator_is_not_working.wav
 
+#begin Assets/Audio/Diegetic/Player/Dialogue/Generator Room/wrong_fuse.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Generator Room/wrong_fuse.wav
+
 #begin Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -168,6 +174,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_get_out_of_here.wav
+
+#begin Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_go.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Timer/time_to_go.wav
 
 #begin Assets/Audio/Diegetic/Radio/516618__arialfa07__radio-1.wav
 /importer:WavImporter

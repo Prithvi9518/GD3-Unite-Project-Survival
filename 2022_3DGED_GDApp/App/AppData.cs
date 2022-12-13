@@ -280,7 +280,7 @@ namespace GD.App
 
         public static readonly string FIND_A_WAY_OUT_DIALOGUE = "find_a_way_out";
         public static readonly string CANT_BE_THE_END_OF_ME_DIALOGUE = "cannot_be_the_end_of_me";
-        public static readonly string TIME_TO_GET_OUT_OF_HERE_DIALOGUE = "time_to_get_out_of_here";
+        public static readonly string TIME_TO_GO_DIALOGUE = "time_to_get_out_of_here";
 
         #endregion
 

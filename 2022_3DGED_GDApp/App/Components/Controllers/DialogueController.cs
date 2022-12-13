@@ -25,7 +25,7 @@ namespace GD.App
         WhereFuse, //“Where would I find the fuse? Maybe I’ll check the electronic aisle.”
         PickRightFuse,
         GeneratorWorking, //“The generator is working again!!!”.
-        TimeToRun, //“Time to GET OUTTA HERE!
+        TimeToGo, //“Time to go!
 
         MultipleFuses, //“There are multiple fuses here. I should take a few in case one of them is broken.”
 
@@ -66,7 +66,7 @@ namespace GD.App
             [DialogueState.PickRightFuse] = "The fuse box only takes 220 volts. I have to be careful not to take the wrong one.",
 
             [DialogueState.GeneratorWorking] = "The generator is working again!!",
-            [DialogueState.TimeToRun] = "Time to GET OUTTA HERE!!!",
+            [DialogueState.TimeToGo] = "Time to go!!",
 
             [DialogueState.GeneralDialogue1] = "Riverside. I remember this place. It used to be great during the Halloween break." +
             " Scared the crap out of me.",
@@ -97,7 +97,7 @@ namespace GD.App
             [DialogueState.PickRightFuse] = 4000,
 
             [DialogueState.GeneratorWorking] = 2000,
-            [DialogueState.TimeToRun] = 2500,
+            [DialogueState.TimeToGo] = 2500,
 
             [DialogueState.GeneralDialogue1] = 5500,
             [DialogueState.GeneralDialogue2] = 3500,
@@ -127,7 +127,7 @@ namespace GD.App
             [DialogueState.HollowBlockOffice] = AppData.HOLLOW_IN_THE_WAY_DIALOGUE,
             [DialogueState.NoteInOffice] = AppData.GENERATOR_BUSTED_DIALOGUE,
 
-            [DialogueState.TimeToRun] = AppData.TIME_TO_GET_OUT_OF_HERE_DIALOGUE,
+            [DialogueState.TimeToGo] = AppData.TIME_TO_GO_DIALOGUE,
 
             [DialogueState.Time1] = AppData.FIND_A_WAY_OUT_DIALOGUE,
             [DialogueState.Time2] = AppData.CANT_BE_THE_END_OF_ME_DIALOGUE,
@@ -147,7 +147,7 @@ namespace GD.App
             new List<DialogueState>(){DialogueState.NeedFuse, DialogueState.WhereFuse},
 
             // Dialogue when generator turns on
-            new List<DialogueState>(){DialogueState.GeneratorWorking, DialogueState.TimeToRun}
+            new List<DialogueState>(){DialogueState.GeneratorWorking, DialogueState.TimeToGo}
         };
 
         private DialogueState currentDialogue;
