@@ -112,7 +112,7 @@ namespace GD.App
         private static readonly float OLD_PLAYER_STRAFE_SPEED_MULTIPLIER = 0.75f;
         public static readonly float OLD_PLAYER_STRAFE_SPEED = OLD_PLAYER_STRAFE_SPEED_MULTIPLIER * OLD_PLAYER_MOVE_SPEED;
 
-        public static readonly float PLAYER_MOVE_SPEED = 0.036f;
+        public static readonly float PLAYER_MOVE_SPEED = 0.030f;
         private static readonly float PLAYER_STRAFE_SPEED_MULTIPLIER = 0.6f;
         public static readonly float PLAYER_STRAFE_SPEED = PLAYER_STRAFE_SPEED_MULTIPLIER * PLAYER_MOVE_SPEED;
 
@@ -126,13 +126,13 @@ namespace GD.App
         public static readonly float PLAYER_ROTATE_MIN_X = -10f;
 
         public static readonly float PLAYER_DEFAULT_MULTIPLIER = 1f;
-        public static readonly float PLAYER_RUN_MULTIPLIER = 1.4f;
+        public static readonly float PLAYER_RUN_MULTIPLIER = 1.75f;
         public static readonly float PLAYER_CROUCH_MULTIPLIER = 0.6f;
 
         public static readonly float PLAYER_CROUCH_HEIGHT_OFFSET = 1.75f;
 
         public static readonly float OLD_PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
-        public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 15f;
+        public static readonly float PLAYER_ROTATE_GAMEPAD_MULTIPLIER = 18f;
 
         public static readonly float PLAYER_COLLIDABLE_JUMP_HEIGHT = 5;
 
@@ -206,8 +206,8 @@ namespace GD.App
 
         #region Interactible Variables
 
-        public static readonly float INTERACTION_DISTANCE = 3.5f;
-        public static readonly float LONG_INTERACTION_DISTANCE = 5.5f;
+        public static readonly float INTERACTION_DISTANCE = 6f;
+        public static readonly float LONG_INTERACTION_DISTANCE = 8.5f;
 
         #endregion Interactible Variables
 
@@ -220,7 +220,7 @@ namespace GD.App
 
         #region Timer Variables
 
-        public static double MAX_GAME_TIME_IN_MSECS = 270000;
+        public static double MAX_GAME_TIME_IN_MSECS = 300000;
         //public static double MAX_GAME_TIME_IN_MSECS = 25000;
 
         #endregion Timer Variables

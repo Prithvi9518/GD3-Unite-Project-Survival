@@ -1,7 +1,7 @@
 ﻿#region Pre-compiler directives
 
 //#define DEMO
-//#define SHOW_DEBUG_INFO
+#define SHOW_DEBUG_INFO
 //#define SHOW_TIMER_TEXT
 
 #endregion
@@ -543,7 +543,7 @@ namespace GD.App
                 new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(0, 30), 0)
                 );
 
-            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.White, 0.8f);
+            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.LightGreen, 0.8f);
             //add renderer to draw the text
             uiGameObject.AddComponent(new Renderer2D(material));
 
@@ -1256,7 +1256,7 @@ namespace GD.App
             Renderer renderer = InitializeRenderer(
                     model_path,
                     texture_path,
-                    gdBasicEffect,
+                    new GDBasicEffect(unlitEffect),
                     1
                     );
 
@@ -1946,7 +1946,7 @@ ObjectType.Static, RenderType.Opaque);
         {
             #region Notes
 
-            var gdBasicEffect = new GDBasicEffect(litEffect);
+            var gdBasicEffect = new GDBasicEffect(unlitEffect);
 
             #region Office Note
 
@@ -4153,7 +4153,7 @@ ObjectType.Static, RenderType.Opaque);
             interactibleCollider.AddPrimitive(new Box(
                 gameObject.Transform.Translation,
                 gameObject.Transform.Rotation,
-                gameObject.Transform.Scale * 230
+                gameObject.Transform.Scale * 550
                 ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
@@ -4191,7 +4191,7 @@ ObjectType.Static, RenderType.Opaque);
             interactibleCollider.AddPrimitive(new Box(
                 gameObject.Transform.Translation,
                 gameObject.Transform.Rotation,
-                gameObject.Transform.Scale * 230
+                gameObject.Transform.Scale * 350
                 ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );
@@ -4292,7 +4292,7 @@ ObjectType.Static, RenderType.Opaque);
                 new Box(
                     gameObject.Transform.Translation,
                     gameObject.Transform.Rotation,
-                    70 * gameObject.Transform.Scale
+                    400 * gameObject.Transform.Scale
                     ),
                 new MaterialProperties(0.8f, 0.8f, 0.7f)
                 );

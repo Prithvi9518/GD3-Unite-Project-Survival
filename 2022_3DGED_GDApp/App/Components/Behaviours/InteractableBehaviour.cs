@@ -74,11 +74,16 @@ namespace GD.Engine
 
             if (targetDist <= AppData.LONG_INTERACTION_DISTANCE)
             {
+                if (gameObject.GameObjectType == GameObjectType.Collectible)
+                    RaiseButtonPromptUIEvent(PromptState.PickupPrompt);
+
                 if (isInteracting)
                     HandleInteraction();
             }
             else
             {
+                RaiseButtonPromptUIEvent(PromptState.NoPrompt);
+
                 if (isInteracting)
                     System.Diagnostics.Debug.WriteLine("Too far");
             }
@@ -99,6 +104,13 @@ namespace GD.Engine
                 default:
                     break;
             }
+        }
+
+        protected virtual void RaiseButtonPromptUIEvent(PromptState promptState)
+        {
+            object[] parameters = { AppData.INTERACT_PROMPT_NAME, promptState };
+
+            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnToggleButtonPrompt, parameters));
         }
 
         private void RaiseCollectibleEvents()

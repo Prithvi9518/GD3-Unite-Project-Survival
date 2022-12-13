@@ -159,8 +159,8 @@ namespace GD.App
 
         private void HandleTimeStateChange(TimeState newState)
         {
-            //this.timeState = newState;
-            //object[] parameters;
+            this.timeState = newState;
+            object[] parameters;
 
             //GameObject dialogue = Application.SceneManager.ActiveScene.Find(
             //    ObjectType.Static,
@@ -170,30 +170,27 @@ namespace GD.App
 
             //DialogueController dialogueController = dialogue.GetComponent<DialogueController>();
 
-            //switch (timeState)
-            //{
-            //    case TimeState.HalfTime:
-            //        if (dialogueController.CurrentSubtitle == DialogueState.NoDialogue)
-            //        {
-            //            // Send event to show half-time subtitle
-            //            parameters = new object[] { DialogueState.Time1 };
-            //            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
-            //        }
+            switch (timeState)
+            {
+                case TimeState.HalfTime:
+                    // Send event to show half-time subtitle
+                    parameters = new object[] { DialogueState.Time1 };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnTriggerDialogue, parameters));
 
-            //        break;
+                    break;
 
-            //    case TimeState.ThreeFourthTime:
-            //        if (dialogueController.CurrentSubtitle == DialogueState.NoDialogue)
-            //        {
-            //            parameters = new object[] { DialogueState.Time2 };
-            //            EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
-            //        }
+                //case TimeState.ThreeFourthTime:
+                //    if (dialogueController.CurrentSubtitle == DialogueState.NoDialogue)
+                //    {
+                //        parameters = new object[] { DialogueState.Time2 };
+                //        EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShowSubtitles, parameters));
+                //    }
 
-            //        break;
+                //    break;
 
-            //    default:
-            //        break;
-            //}
+                default:
+                    break;
+            }
         }
 
         private bool CheckWin()
