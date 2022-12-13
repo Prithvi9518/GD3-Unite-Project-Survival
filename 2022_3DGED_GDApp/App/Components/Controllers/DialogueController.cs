@@ -48,7 +48,7 @@ namespace GD.App
 
         private Dictionary<DialogueState, string> subtitlesDict = new Dictionary<DialogueState, string>
         {
-            [DialogueState.Start1] = "I've got about three minutes to get out of here before the infection takes over.",
+            [DialogueState.Start1] = "I've got about five minutes to get out of here before the infection takes over.",
             [DialogueState.Start2] = "Looks like there's an exit door ahead. I can't go back the way  I came.",
 
             [DialogueState.ExitDoorNoPower] = "The door isn't opening. Looks like I need to restore the power first.",
@@ -79,7 +79,7 @@ namespace GD.App
 
         private Dictionary<DialogueState, float> durationsDict = new Dictionary<DialogueState, float>
         {
-            [DialogueState.Start1] = 4500,
+            [DialogueState.Start1] = 3500,
             [DialogueState.Start2] = 4500,
 
             [DialogueState.ExitDoorNoPower] = 4500,

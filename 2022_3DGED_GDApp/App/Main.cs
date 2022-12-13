@@ -762,7 +762,7 @@ namespace GD.App
 
             #region Intro
 
-            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue");
+            sound = Content.Load<SoundEffect>("Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue_new");
             soundManager.Add(new Cue(
                 AppData.INTRO_DIALOGUE,
                 sound,

@@ -115,6 +115,12 @@
 /processorParam:Quality=Best
 /build:Assets/Audio/Diegetic/Player/Dialogue/Generator Room/wrong_fuse.wav
 
+#begin Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue_new.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue_new.wav
+
 #begin Assets/Audio/Diegetic/Player/Dialogue/Intro/intro_dialogue.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
