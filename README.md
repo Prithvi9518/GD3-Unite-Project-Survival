@@ -22,6 +22,7 @@ using a 3D game engine built on MonoGame)
 - Toggle Crouch: Left Ctrl
 - Run: Hold Left Shift
 - Interact with Items: E
+- Place and Use Radio: R
 
 ### Xbox Controller
 - Movement: Left Joystick
@@ -29,3 +30,4 @@ using a 3D game engine built on MonoGame)
 - Toggle Crouch: X
 - Run: Press Left Joystick
 - Interact with Items: Y
+- Place and Use Radio: Right Shoulder Button
