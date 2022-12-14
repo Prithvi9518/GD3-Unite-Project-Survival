@@ -220,8 +220,8 @@ namespace GD.App
 
         #region Timer Variables
 
-        //public static double MAX_GAME_TIME_IN_MSECS = 300000;
-        public static double MAX_GAME_TIME_IN_MSECS = 5000;
+        public static double MAX_GAME_TIME_IN_MSECS = 300000;
+        //public static double MAX_GAME_TIME_IN_MSECS = 5000;
 
         #endregion Timer Variables
 
