@@ -108,6 +108,15 @@ namespace GD.App
             //how much of a percentage of the width of the image does the current value represent?
             var widthMultiplier = minValue + currentValue / startValue;
 
+            if (widthMultiplier >= 0.75f)
+            {
+                textureMaterial2D.Color = Color.Red;
+            }
+            else if (widthMultiplier >= 0.5f)
+            {
+                textureMaterial2D.Color = Color.Orange;
+            }
+
             //now set the amount of visible rectangle using the current value
             textureMaterial2D.SourceRectangleWidth = (int)Math.Round(widthMultiplier * textureMaterial2D.OriginalSourceRectangle.Width);
         }
