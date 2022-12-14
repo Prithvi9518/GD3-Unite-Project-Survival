@@ -1938,7 +1938,10 @@ ObjectType.Static, RenderType.Opaque);
             var gameObject = new GameObject(AppData.FLOOR_NAME,
                ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(
+                AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+                Vector3.Zero,
+                Vector3.Zero + Vector3.Up * 0.5f);
 
             Renderer renderer = InitializeRenderer(
                 AppData.FLOOR_MODEL_PATH,
