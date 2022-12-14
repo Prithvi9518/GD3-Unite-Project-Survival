@@ -134,7 +134,11 @@ namespace GD.App
 
                 case GameState.Win:
 
-                    System.Diagnostics.Debug.WriteLine("You Escaped");
+                    //System.Diagnostics.Debug.WriteLine("You Escaped");
+
+                    // Raise event to show win screen
+                    object[] winParams = { AppData.WIN_SCREEN_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShow, winParams));
 
                     // Stop alarm sound: Alarm sound playing twice for some reason - will fix later
                     RaiseAlarmEvent(EventActionType.OnStop);
@@ -146,10 +150,17 @@ namespace GD.App
                     break;
 
                 case GameState.Lose:
-                    System.Diagnostics.Debug.WriteLine("You Lose");
+
+                    //System.Diagnostics.Debug.WriteLine("You Lose");
+
+                    // Raise event to show lose screen
+                    object[] loseParams = { AppData.LOSE_SCREEN_NAME };
+                    EventDispatcher.Raise(new EventData(EventCategoryType.UI, EventActionType.OnShow, loseParams));
+
                     // Alarm sound playing twice for some reason - will fix later
                     RaiseAlarmEvent(EventActionType.OnStop);
                     RaiseAlarmEvent(EventActionType.OnStop);
+
                     break;
 
                 default:

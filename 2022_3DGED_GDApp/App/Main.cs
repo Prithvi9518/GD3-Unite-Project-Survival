@@ -497,15 +497,15 @@ namespace GD.App
             uiGameObject = new GameObject(AppData.INFECTION_METER_NAME);
 
             // Set width and height of the meter here
-            var infectionMeterTexture = new Texture2D(Application.GraphicsDevice, 250, 30);
+            var infectionMeterTexture = new Texture2D(Application.GraphicsDevice, 250, 40);
 
             // Make sure the array size is width * height
-            var infectionMeterPixels = new Color[250 * 30];
+            var infectionMeterPixels = new Color[250 * 40];
 
             for (int i = 0; i < infectionMeterPixels.Length; i++)
             {
                 // Set the colour of meter here
-                infectionMeterPixels[i] = Color.Teal;
+                infectionMeterPixels[i] = Color.White;
             }
 
             // Debug - Just to see the end of the bar
@@ -518,16 +518,33 @@ namespace GD.App
                 new Vector3(1, 1, 0), //s
                 new Vector3(0, 0, 0), //r
                 new Vector3(_graphics.PreferredBackBufferWidth - texture.Width - 100,
-                20, 0)); //t
+                70, 0)); //t
 
             infectionMeterTexture.SetData(infectionMeterPixels);
 
-            material = new TextureMaterial2D(infectionMeterTexture, Color.White);
+            material = new TextureMaterial2D(infectionMeterTexture, Color.Teal);
             uiGameObject.AddComponent(new Renderer2D(material));
 
             uiGameObject.AddComponent(new InfectionMeterController((float)AppData.MAX_GAME_TIME_IN_MSECS, 0));
 
             mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Add Infection Text
+
+            var infectionText = new GameObject(AppData.INFECTION_TEXT_NAME);
+            infectionText.Transform = new Transform(
+                new Vector3(0.9f, 0.9f, 0),
+                Vector3.Zero,
+                uiGameObject.Transform.Translation + new Vector3(-15, -55, 0)
+                );
+
+            var infectedFont = Content.Load<SpriteFont>("Assets/Fonts/INFECTED");
+            material = new TextMaterial2D(infectedFont, "INFECTION", new Vector2(0, 0), Color.Teal, 0.8f);
+            infectionText.AddComponent(new Renderer2D(material));
+
+            mainHUD.Add(infectionText);
 
             #endregion
 
@@ -543,7 +560,7 @@ namespace GD.App
                 new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(0, 30), 0)
                 );
 
-            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.LightGreen, 0.8f);
+            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.Cyan, 0.8f);
             //add renderer to draw the text
             uiGameObject.AddComponent(new Renderer2D(material));
 
@@ -566,7 +583,7 @@ namespace GD.App
 
             material = new TextMaterial2D(spriteFont, new StringBuilder(""),
                 new Vector2(0, 0),
-                Color.LightGreen,
+                Color.Cyan,
                 0.8f
                 );
 
@@ -596,6 +613,51 @@ namespace GD.App
             uiGameObject.AddComponent(new Renderer2D(material));
 
             uiGameObject.AddComponent(new NoteUIController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Win Screen
+
+            uiGameObject = new GameObject(AppData.WIN_SCREEN_NAME);
+            Vector2 screenScale = new Vector2(0.67f, 0.67f);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(screenScale, 1),
+                Vector3.Zero,
+                new Vector3(0, 0, 0)
+                );
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Screens/win-screen");
+
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new ScreenVisibilityController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Lose Screen
+
+            uiGameObject = new GameObject(AppData.LOSE_SCREEN_NAME);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(screenScale, 1),
+                Vector3.Zero,
+                new Vector3(0, 0, 0)
+                );
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Screens/lose-screen-infection-taken-over");
+
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new ScreenVisibilityController());
 
             mainHUD.Add(uiGameObject);
 
@@ -980,8 +1042,8 @@ namespace GD.App
 
             sideWallEffect.FogEnabled = true;
             sideWallEffect.FogColor = new Vector3(27 / 255f, 26 / 255f, 26 / 255f);
-            sideWallEffect.FogStart = 0f;
-            sideWallEffect.FogEnd = 25f;
+            sideWallEffect.FogStart = 7f;
+            sideWallEffect.FogEnd = 49.5f;
 
             sideWallEffect.PreferPerPixelLighting = true;
 
@@ -1876,7 +1938,10 @@ ObjectType.Static, RenderType.Opaque);
             var gameObject = new GameObject(AppData.FLOOR_NAME,
                ObjectType.Static, RenderType.Opaque);
 
-            gameObject.Transform = new Transform(AppData.DEFAULT_OBJECT_SCALE * Vector3.One, Vector3.Zero, Vector3.Zero);
+            gameObject.Transform = new Transform(
+                AppData.DEFAULT_OBJECT_SCALE * Vector3.One,
+                Vector3.Zero,
+                Vector3.Zero + Vector3.Up * 0.5f);
 
             Renderer renderer = InitializeRenderer(
                 AppData.FLOOR_MODEL_PATH,

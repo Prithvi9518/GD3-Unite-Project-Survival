@@ -221,7 +221,7 @@ namespace GD.App
         #region Timer Variables
 
         public static double MAX_GAME_TIME_IN_MSECS = 300000;
-        //public static double MAX_GAME_TIME_IN_MSECS = 25000;
+        //public static double MAX_GAME_TIME_IN_MSECS = 5000;
 
         #endregion Timer Variables
 
@@ -254,8 +254,12 @@ namespace GD.App
         #region UI Object Names
 
         public static readonly string INFECTION_METER_NAME = "infection meter";
+        public static readonly string INFECTION_TEXT_NAME = "infection text";
         public static readonly string INTERACT_PROMPT_NAME = "interact prompt";
         public static readonly string SUBTITLES_NAME = "subtitles";
+
+        public static readonly string WIN_SCREEN_NAME = "win screen";
+        public static readonly string LOSE_SCREEN_NAME = "lose screen";
 
         #endregion
 
