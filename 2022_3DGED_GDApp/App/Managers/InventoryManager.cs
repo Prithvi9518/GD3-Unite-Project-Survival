@@ -200,7 +200,7 @@ namespace GD.App
 
                         gameObject.Transform.SetTranslation(
                             gameObject.Transform.Translation.X,
-                            AppData.OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y - 3.2f,
+                            AppData.OLD_FIRST_PERSON_DEFAULT_CAMERA_POSITION.Y - 2.7f,
                             gameObject.Transform.Translation.Z
                             );
                     }
