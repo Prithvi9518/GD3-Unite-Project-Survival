@@ -560,7 +560,7 @@ namespace GD.App
                 new Vector3(Application.Screen.ScreenCentre - textScale + new Vector2(0, 30), 0)
                 );
 
-            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.LightGreen, 0.8f);
+            material = new TextMaterial2D(spriteFont, "", new Vector2(70, 5), Color.Cyan, 0.8f);
             //add renderer to draw the text
             uiGameObject.AddComponent(new Renderer2D(material));
 
@@ -583,7 +583,7 @@ namespace GD.App
 
             material = new TextMaterial2D(spriteFont, new StringBuilder(""),
                 new Vector2(0, 0),
-                Color.LightGreen,
+                Color.Cyan,
                 0.8f
                 );
 
@@ -613,6 +613,51 @@ namespace GD.App
             uiGameObject.AddComponent(new Renderer2D(material));
 
             uiGameObject.AddComponent(new NoteUIController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Win Screen
+
+            uiGameObject = new GameObject(AppData.WIN_SCREEN_NAME);
+            Vector2 screenScale = new Vector2(0.67f, 0.67f);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(screenScale, 1),
+                Vector3.Zero,
+                new Vector3(0, 0, 0)
+                );
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Screens/win-screen");
+
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new ScreenVisibilityController());
+
+            mainHUD.Add(uiGameObject);
+
+            #endregion
+
+            #region Lose Screen
+
+            uiGameObject = new GameObject(AppData.LOSE_SCREEN_NAME);
+
+            uiGameObject.Transform = new Transform(
+                new Vector3(screenScale, 1),
+                Vector3.Zero,
+                new Vector3(0, 0, 0)
+                );
+
+            texture = Content.Load<Texture2D>("Assets/Textures/Screens/lose-screen-infection-taken-over");
+
+            material = new TextureMaterial2D(texture, Color.White);
+
+            uiGameObject.AddComponent(new Renderer2D(material));
+
+            uiGameObject.AddComponent(new ScreenVisibilityController());
 
             mainHUD.Add(uiGameObject);
 

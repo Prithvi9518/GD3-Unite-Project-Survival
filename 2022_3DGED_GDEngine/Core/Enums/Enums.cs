@@ -189,7 +189,10 @@
         OnTriggerDialogue,
         OnToggleNote,
         OnEnterControlsMenu,
-        OnExitControlsMenu
+        OnExitControlsMenu,
+
+        OnShow,
+        OnHide
     }
 
     /// <summary>
